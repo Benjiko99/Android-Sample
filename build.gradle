@@ -1,0 +1,47 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.app = [
+            'id'          : 'com.spiraclesoftware.airbankinterview',
+            'versionCode' : 1,
+            'versionName' : '1.0',
+
+            'compileSdk'  : 28,
+            'targetSdk'   : 28,
+            'minSdk'      : 21,
+
+            'sourceCompat': JavaVersion.VERSION_1_8,
+            'targetCompat': JavaVersion.VERSION_1_8,
+    ]
+
+    ext.versions = [
+            'leakCanary'      : '1.6.1',
+            'kotlin'          : '1.2.71',
+            'androidx'        : '1.0.0',
+            'constraintLayout': '2.0.0-alpha2',
+            'archComp'        : '1.1.1',
+            'navigationComp'  : '1.0.0-alpha06',
+            'lifecycleComp'   : '2.0.0',
+    ]
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:${versions.navigationComp}"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
