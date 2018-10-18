@@ -1,6 +1,7 @@
 package com.spiraclesoftware.airbankinterview
 
 import android.app.Application
+import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
 
 class AirBankApplication : Application() {
@@ -15,5 +16,7 @@ class AirBankApplication : Application() {
         }
         LeakCanary.install(this)
         // Normal app init code...
+
+        Stetho.initializeWithDefaults(this)
     }
 }
