@@ -34,6 +34,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    debugApi "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}"
+    releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
+    debugApi "com.squareup.leakcanary:leakcanary-support-fragment:${versions.leakCanary}"
+
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
 
     api "androidx.appcompat:appcompat:${versions.androidx}"
