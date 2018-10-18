@@ -35,12 +35,15 @@ android {
 
 dependencies {
     ext.localVersions = [
+            'stetho': '1.5.0',
     ]
     // combine with project-level versions
     versions.putAll(localVersions)
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':core')
+
+    implementation "com.facebook.stetho:stetho:${versions.stetho}"
 
     implementation "android.arch.navigation:navigation-fragment-ktx:${versions.navigationComp}"
     implementation "android.arch.navigation:navigation-ui-ktx:${versions.navigationComp}"
