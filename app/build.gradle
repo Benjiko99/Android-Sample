@@ -36,6 +36,7 @@ android {
 dependencies {
     ext.localVersions = [
             'stetho': '1.5.0',
+            'fastAdapter': '3.3.1',
     ]
     // combine with project-level versions
     versions.putAll(localVersions)
@@ -50,6 +51,9 @@ dependencies {
 
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycleComp}"
+
+    implementation "com.mikepenz:fastadapter:${versions.fastAdapter}"
+    implementation "com.mikepenz:fastadapter-commons:${versions.fastAdapter}"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
