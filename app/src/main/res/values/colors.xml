@@ -3,4 +3,11 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="transaction_incoming">@color/green_800</color>
+    <color name="transaction_outgoing">@color/red_900</color>
+
+    <!-- Material Palette -->
+    <color name="green_800">#2e7d32</color>
+    <color name="red_900">#b71c1c</color>
 </resources>

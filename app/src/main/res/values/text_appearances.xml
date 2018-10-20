@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.Transaction.Amount" parent="TextAppearance.MaterialComponents.Body1" />
+
+    <style name="TextAppearance.Transaction.Amount.Incoming">
+        <item name="android:textColor">@color/transaction_incoming</item>
+    </style>
+
+    <style name="TextAppearance.Transaction.Amount.Outgoing">
+        <item name="android:textColor">@color/transaction_outgoing</item>
+    </style>
+
+</resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="transactionIcon"
+            type="android.graphics.drawable.Drawable" />
+
+        <variable
+            name="transactionAmount"
+            type="String" />
+
+        <variable
+            name="transactionDirection"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/content__spacing__small">
+
+        <ImageView
+            android:id="@+id/iconView"
+            android:layout_width="@dimen/icon__large"
+            android:layout_height="@dimen/icon__large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_transaction_incoming" />
+
+        <TextView
+            android:id="@+id/transactionAmountView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content__spacing__small"
+            android:text='@{@string/format__money(transactionAmount), default="1337 Kc"}'
+            android:textAppearance="@style/TextAppearance.Transaction.Amount"
+            app:layout_constraintBottom_toTopOf="@id/transactionDirectionView"
+            app:layout_constraintLeft_toRightOf="@id/iconView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/transactionDirectionView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content__spacing__small"
+            android:text='@{transactionDirection, default="Incoming"}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/iconView"
+            app:layout_constraintTop_toBottomOf="@id/transactionAmountView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
