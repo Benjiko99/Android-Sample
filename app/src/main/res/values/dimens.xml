@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="content__spacing__small">8dp</dimen>
+
     <dimen name="appbar__height__tall">150dp</dimen>
+
+    <dimen name="icon__large">32dp</dimen>
 
 </resources>

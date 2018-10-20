@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Air Bank</string>
 
+    <!-- Common -->
+    <string name="format__money">%s Kč</string>
+
+    <!-- Transaction -->
+    <string name="transaction_direction__incoming">Incoming</string>
+    <string name="transaction_direction__outgoing">Outgoing</string>
+
+    <!-- Transaction List -->
     <string name="transaction__list__title">Transactions</string>
 </resources>
