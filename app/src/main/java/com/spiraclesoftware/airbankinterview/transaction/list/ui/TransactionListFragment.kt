@@ -39,5 +39,25 @@ class TransactionListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = fastItemAdapter
         }
+
+        fastItemAdapter.add(getDummyTransactionItems())
+    }
+
+    private fun getDummyTransactionItems(): List<TransactionItem> {
+        val items = arrayListOf<TransactionItem>()
+
+        items.add(
+            TransactionItem()
+                .withTransactionAmount(BigDecimal(1337))
+                .withTransactionDirection(TransactionDirection.INCOMING)
+        )
+
+        items.add(
+            TransactionItem()
+                .withTransactionAmount(BigDecimal.TEN)
+                .withTransactionDirection(TransactionDirection.OUTGOING)
+        )
+
+        return items
     }
 }
