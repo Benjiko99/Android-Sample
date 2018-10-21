@@ -46,6 +46,9 @@ dependencies {
     api "com.squareup.okhttp3:okhttp:${versions.okhttp}"
     api "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
 
+    api "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    api "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
 
     api "androidx.appcompat:appcompat:${versions.androidx}"
