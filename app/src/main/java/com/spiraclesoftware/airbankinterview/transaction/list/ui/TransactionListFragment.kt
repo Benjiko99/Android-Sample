@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.airbankinterview.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.airbankinterview.transaction.shared.domain.TransactionDirection
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
 import java.math.BigDecimal
 
+class TransactionListFragment : DaggerFragment() {
 
-class TransactionListFragment : Fragment() {
 
     private lateinit var binding: TransactionListFragmentBinding
     private lateinit var fastItemAdapter: FastItemAdapter<TransactionItem>

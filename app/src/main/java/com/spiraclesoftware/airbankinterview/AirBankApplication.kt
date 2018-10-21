@@ -1,10 +1,12 @@
 package com.spiraclesoftware.airbankinterview
 
-import android.app.Application
 import com.facebook.stetho.Stetho
+import com.spiraclesoftware.airbankinterview.di.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
-class AirBankApplication : Application() {
+class AirBankApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
@@ -18,5 +20,9 @@ class AirBankApplication : Application() {
         // Normal app init code...
 
         Stetho.initializeWithDefaults(this)
+    }
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.builder().create(this)
     }
 }
