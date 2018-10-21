@@ -15,6 +15,7 @@ buildscript {
     ]
 
     ext.versions = [
+            'dagger'          : '2.16',
             'leakCanary'      : '1.6.1',
             'kotlin'          : '1.2.71',
             'androidx'        : '1.0.0',
@@ -44,4 +45,11 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        // Increase printed error count for Dagger + DataBinding
+        options.compilerArgs << "-Xmaxerrs" << "500"
+    }
 }

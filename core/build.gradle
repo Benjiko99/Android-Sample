@@ -38,10 +38,17 @@ dependencies {
     releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
     debugApi "com.squareup.leakcanary:leakcanary-support-fragment:${versions.leakCanary}"
 
+    api "com.google.dagger:dagger-android:${versions.dagger}"
+    api "com.google.dagger:dagger-android-support:${versions.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
+    kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
+
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
 
     api "androidx.appcompat:appcompat:${versions.androidx}"
     api "androidx.recyclerview:recyclerview:${versions.androidx}"
+
+    api "androidx.lifecycle:lifecycle-extensions:${versions.lifecycleComp}"
 
     api "com.google.android.material:material:${versions.androidx}"
 }
