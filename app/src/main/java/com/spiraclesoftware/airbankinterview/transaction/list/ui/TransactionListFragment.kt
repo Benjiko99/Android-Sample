@@ -4,16 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.airbankinterview.databinding.TransactionListFragmentBinding
-import com.spiraclesoftware.airbankinterview.transaction.shared.domain.TransactionDirection
+import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
+import com.spiraclesoftware.core.extensions.viewModelProvider
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
-import java.math.BigDecimal
+import javax.inject.Inject
 
 class TransactionListFragment : DaggerFragment() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModel: TransactionListViewModel
 
     private lateinit var binding: TransactionListFragmentBinding
     private lateinit var fastItemAdapter: FastItemAdapter<TransactionItem>
@@ -29,7 +35,7 @@ class TransactionListFragment : DaggerFragment() {
         fastItemAdapter = FastItemAdapter()
         fastItemAdapter.apply {
             withSelectable(true)
-            withOnClickListener { itemView, adapter, item, position ->
+            withOnClickListener { _, _, _, _ ->
                 // TODO: Open Transaction Detail
                 true
             }
@@ -39,25 +45,22 @@ class TransactionListFragment : DaggerFragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = fastItemAdapter
         }
-
-        fastItemAdapter.add(getDummyTransactionItems())
     }
 
-    private fun getDummyTransactionItems(): List<TransactionItem> {
-        val items = arrayListOf<TransactionItem>()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-        items.add(
-            TransactionItem()
-                .withTransactionAmount(BigDecimal(1337))
-                .withTransactionDirection(TransactionDirection.INCOMING)
-        )
+        viewModel = viewModelProvider(viewModelFactory)
 
-        items.add(
-            TransactionItem()
-                .withTransactionAmount(BigDecimal.TEN)
-                .withTransactionDirection(TransactionDirection.OUTGOING)
-        )
-
-        return items
+        viewModel.transactions.observe(this, Observer { resource ->
+            binding.transactionListResource = resource
+            fastItemAdapter.set(resource.data?.toListItems() ?: arrayListOf())
+        })
     }
+
+    private fun List<Transaction>.toListItems(): List<TransactionItem> = map { it.toListItem() }
+
+    private fun Transaction.toListItem() = TransactionItem()
+        .withTransactionAmount(amountInAccountCurrency)
+        .withTransactionDirection(direction)
 }
