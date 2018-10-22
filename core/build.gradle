@@ -43,6 +43,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
     kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
 
+    api "com.squareup.okhttp3:okhttp:${versions.okhttp}"
+    api "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
+
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
 
     api "androidx.appcompat:appcompat:${versions.androidx}"

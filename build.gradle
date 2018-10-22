@@ -16,6 +16,7 @@ buildscript {
 
     ext.versions = [
             'dagger'          : '2.16',
+            'okhttp'          : '3.11.0',
             'leakCanary'      : '1.6.1',
             'kotlin'          : '1.2.71',
             'androidx'        : '1.0.0',
