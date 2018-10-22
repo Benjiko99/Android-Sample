@@ -1,9 +1,20 @@
 package com.spiraclesoftware.airbankinterview.di
 
 import android.content.Context
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.spiraclesoftware.airbankinterview.AirBankApplication
+import com.spiraclesoftware.airbankinterview.BuildConfig
+import com.spiraclesoftware.airbankinterview.api.ApiService
+import com.spiraclesoftware.core.data.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 /**
  * Defines all the classes that need to be provided in the scope of the app.
@@ -17,5 +28,50 @@ class AppModule {
     @Provides
     fun provideContext(application: AirBankApplication): Context {
         return application.applicationContext
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl("http://demo0569565.mockable.io/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(LiveDataCallAdapterFactory())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        val builder = OkHttpClient.Builder()
+
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(httpLoggingInterceptor)
+        }
+
+        return builder.build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        return interceptor
+    }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+            .create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
     }
 }
