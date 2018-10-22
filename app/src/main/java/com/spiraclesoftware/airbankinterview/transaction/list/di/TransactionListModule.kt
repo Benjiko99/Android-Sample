@@ -1,10 +1,15 @@
 package com.spiraclesoftware.airbankinterview.transaction.list.di
 
-import com.spiraclesoftware.airbankinterview.di.FragmentScoped
+import androidx.lifecycle.ViewModel
+import com.spiraclesoftware.core.di.FragmentScoped
+import com.spiraclesoftware.core.di.ViewModelKey
 import com.spiraclesoftware.airbankinterview.transaction.list.ui.TransactionListFragment
+import com.spiraclesoftware.airbankinterview.transaction.list.ui.TransactionListViewModel
+import dagger.Binds
 import dagger.Module
 import dagger.android.AndroidInjector
 import dagger.android.ContributesAndroidInjector
+import dagger.multibindings.IntoMap
 
 /**
  * Module where classes needed to create the [TransactionListFragment] are defined.
@@ -18,4 +23,13 @@ internal abstract class TransactionListModule {
     @FragmentScoped
     @ContributesAndroidInjector
     internal abstract fun contributeTransactionListFragment(): TransactionListFragment
+
+    /**
+     * The ViewModels are created by Dagger in a map. Via the @ViewModelKey, we define that we
+     * want to get a [TransactionListViewModel] class.
+     */
+    @Binds
+    @IntoMap
+    @ViewModelKey(TransactionListViewModel::class)
+    internal abstract fun bindTransactionListViewModel(viewModel: TransactionListViewModel): ViewModel
 }
