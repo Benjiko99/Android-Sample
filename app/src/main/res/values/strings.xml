@@ -2,6 +2,9 @@
     <string name="app_name">Air Bank</string>
 
     <!-- Common -->
+    <string name="retry">Retry</string>
+    <string name="unknown_error">Unknown Error</string>
+
     <string name="format__money">%s Kč</string>
 
     <!-- Transaction -->
