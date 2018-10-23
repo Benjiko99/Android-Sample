@@ -36,26 +36,15 @@ class TransactionItem : AbstractItem<TransactionItem, TransactionItem.ViewHolder
             val context = view.context
             val binding = TransactionListTransactionItemBinding.bind(view)
 
-            val transactionDirectionText = when (item.transactionDirection) {
-                TransactionDirection.INCOMING -> R.string.transaction_direction__incoming
-                TransactionDirection.OUTGOING -> R.string.transaction_direction__outgoing
-            }
-
-            val icon = when (item.transactionDirection) {
-                TransactionDirection.INCOMING -> R.drawable.ic_transaction_incoming
-                TransactionDirection.OUTGOING -> R.drawable.ic_transaction_outgoing
-            }
-
-            val transactionAmountTextAppearance = when (item.transactionDirection) {
-                TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
-                TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
-            }
-
             binding.apply {
                 transactionAmount = item.transactionAmount.toString()
-                transactionDirection = context.getString(transactionDirectionText)
-                iconView.setImageResource(icon)
+                transactionDirection = context.getString(item.transactionDirection.getStringRes())
+                iconView.setImageResource(item.transactionDirection.getDrawableRes())
 
+                val transactionAmountTextAppearance = when (item.transactionDirection) {
+                    TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
+                    TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
+                }
                 TextViewCompat.setTextAppearance(transactionAmountView, transactionAmountTextAppearance)
             }
         }
