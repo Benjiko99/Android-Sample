@@ -2,6 +2,7 @@ package com.spiraclesoftware.airbankinterview.transaction.list.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.spiraclesoftware.airbankinterview.transaction.list.data.TransactionListRepository
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
@@ -12,17 +13,22 @@ class TransactionListViewModel @Inject constructor(
     val repository: TransactionListRepository
 ) : ViewModel() {
 
-    private lateinit var transactions: LiveData<Resource<List<Transaction>>>
+    private val _loadTransactionListEvent: MutableLiveData<Nothing> = MutableLiveData()
 
-    fun getTransactions(): LiveData<Resource<List<Transaction>>> {
-        if (!::transactions.isInitialized) {
-            transactions = MutableLiveData()
-            loadTransactions()
+    val transactions: LiveData<Resource<List<Transaction>>> = Transformations
+        .switchMap(_loadTransactionListEvent) { _ ->
+            repository.loadTransactionList()
         }
-        return transactions
+
+    init {
+        loadTransactionList()
     }
 
-    private fun loadTransactions() {
-        transactions = repository.loadTransactionList()
+    private fun loadTransactionList() {
+        _loadTransactionListEvent.value = _loadTransactionListEvent.value
+    }
+
+    fun retry() {
+        loadTransactionList()
     }
 }

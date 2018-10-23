@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.spiraclesoftware.airbankinterview.common.ui.RetryCallback
 import com.spiraclesoftware.airbankinterview.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
 import com.spiraclesoftware.core.extensions.viewModelProvider
@@ -26,6 +28,13 @@ class TransactionListFragment : DaggerFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = TransactionListFragmentBinding.inflate(inflater)
+
+        binding.retryCallback = object : RetryCallback {
+            override fun retry() {
+                viewModel.retry()
+            }
+        }
+
         return binding.root
     }
 
