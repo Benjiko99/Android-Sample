@@ -10,4 +10,10 @@
 
     <!-- Transaction List -->
     <string name="transaction__list__title">Transactions</string>
+
+    <!-- Transaction Detail -->
+    <string name="transaction__detail__title">Transaction Detail</string>
+    <string name="transaction__detail__account_number">Account Number:</string>
+    <string name="transaction__detail__account_name">Account Name:</string>
+    <string name="transaction__detail__bank_code">Bank Code:</string>
 </resources>
