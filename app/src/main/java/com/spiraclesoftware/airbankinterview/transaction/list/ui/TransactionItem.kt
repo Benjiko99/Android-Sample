@@ -6,13 +6,21 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.spiraclesoftware.airbankinterview.R
 import com.spiraclesoftware.airbankinterview.databinding.TransactionListTransactionItemBinding
+import com.spiraclesoftware.airbankinterview.transaction.list.domain.TransactionId
 import com.spiraclesoftware.airbankinterview.transaction.shared.domain.TransactionDirection
 import kotlinx.android.synthetic.main.transaction__list__transaction_item.view.*
 
 class TransactionItem : AbstractItem<TransactionItem, TransactionItem.ViewHolder>() {
 
+    var transactionId: TransactionId = 0
+        private set
     private var transactionAmount: Int = 0
     private lateinit var transactionDirection: TransactionDirection
+
+    fun withTransactionId(id: TransactionId): TransactionItem {
+        this.transactionId = id
+        return this
+    }
 
     fun withTransactionAmount(amount: Int): TransactionItem {
         this.transactionAmount = amount

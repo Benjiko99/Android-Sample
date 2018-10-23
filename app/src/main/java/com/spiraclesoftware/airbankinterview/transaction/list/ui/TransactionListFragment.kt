@@ -35,8 +35,10 @@ class TransactionListFragment : DaggerFragment() {
         fastItemAdapter = FastItemAdapter()
         fastItemAdapter.apply {
             withSelectable(true)
-            withOnClickListener { _, _, _, _ ->
-                // TODO: Open Transaction Detail
+            withOnClickListener { _, _, item, _ ->
+                val direction =
+                    TransactionListFragmentDirections.actionTransactionListFragmentToTransactionDetailFragment(item.transactionId)
+                findNavController().navigate(direction)
                 true
             }
         }
@@ -61,6 +63,7 @@ class TransactionListFragment : DaggerFragment() {
     private fun List<Transaction>.toListItems(): List<TransactionItem> = map { it.toListItem() }
 
     private fun Transaction.toListItem() = TransactionItem()
+        .withTransactionId(id)
         .withTransactionAmount(amountInAccountCurrency)
         .withTransactionDirection(direction)
 }
