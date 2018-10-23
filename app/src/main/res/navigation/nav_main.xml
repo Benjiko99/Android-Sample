@@ -9,6 +9,24 @@
         android:id="@+id/transactionListFragment"
         android:name="com.spiraclesoftware.airbankinterview.transaction.list.ui.TransactionListFragment"
         android:label="@string/transaction__list__title"
-        tools:layout="@layout/transaction__list__fragment" />
+        tools:layout="@layout/transaction__list__fragment">
+        <action
+            android:id="@+id/action_transactionListFragment_to_transactionDetailFragment"
+            app:destination="@id/transactionDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionDetailFragment"
+        android:name="com.spiraclesoftware.airbankinterview.transaction.detail.ui.TransactionDetailFragment"
+        android:label="@string/transaction__detail__title"
+        tools:layout="@layout/transaction__detail__fragment">
+        <argument
+            android:name="transactionId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

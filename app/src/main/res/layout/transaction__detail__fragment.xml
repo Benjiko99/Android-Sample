@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".transaction.detail.ui.TransactionDetailFragment">
+
+    <data>
+
+        <variable
+            name="retryCallback"
+            type="com.spiraclesoftware.airbankinterview.common.ui.RetryCallback" />
+
+        <variable
+            name="transaction"
+            type="com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction" />
+
+        <variable
+            name="transactionDetail"
+            type="com.spiraclesoftware.airbankinterview.transaction.detail.domain.TransactionDetail" />
+
+        <variable
+            name="transactionDetailResource"
+            type="com.spiraclesoftware.core.data.Resource" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/content__spacing__small">
+
+            <ImageView
+                android:id="@+id/iconView"
+                android:layout_width="@dimen/icon__large"
+                android:layout_height="@dimen/icon__large"
+                android:src="@{context.getDrawable(transaction.direction.getDrawableRes())}"
+                app:layout_constraintBottom_toBottomOf="@id/transactionDirectionView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/transactionAmountView"
+                tools:src="@drawable/ic_transaction_incoming" />
+
+            <TextView
+                android:id="@+id/transactionAmountView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/content__spacing__small"
+                android:text='@{@string/format__money(transaction.amountInAccountCurrency), default="1337 Kc"}'
+                android:textAppearance="@style/TextAppearance.Transaction.Amount"
+                app:layout_constraintBottom_toTopOf="@id/transactionDirectionView"
+                app:layout_constraintLeft_toRightOf="@id/iconView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/transactionDirectionView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/content__spacing__small"
+                android:text='@{transaction.direction.getStringRes(), default="Incoming"}'
+                app:layout_constraintBottom_toTopOf="@id/divider"
+                app:layout_constraintLeft_toRightOf="@id/iconView"
+                app:layout_constraintTop_toBottomOf="@id/transactionAmountView" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content__spacing__small"
+                android:layout_marginBottom="@dimen/content__spacing__small"
+                android:background="?android:listDivider"
+                app:layout_constraintBottom_toTopOf="@id/detailsBarrier"
+                app:layout_constraintLeft_toLeftOf="@id/transactionDirectionView"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transactionDirectionView" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/detailsBarrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="detailsContainer, loadingState" />
+
+            <LinearLayout
+                android:id="@+id/detailsContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/divider"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:visibleGone="@{transactionDetail != null}">
+
+                <include
+                    layout="@layout/transaction__detail__detail_item"
+                    app:itemLabel='@{@string/transaction__detail__account_number}'
+                    app:itemValue='@{transactionDetail.contraAccount.accountNumber}' />
+
+                <include
+                    layout="@layout/transaction__detail__detail_item"
+                    app:itemLabel='@{@string/transaction__detail__account_name}'
+                    app:itemValue='@{transactionDetail.contraAccount.accountName}' />
+
+                <include
+                    layout="@layout/transaction__detail__detail_item"
+                    app:itemLabel='@{@string/transaction__detail__bank_code}'
+                    app:itemValue='@{transactionDetail.contraAccount.bankCode}' />
+
+            </LinearLayout>
+
+            <include
+                android:id="@+id/loadingState"
+                layout="@layout/loading_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:callback="@{() -> retryCallback.retry()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:resource="@{transactionDetailResource}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
