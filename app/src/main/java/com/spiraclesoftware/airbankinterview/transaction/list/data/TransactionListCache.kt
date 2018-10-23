@@ -23,4 +23,6 @@ class TransactionListCache @Inject constructor() {
     }
 
     fun get(): List<Transaction>? = cache?.values?.toList()
+
+    fun get(id: TransactionId): Transaction? = cache?.get(id)
 }
