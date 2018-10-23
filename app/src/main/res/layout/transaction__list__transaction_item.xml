@@ -6,16 +6,8 @@
     <data>
 
         <variable
-            name="transactionIcon"
-            type="android.graphics.drawable.Drawable" />
-
-        <variable
-            name="transactionAmount"
-            type="String" />
-
-        <variable
-            name="transactionDirection"
-            type="String" />
+            name="transaction"
+            type="com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +20,7 @@
             android:id="@+id/iconView"
             android:layout_width="@dimen/icon__large"
             android:layout_height="@dimen/icon__large"
+            android:src="@{context.getDrawable(transaction.direction.getDrawableRes())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/content__spacing__small"
-            android:text='@{@string/format__money(transactionAmount), default="1337 Kc"}'
+            android:text='@{@string/format__money(transaction.amountInAccountCurrency), default="1337 Kc"}'
             android:textAppearance="@style/TextAppearance.Transaction.Amount"
             app:layout_constraintBottom_toTopOf="@id/transactionDirectionView"
             app:layout_constraintLeft_toRightOf="@id/iconView"
@@ -49,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/content__spacing__small"
-            android:text='@{transactionDirection, default="Incoming"}'
+            android:text='@{transaction.direction.getStringRes(), default="Incoming"}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/iconView"
             app:layout_constraintTop_toBottomOf="@id/transactionAmountView" />

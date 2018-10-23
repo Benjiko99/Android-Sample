@@ -12,6 +12,7 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.airbankinterview.common.ui.RetryCallback
 import com.spiraclesoftware.airbankinterview.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
+import com.spiraclesoftware.airbankinterview.transaction.list.ui.TransactionListFragmentDirections.actionTransactionListFragmentToTransactionDetailFragment
 import com.spiraclesoftware.core.extensions.viewModelProvider
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
@@ -45,9 +46,9 @@ class TransactionListFragment : DaggerFragment() {
         fastItemAdapter.apply {
             withSelectable(true)
             withOnClickListener { _, _, item, _ ->
-                val direction =
-                    TransactionListFragmentDirections.actionTransactionListFragmentToTransactionDetailFragment(item.transactionId)
-                findNavController().navigate(direction)
+                findNavController().navigate(
+                    actionTransactionListFragmentToTransactionDetailFragment(item.transaction.id)
+                )
                 true
             }
         }
@@ -65,14 +66,9 @@ class TransactionListFragment : DaggerFragment() {
 
         viewModel.transactions.observe(this, Observer { resource ->
             binding.transactionListResource = resource
-            fastItemAdapter.set(resource.data?.toListItems() ?: arrayListOf())
+            fastItemAdapter.set(toListItems(resource.data))
         })
     }
 
-    private fun List<Transaction>.toListItems(): List<TransactionItem> = map { it.toListItem() }
-
-    private fun Transaction.toListItem() = TransactionItem()
-        .withTransactionId(id)
-        .withTransactionAmount(amountInAccountCurrency)
-        .withTransactionDirection(direction)
+    private fun toListItems(data: List<Transaction>?) = data?.map(::TransactionItem) ?: emptyList()
 }
