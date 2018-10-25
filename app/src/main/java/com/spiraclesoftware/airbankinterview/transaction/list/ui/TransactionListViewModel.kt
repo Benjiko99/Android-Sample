@@ -1,6 +1,6 @@
 package com.spiraclesoftware.airbankinterview.transaction.list.ui
 
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -8,6 +8,8 @@ import com.spiraclesoftware.airbankinterview.transaction.list.data.TransactionDi
 import com.spiraclesoftware.airbankinterview.transaction.list.data.TransactionListFilter
 import com.spiraclesoftware.airbankinterview.transaction.list.data.TransactionListRepository
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
+import com.spiraclesoftware.core.data.LiveTrigger
+import com.spiraclesoftware.core.data.MediatorLiveTrigger
 import com.spiraclesoftware.core.data.Resource
 import javax.inject.Inject
 
@@ -15,30 +17,33 @@ class TransactionListViewModel @Inject constructor(
     private val repository: TransactionListRepository
 ) : ViewModel() {
 
-    val transactions = MediatorLiveData<Resource<List<Transaction>>>()
+    val transactions: LiveData<Resource<List<Transaction>>>
+
     private val transactionListFilter = MutableLiveData<TransactionListFilter>()
-    private val retryTransactionsTrigger = MutableLiveData<Nothing>()
+    private val retryTrigger = LiveTrigger()
 
     init {
         transactionListFilter.value = TransactionListFilter()
 
-        val filterChanged = Transformations.switchMap(transactionListFilter) { filter ->
-            repository.loadTransactionList(filter)
-        }
-        val retryTriggered = Transformations.switchMap(retryTransactionsTrigger) {
-            repository.loadTransactionList(transactionListFilter.value!!)
+        // Define all events that should cause data to be reloaded.
+        val triggers = MediatorLiveTrigger().apply {
+            // trigger() just calls setValue() on the Mediator to cause the observers to be notified.
+            addSource(transactionListFilter) { trigger() }
+            addSource(retryTrigger) { trigger() }
         }
 
-        transactions.addSource(filterChanged, transactions::setValue)
-        transactions.addSource(retryTriggered, transactions::setValue)
+        transactions = Transformations.switchMap(triggers) {
+            repository.loadTransactionList(transactionListFilter.value!!)
+        }
+    }
+
+    fun retry() {
+        retryTrigger.trigger()
     }
 
     fun setTransactionDirectionFilter(transactionDirectionFilter: TransactionDirectionFilter) {
         transactionListFilter.value?.transactionDirectionFilter = transactionDirectionFilter
+        // trigger the observers to be notified
         transactionListFilter.value = transactionListFilter.value
-    }
-
-    fun retry() {
-        retryTransactionsTrigger.value = retryTransactionsTrigger.value
     }
 }

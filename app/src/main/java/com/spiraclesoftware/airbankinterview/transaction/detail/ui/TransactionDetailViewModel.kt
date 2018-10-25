@@ -9,36 +9,47 @@ import com.spiraclesoftware.airbankinterview.transaction.detail.domain.Transacti
 import com.spiraclesoftware.airbankinterview.transaction.list.data.TransactionListRepository
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.TransactionId
+import com.spiraclesoftware.core.data.LiveTrigger
+import com.spiraclesoftware.core.data.MediatorLiveTrigger
 import com.spiraclesoftware.core.data.Resource
 import javax.inject.Inject
 
 class TransactionDetailViewModel @Inject constructor(
-    val detailRepository: TransactionDetailRepository,
-    val listRepository: TransactionListRepository
+    private val detailRepository: TransactionDetailRepository,
+    private val listRepository: TransactionListRepository
 ) : ViewModel() {
 
-    private val _transactionId: MutableLiveData<TransactionId> = MutableLiveData()
-    val transactionId: LiveData<TransactionId>
-        get() = _transactionId
+    val transaction: LiveData<Resource<Transaction>>
+    val transactionDetail: LiveData<Resource<TransactionDetail>>
 
-    val transaction: LiveData<Resource<Transaction>> = Transformations
-        .switchMap(_transactionId) { input ->
-            listRepository.loadTransaction(input)
+    private val transactionId = MutableLiveData<TransactionId>()
+    private val retryTrigger = LiveTrigger()
+
+    init {
+        // Define all events that should cause data to be reloaded.
+        val triggers = MediatorLiveTrigger().apply {
+            // trigger() just calls setValue() on the Mediator to cause the observers to be notified.
+            addSource(transactionId) { trigger() }
+            addSource(retryTrigger) { trigger() }
         }
 
-    val transactionDetail: LiveData<Resource<TransactionDetail>> = Transformations
-        .switchMap(_transactionId) { input ->
-            detailRepository.loadTransactionDetail(input)
+        transaction = Transformations.switchMap(triggers) {
+            listRepository.loadTransaction(transactionId.value!!)
         }
+
+        transactionDetail = Transformations.switchMap(triggers) {
+            detailRepository.loadTransactionDetail(transactionId.value!!)
+        }
+    }
 
     fun retry() {
-        _transactionId.value = _transactionId.value
+        retryTrigger.trigger()
     }
 
     fun setTransactionId(id: TransactionId) {
-        if (_transactionId.value == id) {
+        if (transactionId.value == id) {
             return
         }
-        _transactionId.value = id
+        transactionId.value = id
     }
 }
