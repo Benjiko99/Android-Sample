@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.airbankinterview.common.ui.RetryCallback
 import com.spiraclesoftware.airbankinterview.databinding.TransactionListFragmentBinding
+import com.spiraclesoftware.airbankinterview.transaction.list.data.TransactionDirectionFilter
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
 import com.spiraclesoftware.airbankinterview.transaction.list.ui.TransactionListFragmentDirections.actionTransactionListFragmentToTransactionDetailFragment
 import com.spiraclesoftware.core.extensions.viewModelProvider
@@ -31,9 +34,7 @@ class TransactionListFragment : DaggerFragment() {
         binding = TransactionListFragmentBinding.inflate(inflater)
 
         binding.retryCallback = object : RetryCallback {
-            override fun retry() {
-                viewModel.retry()
-            }
+            override fun retry() = viewModel.retry()
         }
 
         return binding.root
@@ -54,9 +55,26 @@ class TransactionListFragment : DaggerFragment() {
         }
 
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = fastItemAdapter
+            itemAnimator = null
         }
+
+        val filterSpinnerAdapter = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            TransactionDirectionFilter.values().map { getString(it.stringRes) }
+        )
+        filterSpinner.adapter = filterSpinnerAdapter
+        filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val transactionDirectionFilter = TransactionDirectionFilter.values()[position]
+                viewModel.setTransactionDirectionFilter(transactionDirectionFilter)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        filterSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
