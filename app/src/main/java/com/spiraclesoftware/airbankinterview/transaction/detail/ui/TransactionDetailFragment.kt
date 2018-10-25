@@ -8,8 +8,8 @@ import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.spiraclesoftware.airbankinterview.R
-import com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback
 import com.spiraclesoftware.airbankinterview.databinding.TransactionDetailFragmentBinding
+import com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback
 import com.spiraclesoftware.airbankinterview.transaction.shared.domain.TransactionDirection
 import com.spiraclesoftware.core.extensions.viewModelProvider
 import dagger.android.support.DaggerFragment
@@ -42,6 +42,10 @@ class TransactionDetailFragment : DaggerFragment() {
         viewModel = viewModelProvider(viewModelFactory)
         viewModel.setTransactionId(params.transactionId)
 
+        subscribeUi()
+    }
+
+    private fun subscribeUi() {
         viewModel.transaction.observe(this, Observer { resource ->
             binding.transaction = resource?.data
 
