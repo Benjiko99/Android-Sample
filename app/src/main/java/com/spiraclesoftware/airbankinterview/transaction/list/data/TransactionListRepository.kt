@@ -32,7 +32,7 @@ class TransactionListRepository @Inject constructor(
                 return cache.cacheIsDirty || data == null || data.isEmpty()
             }
 
-            override fun loadFromDb(): LiveData<List<Transaction>> {
+            override fun loadFromCache(): LiveData<List<Transaction>> {
                 return MutableLiveData<List<Transaction>>().apply {
                     value = cache.get()?.filter {
                         if (filter.transactionDirectionFilter == TransactionDirectionFilter.ALL)
@@ -62,7 +62,7 @@ class TransactionListRepository @Inject constructor(
                 return cache.cacheIsDirty || data == null
             }
 
-            override fun loadFromDb(): LiveData<Transaction> {
+            override fun loadFromCache(): LiveData<Transaction> {
                 return MutableLiveData<Transaction>().apply { value = cache.get(transactionId) }
             }
 
