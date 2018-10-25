@@ -29,7 +29,7 @@ class TransactionDetailRepository @Inject constructor(
                 return cache.cacheIsDirty || data == null
             }
 
-            override fun loadFromDb(): LiveData<TransactionDetail> {
+            override fun loadFromCache(): LiveData<TransactionDetail> {
                 return MutableLiveData<TransactionDetail>().apply { value = cache.get(transactionId) }
             }
 
