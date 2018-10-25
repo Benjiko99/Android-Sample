@@ -19,7 +19,9 @@ class TransactionListRepository @Inject constructor(
     private val cache: TransactionListCache
 ) {
 
-    fun loadTransactionList(): LiveData<Resource<List<Transaction>>> {
+    fun loadTransactionList() = loadTransactionList(TransactionListFilter())
+
+    fun loadTransactionList(filter: TransactionListFilter): LiveData<Resource<List<Transaction>>> {
         return object : NetworkBoundResource<List<Transaction>, TransactionListResponse>(appExecutors) {
 
             override fun saveCallResult(data: TransactionListResponse) {
@@ -31,7 +33,14 @@ class TransactionListRepository @Inject constructor(
             }
 
             override fun loadFromDb(): LiveData<List<Transaction>> {
-                return MutableLiveData<List<Transaction>>().apply { value = cache.get() }
+                return MutableLiveData<List<Transaction>>().apply {
+                    value = cache.get()?.filter {
+                        if (filter.transactionDirectionFilter == TransactionDirectionFilter.ALL)
+                            true
+                        else
+                            filter.transactionDirectionFilter.mapsTo(it.direction)
+                    }
+                }
             }
 
             override fun createCall() = apiService.transactionList()
