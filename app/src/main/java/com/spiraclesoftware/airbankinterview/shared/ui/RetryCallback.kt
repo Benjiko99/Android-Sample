@@ -1,4 +1,4 @@
-package com.spiraclesoftware.airbankinterview.common.ui
+package com.spiraclesoftware.airbankinterview.shared.ui
 
 /**
  * Generic interface for retry buttons.

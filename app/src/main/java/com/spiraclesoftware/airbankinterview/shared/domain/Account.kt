@@ -1,4 +1,4 @@
-package com.spiraclesoftware.airbankinterview.common.domain
+package com.spiraclesoftware.airbankinterview.shared.domain
 
 data class Account(
     val accountNumber: String,

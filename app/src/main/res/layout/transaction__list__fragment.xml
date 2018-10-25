@@ -8,7 +8,7 @@
 
         <variable
             name="retryCallback"
-            type="com.spiraclesoftware.airbankinterview.common.ui.RetryCallback" />
+            type="com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback" />
 
         <variable
             name="transactionListResource"
