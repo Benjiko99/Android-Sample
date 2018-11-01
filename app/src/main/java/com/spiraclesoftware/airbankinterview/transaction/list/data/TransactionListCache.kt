@@ -2,9 +2,11 @@ package com.spiraclesoftware.airbankinterview.transaction.list.data
 
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.TransactionId
+import com.spiraclesoftware.core.testing.OpenForTesting
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OpenForTesting
 @Singleton
 class TransactionListCache @Inject constructor() {
 
