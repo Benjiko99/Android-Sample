@@ -57,8 +57,11 @@ dependencies {
     implementation "com.mikepenz:fastadapter:${versions.fastAdapter}"
     implementation "com.mikepenz:fastadapter-commons:${versions.fastAdapter}"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation "android.arch.navigation:navigation-testing-ktx:${versions.navigationComp}"
+    testImplementation "junit:junit:${versions.junit}"
+    testImplementation "androidx.arch.core:core-testing:${versions.lifecycleComp}"
+    //androidTestImplementation "android.arch.navigation:navigation-testing-ktx:${versions.navigationComp}"
+
+    testImplementation "org.mockito:mockito-core:${versions.mockito}"
+    testImplementation "com.nhaarman:mockito-kotlin:${versions.mockitoKotlin}"
+    //androidTestImplementation "org.mockito:mockito-android:${versions.mockito}"
 }
