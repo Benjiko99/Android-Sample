@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -29,6 +30,11 @@ android {
     dataBinding {
         enabled true
     }
+}
+
+allOpen {
+    // Makes annotated classes `open` in debug builds, used for mocking in unit tests.
+    annotation 'com.spiraclesoftware.core.testing.OpenClass'
 }
 
 dependencies {
