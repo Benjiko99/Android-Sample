@@ -25,6 +25,10 @@ buildscript {
             'archComp'        : '1.1.1',
             'navigationComp'  : '1.0.0-alpha06',
             'lifecycleComp'   : '2.0.0',
+
+            'junit'           : '4.12',
+            'mockito'         : '2.8.9',
+            'mockitoKotlin'   : '1.5.0',
     ]
 
     repositories {
