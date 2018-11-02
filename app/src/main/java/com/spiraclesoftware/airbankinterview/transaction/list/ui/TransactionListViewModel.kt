@@ -19,6 +19,8 @@ class TransactionListViewModel @Inject constructor(
 ) : ViewModel() {
 
     val transactions: LiveData<Resource<List<Transaction>>>
+    val transactionListFilter: LiveData<TransactionListFilter>
+        get() = _transactionListFilter
 
     private val _transactionListFilter = MutableLiveData<TransactionListFilter>()
     private val retryTrigger = LiveTrigger()
