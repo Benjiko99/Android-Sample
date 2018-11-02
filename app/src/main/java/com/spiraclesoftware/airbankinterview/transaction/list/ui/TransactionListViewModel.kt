@@ -8,6 +8,7 @@ import com.spiraclesoftware.airbankinterview.transaction.list.data.TransactionDi
 import com.spiraclesoftware.airbankinterview.transaction.list.data.TransactionListFilter
 import com.spiraclesoftware.airbankinterview.transaction.list.data.TransactionListRepository
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
+import com.spiraclesoftware.core.data.AbsentLiveData
 import com.spiraclesoftware.core.data.LiveTrigger
 import com.spiraclesoftware.core.data.MediatorLiveTrigger
 import com.spiraclesoftware.core.data.Resource
@@ -19,21 +20,23 @@ class TransactionListViewModel @Inject constructor(
 
     val transactions: LiveData<Resource<List<Transaction>>>
 
-    private val transactionListFilter = MutableLiveData<TransactionListFilter>()
+    private val _transactionListFilter = MutableLiveData<TransactionListFilter>()
     private val retryTrigger = LiveTrigger()
 
     init {
-        transactionListFilter.value = TransactionListFilter()
-
         // Define all events that should cause data to be reloaded.
         val triggers = MediatorLiveTrigger().apply {
             // trigger() just calls setValue() on the Mediator to cause the observers to be notified.
-            addSource(transactionListFilter) { trigger() }
+            addSource(_transactionListFilter) { trigger() }
             addSource(retryTrigger) { trigger() }
         }
 
         transactions = Transformations.switchMap(triggers) {
-            repository.loadTransactionList(transactionListFilter.value!!)
+            if (_transactionListFilter.value != null) {
+                repository.loadTransactionList(_transactionListFilter.value!!)
+            } else {
+                AbsentLiveData.create()
+            }
         }
     }
 
@@ -42,8 +45,8 @@ class TransactionListViewModel @Inject constructor(
     }
 
     fun setTransactionDirectionFilter(transactionDirectionFilter: TransactionDirectionFilter) {
-        transactionListFilter.value?.transactionDirectionFilter = transactionDirectionFilter
-        // trigger the observers to be notified
-        transactionListFilter.value = transactionListFilter.value
+        if (_transactionListFilter.value?.transactionDirectionFilter == transactionDirectionFilter) return
+
+        _transactionListFilter.value = TransactionListFilter(transactionDirectionFilter)
     }
 }
