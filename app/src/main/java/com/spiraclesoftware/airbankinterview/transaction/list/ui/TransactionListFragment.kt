@@ -59,6 +59,7 @@ class TransactionListFragment : DaggerFragment() {
                 }
             }
         }
+        setupFastItemAdapter()
 
         fun setupRecyclerView() {
             recyclerView.apply {
@@ -67,6 +68,7 @@ class TransactionListFragment : DaggerFragment() {
                 itemAnimator = null
             }
         }
+        setupRecyclerView()
 
         fun setupFilterSpinner() {
 
@@ -89,9 +91,6 @@ class TransactionListFragment : DaggerFragment() {
                 }
             }
         }
-
-        setupFastItemAdapter()
-        setupRecyclerView()
         setupFilterSpinner()
     }
 
@@ -100,14 +99,14 @@ class TransactionListFragment : DaggerFragment() {
 
         viewModel = viewModelProvider(viewModelFactory)
 
-        subscribeUi()
-    }
+        fun subscribeUi() {
+            viewModel.transactions.observe(this, Observer { resource ->
+                binding.transactionListResource = resource
+                fastItemAdapter.set(toListItems(resource.data))
+            })
 
-    private fun subscribeUi() {
-        viewModel.transactions.observe(this, Observer { resource ->
-            binding.transactionListResource = resource
-            fastItemAdapter.set(toListItems(resource.data))
-        })
+        }
+        subscribeUi()
     }
 
     private fun toListItems(data: List<Transaction>?) = data?.map(::TransactionItem) ?: emptyList()
