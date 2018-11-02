@@ -9,9 +9,11 @@ import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
 import com.spiraclesoftware.core.data.AppExecutors
 import com.spiraclesoftware.core.data.NetworkBoundResource
 import com.spiraclesoftware.core.data.Resource
+import com.spiraclesoftware.core.testing.OpenForTesting
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OpenForTesting
 @Singleton
 class TransactionListRepository @Inject constructor(
     private val appExecutors: AppExecutors,
