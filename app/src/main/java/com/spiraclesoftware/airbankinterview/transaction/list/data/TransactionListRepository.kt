@@ -19,7 +19,7 @@ class TransactionListRepository @Inject constructor(
     private val cache: TransactionListCache
 ) {
 
-    fun loadTransactionList() = loadTransactionList(TransactionListFilter())
+    fun loadTransactionList() = loadTransactionList(TransactionListFilter(TransactionDirectionFilter.ALL))
 
     fun loadTransactionList(filter: TransactionListFilter): LiveData<Resource<List<Transaction>>> {
         return object : NetworkBoundResource<List<Transaction>, TransactionListResponse>(appExecutors) {

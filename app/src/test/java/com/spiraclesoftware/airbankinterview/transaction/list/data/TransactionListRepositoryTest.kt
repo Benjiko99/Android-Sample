@@ -60,9 +60,7 @@ class TransactionListRepositoryTest {
     fun `Test filtering incoming transactions`() {
         stubTransactionListCache(list = TestData.transactions)
 
-        val filter = TransactionListFilter().apply {
-            transactionDirectionFilter = TransactionDirectionFilter.INCOMING_ONLY
-        }
+        val filter = TransactionListFilter(TransactionDirectionFilter.INCOMING_ONLY)
 
         val transactionsLiveData = transactionListRepository.loadTransactionList(filter)
 
@@ -75,9 +73,7 @@ class TransactionListRepositoryTest {
     fun `Test filtering outgoing transactions`() {
         stubTransactionListCache(list = TestData.transactions)
 
-        val filter = TransactionListFilter().apply {
-            transactionDirectionFilter = TransactionDirectionFilter.OUTGOING_ONLY
-        }
+        val filter = TransactionListFilter(TransactionDirectionFilter.OUTGOING_ONLY)
 
         val transactionsLiveData = transactionListRepository.loadTransactionList(filter)
 
