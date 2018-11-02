@@ -105,6 +105,9 @@ class TransactionListFragment : DaggerFragment() {
                 fastItemAdapter.set(toListItems(resource.data))
             })
 
+            viewModel.transactionListFilter.observe(this, Observer { filter ->
+                filterSpinner.setSelection(filter.transactionDirectionFilter.ordinal)
+            })
         }
         subscribeUi()
     }
