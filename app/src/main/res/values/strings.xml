@@ -1,11 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Air Bank</string>
 
     <!-- Common -->
     <string name="retry">Retry</string>
-    <string name="unknown_error">Unknown Error</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="switch_locale">Switch locale</string>
 
-    <string name="format__money">%s Kč</string>
+    <string name="format__money">%s CZK</string>
 
     <!-- Transaction -->
     <string name="transaction_direction__incoming">Incoming</string>
@@ -18,8 +20,8 @@
     <string name="transaction__list__filter__transaction_direction__outgoing">Outgoing transactions</string>
 
     <!-- Transaction Detail -->
-    <string name="transaction__detail__title">Transaction Detail</string>
-    <string name="transaction__detail__account_number">Account Number:</string>
-    <string name="transaction__detail__account_name">Account Name:</string>
-    <string name="transaction__detail__bank_code">Bank Code:</string>
+    <string name="transaction__detail__title">Transaction detail</string>
+    <string name="transaction__detail__account_number">Account number:</string>
+    <string name="transaction__detail__account_name">Account name:</string>
+    <string name="transaction__detail__bank_code">Bank code:</string>
 </resources>

@@ -19,6 +19,7 @@ buildscript {
             'okhttp'          : '3.11.0',
             'retrofit'        : '2.4.0',
             'leakCanary'      : '1.6.1',
+            'processPhoenix'  : '2.0.0',
             'kotlin'          : '1.2.71',
             'androidx'        : '1.0.0',
             'constraintLayout': '2.0.0-alpha2',
