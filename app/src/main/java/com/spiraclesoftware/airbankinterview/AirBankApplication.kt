@@ -8,6 +8,10 @@ import dagger.android.DaggerApplication
 
 class AirBankApplication : DaggerApplication() {
 
+    companion object {
+        const val API_SERVICE_BASE_URL = "https://demo0569565.mockable.io/"
+    }
+
     override fun onCreate() {
         super.onCreate()
 
