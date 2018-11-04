@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Air Bank</string>
+
+    <!-- Common -->
+    <string name="retry">Opakovat</string>
+    <string name="unknown_error">Neznámá chyba</string>
+    <string name="switch_locale">Přepnout jazyk</string>
+
+    <string name="format__money">%s Kč</string>
+
+    <!-- Transaction -->
+    <string name="transaction_direction__incoming">Příchozí</string>
+    <string name="transaction_direction__outgoing">Odchozí</string>
+
+    <!-- Transaction List -->
+    <string name="transaction__list__title">Transakce</string>
+    <string name="transaction__list__filter__transaction_direction__all">Všechny transakce</string>
+    <string name="transaction__list__filter__transaction_direction__incoming">Příchozí transakce</string>
+    <string name="transaction__list__filter__transaction_direction__outgoing">Odchozí transakce</string>
+
+    <!-- Transaction Detail -->
+    <string name="transaction__detail__title">Detail transakce</string>
+    <string name="transaction__detail__account_number">Číslo účtu:</string>
+    <string name="transaction__detail__account_name">Jméno účtu:</string>
+    <string name="transaction__detail__bank_code">Bankovní kód:</string>
+</resources>

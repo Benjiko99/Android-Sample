@@ -63,4 +63,6 @@ dependencies {
     api "androidx.lifecycle:lifecycle-extensions:${versions.lifecycleComp}"
 
     api "com.google.android.material:material:${versions.androidx}"
+
+    api "com.jakewharton:process-phoenix:${versions.processPhoenix}"
 }

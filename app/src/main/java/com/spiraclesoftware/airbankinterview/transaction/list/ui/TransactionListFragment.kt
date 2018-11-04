@@ -1,9 +1,7 @@
 package com.spiraclesoftware.airbankinterview.transaction.list.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
@@ -11,12 +9,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.spiraclesoftware.airbankinterview.R
 import com.spiraclesoftware.airbankinterview.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback
 import com.spiraclesoftware.airbankinterview.transaction.list.data.TransactionDirectionFilter
 import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
 import com.spiraclesoftware.airbankinterview.transaction.list.ui.TransactionListFragmentDirections.actionTransactionListFragmentToTransactionDetailFragment
 import com.spiraclesoftware.core.extensions.viewModelProvider
+import com.spiraclesoftware.core.utils.LanguageSwitcher
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
 import javax.inject.Inject
@@ -97,6 +97,8 @@ class TransactionListFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        setHasOptionsMenu(true)
+
         viewModel = viewModelProvider(viewModelFactory)
 
         fun subscribeUi() {
@@ -113,4 +115,20 @@ class TransactionListFragment : DaggerFragment() {
     }
 
     private fun toListItems(data: List<Transaction>?) = data?.map(::TransactionItem) ?: emptyList()
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_switch_locale -> {
+                LanguageSwitcher.toggleLanguageAndRestart(requireContext())
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.transaction_list_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 }

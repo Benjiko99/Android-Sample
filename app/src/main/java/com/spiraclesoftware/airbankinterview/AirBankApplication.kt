@@ -1,7 +1,11 @@
 package com.spiraclesoftware.airbankinterview
 
+import android.content.Context
+import android.content.res.Configuration
 import com.facebook.stetho.Stetho
+import com.jakewharton.processphoenix.ProcessPhoenix
 import com.spiraclesoftware.airbankinterview.di.DaggerAppComponent
+import com.spiraclesoftware.core.utils.LanguageSwitcher
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
@@ -15,18 +19,23 @@ class AirBankApplication : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
 
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return
-        }
-        LeakCanary.install(this)
-        // Normal app init code...
+        if (ProcessPhoenix.isPhoenixProcess(this)) return
+        if (LeakCanary.isInAnalyzerProcess(this)) return
 
+        LeakCanary.install(this)
         Stetho.initializeWithDefaults(this)
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent.builder().create(this)
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(LanguageSwitcher.applyLocale(base))
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        LanguageSwitcher.applyLocale(this)
     }
 }
