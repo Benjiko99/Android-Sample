@@ -35,7 +35,7 @@ class AppModule {
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("http://demo0569565.mockable.io/")
+            .baseUrl(AirBankApplication.API_SERVICE_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
