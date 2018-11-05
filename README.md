@@ -19,6 +19,12 @@ Dependency Injection is done through **Dagger 2**.
 
 Debugging is facilitated by **LeakCanary** and **Stetho**.
 
+Back-end
+--------
+The app is communicating with a REST API documented at http://docs.airbank.apiary.io/.
+
+The API is hosted at https://demo0569565.mockable.io/
+
 License
 -------
 
