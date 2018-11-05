@@ -28,7 +28,7 @@ class TransactionDetailRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: TransactionDetail?): Boolean {
-                return cache.cacheIsDirty || data == null
+                return cache.isDirty || data == null
             }
 
             override fun loadFromCache(): LiveData<TransactionDetail> {
@@ -38,7 +38,7 @@ class TransactionDetailRepository @Inject constructor(
             override fun createCall() = apiService.transactionDetail(transactionId)
 
             override fun onFetchFailed() {
-                cache.cacheIsDirty = true
+                cache.isDirty = true
             }
         }.asLiveData()
     }

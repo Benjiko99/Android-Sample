@@ -11,16 +11,22 @@ import javax.inject.Singleton
 class TransactionDetailCache @Inject constructor() {
 
     /** Marks the cache as invalid, to force an update the next time data is requested. */
-    var cacheIsDirty = false
+    var isDirty = false
 
     private var cache: HashMap<TransactionId, TransactionDetail>? = null
 
+    fun clear() {
+        isDirty = false
+        cache = null
+    }
+
     fun set(id: TransactionId, data: TransactionDetail) {
+        isDirty = false
+
         if (cache == null) {
             cache = LinkedHashMap()
         }
         cache!![id] = data
-        cacheIsDirty = false
     }
 
     fun get(id: TransactionId): TransactionDetail? = cache?.get(id)
