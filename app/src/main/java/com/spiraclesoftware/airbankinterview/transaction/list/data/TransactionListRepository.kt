@@ -31,7 +31,7 @@ class TransactionListRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: List<Transaction>?): Boolean {
-                return cache.cacheIsDirty || data == null || data.isEmpty()
+                return cache.isDirty || data == null
             }
 
             override fun loadFromCache(): LiveData<List<Transaction>> {
@@ -48,7 +48,7 @@ class TransactionListRepository @Inject constructor(
             override fun createCall() = apiService.transactionList()
 
             override fun onFetchFailed() {
-                cache.cacheIsDirty = true
+                cache.isDirty = true
             }
         }.asLiveData()
     }
@@ -61,7 +61,7 @@ class TransactionListRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: Transaction?): Boolean {
-                return cache.cacheIsDirty || data == null
+                return cache.isDirty || data == null
             }
 
             override fun loadFromCache(): LiveData<Transaction> {
@@ -71,7 +71,7 @@ class TransactionListRepository @Inject constructor(
             override fun createCall() = apiService.transactionList()
 
             override fun onFetchFailed() {
-                cache.cacheIsDirty = true
+                cache.isDirty = true
             }
         }.asLiveData()
     }
