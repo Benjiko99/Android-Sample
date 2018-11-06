@@ -24,6 +24,6 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(null, findNavController(R.id.navHostFragment))
+        return NavigationUI.navigateUp(findNavController(R.id.navHostFragment), null)
     }
 }
