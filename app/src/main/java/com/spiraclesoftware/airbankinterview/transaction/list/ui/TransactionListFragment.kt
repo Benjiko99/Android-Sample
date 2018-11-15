@@ -102,12 +102,12 @@ class TransactionListFragment : DaggerFragment() {
         viewModel = viewModelProvider(viewModelFactory)
 
         fun subscribeUi() {
-            viewModel.transactions.observe(this, Observer { resource ->
+            viewModel.transactions.observe(viewLifecycleOwner, Observer { resource ->
                 binding.transactionListResource = resource
                 fastItemAdapter.set(toListItems(resource.data))
             })
 
-            viewModel.transactionListFilter.observe(this, Observer { filter ->
+            viewModel.transactionListFilter.observe(viewLifecycleOwner, Observer { filter ->
                 filterSpinner.setSelection(filter.transactionDirectionFilter.ordinal)
             })
         }
