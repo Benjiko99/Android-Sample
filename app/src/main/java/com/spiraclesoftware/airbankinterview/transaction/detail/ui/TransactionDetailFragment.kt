@@ -46,7 +46,7 @@ class TransactionDetailFragment : DaggerFragment() {
     }
 
     private fun subscribeUi() {
-        viewModel.transaction.observe(this, Observer { resource ->
+        viewModel.transaction.observe(viewLifecycleOwner, Observer { resource ->
             binding.transaction = resource?.data
 
             val transactionAmountTextAppearance = when (resource.data!!.direction) {
@@ -56,7 +56,7 @@ class TransactionDetailFragment : DaggerFragment() {
             TextViewCompat.setTextAppearance(binding.transactionAmountView, transactionAmountTextAppearance)
         })
 
-        viewModel.transactionDetail.observe(this, Observer { resource ->
+        viewModel.transactionDetail.observe(viewLifecycleOwner, Observer { resource ->
             binding.transactionDetail = resource?.data
             binding.transactionDetailResource = resource
         })
