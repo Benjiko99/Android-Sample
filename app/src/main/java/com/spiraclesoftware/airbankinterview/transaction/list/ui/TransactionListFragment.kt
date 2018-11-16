@@ -72,12 +72,14 @@ class TransactionListFragment : DaggerFragment() {
 
         fun setupFilterSpinner() {
 
-            fun createSpinnerAdapter(): ArrayAdapter<String> = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_item,
-                TransactionDirectionFilter.values().map { getString(it.stringRes) }
-            ).also {
-                it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            fun createSpinnerAdapter(): ArrayAdapter<String> {
+                return ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_item,
+                    TransactionDirectionFilter.values().map { getString(it.stringRes) }
+                ).also {
+                    it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
             }
 
             filterSpinner.adapter = createSpinnerAdapter()
