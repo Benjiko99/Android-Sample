@@ -7,7 +7,7 @@
 
         <variable
             name="transaction"
-            type="com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction" />
+            type="com.spiraclesoftware.airbankinterview.shared.domain.Transaction" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
