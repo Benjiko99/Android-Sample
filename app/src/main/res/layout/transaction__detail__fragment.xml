@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".transaction.detail.ui.TransactionDetailFragment">
+    tools:context="com.spiraclesoftware.airbankinterview.features.transaction.detail.ui.TransactionDetailFragment">
 
     <data>
 
@@ -12,11 +12,11 @@
 
         <variable
             name="transaction"
-            type="com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction" />
+            type="com.spiraclesoftware.airbankinterview.shared.domain.Transaction" />
 
         <variable
             name="transactionDetail"
-            type="com.spiraclesoftware.airbankinterview.transaction.detail.domain.TransactionDetail" />
+            type="com.spiraclesoftware.airbankinterview.features.transaction.detail.domain.TransactionDetail" />
 
         <variable
             name="transactionDetailResource"

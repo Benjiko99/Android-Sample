@@ -1,9 +1,9 @@
 package com.spiraclesoftware.airbankinterview
 
 import com.spiraclesoftware.airbankinterview.shared.domain.Account
-import com.spiraclesoftware.airbankinterview.transaction.detail.domain.TransactionDetail
-import com.spiraclesoftware.airbankinterview.transaction.list.domain.Transaction
-import com.spiraclesoftware.airbankinterview.transaction.shared.domain.TransactionDirection
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDetail
+import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirection
 
 object TestData {
 
