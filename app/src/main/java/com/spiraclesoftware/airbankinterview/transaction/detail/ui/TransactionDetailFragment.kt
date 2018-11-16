@@ -42,23 +42,22 @@ class TransactionDetailFragment : DaggerFragment() {
         viewModel = viewModelProvider(viewModelFactory)
         viewModel.setTransactionId(params.transactionId)
 
+        fun subscribeUi() {
+            viewModel.transaction.observe(viewLifecycleOwner, Observer { resource ->
+                binding.transaction = resource?.data
+
+                val transactionAmountTextAppearance = when (resource.data!!.direction) {
+                    TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
+                    TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
+                }
+                TextViewCompat.setTextAppearance(binding.transactionAmountView, transactionAmountTextAppearance)
+            })
+
+            viewModel.transactionDetail.observe(viewLifecycleOwner, Observer { resource ->
+                binding.transactionDetail = resource?.data
+                binding.transactionDetailResource = resource
+            })
+        }
         subscribeUi()
-    }
-
-    private fun subscribeUi() {
-        viewModel.transaction.observe(viewLifecycleOwner, Observer { resource ->
-            binding.transaction = resource?.data
-
-            val transactionAmountTextAppearance = when (resource.data!!.direction) {
-                TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
-                TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
-            }
-            TextViewCompat.setTextAppearance(binding.transactionAmountView, transactionAmountTextAppearance)
-        })
-
-        viewModel.transactionDetail.observe(viewLifecycleOwner, Observer { resource ->
-            binding.transactionDetail = resource?.data
-            binding.transactionDetailResource = resource
-        })
     }
 }
