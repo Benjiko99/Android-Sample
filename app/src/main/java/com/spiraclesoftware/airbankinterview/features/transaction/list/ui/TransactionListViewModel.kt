@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.spiraclesoftware.airbankinterview.features.transaction.list.data.TransactionDirectionFilter
-import com.spiraclesoftware.airbankinterview.features.transaction.list.data.TransactionListFilter
-import com.spiraclesoftware.airbankinterview.features.transaction.list.data.TransactionListRepository
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirectionFilter
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionListFilter
+import com.spiraclesoftware.airbankinterview.shared.data.TransactionsRepository
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
 import com.spiraclesoftware.core.data.AbsentLiveData
 import com.spiraclesoftware.core.data.LiveTrigger
@@ -15,7 +15,7 @@ import com.spiraclesoftware.core.data.Resource
 import javax.inject.Inject
 
 class TransactionListViewModel @Inject constructor(
-    private val repository: TransactionListRepository
+    private val repository: TransactionsRepository
 ) : ViewModel() {
 
     val transactions: LiveData<Resource<List<Transaction>>>
@@ -49,6 +49,7 @@ class TransactionListViewModel @Inject constructor(
     fun setTransactionDirectionFilter(transactionDirectionFilter: TransactionDirectionFilter) {
         if (_transactionListFilter.value?.transactionDirectionFilter == transactionDirectionFilter) return
 
-        _transactionListFilter.value = TransactionListFilter(transactionDirectionFilter)
+        _transactionListFilter.value =
+                TransactionListFilter(transactionDirectionFilter)
     }
 }

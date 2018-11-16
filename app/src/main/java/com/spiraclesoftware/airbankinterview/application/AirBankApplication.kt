@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
-import com.spiraclesoftware.airbankinterview.di.DaggerAppComponent
+import com.spiraclesoftware.airbankinterview.application.di.DaggerAppComponent
 import com.spiraclesoftware.core.utils.LanguageSwitcher
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector

@@ -1,3 +1,3 @@
-package com.spiraclesoftware.airbankinterview.features.transaction.list.data
+package com.spiraclesoftware.airbankinterview.shared.domain
 
 data class TransactionListFilter(val transactionDirectionFilter: TransactionDirectionFilter)

@@ -1,4 +1,4 @@
-package com.spiraclesoftware.airbankinterview.features.transaction.detail.di
+package com.spiraclesoftware.airbankinterview.features.transaction.detail
 
 import androidx.lifecycle.ViewModel
 import com.spiraclesoftware.airbankinterview.features.transaction.detail.ui.TransactionDetailFragment

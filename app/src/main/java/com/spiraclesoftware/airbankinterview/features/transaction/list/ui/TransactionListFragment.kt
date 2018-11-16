@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.airbankinterview.R
 import com.spiraclesoftware.airbankinterview.databinding.TransactionListFragmentBinding
-import com.spiraclesoftware.airbankinterview.features.transaction.list.data.TransactionDirectionFilter
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirectionFilter
 import com.spiraclesoftware.airbankinterview.features.transaction.list.ui.TransactionListFragmentDirections.actionTransactionListFragmentToTransactionDetailFragment
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
 import com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback

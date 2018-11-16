@@ -3,8 +3,8 @@ package com.spiraclesoftware.airbankinterview.features.transaction.list.ui
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.*
-import com.spiraclesoftware.airbankinterview.features.transaction.list.data.TransactionDirectionFilter
-import com.spiraclesoftware.airbankinterview.features.transaction.list.data.TransactionListRepository
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirectionFilter
+import com.spiraclesoftware.airbankinterview.shared.data.TransactionsRepository
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
 import com.spiraclesoftware.core.data.Resource
 import org.hamcrest.CoreMatchers.notNullValue
@@ -22,7 +22,7 @@ class TransactionListViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var transactionListRepository: TransactionListRepository
+    private lateinit var transactionsRepository: TransactionsRepository
 
     private lateinit var transactionListViewModel: TransactionListViewModel
 
@@ -30,27 +30,27 @@ class TransactionListViewModelTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        transactionListViewModel = TransactionListViewModel(transactionListRepository)
+        transactionListViewModel = TransactionListViewModel(transactionsRepository)
     }
 
     @Test
     fun testNull() {
         assertThat(transactionListViewModel.transactions, notNullValue())
         assertThat(transactionListViewModel.transactionListFilter, notNullValue())
-        verify(transactionListRepository, never()).loadTransactionList(any())
+        verify(transactionsRepository, never()).loadTransactionList(any())
     }
 
     @Test
     fun dontFetchWithoutObservers() {
         transactionListViewModel.setTransactionDirectionFilter(TransactionDirectionFilter.ALL)
-        verify(transactionListRepository, never()).loadTransactionList(any())
+        verify(transactionsRepository, never()).loadTransactionList(any())
     }
 
     @Test
     fun fetchWhenObserved() {
         transactionListViewModel.setTransactionDirectionFilter(TransactionDirectionFilter.ALL)
         transactionListViewModel.transactions.observeForever(mock())
-        verify(transactionListRepository).loadTransactionList(any())
+        verify(transactionsRepository).loadTransactionList(any())
     }
 
     @Test
@@ -59,22 +59,22 @@ class TransactionListViewModelTest {
         transactionListViewModel.transactions.observeForever(observer)
 
         verifyNoMoreInteractions(observer)
-        verifyNoMoreInteractions(transactionListRepository)
+        verifyNoMoreInteractions(transactionsRepository)
 
         transactionListViewModel.setTransactionDirectionFilter(TransactionDirectionFilter.ALL)
-        verify(transactionListRepository).loadTransactionList(any())
+        verify(transactionsRepository).loadTransactionList(any())
     }
 
     @Test
     fun retry() {
         transactionListViewModel.setTransactionDirectionFilter(TransactionDirectionFilter.ALL)
-        verifyNoMoreInteractions(transactionListRepository)
+        verifyNoMoreInteractions(transactionsRepository)
 
         transactionListViewModel.transactions.observeForever(mock())
-        verify(transactionListRepository).loadTransactionList(any())
+        verify(transactionsRepository).loadTransactionList(any())
 
-        reset(transactionListRepository)
+        reset(transactionsRepository)
         transactionListViewModel.retry()
-        verify(transactionListRepository).loadTransactionList(any())
+        verify(transactionsRepository).loadTransactionList(any())
     }
 }

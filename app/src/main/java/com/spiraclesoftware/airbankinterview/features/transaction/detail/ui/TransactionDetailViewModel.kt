@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.spiraclesoftware.airbankinterview.features.transaction.detail.data.TransactionDetailRepository
-import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDetail
-import com.spiraclesoftware.airbankinterview.features.transaction.list.data.TransactionListRepository
+import com.spiraclesoftware.airbankinterview.shared.data.TransactionsRepository
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDetail
 import com.spiraclesoftware.airbankinterview.shared.domain.TransactionId
 import com.spiraclesoftware.core.data.LiveTrigger
 import com.spiraclesoftware.core.data.MediatorLiveTrigger
@@ -15,8 +14,7 @@ import com.spiraclesoftware.core.data.Resource
 import javax.inject.Inject
 
 class TransactionDetailViewModel @Inject constructor(
-    private val detailRepository: TransactionDetailRepository,
-    private val listRepository: TransactionListRepository
+    private val repository: TransactionsRepository
 ) : ViewModel() {
 
     val transaction: LiveData<Resource<Transaction>>
@@ -34,11 +32,11 @@ class TransactionDetailViewModel @Inject constructor(
         }
 
         transaction = Transformations.switchMap(triggers) {
-            listRepository.loadTransaction(transactionId.value!!)
+            repository.loadTransaction(transactionId.value!!)
         }
 
         transactionDetail = Transformations.switchMap(triggers) {
-            detailRepository.loadTransactionDetail(transactionId.value!!)
+            repository.loadTransactionDetail(transactionId.value!!)
         }
     }
 
