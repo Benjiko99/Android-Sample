@@ -3,10 +3,9 @@ package com.spiraclesoftware.airbankinterview.features.transaction.detail.ui
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.*
-import com.spiraclesoftware.airbankinterview.features.transaction.detail.data.TransactionDetailRepository
-import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDetail
-import com.spiraclesoftware.airbankinterview.features.transaction.list.data.TransactionListRepository
+import com.spiraclesoftware.airbankinterview.shared.data.TransactionsRepository
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDetail
 import com.spiraclesoftware.core.data.Resource
 import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.Assert.assertThat
@@ -23,10 +22,7 @@ class TransactionDetailViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var transactionDetailRepository: TransactionDetailRepository
-
-    @Mock
-    private lateinit var transactionListRepository: TransactionListRepository
+    private lateinit var transactionsRepository: TransactionsRepository
 
     private lateinit var transactionDetailViewModel: TransactionDetailViewModel
 
@@ -34,22 +30,22 @@ class TransactionDetailViewModelTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        transactionDetailViewModel = TransactionDetailViewModel(transactionDetailRepository, transactionListRepository)
+        transactionDetailViewModel = TransactionDetailViewModel(transactionsRepository)
     }
 
     @Test
     fun testNull() {
         assertThat(transactionDetailViewModel.transactionDetail, notNullValue())
         assertThat(transactionDetailViewModel.transaction, notNullValue())
-        verify(transactionDetailRepository, never()).loadTransactionDetail(any())
-        verify(transactionListRepository, never()).loadTransaction(any())
+        verify(transactionsRepository, never()).loadTransactionDetail(any())
+        verify(transactionsRepository, never()).loadTransaction(any())
     }
 
     @Test
     fun dontFetchWithoutObservers() {
         transactionDetailViewModel.setTransactionId(1)
-        verify(transactionDetailRepository, never()).loadTransactionDetail(any())
-        verify(transactionListRepository, never()).loadTransaction(any())
+        verify(transactionsRepository, never()).loadTransactionDetail(any())
+        verify(transactionsRepository, never()).loadTransaction(any())
     }
 
     @Test
@@ -57,8 +53,8 @@ class TransactionDetailViewModelTest {
         transactionDetailViewModel.setTransactionId(1)
         transactionDetailViewModel.transactionDetail.observeForever(mock())
         transactionDetailViewModel.transaction.observeForever(mock())
-        verify(transactionDetailRepository).loadTransactionDetail(any())
-        verify(transactionListRepository).loadTransaction(any())
+        verify(transactionsRepository).loadTransactionDetail(any())
+        verify(transactionsRepository).loadTransaction(any())
     }
 
     @Test
@@ -67,10 +63,10 @@ class TransactionDetailViewModelTest {
         transactionDetailViewModel.transaction.observeForever(observer)
 
         verifyNoMoreInteractions(observer)
-        verifyNoMoreInteractions(transactionListRepository)
+        verifyNoMoreInteractions(transactionsRepository)
 
         transactionDetailViewModel.setTransactionId(1)
-        verify(transactionListRepository).loadTransaction(any())
+        verify(transactionsRepository).loadTransaction(any())
     }
 
     @Test
@@ -79,28 +75,28 @@ class TransactionDetailViewModelTest {
         transactionDetailViewModel.transactionDetail.observeForever(observer)
 
         verifyNoMoreInteractions(observer)
-        verifyNoMoreInteractions(transactionDetailRepository)
+        verifyNoMoreInteractions(transactionsRepository)
 
         transactionDetailViewModel.setTransactionId(1)
-        verify(transactionDetailRepository).loadTransactionDetail(any())
+        verify(transactionsRepository).loadTransactionDetail(any())
     }
 
     @Test
     fun retry() {
         transactionDetailViewModel.setTransactionId(1)
-        verifyNoMoreInteractions(transactionDetailRepository)
-        verifyNoMoreInteractions(transactionListRepository)
+        verifyNoMoreInteractions(transactionsRepository)
+        verifyNoMoreInteractions(transactionsRepository)
 
         transactionDetailViewModel.transactionDetail.observeForever(mock())
-        verify(transactionDetailRepository).loadTransactionDetail(any())
+        verify(transactionsRepository).loadTransactionDetail(any())
 
         transactionDetailViewModel.transaction.observeForever(mock())
-        verify(transactionListRepository).loadTransaction(any())
+        verify(transactionsRepository).loadTransaction(any())
 
-        reset(transactionDetailRepository)
-        reset(transactionListRepository)
+        reset(transactionsRepository)
+        reset(transactionsRepository)
         transactionDetailViewModel.retry()
-        verify(transactionDetailRepository).loadTransactionDetail(any())
-        verify(transactionListRepository).loadTransaction(any())
+        verify(transactionsRepository).loadTransactionDetail(any())
+        verify(transactionsRepository).loadTransaction(any())
     }
 }

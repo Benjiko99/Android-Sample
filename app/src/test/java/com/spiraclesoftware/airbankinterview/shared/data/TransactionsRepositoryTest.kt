@@ -1,12 +1,15 @@
-package com.spiraclesoftware.airbankinterview.features.transaction.list.data
+package com.spiraclesoftware.airbankinterview.shared.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.stub
 import com.spiraclesoftware.airbankinterview.TestData
-import com.spiraclesoftware.airbankinterview.application.api.ApiService
+import com.spiraclesoftware.airbankinterview.application.data.ApiService
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDetail
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirectionFilter
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionListFilter
 import com.spiraclesoftware.airbankinterview.utils.LiveDataTestUtil
 import com.spiraclesoftware.core.data.InstantAppExecutors
 import com.spiraclesoftware.core.data.Status
@@ -17,7 +20,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
-class TransactionListRepositoryTest {
+class TransactionsRepositoryTest {
 
     // Executes each task synchronously using Architecture Components.
     @get:Rule
@@ -29,13 +32,22 @@ class TransactionListRepositoryTest {
     @Mock
     private lateinit var transactionListCache: TransactionListCache
 
-    private lateinit var transactionListRepository: TransactionListRepository
+    @Mock
+    private lateinit var transactionDetailCache: TransactionDetailCache
+
+    private lateinit var transactionsRepository: TransactionsRepository
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        transactionListRepository = TransactionListRepository(InstantAppExecutors(), apiService, transactionListCache)
+        transactionsRepository =
+                TransactionsRepository(
+                    InstantAppExecutors(),
+                    apiService,
+                    transactionListCache,
+                    transactionDetailCache
+                )
     }
 
     private fun stubTransactionListCache(list: List<Transaction>? = null, single: Transaction? = null) {
@@ -45,11 +57,17 @@ class TransactionListRepositoryTest {
         }
     }
 
+    private fun stubTransactionDetailCache(single: TransactionDetail? = null) {
+        transactionDetailCache.stub {
+            on { get(any()) }.doReturn(single)
+        }
+    }
+
     @Test
     fun `Given that list is cached, return cached list`() {
         stubTransactionListCache(list = TestData.transactions)
 
-        val transactionsLiveData = transactionListRepository.loadTransactionList()
+        val transactionsLiveData = transactionsRepository.loadTransactionList()
 
         val transactionsResource = LiveDataTestUtil.getValue(transactionsLiveData)
         assertEquals(Status.SUCCESS, transactionsResource?.status)
@@ -60,9 +78,10 @@ class TransactionListRepositoryTest {
     fun `Test filtering incoming transactions`() {
         stubTransactionListCache(list = TestData.transactions)
 
-        val filter = TransactionListFilter(TransactionDirectionFilter.INCOMING_ONLY)
+        val filter =
+            TransactionListFilter(TransactionDirectionFilter.INCOMING_ONLY)
 
-        val transactionsLiveData = transactionListRepository.loadTransactionList(filter)
+        val transactionsLiveData = transactionsRepository.loadTransactionList(filter)
 
         val transactionsResource = LiveDataTestUtil.getValue(transactionsLiveData)
         assertEquals(Status.SUCCESS, transactionsResource?.status)
@@ -73,12 +92,24 @@ class TransactionListRepositoryTest {
     fun `Test filtering outgoing transactions`() {
         stubTransactionListCache(list = TestData.transactions)
 
-        val filter = TransactionListFilter(TransactionDirectionFilter.OUTGOING_ONLY)
+        val filter =
+            TransactionListFilter(TransactionDirectionFilter.OUTGOING_ONLY)
 
-        val transactionsLiveData = transactionListRepository.loadTransactionList(filter)
+        val transactionsLiveData = transactionsRepository.loadTransactionList(filter)
 
         val transactionsResource = LiveDataTestUtil.getValue(transactionsLiveData)
         assertEquals(Status.SUCCESS, transactionsResource?.status)
         assertEquals(TestData.transactionsOutgoing, transactionsResource?.data)
+    }
+
+    @Test
+    fun `Given that detail is cached, return cached detail`() {
+        stubTransactionDetailCache(single = TestData.transactionDetail)
+
+        val transactionDetailLiveData = transactionsRepository.loadTransactionDetail(1)
+
+        val transactionDetailResource = LiveDataTestUtil.getValue(transactionDetailLiveData)
+        assertEquals(Status.SUCCESS, transactionDetailResource?.status)
+        assertEquals(TestData.transactionDetail, transactionDetailResource?.data)
     }
 }

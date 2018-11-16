@@ -1,11 +1,10 @@
-package com.spiraclesoftware.airbankinterview.features.transaction.list.data
+package com.spiraclesoftware.airbankinterview.shared.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.spiraclesoftware.airbankinterview.application.api.ApiService
-import com.spiraclesoftware.airbankinterview.features.transaction.list.data.dto.TransactionListResponse
-import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
-import com.spiraclesoftware.airbankinterview.shared.domain.TransactionId
+import com.spiraclesoftware.airbankinterview.application.data.ApiService
+import com.spiraclesoftware.airbankinterview.shared.data.dto.TransactionListResponse
+import com.spiraclesoftware.airbankinterview.shared.domain.*
 import com.spiraclesoftware.core.data.AppExecutors
 import com.spiraclesoftware.core.data.NetworkBoundResource
 import com.spiraclesoftware.core.data.Resource
@@ -15,28 +14,33 @@ import javax.inject.Singleton
 
 @OpenForTesting
 @Singleton
-class TransactionListRepository @Inject constructor(
+class TransactionsRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val apiService: ApiService,
-    private val cache: TransactionListCache
+    private val listCache: TransactionListCache,
+    private val detailCache: TransactionDetailCache
 ) {
 
-    fun loadTransactionList() = loadTransactionList(TransactionListFilter(TransactionDirectionFilter.ALL))
+    fun loadTransactionList() = loadTransactionList(
+        TransactionListFilter(
+            TransactionDirectionFilter.ALL
+        )
+    )
 
     fun loadTransactionList(filter: TransactionListFilter): LiveData<Resource<List<Transaction>>> {
         return object : NetworkBoundResource<List<Transaction>, TransactionListResponse>(appExecutors) {
 
             override fun saveCallResult(data: TransactionListResponse) {
-                cache.set(data.items)
+                listCache.set(data.items)
             }
 
             override fun shouldFetch(data: List<Transaction>?): Boolean {
-                return cache.isDirty || data == null
+                return listCache.isDirty || data == null
             }
 
             override fun loadFromCache(): LiveData<List<Transaction>> {
                 return MutableLiveData<List<Transaction>>().apply {
-                    value = cache.get()?.filter {
+                    value = listCache.get()?.filter {
                         if (filter.transactionDirectionFilter == TransactionDirectionFilter.ALL)
                             true
                         else
@@ -48,7 +52,7 @@ class TransactionListRepository @Inject constructor(
             override fun createCall() = apiService.transactionList()
 
             override fun onFetchFailed() {
-                cache.isDirty = true
+                listCache.isDirty = true
             }
         }.asLiveData()
     }
@@ -57,21 +61,44 @@ class TransactionListRepository @Inject constructor(
         return object : NetworkBoundResource<Transaction, TransactionListResponse>(appExecutors) {
 
             override fun saveCallResult(data: TransactionListResponse) {
-                cache.set(data.items)
+                listCache.set(data.items)
             }
 
             override fun shouldFetch(data: Transaction?): Boolean {
-                return cache.isDirty || data == null
+                return listCache.isDirty || data == null
             }
 
             override fun loadFromCache(): LiveData<Transaction> {
-                return MutableLiveData<Transaction>().apply { value = cache.get(transactionId) }
+                return MutableLiveData<Transaction>().apply { value = listCache.get(transactionId) }
             }
 
             override fun createCall() = apiService.transactionList()
 
             override fun onFetchFailed() {
-                cache.isDirty = true
+                listCache.isDirty = true
+            }
+        }.asLiveData()
+    }
+
+    fun loadTransactionDetail(transactionId: TransactionId): LiveData<Resource<TransactionDetail>> {
+        return object : NetworkBoundResource<TransactionDetail, TransactionDetail>(appExecutors) {
+
+            override fun saveCallResult(data: TransactionDetail) {
+                detailCache.set(transactionId, data)
+            }
+
+            override fun shouldFetch(data: TransactionDetail?): Boolean {
+                return detailCache.isDirty || data == null
+            }
+
+            override fun loadFromCache(): LiveData<TransactionDetail> {
+                return MutableLiveData<TransactionDetail>().apply { value = detailCache.get(transactionId) }
+            }
+
+            override fun createCall() = apiService.transactionDetail(transactionId)
+
+            override fun onFetchFailed() {
+                detailCache.isDirty = true
             }
         }.asLiveData()
     }

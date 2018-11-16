@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.spiraclesoftware.airbankinterview.application.AirBankApplication
 import com.spiraclesoftware.airbankinterview.BuildConfig
-import com.spiraclesoftware.airbankinterview.application.api.ApiService
+import com.spiraclesoftware.airbankinterview.application.data.ApiService
 import com.spiraclesoftware.core.data.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides

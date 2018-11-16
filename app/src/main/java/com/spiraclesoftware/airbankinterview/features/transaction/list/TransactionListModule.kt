@@ -1,4 +1,4 @@
-package com.spiraclesoftware.airbankinterview.features.transaction.list.di
+package com.spiraclesoftware.airbankinterview.features.transaction.list
 
 import androidx.lifecycle.ViewModel
 import com.spiraclesoftware.core.di.FragmentScoped

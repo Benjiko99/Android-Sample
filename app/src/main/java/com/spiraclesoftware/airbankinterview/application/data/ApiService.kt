@@ -1,8 +1,8 @@
-package com.spiraclesoftware.airbankinterview.application.api
+package com.spiraclesoftware.airbankinterview.application.data
 
 import androidx.lifecycle.LiveData
 import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDetail
-import com.spiraclesoftware.airbankinterview.features.transaction.list.data.dto.TransactionListResponse
+import com.spiraclesoftware.airbankinterview.shared.data.dto.TransactionListResponse
 import com.spiraclesoftware.core.data.ApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers

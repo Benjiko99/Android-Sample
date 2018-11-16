@@ -1,4 +1,4 @@
-package com.spiraclesoftware.airbankinterview.features.transaction.list.data
+package com.spiraclesoftware.airbankinterview.shared.data
 
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
 import com.spiraclesoftware.airbankinterview.shared.domain.TransactionId

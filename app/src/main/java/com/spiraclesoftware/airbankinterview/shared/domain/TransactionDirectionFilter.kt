@@ -1,4 +1,4 @@
-package com.spiraclesoftware.airbankinterview.features.transaction.list.data
+package com.spiraclesoftware.airbankinterview.shared.domain
 
 import androidx.annotation.StringRes
 import com.spiraclesoftware.airbankinterview.R
