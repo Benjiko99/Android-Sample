@@ -4,10 +4,12 @@ import android.content.Context
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.spiraclesoftware.airbankinterview.application.AirBankApplication
 import com.spiraclesoftware.airbankinterview.BuildConfig
+import com.spiraclesoftware.airbankinterview.application.AirBankApplication
 import com.spiraclesoftware.airbankinterview.application.data.ApiService
 import com.spiraclesoftware.core.data.LiveDataCallAdapterFactory
+import com.spiraclesoftware.core.data.UniqueIdentifier
+import com.spiraclesoftware.core.data.UniqueIdentifierAdapter
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -66,6 +68,10 @@ class AppModule {
     fun provideGson(): Gson {
         return GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+            .registerTypeAdapter(
+                UniqueIdentifier::class.java,
+                UniqueIdentifierAdapter()
+            )
             .create()
     }
 
