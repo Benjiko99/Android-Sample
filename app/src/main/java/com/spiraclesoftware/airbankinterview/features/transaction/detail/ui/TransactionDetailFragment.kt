@@ -9,8 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.spiraclesoftware.airbankinterview.R
 import com.spiraclesoftware.airbankinterview.databinding.TransactionDetailFragmentBinding
-import com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback
 import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirection
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionId
+import com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback
 import com.spiraclesoftware.core.extensions.viewModelProvider
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -40,7 +41,7 @@ class TransactionDetailFragment : DaggerFragment() {
         val params = TransactionDetailFragmentArgs.fromBundle(arguments)
 
         viewModel = viewModelProvider(viewModelFactory)
-        viewModel.setTransactionId(params.transactionId)
+        viewModel.setTransactionId(TransactionId(params.transactionId))
 
         fun subscribeUi() {
             viewModel.transaction.observe(viewLifecycleOwner, Observer { resource ->

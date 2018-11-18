@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.airbankinterview.R
 import com.spiraclesoftware.airbankinterview.databinding.TransactionListFragmentBinding
-import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirectionFilter
-import com.spiraclesoftware.airbankinterview.features.transaction.list.ui.TransactionListFragmentDirections.actionTransactionListFragmentToTransactionDetailFragment
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirectionFilter
 import com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback
 import com.spiraclesoftware.core.extensions.viewModelProvider
 import com.spiraclesoftware.core.utils.LanguageSwitcher
@@ -53,7 +52,9 @@ class TransactionListFragment : DaggerFragment() {
                 withSelectable(true)
                 withOnClickListener { _, _, item, _ ->
                     findNavController().navigate(
-                        actionTransactionListFragmentToTransactionDetailFragment(item.transaction.id)
+                        TransactionListFragmentDirections.ActionTransactionListFragmentToTransactionDetailFragment(
+                            item.transaction.id.value
+                        )
                     )
                     true
                 }

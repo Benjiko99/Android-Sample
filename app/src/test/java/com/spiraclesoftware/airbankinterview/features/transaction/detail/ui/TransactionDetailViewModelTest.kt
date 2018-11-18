@@ -6,6 +6,7 @@ import com.nhaarman.mockito_kotlin.*
 import com.spiraclesoftware.airbankinterview.shared.data.TransactionsRepository
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
 import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDetail
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionId
 import com.spiraclesoftware.core.data.Resource
 import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.Assert.assertThat
@@ -43,14 +44,14 @@ class TransactionDetailViewModelTest {
 
     @Test
     fun dontFetchWithoutObservers() {
-        transactionDetailViewModel.setTransactionId(1)
+        transactionDetailViewModel.setTransactionId(TransactionId(1))
         verify(transactionsRepository, never()).loadTransactionDetail(any())
         verify(transactionsRepository, never()).loadTransaction(any())
     }
 
     @Test
     fun fetchWhenObserved() {
-        transactionDetailViewModel.setTransactionId(1)
+        transactionDetailViewModel.setTransactionId(TransactionId(1))
         transactionDetailViewModel.transactionDetail.observeForever(mock())
         transactionDetailViewModel.transaction.observeForever(mock())
         verify(transactionsRepository).loadTransactionDetail(any())
@@ -65,7 +66,7 @@ class TransactionDetailViewModelTest {
         verifyNoMoreInteractions(observer)
         verifyNoMoreInteractions(transactionsRepository)
 
-        transactionDetailViewModel.setTransactionId(1)
+        transactionDetailViewModel.setTransactionId(TransactionId(1))
         verify(transactionsRepository).loadTransaction(any())
     }
 
@@ -77,13 +78,13 @@ class TransactionDetailViewModelTest {
         verifyNoMoreInteractions(observer)
         verifyNoMoreInteractions(transactionsRepository)
 
-        transactionDetailViewModel.setTransactionId(1)
+        transactionDetailViewModel.setTransactionId(TransactionId(1))
         verify(transactionsRepository).loadTransactionDetail(any())
     }
 
     @Test
     fun retry() {
-        transactionDetailViewModel.setTransactionId(1)
+        transactionDetailViewModel.setTransactionId(TransactionId(1))
         verifyNoMoreInteractions(transactionsRepository)
         verifyNoMoreInteractions(transactionsRepository)
 

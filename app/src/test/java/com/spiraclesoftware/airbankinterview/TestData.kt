@@ -1,15 +1,12 @@
 package com.spiraclesoftware.airbankinterview
 
-import com.spiraclesoftware.airbankinterview.shared.domain.Account
-import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDetail
-import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
-import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirection
+import com.spiraclesoftware.airbankinterview.shared.domain.*
 
 object TestData {
 
     val transactions: List<Transaction> = arrayListOf(
-        Transaction(1, 1000, TransactionDirection.INCOMING),
-        Transaction(2, 2000, TransactionDirection.OUTGOING)
+        Transaction(TransactionId(1), 1000, TransactionDirection.INCOMING),
+        Transaction(TransactionId(2), 2000, TransactionDirection.OUTGOING)
     )
 
     val transactionsIncoming: List<Transaction>
