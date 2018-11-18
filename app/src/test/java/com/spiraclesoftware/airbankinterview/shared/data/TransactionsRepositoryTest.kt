@@ -6,11 +6,10 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.stub
 import com.spiraclesoftware.airbankinterview.TestData
 import com.spiraclesoftware.airbankinterview.application.data.ApiService
-import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
-import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDetail
-import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirectionFilter
-import com.spiraclesoftware.airbankinterview.shared.domain.TransactionListFilter
+import com.spiraclesoftware.airbankinterview.shared.domain.*
 import com.spiraclesoftware.airbankinterview.utils.LiveDataTestUtil
+import com.spiraclesoftware.core.data.AssociatedItemCache
+import com.spiraclesoftware.core.data.AssociatedListCache
 import com.spiraclesoftware.core.data.InstantAppExecutors
 import com.spiraclesoftware.core.data.Status
 import org.junit.Assert.assertEquals
@@ -30,10 +29,10 @@ class TransactionsRepositoryTest {
     private lateinit var apiService: ApiService
 
     @Mock
-    private lateinit var transactionListCache: TransactionListCache
+    private lateinit var listCache: AssociatedListCache<TransactionId, Transaction>
 
     @Mock
-    private lateinit var transactionDetailCache: TransactionDetailCache
+    private lateinit var detailCache: AssociatedItemCache<TransactionId, TransactionDetail>
 
     private lateinit var transactionsRepository: TransactionsRepository
 
@@ -45,20 +44,20 @@ class TransactionsRepositoryTest {
                 TransactionsRepository(
                     InstantAppExecutors(),
                     apiService,
-                    transactionListCache,
-                    transactionDetailCache
+                    listCache,
+                    detailCache
                 )
     }
 
     private fun stubTransactionListCache(list: List<Transaction>? = null, single: Transaction? = null) {
-        transactionListCache.stub {
+        listCache.stub {
             on { get() }.doReturn(list)
             on { get(any()) }.doReturn(single)
         }
     }
 
     private fun stubTransactionDetailCache(single: TransactionDetail? = null) {
-        transactionDetailCache.stub {
+        detailCache.stub {
             on { get(any()) }.doReturn(single)
         }
     }
@@ -78,8 +77,7 @@ class TransactionsRepositoryTest {
     fun `Test filtering incoming transactions`() {
         stubTransactionListCache(list = TestData.transactions)
 
-        val filter =
-            TransactionListFilter(TransactionDirectionFilter.INCOMING_ONLY)
+        val filter = TransactionListFilter(TransactionDirectionFilter.INCOMING_ONLY)
 
         val transactionsLiveData = transactionsRepository.loadTransactionList(filter)
 
@@ -92,8 +90,7 @@ class TransactionsRepositoryTest {
     fun `Test filtering outgoing transactions`() {
         stubTransactionListCache(list = TestData.transactions)
 
-        val filter =
-            TransactionListFilter(TransactionDirectionFilter.OUTGOING_ONLY)
+        val filter = TransactionListFilter(TransactionDirectionFilter.OUTGOING_ONLY)
 
         val transactionsLiveData = transactionsRepository.loadTransactionList(filter)
 
@@ -106,7 +103,7 @@ class TransactionsRepositoryTest {
     fun `Given that detail is cached, return cached detail`() {
         stubTransactionDetailCache(single = TestData.transactionDetail)
 
-        val transactionDetailLiveData = transactionsRepository.loadTransactionDetail(1)
+        val transactionDetailLiveData = transactionsRepository.loadTransactionDetail(TransactionId(1))
 
         val transactionDetailResource = LiveDataTestUtil.getValue(transactionDetailLiveData)
         assertEquals(Status.SUCCESS, transactionDetailResource?.status)

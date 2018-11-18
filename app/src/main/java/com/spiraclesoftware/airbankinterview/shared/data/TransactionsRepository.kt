@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.spiraclesoftware.airbankinterview.application.data.ApiService
 import com.spiraclesoftware.airbankinterview.shared.data.dto.TransactionListResponse
 import com.spiraclesoftware.airbankinterview.shared.domain.*
-import com.spiraclesoftware.core.data.AppExecutors
-import com.spiraclesoftware.core.data.NetworkBoundResource
-import com.spiraclesoftware.core.data.Resource
+import com.spiraclesoftware.core.data.*
 import com.spiraclesoftware.core.testing.OpenForTesting
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,8 +15,8 @@ import javax.inject.Singleton
 class TransactionsRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val apiService: ApiService,
-    private val listCache: TransactionListCache,
-    private val detailCache: TransactionDetailCache
+    private val listCache: AssociatedListCache<TransactionId, Transaction>,
+    private val detailCache: AssociatedItemCache<TransactionId, TransactionDetail>
 ) {
 
     fun loadTransactionList() = loadTransactionList(
@@ -95,7 +93,7 @@ class TransactionsRepository @Inject constructor(
                 return MutableLiveData<TransactionDetail>().apply { value = detailCache.get(transactionId) }
             }
 
-            override fun createCall() = apiService.transactionDetail(transactionId)
+            override fun createCall() = apiService.transactionDetail(transactionId.value)
 
             override fun onFetchFailed() {
                 detailCache.isDirty = true
