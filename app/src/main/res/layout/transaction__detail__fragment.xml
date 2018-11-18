@@ -92,7 +92,7 @@
                 app:layout_constraintLeft_toLeftOf="@id/divider"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider"
-                app:visibleGone="@{transactionDetail != null}">
+                app:goneUnless="@{transactionDetail != null}">
 
                 <include
                     layout="@layout/transaction__detail__detail_item"
