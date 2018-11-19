@@ -47,11 +47,13 @@ class TransactionDetailFragment : DaggerFragment() {
             viewModel.transaction.observe(viewLifecycleOwner, Observer { resource ->
                 binding.transaction = resource?.data
 
-                val transactionAmountTextAppearance = when (resource.data!!.direction) {
-                    TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
-                    TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
+                if (resource.data != null) {
+                    val transactionAmountTextAppearance = when (resource.data!!.direction) {
+                        TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
+                        TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
+                    }
+                    TextViewCompat.setTextAppearance(binding.transactionAmountView, transactionAmountTextAppearance)
                 }
-                TextViewCompat.setTextAppearance(binding.transactionAmountView, transactionAmountTextAppearance)
             })
 
             viewModel.transactionDetail.observe(viewLifecycleOwner, Observer { resource ->

@@ -37,7 +37,7 @@
                 android:id="@+id/iconView"
                 android:layout_width="@dimen/icon__large"
                 android:layout_height="@dimen/icon__large"
-                android:src="@{context.getDrawable(transaction.direction.getDrawableRes())}"
+                android:src="@{transaction != null ? context.getDrawable(transaction.direction.getDrawableRes()) : null}"
                 app:layout_constraintBottom_toBottomOf="@id/transactionDirectionView"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@id/transactionAmountView"
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/content__spacing__small"
-                android:text='@{transaction.direction.getStringRes(), default="Incoming"}'
+                android:text='@{transaction != null ? context.getString(transaction.direction.getStringRes()) : null, default="Incoming"}'
                 app:layout_constraintBottom_toTopOf="@id/divider"
                 app:layout_constraintLeft_toRightOf="@id/iconView"
                 app:layout_constraintTop_toBottomOf="@id/transactionAmountView" />
