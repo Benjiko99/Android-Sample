@@ -45,9 +45,8 @@ class TransactionDetailViewModel @Inject constructor(
     }
 
     fun setTransactionId(id: TransactionId) {
-        if (transactionId.value == id) {
-            return
+        if (transactionId.value != id) {
+            transactionId.value = id
         }
-        transactionId.value = id
     }
 }
