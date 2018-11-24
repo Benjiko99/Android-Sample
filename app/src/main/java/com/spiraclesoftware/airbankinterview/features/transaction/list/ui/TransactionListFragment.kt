@@ -14,6 +14,7 @@ import com.spiraclesoftware.airbankinterview.databinding.TransactionListFragment
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
 import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirectionFilter
 import com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback
+import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.extensions.viewModelProvider
 import com.spiraclesoftware.core.utils.LanguageSwitcher
 import dagger.android.support.DaggerFragment
@@ -77,7 +78,7 @@ class TransactionListFragment : DaggerFragment() {
                 return ArrayAdapter(
                     requireContext(),
                     android.R.layout.simple_spinner_item,
-                    TransactionDirectionFilter.values().map { getString(it.stringRes) }
+                    TransactionDirectionFilter.values().map { string(it.stringRes) }
                 ).also {
                     it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 }
