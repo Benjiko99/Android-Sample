@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.airbankinterview.R
 import com.spiraclesoftware.airbankinterview.databinding.TransactionListFragmentBinding
+import com.spiraclesoftware.airbankinterview.features.transaction.list.ui.TransactionListFragment.DataWiring.DataBindings
+import com.spiraclesoftware.airbankinterview.features.transaction.list.ui.TransactionListFragment.DataWiring.ViewBindings
 import com.spiraclesoftware.airbankinterview.shared.domain.Transaction
 import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirectionFilter
+import com.spiraclesoftware.airbankinterview.shared.domain.TransactionListFilter
 import com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback
+import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.extensions.viewModelProvider
 import com.spiraclesoftware.core.utils.LanguageSwitcher
@@ -27,6 +31,7 @@ class TransactionListFragment : DaggerFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: TransactionListViewModel
 
+    private val dataWiring = DataWiring()
     private lateinit var binding: TransactionListFragmentBinding
     private lateinit var fastItemAdapter: FastItemAdapter<TransactionItem>
 
@@ -107,19 +112,18 @@ class TransactionListFragment : DaggerFragment() {
         viewModel = viewModelProvider(viewModelFactory)
 
         fun subscribeUi() {
-            viewModel.transactions.observe(viewLifecycleOwner, Observer { resource ->
-                binding.transactionListResource = resource
-                fastItemAdapter.set(toListItems(resource.data))
-            })
+            viewModel.transactions.observe(
+                viewLifecycleOwner,
+                Observer(dataWiring::wireTransactionsResource)
+            )
 
-            viewModel.transactionListFilter.observe(viewLifecycleOwner, Observer { filter ->
-                filterSpinner.setSelection(filter.transactionDirectionFilter.ordinal)
-            })
+            viewModel.transactionListFilter.observe(
+                viewLifecycleOwner,
+                Observer(dataWiring::wireTransactionListFilter)
+            )
         }
         subscribeUi()
     }
-
-    private fun toListItems(data: List<Transaction>?) = data?.map(::TransactionItem) ?: emptyList()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -135,5 +139,49 @@ class TransactionListFragment : DaggerFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.transaction_list_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    /**
+     * Delegates data-wiring logic to [DataBindings] and [ViewBindings] so the call-site can be a function reference.
+     */
+    inner class DataWiring {
+
+        private val dataBindings = DataBindings()
+        private val viewBindings = ViewBindings()
+
+        fun wireTransactionsResource(resource: Resource<List<Transaction>>) {
+            dataBindings.bindTransactionsResource(resource)
+            viewBindings.bindTransactions(resource.data)
+        }
+
+        fun wireTransactionListFilter(filter: TransactionListFilter) {
+            viewBindings.bindTransactionListFilter(filter)
+        }
+
+        /**
+         * Class for nicely organizing data binding code in a separate place.
+         */
+        inner class DataBindings {
+
+            fun bindTransactionsResource(resource: Resource<List<Transaction>>) {
+                binding.transactionListResource = resource
+            }
+        }
+
+        /**
+         * Class for nicely organizing view binding code in a separate place.
+         */
+        inner class ViewBindings {
+
+            fun bindTransactions(transactions: List<Transaction>?) {
+                fun toListItems(data: List<Transaction>?) = data?.map(::TransactionItem) ?: emptyList()
+
+                fastItemAdapter.set(toListItems(transactions))
+            }
+
+            fun bindTransactionListFilter(filter: TransactionListFilter) {
+                filterSpinner.setSelection(filter.transactionDirectionFilter.ordinal)
+            }
+        }
     }
 }

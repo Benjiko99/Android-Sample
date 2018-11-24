@@ -11,8 +11,16 @@
             type="com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback" />
 
         <variable
-            name="transaction"
-            type="com.spiraclesoftware.airbankinterview.shared.domain.Transaction" />
+            name="transactionAmountText"
+            type="String" />
+
+        <variable
+            name="transactionDirectionDrawable"
+            type="android.graphics.drawable.Drawable" />
+
+        <variable
+            name="transactionDirectionText"
+            type="String" />
 
         <variable
             name="transactionDetail"
@@ -37,7 +45,7 @@
                 android:id="@+id/iconView"
                 android:layout_width="@dimen/icon__large"
                 android:layout_height="@dimen/icon__large"
-                android:src="@{transaction != null ? context.getDrawable(transaction.direction.getDrawableRes()) : null}"
+                android:src="@{transactionDirectionDrawable}"
                 app:layout_constraintBottom_toBottomOf="@id/transactionDirectionView"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@id/transactionAmountView"
@@ -48,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/content__spacing__small"
-                android:text='@{@string/format__money(transaction.amountInAccountCurrency), default="1337 Kc"}'
+                android:text='@{transactionAmountText, default="1337 Kc"}'
                 android:textAppearance="@style/TextAppearance.Transaction.Amount"
                 app:layout_constraintBottom_toTopOf="@id/transactionDirectionView"
                 app:layout_constraintLeft_toRightOf="@id/iconView"
@@ -59,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/content__spacing__small"
-                android:text='@{transaction != null ? context.getString(transaction.direction.getStringRes()) : null, default="Incoming"}'
+                android:text='@{transactionDirectionText, default="Incoming"}'
                 app:layout_constraintBottom_toTopOf="@id/divider"
                 app:layout_constraintLeft_toRightOf="@id/iconView"
                 app:layout_constraintTop_toBottomOf="@id/transactionAmountView" />

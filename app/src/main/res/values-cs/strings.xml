@@ -7,7 +7,7 @@
     <string name="unknown_error">Neznámá chyba</string>
     <string name="switch_locale">Přepnout jazyk</string>
 
-    <string name="format__money">%s Kč</string>
+    <string name="format__money">%d Kč</string>
 
     <!-- Transaction -->
     <string name="transaction_direction__incoming">Příchozí</string>
