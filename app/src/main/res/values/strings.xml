@@ -7,7 +7,7 @@
     <string name="unknown_error">Unknown error</string>
     <string name="switch_locale">Switch locale</string>
 
-    <string name="format__money">%s CZK</string>
+    <string name="format__money">%d CZK</string>
 
     <!-- Transaction -->
     <string name="transaction_direction__incoming">Incoming</string>
