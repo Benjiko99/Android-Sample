@@ -26,6 +26,7 @@ class TransactionDetailFragment : DaggerFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = TransactionDetailFragmentBinding.inflate(inflater)
+        binding.setLifecycleOwner(this)
 
         binding.retryCallback = object : RetryCallback {
             override fun retry() {
