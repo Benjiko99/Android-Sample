@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="edge__margin">16dp</dimen>
+
     <dimen name="content__spacing__small">8dp</dimen>
+    <dimen name="content__spacing__medium">16dp</dimen>
 
     <dimen name="appbar__height__tall">150dp</dimen>
 

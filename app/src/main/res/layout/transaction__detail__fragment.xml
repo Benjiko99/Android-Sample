@@ -39,7 +39,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/content__spacing__small">
+            android:padding="@dimen/edge__margin">
 
             <ImageView
                 android:id="@+id/iconView"
@@ -55,7 +55,7 @@
                 android:id="@+id/transactionAmountView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/content__spacing__small"
+                android:layout_marginLeft="@dimen/content__spacing__medium"
                 android:text='@{transactionAmountText}'
                 android:textAppearance="@style/TextAppearance.Transaction.Amount"
                 app:layout_constraintBottom_toTopOf="@id/transactionDirectionView"
@@ -67,7 +67,7 @@
                 android:id="@+id/transactionDirectionView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/content__spacing__small"
+                android:layout_marginLeft="@dimen/content__spacing__medium"
                 android:text='@{transactionDirectionText}'
                 app:layout_constraintBottom_toTopOf="@id/divider"
                 app:layout_constraintLeft_toRightOf="@id/iconView"

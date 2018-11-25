@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/content__spacing__small"
+        android:padding="@dimen/content__spacing__medium"
         app:goneUnless="@{resource.data == null}">
 
         <ProgressBar

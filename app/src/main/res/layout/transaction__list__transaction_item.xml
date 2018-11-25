@@ -14,7 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:padding="@dimen/content__spacing__small">
+        android:paddingLeft="@dimen/content__spacing__medium"
+        android:paddingTop="@dimen/content__spacing__small"
+        android:paddingRight="@dimen/content__spacing__medium"
+        android:paddingBottom="@dimen/content__spacing__small">
 
         <ImageView
             android:id="@+id/iconView"
@@ -30,7 +33,7 @@
             android:id="@+id/transactionAmountView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/content__spacing__small"
+            android:layout_marginLeft="@dimen/content__spacing__medium"
             android:text='@{@string/format__money(transaction.amountInAccountCurrency)}'
             android:textAppearance="@style/TextAppearance.Transaction.Amount"
             app:layout_constraintBottom_toTopOf="@id/transactionDirectionView"
@@ -42,7 +45,7 @@
             android:id="@+id/transactionDirectionView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/content__spacing__small"
+            android:layout_marginLeft="@dimen/content__spacing__medium"
             android:text='@{transaction.direction.getStringRes()}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/iconView"
