@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.airbankinterview.R
@@ -70,10 +71,13 @@ class TransactionListFragment : DaggerFragment() {
         setupFastItemAdapter()
 
         fun setupRecyclerView() {
+            val linearLayoutManager = LinearLayoutManager(requireContext())
+
             recyclerView.apply {
-                layoutManager = LinearLayoutManager(requireContext())
+                layoutManager = linearLayoutManager
                 adapter = fastItemAdapter
                 itemAnimator = null
+                addItemDecoration(DividerItemDecoration(requireContext(), linearLayoutManager.orientation))
             }
         }
         setupRecyclerView()
