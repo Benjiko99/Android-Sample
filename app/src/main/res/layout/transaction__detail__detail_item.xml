@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -20,7 +21,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{itemLabel, default="label"}' />
+            android:text='@{itemLabel}'
+            tools:text="label" />
 
         <View
             android:layout_width="0dp"
@@ -30,8 +32,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{itemValue, default="value"}'
-            android:textStyle="bold" />
+            android:text='@{itemValue}'
+            android:textStyle="bold"
+            tools:text="value" />
 
     </LinearLayout>
 </layout>
