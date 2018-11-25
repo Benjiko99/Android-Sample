@@ -31,21 +31,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/content__spacing__small"
-            android:text='@{@string/format__money(transaction.amountInAccountCurrency), default="1337 Kc"}'
+            android:text='@{@string/format__money(transaction.amountInAccountCurrency)}'
             android:textAppearance="@style/TextAppearance.Transaction.Amount"
             app:layout_constraintBottom_toTopOf="@id/transactionDirectionView"
             app:layout_constraintLeft_toRightOf="@id/iconView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1234 CZK" />
 
         <TextView
             android:id="@+id/transactionDirectionView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/content__spacing__small"
-            android:text='@{transaction.direction.getStringRes(), default="Incoming"}'
+            android:text='@{transaction.direction.getStringRes()}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/iconView"
-            app:layout_constraintTop_toBottomOf="@id/transactionAmountView" />
+            app:layout_constraintTop_toBottomOf="@id/transactionAmountView"
+            tools:text="Incoming" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
