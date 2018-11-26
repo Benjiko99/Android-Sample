@@ -24,14 +24,16 @@ class TransactionItem(val transaction: Transaction) : AbstractItem<TransactionIt
         override fun bindView(item: TransactionItem, payloads: List<Any>) {
             val binding = DataBindingUtil.getBinding(view) ?: TransactionListTransactionItemBinding.bind(view)
 
+            binding.transaction = item.transaction
             binding.apply {
-                transaction = item.transaction
-
-                val transactionAmountTextAppearance = when (item.transaction.direction) {
-                    TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
-                    TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
+                fun setAmountTextAppearance() {
+                    val transactionAmountTextAppearance = when (item.transaction.direction) {
+                        TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
+                        TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
+                    }
+                    TextViewCompat.setTextAppearance(transactionAmountView, transactionAmountTextAppearance)
                 }
-                TextViewCompat.setTextAppearance(transactionAmountView, transactionAmountTextAppearance)
+                setAmountTextAppearance()
             }
         }
 
