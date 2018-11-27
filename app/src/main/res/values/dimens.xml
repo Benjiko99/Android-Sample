@@ -8,6 +8,6 @@
 
     <dimen name="appbar__height__tall">150dp</dimen>
 
-    <dimen name="icon__large">32dp</dimen>
+    <dimen name="icon__large">40dp</dimen>
 
 </resources>
