@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="androidx.core.content.ContextCompat" />
+
         <variable
             name="transaction"
             type="com.spiraclesoftware.airbankinterview.shared.domain.Transaction" />
@@ -24,6 +26,7 @@
             android:layout_width="@dimen/icon__large"
             android:layout_height="@dimen/icon__large"
             android:src="@{context.getDrawable(transaction.direction.getDrawableRes())}"
+            android:tint="@{ContextCompat.getColor(context, transaction.direction.getColorRes())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"

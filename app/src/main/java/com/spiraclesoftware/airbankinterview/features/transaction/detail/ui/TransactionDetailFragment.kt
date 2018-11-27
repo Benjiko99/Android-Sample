@@ -17,9 +17,11 @@ import com.spiraclesoftware.airbankinterview.shared.domain.TransactionDirection
 import com.spiraclesoftware.airbankinterview.shared.domain.TransactionId
 import com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback
 import com.spiraclesoftware.core.data.Resource
+import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.drawable
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.extensions.viewModelProvider
+import com.spiraclesoftware.core.utils.ResourceUtils
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -92,12 +94,27 @@ class TransactionDetailFragment : DaggerFragment() {
                 if (resource.data == null) return
                 val transaction = resource.data as Transaction
 
-                binding.transactionAmountText = string(
-                    R.string.format__money,
-                    transaction.amountInAccountCurrency
-                )
-                binding.transactionDirectionText = string(transaction.direction.getStringRes())
-                binding.transactionDirectionDrawable = drawable(transaction.direction.getDrawableRes())
+                fun setTransactionAmountText() {
+                    binding.transactionAmountText = string(
+                        R.string.format__money,
+                        transaction.amountInAccountCurrency
+                    )
+                }
+                setTransactionAmountText()
+
+                fun setTransactionDirectionText() {
+                    binding.transactionDirectionText = string(transaction.direction.getStringRes())
+                }
+                setTransactionDirectionText()
+
+                fun setTransactionDirectionIcon() {
+                    val tintedDrawable = ResourceUtils.getTintedDrawable(
+                        drawable(transaction.direction.getDrawableRes())!!,
+                        color(transaction.direction.getColorRes())
+                    )
+                    binding.transactionDirectionDrawable = tintedDrawable
+                }
+                setTransactionDirectionIcon()
             }
 
             fun bindTransactionDetailResource(resource: Resource<TransactionDetail>) {
