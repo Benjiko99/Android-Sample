@@ -17,9 +17,9 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:paddingLeft="@dimen/content__spacing__medium"
-        android:paddingTop="@dimen/content__spacing__small"
+        android:paddingTop="@dimen/content__spacing__medium"
         android:paddingRight="@dimen/content__spacing__medium"
-        android:paddingBottom="@dimen/content__spacing__small">
+        android:paddingBottom="@dimen/content__spacing__medium">
 
         <ImageView
             android:id="@+id/iconView"
