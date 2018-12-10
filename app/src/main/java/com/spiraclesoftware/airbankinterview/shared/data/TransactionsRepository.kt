@@ -37,12 +37,19 @@ class TransactionsRepository @Inject constructor(
             }
 
             override fun loadFromCache(): LiveData<List<Transaction>> {
-                return MutableLiveData<List<Transaction>>().apply {
-                    value = listCache.get()?.filter {
-                        if (filter.transactionDirectionFilter == TransactionDirectionFilter.ALL)
-                            true
-                        else
-                            filter.transactionDirectionFilter.mapsTo(it.direction)
+                val cachedData = listCache.get()
+
+                return if (cachedData == null) {
+                    AbsentLiveData.create()
+                } else {
+                    MutableLiveData<List<Transaction>>().apply {
+                        value = cachedData
+                            .filter {
+                                if (filter.transactionDirectionFilter == TransactionDirectionFilter.ALL)
+                                    true
+                                else
+                                    filter.transactionDirectionFilter.mapsTo(it.direction)
+                            }
                     }
                 }
             }
@@ -67,7 +74,13 @@ class TransactionsRepository @Inject constructor(
             }
 
             override fun loadFromCache(): LiveData<Transaction> {
-                return MutableLiveData<Transaction>().apply { value = listCache.get(transactionId) }
+                val cachedData = listCache.get(transactionId)
+
+                return if (cachedData == null) {
+                    AbsentLiveData.create()
+                } else {
+                    MutableLiveData<Transaction>().apply { value = cachedData }
+                }
             }
 
             override fun createCall() = apiService.transactionList()
@@ -90,7 +103,13 @@ class TransactionsRepository @Inject constructor(
             }
 
             override fun loadFromCache(): LiveData<TransactionDetail> {
-                return MutableLiveData<TransactionDetail>().apply { value = detailCache.get(transactionId) }
+                val cachedData = detailCache.get(transactionId)
+
+                return if (cachedData == null) {
+                    AbsentLiveData.create()
+                } else {
+                    MutableLiveData<TransactionDetail>().apply { value = cachedData }
+                }
             }
 
             override fun createCall() = apiService.transactionDetail(transactionId.value)
