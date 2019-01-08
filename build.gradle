@@ -24,7 +24,7 @@ buildscript {
             'androidx'        : '1.0.0',
             'constraintLayout': '2.0.0-alpha2',
             'archComp'        : '1.1.1',
-            'navigationComp'  : '1.0.0-alpha07',
+            'navigationComp'  : '1.0.0-alpha09',
             'lifecycleComp'   : '2.0.0',
 
             'junit'           : '4.12',
