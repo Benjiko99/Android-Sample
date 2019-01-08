@@ -49,7 +49,7 @@ class TransactionDetailFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val params = TransactionDetailFragmentArgs.fromBundle(arguments)
+        val params = TransactionDetailFragmentArgs.fromBundle(arguments!!)
 
         viewModel = viewModelProvider(viewModelFactory)
         viewModel.setTransactionId(TransactionId(params.transactionId))
