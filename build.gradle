@@ -2,7 +2,7 @@
 
 buildscript {
     ext.app = [
-            'id'          : 'com.spiraclesoftware.airbankinterview',
+            'id'          : 'com.spiraclesoftware.androidsample',
             'versionCode' : 1,
             'versionName' : '1.0',
 

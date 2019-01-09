@@ -14,7 +14,7 @@
 
         <variable
             name="callback"
-            type="com.spiraclesoftware.airbankinterview.shared.ui.RetryCallback" />
+            type="com.spiraclesoftware.androidsample.shared.ui.RetryCallback" />
     </data>
 
     <LinearLayout
