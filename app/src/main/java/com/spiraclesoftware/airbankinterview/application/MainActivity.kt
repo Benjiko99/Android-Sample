@@ -16,15 +16,17 @@ class MainActivity : DaggerAppCompatActivity() {
         super.attachBaseContext(LanguageSwitcher.applyLocale(newBase))
     }
 
+    private val navController by lazy { findNavController(R.id.navHostFragment) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main__activity)
 
         setSupportActionBar(toolbar)
-        collapsingToolbar.setupWithNavController(toolbar, findNavController(R.id.navHostFragment))
+        collapsingToolbar.setupWithNavController(toolbar, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(findNavController(R.id.navHostFragment), null)
+        return NavigationUI.navigateUp(navController, null)
     }
 }
