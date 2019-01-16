@@ -19,6 +19,12 @@
     <string name="transaction__list__filter__transaction_direction__incoming">Příchozí transakce</string>
     <string name="transaction__list__filter__transaction_direction__outgoing">Odchozí transakce</string>
 
+    <string name="transaction__list__empty_state__no_transactions__caption">Nemáte žádné transakce</string>
+    <string name="transaction__list__empty_state__no_transactions__message">Když provedete nebo obdržíte platbu, zobrazí se zde.</string>
+
+    <string name="transaction__list__empty_state__no_results__caption">Žádné výsledky</string>
+    <string name="transaction__list__empty_state__no_results__message">Nenašli jsme žádné odpovídající transakce.</string>
+
     <!-- Transaction Detail -->
     <string name="transaction__detail__title">Detail transakce</string>
     <string name="transaction__detail__account_number">Číslo účtu:</string>

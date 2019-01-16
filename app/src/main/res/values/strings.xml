@@ -19,6 +19,12 @@
     <string name="transaction__list__filter__transaction_direction__incoming">Incoming transactions</string>
     <string name="transaction__list__filter__transaction_direction__outgoing">Outgoing transactions</string>
 
+    <string name="transaction__list__empty_state__no_transactions__caption">You have no transactions</string>
+    <string name="transaction__list__empty_state__no_transactions__message">When you make or receive a payment, it will show up here.</string>
+
+    <string name="transaction__list__empty_state__no_results__caption">No results</string>
+    <string name="transaction__list__empty_state__no_results__message">We didn\'t find any matching transactions.</string>
+
     <!-- Transaction Detail -->
     <string name="transaction__detail__title">Transaction detail</string>
     <string name="transaction__detail__account_number">Account number:</string>
