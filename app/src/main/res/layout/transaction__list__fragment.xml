@@ -15,46 +15,48 @@
             type="com.spiraclesoftware.core.data.Resource" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <Spinner
+            android:id="@+id/filterSpinner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content__spacing__medium"
+            android:layout_marginRight="@dimen/content__spacing__medium"
+            android:minHeight="48dp" />
 
-            <Spinner
-                android:id="@+id/filterSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/content__spacing__medium"
-                android:layout_marginRight="@dimen/content__spacing__medium"
-                android:minHeight="48dp"
-                app:layout_constraintBottom_toTopOf="@id/recyclerView"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/filterSpinner"
-                tools:listitem="@layout/transaction__list__transaction_item" />
+                android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/loadingState"
-                layout="@layout/loading_state"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:callback="@{() -> retryCallback.retry()}"
-                app:layout_constraintTop_toBottomOf="@id/filterSpinner"
-                app:resource="@{transactionListResource}" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/transaction__list__transaction_item" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
+                <include
+                    android:id="@+id/loadingState"
+                    layout="@layout/loading_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:callback="@{() -> retryCallback.retry()}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:resource="@{transactionListResource}" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </layout>
