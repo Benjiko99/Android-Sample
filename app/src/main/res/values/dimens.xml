@@ -10,4 +10,6 @@
 
     <dimen name="icon__large">40dp</dimen>
 
+    <dimen name="empty_state">200dp</dimen>
+
 </resources>

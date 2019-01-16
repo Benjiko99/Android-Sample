@@ -11,4 +11,8 @@
         <item name="android:textColor">@color/transaction_outgoing</item>
     </style>
 
+    <style name="TextAppearance.EmptyState.Caption" parent="TextAppearance.MaterialComponents.Headline6" />
+
+    <style name="TextAppearance.EmptyState.Message" parent="TextAppearance.MaterialComponents.Subtitle1" />
+
 </resources>
