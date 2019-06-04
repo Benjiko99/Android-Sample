@@ -12,11 +12,7 @@
         tools:layout="@layout/transaction__list__fragment">
         <action
             android:id="@+id/action_transactionListFragment_to_transactionDetailFragment"
-            app:destination="@id/transactionDetailFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/transactionDetailFragment" />
     </fragment>
 
     <fragment
