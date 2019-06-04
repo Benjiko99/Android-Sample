@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
 import com.spiraclesoftware.androidsample.features.transaction.detail.ui.TransactionDetailFragment.DataWiring.DataBindings
@@ -23,6 +25,7 @@ import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.extensions.viewModelProvider
 import com.spiraclesoftware.core.utils.ResourceUtils
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 import javax.inject.Inject
 
 class TransactionDetailFragment : DaggerFragment() {
@@ -45,6 +48,12 @@ class TransactionDetailFragment : DaggerFragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        toolbar.setupWithNavController(findNavController())
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

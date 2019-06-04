@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
@@ -53,6 +54,8 @@ class TransactionListFragment : DaggerFragment() {
     // to bind our views which requires the fragment's view to be attached.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        toolbar.setupWithNavController(findNavController())
 
         fun setupFastItemAdapter() {
             fastItemAdapter = FastItemAdapter()
