@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.features.transaction.detail.ui
+package com.spiraclesoftware.androidsample.features.transaction.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
-import com.spiraclesoftware.androidsample.features.transaction.detail.ui.TransactionDetailFragment.DataWiring.DataBindings
-import com.spiraclesoftware.androidsample.features.transaction.detail.ui.TransactionDetailFragment.DataWiring.ViewBindings
+import com.spiraclesoftware.androidsample.features.transaction.detail.TransactionDetailFragment.DataWiring.DataBindings
+import com.spiraclesoftware.androidsample.features.transaction.detail.TransactionDetailFragment.DataWiring.ViewBindings
+import com.spiraclesoftware.androidsample.features.transaction.detail.ui.TransactionDetailFragmentArgs
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionDetail
 import com.spiraclesoftware.androidsample.shared.domain.TransactionDirection

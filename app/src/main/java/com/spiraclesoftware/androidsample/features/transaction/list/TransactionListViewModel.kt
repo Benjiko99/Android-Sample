@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.features.transaction.list.ui
+package com.spiraclesoftware.androidsample.features.transaction.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

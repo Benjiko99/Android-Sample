@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.features.transaction.list.ui
+package com.spiraclesoftware.androidsample.features.transaction.list
 
 import android.view.View
 import androidx.core.widget.TextViewCompat

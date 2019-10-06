@@ -1,8 +1,9 @@
-package com.spiraclesoftware.androidsample.features.transaction.list.ui
+package com.spiraclesoftware.androidsample.features.transaction.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.*
+import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListViewModel
 import com.spiraclesoftware.androidsample.shared.domain.TransactionDirectionFilter
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
 import com.spiraclesoftware.androidsample.shared.domain.Transaction

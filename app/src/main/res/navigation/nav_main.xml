@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/transactionListFragment"
-        android:name="com.spiraclesoftware.androidsample.features.transaction.list.ui.TransactionListFragment"
+        android:name="com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragment"
         android:label="@string/transaction__list__title"
         tools:layout="@layout/transaction__list__fragment">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/transactionDetailFragment"
-        android:name="com.spiraclesoftware.androidsample.features.transaction.detail.ui.TransactionDetailFragment"
+        android:name="com.spiraclesoftware.androidsample.features.transaction.detail.TransactionDetailFragment"
         android:label="@string/transaction__detail__title"
         tools:layout="@layout/transaction__detail__fragment">
         <argument

@@ -1,8 +1,7 @@
 package com.spiraclesoftware.androidsample.features.transaction
 
-import com.spiraclesoftware.androidsample.features.transaction.detail.ui.TransactionDetailViewModel
-import com.spiraclesoftware.androidsample.features.transaction.list.ui.TransactionListViewModel
-import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
+import com.spiraclesoftware.androidsample.features.transaction.detail.TransactionDetailViewModel
+import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

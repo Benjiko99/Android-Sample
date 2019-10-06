@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.features.transaction.list.ui
+package com.spiraclesoftware.androidsample.features.transaction.list
 
 import android.os.Bundle
 import android.view.*
@@ -13,8 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
-import com.spiraclesoftware.androidsample.features.transaction.list.ui.TransactionListFragment.DataWiring.DataBindings
-import com.spiraclesoftware.androidsample.features.transaction.list.ui.TransactionListFragment.DataWiring.ViewBindings
+import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragment.DataWiring.DataBindings
+import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragment.DataWiring.ViewBindings
+import com.spiraclesoftware.androidsample.features.transaction.list.ui.TransactionListFragmentDirections
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionDirectionFilter
 import com.spiraclesoftware.androidsample.shared.domain.TransactionListFilter
