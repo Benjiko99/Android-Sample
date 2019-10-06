@@ -44,6 +44,9 @@ dependencies {
     releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
     debugApi "com.squareup.leakcanary:leakcanary-support-fragment:${versions.leakCanary}"
 
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+
     api "org.koin:koin-android:${versions.koin}"
     api "org.koin:koin-android-viewmodel:${versions.koin}"
 
