@@ -44,10 +44,8 @@ dependencies {
     releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
     debugApi "com.squareup.leakcanary:leakcanary-support-fragment:${versions.leakCanary}"
 
-    api "com.google.dagger:dagger-android:${versions.dagger}"
-    api "com.google.dagger:dagger-android-support:${versions.dagger}"
-    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
-    kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
+    api "org.koin:koin-android:${versions.koin}"
+    api "org.koin:koin-android-viewmodel:${versions.koin}"
 
     api "com.squareup.okhttp3:okhttp:${versions.okhttp}"
     api "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"

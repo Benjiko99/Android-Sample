@@ -11,9 +11,8 @@ import com.spiraclesoftware.androidsample.shared.domain.TransactionId
 import com.spiraclesoftware.core.data.LiveTrigger
 import com.spiraclesoftware.core.data.MediatorLiveTrigger
 import com.spiraclesoftware.core.data.Resource
-import javax.inject.Inject
 
-class TransactionDetailViewModel @Inject constructor(
+class TransactionDetailViewModel(
     private val repository: TransactionsRepository
 ) : ViewModel() {
 

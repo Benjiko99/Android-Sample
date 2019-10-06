@@ -15,7 +15,7 @@ Navigation is handled by the **Navigation Architecture Component**.
 
 Networking is done through **OkHttp**, **Retrofit** and **LiveData**.
 
-Dependency Injection is done through **Dagger 2**.
+Dependency Injection is done through **Koin**.
 
 Debugging is facilitated by **LeakCanary** and **Stetho**.
 

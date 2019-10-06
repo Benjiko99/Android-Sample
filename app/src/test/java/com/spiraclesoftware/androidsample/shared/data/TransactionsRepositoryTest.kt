@@ -49,7 +49,10 @@ class TransactionsRepositoryTest {
                 )
     }
 
-    private fun stubTransactionListCache(list: List<Transaction>? = null, single: Transaction? = null) {
+    private fun stubTransactionListCache(
+        list: List<Transaction>? = null,
+        single: Transaction? = null
+    ) {
         listCache.stub {
             on { get() }.doReturn(list)
             on { get(any()) }.doReturn(single)
@@ -103,7 +106,8 @@ class TransactionsRepositoryTest {
     fun `Given that detail is cached, return cached detail`() {
         stubTransactionDetailCache(single = TestData.transactionDetail)
 
-        val transactionDetailLiveData = transactionsRepository.loadTransactionDetail(TransactionId(1))
+        val transactionDetailLiveData =
+            transactionsRepository.loadTransactionDetail(TransactionId(1))
 
         val transactionDetailResource = LiveDataTestUtil.getValue(transactionDetailLiveData)
         assertEquals(Status.SUCCESS, transactionDetailResource?.status)

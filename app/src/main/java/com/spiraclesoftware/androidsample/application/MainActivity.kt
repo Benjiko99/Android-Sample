@@ -2,13 +2,13 @@ package com.spiraclesoftware.androidsample.application
 
 import android.content.Context
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.core.utils.LanguageSwitcher
-import dagger.android.support.DaggerAppCompatActivity
 
-class MainActivity : DaggerAppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LanguageSwitcher.applyLocale(newBase))

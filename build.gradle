@@ -15,7 +15,7 @@ buildscript {
     ]
 
     ext.versions = [
-            'dagger'          : '2.16',
+            'koin'            : '2.0.1',
             'okhttp'          : '3.11.0',
             'retrofit'        : '2.4.0',
             'leakCanary'      : '1.6.1',

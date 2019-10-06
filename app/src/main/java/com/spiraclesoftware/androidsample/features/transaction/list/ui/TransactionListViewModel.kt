@@ -12,9 +12,8 @@ import com.spiraclesoftware.core.data.AbsentLiveData
 import com.spiraclesoftware.core.data.LiveTrigger
 import com.spiraclesoftware.core.data.MediatorLiveTrigger
 import com.spiraclesoftware.core.data.Resource
-import javax.inject.Inject
 
-class TransactionListViewModel @Inject constructor(
+class TransactionListViewModel(
     private val repository: TransactionsRepository
 ) : ViewModel() {
 

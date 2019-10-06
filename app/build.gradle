@@ -50,9 +50,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':core')
 
-    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
-    kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
-
     implementation "com.facebook.stetho:stetho:${versions.stetho}"
 
     implementation "android.arch.navigation:navigation-fragment-ktx:${versions.navigationComp}"

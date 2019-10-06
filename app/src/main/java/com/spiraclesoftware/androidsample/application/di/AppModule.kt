@@ -10,74 +10,49 @@ import com.spiraclesoftware.androidsample.application.data.ApiService
 import com.spiraclesoftware.core.data.LiveDataCallAdapterFactory
 import com.spiraclesoftware.core.data.UniqueIdentifier
 import com.spiraclesoftware.core.data.UniqueIdentifierAdapter
-import dagger.Module
-import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
-/**
- * Defines all the classes that need to be provided in the scope of the app.
- *
- * Define here all objects that are shared throughout the app, like SharedPreferences, navigators or
- * others. If some of those objects are singletons, they should be annotated with `@Singleton`.
- */
-@Module
-class AppModule {
+val appModule = module {
 
-    @Provides
-    fun provideContext(application: SampleApplication): Context {
-        return application.applicationContext
+    single {
+        androidApplication().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
     }
 
-    @Provides
-    @Singleton
-    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .client(okHttpClient)
+    single<ApiService> { (get() as Retrofit).create(ApiService::class.java) }
+
+    single<Retrofit> {
+        Retrofit.Builder()
+            .client(get() as OkHttpClient)
             .baseUrl(SampleApplication.API_SERVICE_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(get() as Gson))
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
     }
-
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        val builder = OkHttpClient.Builder()
-
-        if (BuildConfig.DEBUG) {
-            builder.addInterceptor(httpLoggingInterceptor)
-        }
-
-        return builder.build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        return interceptor
-    }
-
-    @Provides
-    @Singleton
-    fun provideGson(): Gson {
-        return GsonBuilder()
+    single<Gson> {
+        GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
             .registerTypeAdapter(
                 UniqueIdentifier::class.java,
                 UniqueIdentifierAdapter()
-            )
-            .create()
+            ).create()
     }
 
-    @Provides
-    @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    single<OkHttpClient> {
+        OkHttpClient.Builder().apply {
+            if (BuildConfig.DEBUG) {
+                addInterceptor(get() as HttpLoggingInterceptor)
+            }
+        }.build()
+    }
+
+    single {
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
     }
 }

@@ -1,16 +1,21 @@
 package com.spiraclesoftware.androidsample.application
 
+import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
 import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
-import com.spiraclesoftware.androidsample.application.di.DaggerAppComponent
+import com.spiraclesoftware.androidsample.application.di.appModule
+import com.spiraclesoftware.androidsample.application.di.featureModules
+import com.spiraclesoftware.androidsample.application.di.sharedModule
+import com.spiraclesoftware.core.di.coreModule
 import com.spiraclesoftware.core.utils.LanguageSwitcher
 import com.squareup.leakcanary.LeakCanary
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
-class SampleApplication : DaggerApplication() {
+class SampleApplication : Application() {
 
     companion object {
         const val API_SERVICE_BASE_URL = "https://demo0569565.mockable.io/"
@@ -24,10 +29,12 @@ class SampleApplication : DaggerApplication() {
 
         LeakCanary.install(this)
         Stetho.initializeWithDefaults(this)
-    }
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.builder().create(this)
+        startKoin {
+            androidLogger()
+            androidContext(this@SampleApplication)
+            modules(listOf(coreModule, appModule, sharedModule) + featureModules)
+        }
     }
 
     override fun attachBaseContext(base: Context) {

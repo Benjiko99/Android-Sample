@@ -7,12 +7,9 @@ import com.spiraclesoftware.androidsample.shared.data.dto.TransactionListRespons
 import com.spiraclesoftware.androidsample.shared.domain.*
 import com.spiraclesoftware.core.data.*
 import com.spiraclesoftware.core.testing.OpenForTesting
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @OpenForTesting
-@Singleton
-class TransactionsRepository @Inject constructor(
+class TransactionsRepository(
     private val appExecutors: AppExecutors,
     private val apiService: ApiService,
     private val listCache: AssociatedListCache<TransactionId, Transaction>,
@@ -26,7 +23,8 @@ class TransactionsRepository @Inject constructor(
     )
 
     fun loadTransactionList(filter: TransactionListFilter): LiveData<Resource<List<Transaction>>> {
-        return object : NetworkBoundResource<List<Transaction>, TransactionListResponse>(appExecutors) {
+        return object :
+            NetworkBoundResource<List<Transaction>, TransactionListResponse>(appExecutors) {
 
             override fun saveCallResult(data: TransactionListResponse) {
                 listCache.set(data.items)

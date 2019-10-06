@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.TextViewCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.spiraclesoftware.androidsample.R
@@ -22,22 +22,22 @@ import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.drawable
 import com.spiraclesoftware.core.extensions.string
-import com.spiraclesoftware.core.extensions.viewModelProvider
 import com.spiraclesoftware.core.utils.ResourceUtils
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class TransactionDetailFragment : DaggerFragment() {
+class TransactionDetailFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: TransactionDetailViewModel
+    private val viewModel by viewModel<TransactionDetailViewModel>()
 
     private val dataWiring = DataWiring()
     private lateinit var binding: TransactionDetailFragmentBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = TransactionDetailFragmentBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
@@ -60,7 +60,6 @@ class TransactionDetailFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         val params = TransactionDetailFragmentArgs.fromBundle(arguments!!)
 
-        viewModel = viewModelProvider(viewModelFactory)
         viewModel.setTransactionId(TransactionId(params.transactionId))
 
         fun subscribeUi() {
@@ -144,7 +143,10 @@ class TransactionDetailFragment : DaggerFragment() {
                     TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
                     TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
                 }
-                TextViewCompat.setTextAppearance(binding.transactionAmountView, transactionAmountTextAppearance)
+                TextViewCompat.setTextAppearance(
+                    binding.transactionAmountView,
+                    transactionAmountTextAppearance
+                )
             }
         }
     }

@@ -1,11 +1,9 @@
 package com.spiraclesoftware.core.data
 
 import com.spiraclesoftware.core.testing.OpenForTesting
-import javax.inject.Inject
 
 @OpenForTesting
-class AssociatedItemCache<Key, Value> @Inject constructor()
-        where Key : UniqueIdentifier<*> {
+class AssociatedItemCache<Key, Value> where Key : UniqueIdentifier<*> {
 
     /** Marks the cache as invalid, to force an update the next time data is requested. */
     var isDirty = false

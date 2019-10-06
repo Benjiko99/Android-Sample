@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,23 +21,23 @@ import com.spiraclesoftware.androidsample.shared.domain.TransactionListFilter
 import com.spiraclesoftware.androidsample.shared.ui.RetryCallback
 import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.extensions.string
-import com.spiraclesoftware.core.extensions.viewModelProvider
 import com.spiraclesoftware.core.utils.LanguageSwitcher
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class TransactionListFragment : DaggerFragment() {
+class TransactionListFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: TransactionListViewModel
+    private val viewModel by viewModel<TransactionListViewModel>()
 
     private val dataWiring = DataWiring()
     private lateinit var binding: TransactionListFragmentBinding
     private lateinit var fastItemAdapter: FastItemAdapter<TransactionItem>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = TransactionListFragmentBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
@@ -80,7 +80,12 @@ class TransactionListFragment : DaggerFragment() {
                 layoutManager = linearLayoutManager
                 adapter = fastItemAdapter
                 itemAnimator = null
-                addItemDecoration(DividerItemDecoration(requireContext(), linearLayoutManager.orientation))
+                addItemDecoration(
+                    DividerItemDecoration(
+                        requireContext(),
+                        linearLayoutManager.orientation
+                    )
+                )
             }
         }
         setupRecyclerView()
@@ -102,7 +107,12 @@ class TransactionListFragment : DaggerFragment() {
             filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
                     val transactionDirectionFilter = TransactionDirectionFilter.values()[position]
                     viewModel.setTransactionDirectionFilter(transactionDirectionFilter)
                 }
@@ -115,8 +125,6 @@ class TransactionListFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
 
         setHasOptionsMenu(true)
-
-        viewModel = viewModelProvider(viewModelFactory)
 
         fun subscribeUi() {
             viewModel.transactions.observe(
@@ -181,7 +189,8 @@ class TransactionListFragment : DaggerFragment() {
         inner class ViewBindings {
 
             fun bindTransactions(transactions: List<Transaction>?) {
-                fun toListItems(data: List<Transaction>?) = data?.map(::TransactionItem) ?: emptyList()
+                fun toListItems(data: List<Transaction>?) =
+                    data?.map(::TransactionItem) ?: emptyList()
 
                 fastItemAdapter.set(toListItems(transactions))
             }
