@@ -11,9 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
-import com.spiraclesoftware.androidsample.features.transaction.detail.TransactionDetailFragment.DataWiring.DataBindings
-import com.spiraclesoftware.androidsample.features.transaction.detail.TransactionDetailFragment.DataWiring.ViewBindings
-import com.spiraclesoftware.androidsample.features.transaction.detail.ui.TransactionDetailFragmentArgs
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionDetail
 import com.spiraclesoftware.androidsample.shared.domain.TransactionDirection
@@ -31,7 +28,6 @@ class TransactionDetailFragment : Fragment() {
 
     private val viewModel by viewModel<TransactionDetailViewModel>()
 
-    private val dataWiring = DataWiring()
     private lateinit var binding: TransactionDetailFragmentBinding
 
     override fun onCreateView(
@@ -40,7 +36,7 @@ class TransactionDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = TransactionDetailFragmentBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         binding.retryCallback = object : RetryCallback {
             override fun retry() {
@@ -66,89 +62,57 @@ class TransactionDetailFragment : Fragment() {
         fun subscribeUi() {
             viewModel.transaction.observe(
                 viewLifecycleOwner,
-                Observer(dataWiring::wireTransactionResource)
+                TransactionResourceObserver()
             )
 
             viewModel.transactionDetail.observe(
                 viewLifecycleOwner,
-                Observer(dataWiring::wireTransactionDetailResource)
+                Observer(::bindTransactionDetailResource)
             )
         }
         subscribeUi()
     }
 
-    /**
-     * Delegates data-wiring logic to [DataBindings] and [ViewBindings] so the call-site can be a function reference.
-     */
-    inner class DataWiring {
+    inner class TransactionResourceObserver : Observer<Resource<Transaction>> {
 
-        private val dataBindings = DataBindings()
-        private val viewBindings = ViewBindings()
-
-        fun wireTransactionResource(resource: Resource<Transaction>) {
-            dataBindings.bindTransactionResource(resource)
-            viewBindings.bindTransaction(resource.data)
-        }
-
-        fun wireTransactionDetailResource(resource: Resource<TransactionDetail>) {
-            dataBindings.bindTransactionDetailResource(resource)
-        }
-
-        /**
-         * Class for nicely organizing data binding code in a separate place.
-         */
-        inner class DataBindings {
-
-            fun bindTransactionResource(resource: Resource<Transaction>) {
-                if (resource.data == null) return
-                val transaction = resource.data as Transaction
-
-                fun setTransactionAmountText() {
-                    binding.transactionAmountText = string(
-                        R.string.format__money,
-                        transaction.amountInAccountCurrency
-                    )
-                }
-                setTransactionAmountText()
-
-                fun setTransactionDirectionText() {
-                    binding.transactionDirectionText = string(transaction.direction.getStringRes())
-                }
-                setTransactionDirectionText()
-
-                fun setTransactionDirectionIcon() {
-                    val tintedDrawable = ResourceUtils.getTintedDrawable(
-                        drawable(transaction.direction.getDrawableRes())!!,
-                        color(transaction.direction.getColorRes())
-                    )
-                    binding.transactionDirectionDrawable = tintedDrawable
-                }
-                setTransactionDirectionIcon()
-            }
-
-            fun bindTransactionDetailResource(resource: Resource<TransactionDetail>) {
-                binding.transactionDetail = resource.data
-                binding.transactionDetailResource = resource
+        override fun onChanged(resource: Resource<Transaction>?) {
+            (resource?.data)?.let { transaction ->
+                setTransactionAmountText(transaction.amountInAccountCurrency)
+                val direction = transaction.direction
+                setTransactionDirectionText(direction.getStringRes())
+                setTransactionDirectionIcon(direction.getDrawableRes(), direction.getColorRes())
+                setTransactionAmountTextAppearance(direction)
             }
         }
 
-        /**
-         * Class for nicely organizing view binding code in a separate place.
-         */
-        inner class ViewBindings {
-
-            fun bindTransaction(transaction: Transaction?) {
-                if (transaction == null) return
-
-                val transactionAmountTextAppearance = when (transaction.direction) {
-                    TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
-                    TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
-                }
-                TextViewCompat.setTextAppearance(
-                    binding.transactionAmountView,
-                    transactionAmountTextAppearance
-                )
-            }
+        private fun setTransactionAmountText(stringRes: Int) {
+            binding.transactionAmountText = string(R.string.format__money, stringRes)
         }
+
+        private fun setTransactionDirectionText(stringRes: Int) {
+            binding.transactionDirectionText = string(stringRes)
+        }
+
+        private fun setTransactionDirectionIcon(drawableRes: Int, tintRes: Int) {
+            val tintedDrawable =
+                ResourceUtils.getTintedDrawable(drawable(drawableRes)!!, color(tintRes))
+            binding.transactionDirectionDrawable = tintedDrawable
+        }
+
+        private fun setTransactionAmountTextAppearance(direction: TransactionDirection) {
+            val transactionAmountTextAppearance = when (direction) {
+                TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
+                TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
+            }
+            TextViewCompat.setTextAppearance(
+                binding.transactionAmountView,
+                transactionAmountTextAppearance
+            )
+        }
+    }
+
+    private fun bindTransactionDetailResource(resource: Resource<TransactionDetail>) {
+        binding.transactionDetail = resource.data
+        binding.transactionDetailResource = resource
     }
 }
