@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
+import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragmentDirections.toTransactionDetail
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionDirectionFilter
 import com.spiraclesoftware.androidsample.shared.domain.TransactionListFilter
 import com.spiraclesoftware.androidsample.shared.ui.RetryCallback
+import com.spiraclesoftware.core.data.EventObserver
 import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.utils.LanguageSwitcher
@@ -59,11 +61,7 @@ class TransactionListFragment : Fragment() {
             fastItemAdapter.apply {
                 withSelectable(true)
                 withOnClickListener { _, _, item, _ ->
-                    findNavController().navigate(
-                        TransactionListFragmentDirections.ActionTransactionListFragmentToTransactionDetailFragment(
-                            item.transaction.id.value
-                        )
-                    )
+                    viewModel.openTransactionDetail(item.transaction.id)
                     true
                 }
             }
@@ -133,6 +131,11 @@ class TransactionListFragment : Fragment() {
                 viewLifecycleOwner,
                 Observer(::bindTransactionListFilter)
             )
+
+            viewModel.navigateToDetailAction.observe(this, EventObserver { transactionId ->
+                findNavController().navigate(toTransactionDetail(transactionId.value))
+            })
+
         }
         subscribeUi()
     }

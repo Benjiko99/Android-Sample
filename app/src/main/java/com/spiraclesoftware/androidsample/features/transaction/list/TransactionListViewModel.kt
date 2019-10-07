@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionDirectionFilter
+import com.spiraclesoftware.androidsample.shared.domain.TransactionId
 import com.spiraclesoftware.androidsample.shared.domain.TransactionListFilter
-import com.spiraclesoftware.core.data.AbsentLiveData
-import com.spiraclesoftware.core.data.LiveTrigger
-import com.spiraclesoftware.core.data.MediatorLiveTrigger
-import com.spiraclesoftware.core.data.Resource
+import com.spiraclesoftware.core.data.*
 
 class TransactionListViewModel(
     private val repository: TransactionsRepository
@@ -23,6 +21,9 @@ class TransactionListViewModel(
 
     private val _transactionListFilter = MutableLiveData<TransactionListFilter>()
     private val retryTrigger = LiveTrigger()
+
+    private val _navigateToDetailAction = MutableLiveData<Event<TransactionId>>()
+    val navigateToDetailAction: LiveData<Event<TransactionId>> = _navigateToDetailAction
 
     init {
         // Define all events that should cause data to be reloaded.
@@ -39,6 +40,10 @@ class TransactionListViewModel(
                 AbsentLiveData.create()
             }
         }
+    }
+
+    fun openTransactionDetail(transactionId: TransactionId) {
+        _navigateToDetailAction.value = Event(transactionId)
     }
 
     fun retry() {

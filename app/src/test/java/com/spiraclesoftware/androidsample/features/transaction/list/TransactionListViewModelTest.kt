@@ -3,12 +3,14 @@ package com.spiraclesoftware.androidsample.features.transaction.list
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.*
-import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListViewModel
-import com.spiraclesoftware.androidsample.shared.domain.TransactionDirectionFilter
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
+import com.spiraclesoftware.androidsample.shared.domain.TransactionDirectionFilter
+import com.spiraclesoftware.androidsample.shared.domain.TransactionId
+import com.spiraclesoftware.androidsample.utils.LiveDataTestUtil
 import com.spiraclesoftware.core.data.Resource
 import org.hamcrest.CoreMatchers.notNullValue
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -77,5 +79,15 @@ class TransactionListViewModelTest {
         reset(transactionsRepository)
         transactionListViewModel.retry()
         verify(transactionsRepository).loadTransactionList(any())
+    }
+
+    @Test
+    fun navigateToTransactionDetail() {
+        val transactionId = TransactionId(1)
+        transactionListViewModel.openTransactionDetail(transactionId)
+
+        val navigateEvent =
+            LiveDataTestUtil.getValue(transactionListViewModel.navigateToDetailAction)
+        assertEquals(transactionId, navigateEvent?.getContentIfNotHandled())
     }
 }
