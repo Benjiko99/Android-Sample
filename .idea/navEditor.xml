@@ -8,6 +8,21 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="ratesConverterFragment">
+                    <value>
+                      <LayoutPositions />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </LayoutPositions>
+          </value>
+        </entry>
+        <entry key="nav_transactions.xml">
+          <value>
+            <LayoutPositions>
+              <option name="myPositions">
+                <map>
                   <entry key="transactionDetailFragment">
                     <value>
                       <LayoutPositions>

@@ -9,6 +9,9 @@
     <string name="switch_locale">Switch locale</string>
     <string name="not_implemented">Not implemented</string>
 
+    <!-- Rates Converter -->
+    <string name="rates__converter__title">Rates</string>
+
     <!-- Transaction -->
     <string name="transaction_status__completed">Completed</string>
     <string name="transaction_status__declined">Declined</string>

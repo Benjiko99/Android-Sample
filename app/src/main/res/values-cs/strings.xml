@@ -9,6 +9,9 @@
     <string name="switch_locale">Přepnout jazyk</string>
     <string name="not_implemented">Není implementováno</string>
 
+    <!-- Rates Converter -->
+    <string name="rates__converter__title">Rates</string>
+
     <!-- Transaction -->
     <string name="transaction_status__completed">Dokončený</string>
     <string name="transaction_status__declined">Odmítnutý</string>
