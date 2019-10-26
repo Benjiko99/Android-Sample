@@ -57,6 +57,9 @@ dependencies {
     implementation("com.mikepenz:fastadapter:${Deps.fastAdapter}")
     implementation("com.mikepenz:fastadapter-extensions-binding:${Deps.fastAdapter}")
 
+    implementation("com.github.bumptech.glide:glide:${Deps.glide}")
+    annotationProcessor("com.github.bumptech.glide:compiler:${Deps.glide}")
+
     testImplementation("junit:junit:${Deps.junit}")
     testImplementation("androidx.arch.core:core-testing:${Deps.lifecycle}")
     testImplementation("org.koin:koin-test:${Deps.koin}")

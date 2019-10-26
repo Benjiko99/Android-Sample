@@ -16,6 +16,7 @@ object Deps {
     const val constraintLayout = "2.0.0-beta6"
     const val navigation = "2.2.2"
     const val lifecycle = "2.1.0"
+    const val glide = "4.11.0"
 
     // Tests
     const val junit = "4.13"
