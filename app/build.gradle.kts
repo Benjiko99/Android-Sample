@@ -59,6 +59,7 @@ dependencies {
 
     testImplementation("junit:junit:${Deps.junit}")
     testImplementation("androidx.arch.core:core-testing:${Deps.lifecycle}")
+    testImplementation("org.koin:koin-test:${Deps.koin}")
 
     testImplementation("org.mockito:mockito-core:${Deps.mockito}")
     testImplementation("com.nhaarman:mockito-kotlin:${Deps.mockitoKotlin}")

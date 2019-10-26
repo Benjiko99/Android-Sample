@@ -57,6 +57,7 @@ dependencies {
 
     api("org.koin:koin-android:${Deps.koin}")
     api("org.koin:koin-androidx-viewmodel:${Deps.koin}")
+    testImplementation("org.koin:koin-test:${Deps.koin}")
 
     api("com.squareup.okhttp3:okhttp:${Deps.okhttp}")
     api("com.squareup.okhttp3:logging-interceptor:${Deps.okhttp}")
