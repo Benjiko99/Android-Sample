@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 val ratesModule = module {
 
-    viewModel { RatesConverterViewModel() }
+    viewModel { RatesConverterViewModel(get()) }
 }

@@ -23,7 +23,6 @@ import org.mockito.MockitoAnnotations
 
 class TransactionsRepositoryTest {
 
-    // Executes each task synchronously using Architecture Components.
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 

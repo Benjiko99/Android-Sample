@@ -16,7 +16,6 @@ import org.mockito.MockitoAnnotations
 
 class TransactionDetailViewModelTest {
 
-    // Executes each task synchronously using Architecture Components.
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
