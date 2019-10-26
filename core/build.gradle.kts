@@ -48,6 +48,7 @@ dependencies {
 
     debugApi("com.squareup.leakcanary:leakcanary-android:${Deps.leakCanary}")
 
+    api("com.jakewharton.timber:timber:${Deps.timber}")
     api("com.jakewharton.threetenabp:threetenabp:${Deps.threetenabp}")
     api("com.jakewharton:process-phoenix:${Deps.processPhoenix}")
 

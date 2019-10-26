@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.spiraclesoftware.androidsample.BuildConfig
 import com.spiraclesoftware.androidsample.application.di.appModule
 import com.spiraclesoftware.androidsample.application.di.featureModules
 import com.spiraclesoftware.androidsample.application.di.sharedModule
@@ -14,6 +15,9 @@ import com.spiraclesoftware.core.utils.LanguageSwitcher
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import timber.log.Timber
+import timber.log.Timber.DebugTree
+
 
 class SampleApplication : Application() {
 
@@ -33,6 +37,10 @@ class SampleApplication : Application() {
             androidLogger()
             androidContext(this@SampleApplication)
             modules(listOf(coreModule, appModule, sharedModule) + featureModules)
+        }
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
         }
     }
 
