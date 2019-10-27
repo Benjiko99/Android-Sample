@@ -5,7 +5,9 @@ import com.spiraclesoftware.androidsample.shared.data.ConversionRatesRepository
 import com.spiraclesoftware.androidsample.shared.domain.CurrencyCode
 
 class RatesConverterViewModel(
-    private val ratesRepo: ConversionRatesRepository
+    ratesRepo: ConversionRatesRepository,
+    baseCurrencyCode: CurrencyCode
 ) : ViewModel() {
 
+    val conversionRates = ratesRepo.getConversionRates(baseCurrencyCode)
 }
