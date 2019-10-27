@@ -33,6 +33,13 @@
         <item name="fontFamily">sans-serif</item>
     </style>
 
+    <style name="TextAppearance.ListItem.Title" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.ListItem.Subtitle" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
 
     <style name="TextAppearance.EmptyState.Caption" parent="TextAppearance.MaterialComponents.Headline6" />
 

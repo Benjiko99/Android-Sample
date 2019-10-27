@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="currencyName"
+            type="String" />
+
+        <variable
+            name="currencyCode"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/content__spacing__medium"
+        android:paddingRight="@dimen/content__spacing__medium">
+
+        <ImageView
+            android:id="@+id/countryImageView"
+            android:layout_width="@dimen/icon__large"
+            android:layout_height="@dimen/icon__large"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_czk" />
+
+        <TextView
+            android:id="@+id/currencyNameView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content__spacing__medium"
+            android:layout_marginRight="@dimen/content__spacing__small"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text='@{currencyName}'
+            android:textAppearance="@style/TextAppearance.ListItem.Title"
+            app:layout_constraintBottom_toTopOf="@id/currencyCodeView"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toRightOf="@id/countryImageView"
+            app:layout_constraintRight_toLeftOf="@id/inputView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Czech Republic Koruna" />
+
+        <TextView
+            android:id="@+id/currencyCodeView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content__spacing__medium"
+            android:layout_marginRight="@dimen/content__spacing__small"
+            android:text='@{currencyCode}'
+            android:textAppearance="@style/TextAppearance.ListItem.Subtitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toRightOf="@id/countryImageView"
+            app:layout_constraintRight_toLeftOf="@id/inputView"
+            app:layout_constraintTop_toBottomOf="@id/currencyNameView"
+            tools:text="CZK" />
+
+        <EditText
+            android:id="@+id/inputView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="123.45" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
