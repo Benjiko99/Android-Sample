@@ -15,6 +15,6 @@ interface ApiService {
     fun transactionList(): LiveData<ApiResponse<TransactionListResponse>>
 
     @Headers("Accept: application/json")
-    @GET("transactions/{transaction_id}")
+    @GET("transaction_detail/{transaction_id}")
     fun transactionDetail(@Path("transaction_id") transactionId: Int): LiveData<ApiResponse<TransactionDetail>>
 }

@@ -1,0 +1,28 @@
+{
+  "transactions": {
+    "items": [
+      { "id": 1, "amountInAccountCurrency": 1000, "direction": "INCOMING" },
+      { "id": 2, "amountInAccountCurrency": 500, "direction": "INCOMING" },
+      { "id": 3, "amountInAccountCurrency": 1337, "direction": "OUTGOING" },
+      { "id": 4, "amountInAccountCurrency": 5990, "direction": "INCOMING" },
+      { "id": 5, "amountInAccountCurrency": 440, "direction": "OUTGOING" },
+      { "id": 6, "amountInAccountCurrency": 1750, "direction": "INCOMING" },
+      { "id": 7, "amountInAccountCurrency": 100, "direction": "OUTGOING" },
+      { "id": 8, "amountInAccountCurrency": 3990, "direction": "INCOMING" },
+      { "id": 9, "amountInAccountCurrency": 640, "direction": "OUTGOING" },
+      { "id": 10, "amountInAccountCurrency": 1450, "direction": "INCOMING" }
+    ]
+  },
+  "transaction_detail": [
+    { "id": 1, "contraAccount": { "accountNumber": "3185485345", "accountName": "Robert Martin", "bankCode": "0800" } },
+    { "id": 2, "contraAccount": { "accountNumber": "4787891234", "accountName": "Allen Holub", "bankCode": "0300" } },
+    { "id": 3, "contraAccount": { "accountNumber": "3645485345", "accountName": "Doc Norton", "bankCode": "0400" } },
+    { "id": 4, "contraAccount": { "accountNumber": "8743456789", "accountName": "Kent Beck", "bankCode": "0800" } },
+    { "id": 5, "contraAccount": { "accountNumber": "1451234567", "accountName": "Bret Victor", "bankCode": "0800" } },
+    { "id": 6, "contraAccount": { "accountNumber": "7238912345", "accountName": "Alan Kay", "bankCode": "0800" } },
+    { "id": 7, "contraAccount": { "accountNumber": "6475678912", "accountName": "Martin Fowler", "bankCode": "0500" } },
+    { "id": 8, "contraAccount": { "accountNumber": "8213456789", "accountName": "John Romero", "bankCode": "0500" } },
+    { "id": 9, "contraAccount": { "accountNumber": "4611234567", "accountName": "John Carmack", "bankCode": "0700" } },
+    { "id": 10, "contraAccount": { "accountNumber": "5735491451", "accountName": "Linus Torvalds", "bankCode": "0100" } }
+  ]
+}

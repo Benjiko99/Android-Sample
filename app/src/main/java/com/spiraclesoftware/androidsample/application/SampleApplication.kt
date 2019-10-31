@@ -18,7 +18,7 @@ import org.koin.core.context.startKoin
 class SampleApplication : Application() {
 
     companion object {
-        const val API_SERVICE_BASE_URL = "https://demo0569565.mockable.io/"
+        const val API_SERVICE_BASE_URL = "https://my-json-server.typicode.com/Benjiko99/Android-Sample/"
     }
 
     override fun onCreate() {
