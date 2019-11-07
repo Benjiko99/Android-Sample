@@ -2,6 +2,7 @@ package com.spiraclesoftware.androidsample.features.rates.converter
 
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.spiraclesoftware.androidsample.R
@@ -9,6 +10,7 @@ import com.spiraclesoftware.androidsample.application.GlideRequests
 import com.spiraclesoftware.androidsample.application.extensions.countryImageRes
 import com.spiraclesoftware.androidsample.databinding.RatesConverterConversionRateItemBinding
 import com.spiraclesoftware.androidsample.shared.domain.ConversionRate
+import com.spiraclesoftware.core.ui.FocusEventHook
 import kotlinx.android.synthetic.main.rates__converter__conversion_rate_item.view.*
 
 class ConversionRateItem(
@@ -25,10 +27,10 @@ class ConversionRateItem(
 
     class ViewHolder(val view: View) : FastAdapter.ViewHolder<ConversionRateItem>(view) {
 
-        override fun bindView(item: ConversionRateItem, payloads: List<Any>) {
-            val binding = DataBindingUtil.getBinding(view)
-                ?: RatesConverterConversionRateItemBinding.bind(view)
+        val binding = (DataBindingUtil.getBinding(view)
+            ?: RatesConverterConversionRateItemBinding.bind(view))!!
 
+        override fun bindView(item: ConversionRateItem, payloads: List<Any>) {
             binding.apply {
                 val currency = item.conversionRate.currency
 
@@ -49,6 +51,11 @@ class ConversionRateItem(
             view.currencyNameView.text = null
             view.currencyCodeView.text = null
             view.inputView.text = null
+        }
+
+        abstract class InputFocusEventHook : FocusEventHook<ConversionRateItem>() {
+            override fun onBind(viewHolder: RecyclerView.ViewHolder) =
+                (viewHolder as? ViewHolder)?.binding?.inputView
         }
     }
 }

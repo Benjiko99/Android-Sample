@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.androidsample.application.GlideApp
 import com.spiraclesoftware.androidsample.application.GlideRequests
@@ -51,6 +53,9 @@ class RatesConverterFragment : Fragment() {
 
         fun setupFastItemAdapter() {
             fastItemAdapter = FastItemAdapter()
+            fastItemAdapter.apply {
+                withEventHook(moveFocusedItemToTopEventHook())
+            }
         }
         setupFastItemAdapter()
 
@@ -87,4 +92,51 @@ class RatesConverterFragment : Fragment() {
 
         fastItemAdapter.set(toListItems(rates))
     }
+
+    private fun moveFocusedItemToTopEventHook() =
+        object : ConversionRateItem.ViewHolder.InputFocusEventHook() {
+
+            val delayBeforeMovingItem = 300L
+            var pendingMoveAction: Runnable? = null
+
+            override fun onFocusChange(
+                v: View,
+                position: Int,
+                adapter: FastAdapter<ConversionRateItem>,
+                item: ConversionRateItem,
+                hasFocus: Boolean
+            ) {
+                // Item has gained focus and there isn't a pending move action
+                if (hasFocus && pendingMoveAction == null) {
+                    postMoveAction(position)
+                }
+                // Item has lost focus while waiting to animate the item
+                else {
+                    cancelPendingMoveAction()
+                }
+            }
+
+            private fun postMoveAction(pos: Int) {
+                pendingMoveAction = moveAction(recyclerView, pos)
+                view?.postDelayed(pendingMoveAction, delayBeforeMovingItem)
+            }
+
+            private fun cancelPendingMoveAction() {
+                view?.removeCallbacks(pendingMoveAction)
+                pendingMoveAction = null
+            }
+
+            private fun moveAction(
+                recycler: RecyclerView,
+                position: Int
+            ) = Runnable {
+                fastItemAdapter.move(position, 0)
+
+                recycler.post {
+                    recycler.smoothScrollToPosition(0)
+                }
+
+                pendingMoveAction = null
+            }
+        }
 }
