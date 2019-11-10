@@ -11,7 +11,8 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.application.GlideApp
 import com.spiraclesoftware.androidsample.application.GlideRequests
 import com.spiraclesoftware.androidsample.databinding.RatesConverterFragmentBinding
@@ -30,7 +31,8 @@ class RatesConverterFragment : Fragment() {
     }
 
     private lateinit var binding: RatesConverterFragmentBinding
-    private lateinit var fastItemAdapter: FastItemAdapter<ConversionRateItem>
+    private lateinit var itemAdapter: ItemAdapter<ConversionRateItem>
+    private lateinit var fastAdapter: FastAdapter<ConversionRateItem>
     private lateinit var glideRequests: GlideRequests
 
     override fun onCreateView(
@@ -52,9 +54,12 @@ class RatesConverterFragment : Fragment() {
         toolbar.setupWithNavController(findNavController())
 
         fun setupFastItemAdapter() {
-            fastItemAdapter = FastItemAdapter()
-            fastItemAdapter.apply {
-                withEventHook(moveFocusedItemToTopEventHook())
+            itemAdapter = ItemAdapter<ConversionRateItem>().apply {
+                isUseIdDistributor = true
+            }
+            fastAdapter = FastAdapter.with(itemAdapter)
+            fastAdapter.apply {
+                addEventHook(moveFocusedItemToTopEventHook())
             }
         }
         setupFastItemAdapter()
@@ -64,7 +69,7 @@ class RatesConverterFragment : Fragment() {
 
             recyclerView.apply {
                 layoutManager = linearLayoutManager
-                adapter = fastItemAdapter
+                adapter = fastAdapter
             }
         }
         setupRecyclerView()
@@ -83,14 +88,15 @@ class RatesConverterFragment : Fragment() {
     }
 
     private fun bindConversionRatesResource(resource: Resource<ConversionRates>) {
-        setConversionRates(resource.data?.rates)
+        setConversionRatesToList(resource.data?.rates)
+        // TODO: Show loading state or error states
     }
 
-    private fun setConversionRates(rates: List<ConversionRate>?) {
+    private fun setConversionRatesToList(rates: List<ConversionRate>?) {
         fun toListItems(data: List<ConversionRate>?) =
             data?.map { ConversionRateItem(it, glideRequests) } ?: emptyList()
 
-        fastItemAdapter.set(toListItems(rates))
+        FastAdapterDiffUtil[itemAdapter] = toListItems(rates)
     }
 
     private fun moveFocusedItemToTopEventHook() =
@@ -130,7 +136,7 @@ class RatesConverterFragment : Fragment() {
                 recycler: RecyclerView,
                 position: Int
             ) = Runnable {
-                fastItemAdapter.move(position, 0)
+                itemAdapter.move(position, 0)
 
                 recycler.post {
                     recycler.smoothScrollToPosition(0)

@@ -16,21 +16,23 @@ import kotlinx.android.synthetic.main.rates__converter__conversion_rate_item.vie
 class ConversionRateItem(
     val conversionRate: ConversionRate,
     val glideRequests: GlideRequests
-) :
-    AbstractItem<ConversionRateItem, ConversionRateItem.ViewHolder>() {
+) : AbstractItem<ConversionRateItem.ViewHolder>() {
 
-    override fun getType(): Int = R.id.rates__converter__conversion_rate_item
 
-    override fun getLayoutRes(): Int = R.layout.rates__converter__conversion_rate_item
+    override val type: Int
+        get() = R.id.rates__converter__conversion_rate_item
 
-    override fun getViewHolder(view: View): ViewHolder = ViewHolder(view)
+    override val layoutRes: Int
+        get() = R.layout.rates__converter__conversion_rate_item
 
-    class ViewHolder(val view: View) : FastAdapter.ViewHolder<ConversionRateItem>(view) {
+    override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
+
+    class ViewHolder(view: View) : FastAdapter.ViewHolder<ConversionRateItem>(view) {
 
         val binding = (DataBindingUtil.getBinding(view)
             ?: RatesConverterConversionRateItemBinding.bind(view))!!
 
-        override fun bindView(item: ConversionRateItem, payloads: List<Any>) {
+        override fun bindView(item: ConversionRateItem, payloads: MutableList<Any>) {
             binding.apply {
                 val currency = item.conversionRate.currency
 
@@ -40,17 +42,19 @@ class ConversionRateItem(
                 inputView.setText(item.conversionRate.rate.toString())
 
                 item.glideRequests
-                    .load(currency.countryImageRes(view.context))
+                    .load(currency.countryImageRes(binding.root.context))
                     .into(countryImageView)
             }
         }
 
         override fun unbindView(item: ConversionRateItem) {
-            item.glideRequests.clear(view.countryImageView)
-            view.countryImageView.setImageDrawable(null)
-            view.currencyNameView.text = null
-            view.currencyCodeView.text = null
-            view.inputView.text = null
+            with(binding.root) {
+                item.glideRequests.clear(countryImageView)
+                countryImageView.setImageDrawable(null)
+                currencyNameView.text = null
+                currencyCodeView.text = null
+                inputView.text = null
+            }
         }
 
         abstract class InputFocusEventHook : FocusEventHook<ConversionRateItem>() {
