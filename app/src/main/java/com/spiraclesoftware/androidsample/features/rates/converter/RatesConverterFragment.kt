@@ -99,6 +99,10 @@ class RatesConverterFragment : Fragment() {
         FastAdapterDiffUtil[itemAdapter] = toListItems(rates)
     }
 
+    /**
+     * Hooks to the input field, listening for a focus change.
+     * When the field gains focus, the item is animated with a delay to the top of the list.
+     */
     private fun moveFocusedItemToTopEventHook() =
         object : ConversionRateItem.ViewHolder.InputFocusEventHook() {
 
