@@ -2,6 +2,7 @@ package com.spiraclesoftware.androidsample.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import org.mockito.Mockito
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
@@ -29,4 +30,11 @@ object LiveDataTestUtil {
 
         return data
     }
+
+    /**
+     * For mocking LiveData observers.
+     *
+     * Usage: `val observer = lambdaMock<(String) -> Unit>()`
+     */
+    inline fun <reified T> lambdaMock(): T = Mockito.mock(T::class.java)
 }

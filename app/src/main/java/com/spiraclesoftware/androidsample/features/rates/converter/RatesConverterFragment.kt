@@ -11,8 +11,11 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.DiffCallback
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
+import com.mikepenz.fastadapter.utils.ComparableItemListImpl
 import com.spiraclesoftware.androidsample.application.GlideApp
 import com.spiraclesoftware.androidsample.application.GlideRequests
 import com.spiraclesoftware.androidsample.databinding.RatesConverterFragmentBinding
@@ -20,6 +23,7 @@ import com.spiraclesoftware.androidsample.shared.domain.ConversionRate
 import com.spiraclesoftware.androidsample.shared.domain.ConversionRates
 import com.spiraclesoftware.androidsample.shared.domain.CurrencyCode
 import com.spiraclesoftware.core.data.Resource
+import com.spiraclesoftware.core.data.Status
 import kotlinx.android.synthetic.main.rates__converter__fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -27,12 +31,17 @@ import org.koin.core.parameter.parametersOf
 class RatesConverterFragment : Fragment() {
 
     private val viewModel by viewModel<RatesConverterViewModel> {
+        // TODO: Hardcoded base currency
         parametersOf(CurrencyCode("EUR"))
     }
+//    private val ratesConverter by inject<RatesConverter> {
+//        parametersOf(lifecycle)
+//    }
 
     private lateinit var binding: RatesConverterFragmentBinding
     private lateinit var itemAdapter: ItemAdapter<ConversionRateItem>
     private lateinit var fastAdapter: FastAdapter<ConversionRateItem>
+    private lateinit var itemListImpl: ComparableItemListImpl<ConversionRateItem>
     private lateinit var glideRequests: GlideRequests
 
     override fun onCreateView(
@@ -54,11 +63,18 @@ class RatesConverterFragment : Fragment() {
         toolbar.setupWithNavController(findNavController())
 
         fun setupFastItemAdapter() {
-            itemAdapter = ItemAdapter<ConversionRateItem>().apply {
-                isUseIdDistributor = true
-            }
+            itemAdapter = ItemAdapter()
+//            lhs.name.getText().toString().compareTo(rhs.name.getText().toString())
             fastAdapter = FastAdapter.with(itemAdapter)
+
+            itemListImpl = ComparableItemListImpl(Comparator { lhs, rhs ->
+                lhs.conversionRate.currency.currencyCode.compareTo(rhs.conversionRate.currency.currencyCode)
+            })
+            itemAdapter = ItemAdapter(itemListImpl)
+            fastAdapter = FastAdapter.with(itemAdapter)
+
             fastAdapter.apply {
+                setHasStableIds(true)
                 addEventHook(moveFocusedItemToTopEventHook())
             }
         }
@@ -79,24 +95,74 @@ class RatesConverterFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         fun subscribeUi() {
-            viewModel.conversionRates.observe(
+            /*viewModel.conversionRates.observe(
                 viewLifecycleOwner,
                 Observer(::bindConversionRatesResource)
+            )*/
+
+            // TODO: Set the items only once when entering the screen
+            //  Afterwards, just update the data in each item, not the list itself
+            viewModel.adjustedConversionRates.observe(
+                viewLifecycleOwner,
+                Observer(::bindAdjustedConversionRatesResource)
             )
         }
         subscribeUi()
+
+        // Map ConversionRates from the viewModel to the ratesConverter
+        // TODO: Umm why doesn't the RatesConverter pull this data from the repo himself?
+        //ratesConverter.setConversionRates(viewModel.conversionRates)
     }
 
-    private fun bindConversionRatesResource(resource: Resource<ConversionRates>) {
-        setConversionRatesToList(resource.data?.rates)
+    private fun bindAdjustedConversionRatesResource(resource: Resource<ConversionRates>) {
         // TODO: Show loading state or error states
+        when (resource.status) {
+            Status.SUCCESS -> setConversionRatesToList(resource.data?.rates ?: emptyList())
+            else -> setConversionRatesToList(emptyList())
+        }
     }
 
-    private fun setConversionRatesToList(rates: List<ConversionRate>?) {
-        fun toListItems(data: List<ConversionRate>?) =
-            data?.map { ConversionRateItem(it, glideRequests) } ?: emptyList()
+    private fun setConversionRatesToList(rates: List<ConversionRate>) {
+        fun toListItems(data: List<ConversionRate>) =
+            data.map { rate ->
+                ConversionRateItem(rate, glideRequests)
+            }
 
-        FastAdapterDiffUtil[itemAdapter] = toListItems(rates)
+        val listItems = toListItems(rates)
+        // TODO: I'll just be doing the sorting in the viewModel
+        //  So before he sends me the data to display, he applies all the sorting to it on his end
+
+        // TODO: Orientation change makes us lose the order
+        // retain each existing items position in the list,
+        // by simply sorting it by its position in the currently active data set
+        //.sortedBy { itemAdapter.getAdapterPosition(it.identifier) }
+
+        FastAdapterDiffUtil.set(itemAdapter, listItems, DiffCallbackImpl())
+    }
+
+    // TODO: Should be part of the list item class?
+    private class DiffCallbackImpl<Item : IItem<*>> : DiffCallback<Item> {
+        override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+            return oldItem.identifier == newItem.identifier
+        }
+
+        override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun getChangePayload(
+            oldItem: Item,
+            oldItemPosition: Int,
+            newItem: Item,
+            newItemPosition: Int
+        ): Any? {
+            if (oldItem is ConversionRateItem && newItem is ConversionRateItem) {
+                if (oldItem.conversionRate != newItem.conversionRate) {
+                    return newItem.conversionRate
+                }
+            }
+            return null
+        }
     }
 
     /**
@@ -140,6 +206,7 @@ class RatesConverterFragment : Fragment() {
                 recycler: RecyclerView,
                 position: Int
             ) = Runnable {
+                //                viewModel.moveListItem(position, 0)
                 itemAdapter.move(position, 0)
 
                 recycler.post {

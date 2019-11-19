@@ -4,6 +4,7 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import timber.log.Timber
 
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
@@ -52,6 +53,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>
             result.removeSource(dbSource)
             when (response) {
                 is ApiSuccessResponse -> {
+                    Timber.d(response.body.toString())
                     appExecutors.diskIO().execute {
                         saveCallResult(processResponse(response))
                         appExecutors.mainThread().execute {
@@ -73,6 +75,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                     }
                 }
                 is ApiErrorResponse -> {
+                    Timber.e(response.errorMessage)
                     onFetchFailed()
                     result.addSource(dbSource) { newData ->
                         setValue(Resource.error(response.errorMessage, newData))

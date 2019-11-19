@@ -5,13 +5,18 @@
 
     <data>
 
-        <variable
-            name="currencyName"
-            type="String" />
+        <import type="androidx.databinding.ObservableField" />
+
+        <import type="com.spiraclesoftware.androidsample.shared.domain.ConversionRate" />
 
         <variable
-            name="currencyCode"
-            type="String" />
+            name="conversionRate"
+            type="ConversionRate" />
+
+        <variable
+            name="inputValue"
+            type="ObservableField&lt;String>" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +44,7 @@
             android:layout_marginRight="@dimen/content__spacing__small"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text='@{currencyName}'
+            android:text='@{conversionRate.currency.getDisplayName()}'
             android:textAppearance="@style/TextAppearance.ListItem.Title"
             app:layout_constraintBottom_toTopOf="@id/currencyCodeView"
             app:layout_constraintHorizontal_bias="0"
@@ -55,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/content__spacing__medium"
             android:layout_marginRight="@dimen/content__spacing__small"
-            android:text='@{currencyCode}'
+            android:text='@{conversionRate.currency.getCurrencyCode()}'
             android:textAppearance="@style/TextAppearance.ListItem.Subtitle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
@@ -70,6 +75,7 @@
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
+            android:text="@={inputValue}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
