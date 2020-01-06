@@ -24,5 +24,11 @@
     { "id": 8, "contraAccount": { "accountNumber": "8213456789", "accountName": "John Romero", "bankCode": "0500" } },
     { "id": 9, "contraAccount": { "accountNumber": "4611234567", "accountName": "John Carmack", "bankCode": "0700" } },
     { "id": 10, "contraAccount": { "accountNumber": "5735491451", "accountName": "Linus Torvalds", "bankCode": "0100" } }
+  ],
+  "posts": [
+    { "id": 1, "createdAt": "2019-12-22T10:24:00+00:00", "type": 0, "title": "Hello World", "text": "Asdfgh?" },
+    { "id": 2, "createdAt": "2019-12-22T11:00:34+00:00", "type": 0, "title": "Hello World, again?!", "text": "Oh no" },
+    { "id": 3, "createdAt": "2019-12-22T12:48:10+00:00", "type": 0, "title": "Go away, World", "text": "First line\nSecond line" },
+    { "id": 4, "createdAt": "2019-12-22T13:55:53+00:00", "type": 0, "title": "Hello Sailor", "text": "Arrgh!" }
   ]
 }
