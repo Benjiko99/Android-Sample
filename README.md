@@ -21,9 +21,9 @@ Debugging is facilitated by **LeakCanary** and **Stetho**.
 
 Back-end
 --------
-The app is communicating with a REST API documented at http://docs.airbank.apiary.io/.
+The app is communicating with a static REST API at https://my-json-server.typicode.com/Benjiko99/Android-Sample/
 
-The API is hosted at https://demo0569565.mockable.io/
+The API returns what is defined in the [db.json](https://github.com/Benjiko99/Android-Sample/blob/master/db.json) file within this repository.
 
 License
 -------
