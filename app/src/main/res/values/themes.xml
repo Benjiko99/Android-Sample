@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Base.AppTheme">
+        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorPrimaryDark">@color/blue_700</item>
+        <item name="colorAccent">@color/pink_600</item>
+        <item name="colorSurface">@color/gray_50</item>
+        <item name="android:colorBackground">@color/gray_50</item>
+
+        <item name="toolbarTextColor">@color/material_on_surface_emphasis_high_type</item>
+
+        <item name="toolbarNavigationButtonStyle">@style/AppTheme.Toolbar.Button.Navigation</item>
     </style>
 
-    <style name="AppTheme" parent="BaseAppTheme" />
+    <style name="AppTheme.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="android:theme">@style/AppTheme.ThemeOverlay.Toolbar</item>
+        <item name="android:background">?android:colorBackground</item>
+        <item name="titleTextColor">?toolbarTextColor</item>
+    </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+    <style name="AppTheme.ThemeOverlay.Toolbar" parent="">
+        <item name="colorControlNormal">?toolbarTextColor</item>
+        <item name="actionMenuTextColor">?toolbarTextColor</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+    <style name="AppTheme.Toolbar.Button.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="tint">?toolbarTextColor</item>
+    </style>
 
 </resources>
