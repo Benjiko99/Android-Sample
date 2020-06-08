@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.spiraclesoftware.androidsample.application.di.appModule
 import com.spiraclesoftware.androidsample.application.di.featureModules
 import com.spiraclesoftware.androidsample.application.di.sharedModule
@@ -29,6 +30,7 @@ class SampleApplication : Application() {
 
         LeakCanary.install(this)
         Stetho.initializeWithDefaults(this)
+        AndroidThreeTen.init(this)
 
         startKoin {
             androidLogger()

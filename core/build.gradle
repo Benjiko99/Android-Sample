@@ -59,6 +59,8 @@ dependencies {
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
 
+    api "com.jakewharton.threetenabp:threetenabp:${versions.threetenabp}"
+
     api "androidx.appcompat:appcompat:${versions.androidx}"
     api "androidx.recyclerview:recyclerview:${versions.androidx}"
 
