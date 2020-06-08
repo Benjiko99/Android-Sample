@@ -10,6 +10,7 @@
           "currency": "EUR"
         },
         "transferDirection": "OUTGOING",
+        "category": "ENTERTAINMENT",
         "status": "COMPLETED",
         "cardDescription": "VISA **9400",
         "noteToSelf": "Half-Life: Alyx"
@@ -23,6 +24,7 @@
           "currency": "EUR"
         },
         "transferDirection": "INCOMING",
+        "category": "TRANSFERS",
         "status": "COMPLETED"
       },
       {
@@ -34,6 +36,7 @@
           "currency": "USD"
         },
         "transferDirection": "OUTGOING",
+        "category": "RESTAURANTS",
         "status": "DECLINED"
       }
     ]
