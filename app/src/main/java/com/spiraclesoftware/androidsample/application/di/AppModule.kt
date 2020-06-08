@@ -10,10 +10,12 @@ import com.spiraclesoftware.androidsample.application.data.ApiService
 import com.spiraclesoftware.core.data.LiveDataCallAdapterFactory
 import com.spiraclesoftware.core.data.UniqueIdentifier
 import com.spiraclesoftware.core.data.UniqueIdentifierAdapter
+import com.spiraclesoftware.core.data.ZonedDateTimeAdapter
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
+import org.threeten.bp.ZonedDateTime
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -39,7 +41,12 @@ val appModule = module {
             .registerTypeAdapter(
                 UniqueIdentifier::class.java,
                 UniqueIdentifierAdapter()
-            ).create()
+            )
+            .registerTypeAdapter(
+                ZonedDateTime::class.java,
+                ZonedDateTimeAdapter()
+            )
+            .create()
     }
 
     single<OkHttpClient> {
