@@ -1,8 +1,41 @@
 {
   "transactions": {
     "items": [
-      { "id": 1, "name": "Paypal *Steam", "processingDate": "2019-05-15T22:22:00+00:00", "amountInAccountCurrency": "49.99", "transferDirection": "OUTGOING", "status": "COMPLETED", "cardDescription": "VISA **9400", "noteToSelf": "Half-Life: Alyx" },
-      { "id": 2, "name": "Salary", "processingDate": "2019-05-14T09:00:00+00:00", "amountInAccountCurrency": "1000.00", "transferDirection": "INCOMING", "status": "COMPLETED" }
+      {
+        "id": 1,
+        "name": "Paypal *Steam",
+        "processingDate": "2019-05-15T22:22:00+00:00",
+        "money": {
+          "amount": "49.99",
+          "currency": "EUR"
+        },
+        "transferDirection": "OUTGOING",
+        "status": "COMPLETED",
+        "cardDescription": "VISA **9400",
+        "noteToSelf": "Half-Life: Alyx"
+      },
+      {
+        "id": 2,
+        "name": "Salary",
+        "processingDate": "2019-05-14T09:00:00+00:00",
+        "money": {
+          "amount": "2000.00",
+          "currency": "EUR"
+        },
+        "transferDirection": "INCOMING",
+        "status": "COMPLETED"
+      },
+      {
+        "id": 3,
+        "name": "Take-out Burger",
+        "processingDate": "2019-04-28T12:34:56+02:00",
+        "money": {
+          "amount": "5.49",
+          "currency": "USD"
+        },
+        "transferDirection": "OUTGOING",
+        "status": "DECLINED"
+      }
     ]
   }
 }
