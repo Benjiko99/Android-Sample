@@ -11,7 +11,6 @@ import com.spiraclesoftware.androidsample.application.di.featureModules
 import com.spiraclesoftware.androidsample.application.di.sharedModule
 import com.spiraclesoftware.core.di.coreModule
 import com.spiraclesoftware.core.utils.LanguageSwitcher
-import com.squareup.leakcanary.LeakCanary
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -26,9 +25,7 @@ class SampleApplication : Application() {
         super.onCreate()
 
         if (ProcessPhoenix.isPhoenixProcess(this)) return
-        if (LeakCanary.isInAnalyzerProcess(this)) return
 
-        LeakCanary.install(this)
         Stetho.initializeWithDefaults(this)
         AndroidThreeTen.init(this)
 

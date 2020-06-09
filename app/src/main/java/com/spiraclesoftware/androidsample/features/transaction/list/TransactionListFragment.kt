@@ -24,7 +24,7 @@ import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.utils.LanguageSwitcher
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TransactionListFragment : Fragment() {
 
@@ -134,7 +134,7 @@ class TransactionListFragment : Fragment() {
                 Observer(::bindTransactionListFilter)
             )
 
-            viewModel.navigateToDetailAction.observe(this, EventObserver { transactionId ->
+            viewModel.navigateToDetailAction.observe(viewLifecycleOwner, EventObserver { transactionId ->
                 findNavController().navigate(toTransactionDetail(transactionId.value))
             })
 

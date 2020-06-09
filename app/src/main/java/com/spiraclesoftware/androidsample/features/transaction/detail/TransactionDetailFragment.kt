@@ -22,7 +22,7 @@ import com.spiraclesoftware.core.extensions.drawable
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.utils.ResourceUtils
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TransactionDetailFragment : Fragment() {
 
@@ -55,7 +55,7 @@ class TransactionDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val params = TransactionDetailFragmentArgs.fromBundle(arguments!!)
+        val params = TransactionDetailFragmentArgs.fromBundle(requireArguments())
 
         viewModel.setTransactionId(TransactionId(params.transactionId))
 

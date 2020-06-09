@@ -3,7 +3,7 @@ apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdkVersion app.compileSdk
@@ -42,7 +42,7 @@ allOpen {
 
 dependencies {
     ext.localVersions = [
-            'stetho': '1.5.0',
+            'stetho': '1.5.1',
             'fastAdapter': '3.3.1',
     ]
     // combine with project-level versions
@@ -53,8 +53,8 @@ dependencies {
 
     implementation "com.facebook.stetho:stetho:${versions.stetho}"
 
-    implementation "android.arch.navigation:navigation-fragment-ktx:${versions.navigationComp}"
-    implementation "android.arch.navigation:navigation-ui-ktx:${versions.navigationComp}"
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
 
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
 
@@ -62,7 +62,7 @@ dependencies {
     implementation "com.mikepenz:fastadapter-commons:${versions.fastAdapter}"
 
     testImplementation "junit:junit:${versions.junit}"
-    testImplementation "androidx.arch.core:core-testing:${versions.lifecycleComp}"
+    testImplementation "androidx.arch.core:core-testing:${versions.lifecycle}"
 
     testImplementation "org.mockito:mockito-core:${versions.mockito}"
     testImplementation "com.nhaarman:mockito-kotlin:${versions.mockitoKotlin}"

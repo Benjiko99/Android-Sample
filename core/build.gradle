@@ -42,14 +42,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     debugApi "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}"
-    releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
-    debugApi "com.squareup.leakcanary:leakcanary-support-fragment:${versions.leakCanary}"
 
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
 
     api "org.koin:koin-android:${versions.koin}"
-    api "org.koin:koin-android-viewmodel:${versions.koin}"
+    api "org.koin:koin-androidx-viewmodel:${versions.koin}"
 
     api "com.squareup.okhttp3:okhttp:${versions.okhttp}"
     api "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
@@ -63,8 +61,6 @@ dependencies {
 
     api "androidx.appcompat:appcompat:${versions.androidx}"
     api "androidx.recyclerview:recyclerview:${versions.androidx}"
-
-    api "androidx.lifecycle:lifecycle-extensions:${versions.lifecycleComp}"
 
     api "com.google.android.material:material:${versions.androidx}"
 
