@@ -6,9 +6,6 @@
 
     <data>
 
-        <variable
-            name="retryCallback"
-            type="com.spiraclesoftware.androidsample.shared.ui.RetryCallback" />
 
         <variable
             name="transactionAmountText"
@@ -112,12 +109,12 @@
                     app:barrierDirection="top"
                     app:constraint_referenced_ids="detailsContainer, loadingState" />
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:id="@+id/detailsContainer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:goneUnless="@{transactionDetail != null}"
+                    app:goneUnless="@{transaction != null}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="@id/divider"
                     app:layout_constraintRight_toRightOf="parent"
@@ -126,31 +123,20 @@
                     <include
                         layout="@layout/transaction__detail__detail_item"
                         app:itemLabel='@{@string/transaction__detail__account_number}'
-                        app:itemValue='@{transactionDetail.contraAccount.accountNumber}' />
+                        app:itemValue='@{transaction.contraAccount.accountNumber}' />
 
                     <include
                         layout="@layout/transaction__detail__detail_item"
                         app:itemLabel='@{@string/transaction__detail__account_name}'
-                        app:itemValue='@{transactionDetail.contraAccount.accountName}' />
+                        app:itemValue='@{transaction.contraAccount.accountName}' />
 
                     <include
                         layout="@layout/transaction__detail__detail_item"
                         app:itemLabel='@{@string/transaction__detail__bank_code}'
                         app:itemValue='@{transactionDetail.contraAccount.bankCode}' />
-
                 </LinearLayout>
 
-                <include
-                    android:id="@+id/loadingState"
-                    layout="@layout/loading_state"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:callback="@{() -> retryCallback.retry()}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider"
-                    app:resource="@{transactionDetailResource}" />
+                </LinearLayout>-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

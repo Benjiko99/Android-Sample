@@ -18,13 +18,4 @@ object TestData {
         get() = transactions.filter {
             it.direction == TransactionDirection.OUTGOING
         }
-
-    val transactionDetail: TransactionDetail =
-        TransactionDetail(
-            contraAccount = Account(
-                accountNumber = "123456789",
-                accountName = "Test Account",
-                bankCode = "1234"
-            )
-        )
 }

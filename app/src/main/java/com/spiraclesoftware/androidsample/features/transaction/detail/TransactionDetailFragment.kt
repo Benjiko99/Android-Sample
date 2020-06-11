@@ -12,10 +12,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionDetail
 import com.spiraclesoftware.androidsample.shared.domain.TransactionDirection
 import com.spiraclesoftware.androidsample.shared.domain.TransactionId
-import com.spiraclesoftware.androidsample.shared.ui.RetryCallback
+import com.spiraclesoftware.androidsample.shared.ui.DateTimeFormat
 import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.drawable
@@ -38,12 +37,6 @@ class TransactionDetailFragment : Fragment() {
         binding = TransactionDetailFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        binding.retryCallback = object : RetryCallback {
-            override fun retry() {
-                viewModel.retry()
-            }
-        }
-
         return binding.root
     }
 
@@ -63,11 +56,6 @@ class TransactionDetailFragment : Fragment() {
             viewModel.transaction.observe(
                 viewLifecycleOwner,
                 TransactionResourceObserver()
-            )
-
-            viewModel.transactionDetail.observe(
-                viewLifecycleOwner,
-                Observer(::bindTransactionDetailResource)
             )
         }
         subscribeUi()
@@ -111,8 +99,7 @@ class TransactionDetailFragment : Fragment() {
         }
     }
 
-    private fun bindTransactionDetailResource(resource: Resource<TransactionDetail>) {
-        binding.transactionDetail = resource.data
-        binding.transactionDetailResource = resource
+        binding.iconDrawable = tintedDrawable(drawableRes, tint)
+        binding.iconBgDrawable = tintedDrawable(R.drawable.shp_circle, fadedTint)
     }
 }

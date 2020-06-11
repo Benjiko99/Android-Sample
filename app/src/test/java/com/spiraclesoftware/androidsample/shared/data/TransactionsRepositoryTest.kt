@@ -8,7 +8,6 @@ import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.application.data.ApiService
 import com.spiraclesoftware.androidsample.shared.domain.*
 import com.spiraclesoftware.androidsample.utils.LiveDataTestUtil
-import com.spiraclesoftware.core.data.AssociatedItemCache
 import com.spiraclesoftware.core.data.AssociatedListCache
 import com.spiraclesoftware.core.data.InstantAppExecutors
 import com.spiraclesoftware.core.data.Status
@@ -31,9 +30,6 @@ class TransactionsRepositoryTest {
     @Mock
     private lateinit var listCache: AssociatedListCache<TransactionId, Transaction>
 
-    @Mock
-    private lateinit var detailCache: AssociatedItemCache<TransactionId, TransactionDetail>
-
     private lateinit var transactionsRepository: TransactionsRepository
 
     @Before
@@ -41,12 +37,11 @@ class TransactionsRepositoryTest {
         MockitoAnnotations.initMocks(this)
 
         transactionsRepository =
-                TransactionsRepository(
-                    InstantAppExecutors(),
-                    apiService,
-                    listCache,
-                    detailCache
-                )
+            TransactionsRepository(
+                InstantAppExecutors(),
+                apiService,
+                listCache
+            )
     }
 
     private fun stubTransactionListCache(
@@ -55,12 +50,6 @@ class TransactionsRepositoryTest {
     ) {
         listCache.stub {
             on { get() }.doReturn(list)
-            on { get(any()) }.doReturn(single)
-        }
-    }
-
-    private fun stubTransactionDetailCache(single: TransactionDetail? = null) {
-        detailCache.stub {
             on { get(any()) }.doReturn(single)
         }
     }
@@ -100,17 +89,5 @@ class TransactionsRepositoryTest {
         val transactionsResource = LiveDataTestUtil.getValue(transactionsLiveData)
         assertEquals(Status.SUCCESS, transactionsResource?.status)
         assertEquals(TestData.transactionsOutgoing, transactionsResource?.data)
-    }
-
-    @Test
-    fun `Given that detail is cached, return cached detail`() {
-        stubTransactionDetailCache(single = TestData.transactionDetail)
-
-        val transactionDetailLiveData =
-            transactionsRepository.loadTransactionDetail(TransactionId(1))
-
-        val transactionDetailResource = LiveDataTestUtil.getValue(transactionDetailLiveData)
-        assertEquals(Status.SUCCESS, transactionDetailResource?.status)
-        assertEquals(TestData.transactionDetail, transactionDetailResource?.data)
     }
 }

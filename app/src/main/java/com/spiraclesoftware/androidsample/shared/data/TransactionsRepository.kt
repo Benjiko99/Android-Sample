@@ -12,8 +12,7 @@ import com.spiraclesoftware.core.testing.OpenForTesting
 class TransactionsRepository(
     private val appExecutors: AppExecutors,
     private val apiService: ApiService,
-    private val listCache: AssociatedListCache<TransactionId, Transaction>,
-    private val detailCache: AssociatedItemCache<TransactionId, TransactionDetail>
+    private val listCache: AssociatedListCache<TransactionId, Transaction>
 ) {
 
     fun loadTransactionList() = loadTransactionList(
@@ -85,35 +84,6 @@ class TransactionsRepository(
 
             override fun onFetchFailed() {
                 listCache.isDirty = true
-            }
-        }.asLiveData()
-    }
-
-    fun loadTransactionDetail(transactionId: TransactionId): LiveData<Resource<TransactionDetail>> {
-        return object : NetworkBoundResource<TransactionDetail, TransactionDetail>(appExecutors) {
-
-            override fun saveCallResult(data: TransactionDetail) {
-                detailCache.set(transactionId, data)
-            }
-
-            override fun shouldFetch(data: TransactionDetail?): Boolean {
-                return detailCache.isDirty || data == null
-            }
-
-            override fun loadFromCache(): LiveData<TransactionDetail> {
-                val cachedData = detailCache.get(transactionId)
-
-                return if (cachedData == null) {
-                    AbsentLiveData.create()
-                } else {
-                    MutableLiveData<TransactionDetail>().apply { value = cachedData }
-                }
-            }
-
-            override fun createCall() = apiService.transactionDetail(transactionId.value)
-
-            override fun onFetchFailed() {
-                detailCache.isDirty = true
             }
         }.asLiveData()
     }
