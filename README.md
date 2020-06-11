@@ -6,7 +6,6 @@ The files are organized in a package-by-feature manner, where all files related 
 There may also be sub-packages to split large features into smaller ones, e.g.: "list" and "detail".  
 The feature is then broken down into its components, like: "ui" and "domain".
 
-
 Libraries
 ---------
 The app is written entirely in **Kotlin** and uses **AndroidX** components.
@@ -21,9 +20,7 @@ Debugging is facilitated by **LeakCanary** and **Stetho**.
 
 Back-end
 --------
-The app is communicating with a static REST API at https://my-json-server.typicode.com/Benjiko99/Android-Sample/
-
-The API returns what is defined in the [db.json](https://github.com/Benjiko99/Android-Sample/blob/master/db.json) file within this repository.
+The app is communicating with a REST API at https://benjiko99-android-sample.builtwithdark.com/ built with the serverless Dark language/platform.
 
 License
 -------
