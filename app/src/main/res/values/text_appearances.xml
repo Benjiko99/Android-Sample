@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="TextAppearance.Transaction.Amount" parent="TextAppearance.MaterialComponents.Body1" />
-
-    <style name="TextAppearance.Transaction.Amount.Incoming">
-        <item name="android:textColor">@color/transaction_incoming</item>
+    <style name="TextAppearance.ScreenHeader" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">36sp</item>
+        <item name="fontFamily">sans-serif</item>
     </style>
 
-    <style name="TextAppearance.Transaction.Amount.Outgoing">
-        <item name="android:textColor">@color/transaction_outgoing</item>
+    <style name="TextAppearance.Transaction.Amount" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.Transaction.Amount.Large" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">36sp</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Transaction.Name" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Transaction.Date" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
     <style name="TextAppearance.EmptyState.Caption" parent="TextAppearance.MaterialComponents.Headline6" />

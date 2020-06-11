@@ -5,8 +5,8 @@
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorPrimaryDark">@color/blue_700</item>
         <item name="colorAccent">@color/pink_600</item>
-        <item name="colorSurface">@color/gray_50</item>
-        <item name="android:colorBackground">@color/gray_50</item>
+        <item name="colorSurface">@color/gray_200</item>
+        <item name="android:colorBackground">@color/gray_200</item>
 
         <item name="toolbarTextColor">@color/material_on_surface_emphasis_high_type</item>
 

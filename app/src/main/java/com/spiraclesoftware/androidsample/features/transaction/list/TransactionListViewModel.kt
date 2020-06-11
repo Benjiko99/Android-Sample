@@ -6,9 +6,9 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionDirectionFilter
 import com.spiraclesoftware.androidsample.shared.domain.TransactionId
 import com.spiraclesoftware.androidsample.shared.domain.TransactionListFilter
+import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
 import com.spiraclesoftware.core.data.*
 
 class TransactionListViewModel(
@@ -50,9 +50,9 @@ class TransactionListViewModel(
         retryTrigger.trigger()
     }
 
-    fun setTransactionDirectionFilter(transactionDirectionFilter: TransactionDirectionFilter) {
-        if (_transactionListFilter.value?.transactionDirectionFilter != transactionDirectionFilter) {
-            _transactionListFilter.value = TransactionListFilter(transactionDirectionFilter)
+    fun setTransferDirectionFilter(transferDirectionFilter: TransferDirectionFilter) {
+        if (_transactionListFilter.value?.transferDirectionFilter != transferDirectionFilter) {
+            _transactionListFilter.value = TransactionListFilter(transferDirectionFilter)
         }
     }
 }

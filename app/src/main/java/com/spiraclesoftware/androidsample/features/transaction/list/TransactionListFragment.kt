@@ -1,23 +1,24 @@
 package com.spiraclesoftware.androidsample.features.transaction.list
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
-import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragmentDirections.toTransactionDetail
+import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionDirectionFilter
 import com.spiraclesoftware.androidsample.shared.domain.TransactionListFilter
+import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.shared.ui.RetryCallback
 import com.spiraclesoftware.core.data.EventObserver
 import com.spiraclesoftware.core.data.Resource
@@ -50,13 +51,13 @@ class TransactionListFragment : Fragment() {
         return binding.root
     }
 
-    // NOTE: We're setting up our views here instead of in onCreateView() because we're using Kotlin Synthetic Properties
-    // to bind our views which requires the fragment's view to be attached.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
         toolbar.setupWithNavController(findNavController())
+
+        toolbar.inflateMenu(R.menu.transaction_list_menu)
+        toolbar.setOnMenuItemClickListener(::onMenuItemClicked)
 
         fun setupFastItemAdapter() {
             fastItemAdapter = FastItemAdapter()
@@ -77,12 +78,6 @@ class TransactionListFragment : Fragment() {
                 layoutManager = linearLayoutManager
                 adapter = fastItemAdapter
                 itemAnimator = null
-                addItemDecoration(
-                    DividerItemDecoration(
-                        requireContext(),
-                        linearLayoutManager.orientation
-                    )
-                )
             }
         }
         setupRecyclerView()
@@ -93,7 +88,7 @@ class TransactionListFragment : Fragment() {
                 return ArrayAdapter(
                     requireContext(),
                     android.R.layout.simple_spinner_item,
-                    TransactionDirectionFilter.values().map { string(it.stringRes) }
+                    TransferDirectionFilter.values().map { string(it.stringRes) }
                 ).also {
                     it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 }
@@ -110,8 +105,8 @@ class TransactionListFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    val transactionDirectionFilter = TransactionDirectionFilter.values()[position]
-                    viewModel.setTransactionDirectionFilter(transactionDirectionFilter)
+                    val transferDirectionFilter = TransferDirectionFilter.values()[position]
+                    viewModel.setTransferDirectionFilter(transferDirectionFilter)
                 }
             }
         }
@@ -120,8 +115,6 @@ class TransactionListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        setHasOptionsMenu(true)
 
         fun subscribeUi() {
             viewModel.transactions.observe(
@@ -137,7 +130,6 @@ class TransactionListFragment : Fragment() {
             viewModel.navigateToDetailAction.observe(viewLifecycleOwner, EventObserver { transactionId ->
                 findNavController().navigate(toTransactionDetail(transactionId.value))
             })
-
         }
         subscribeUi()
     }
@@ -155,10 +147,10 @@ class TransactionListFragment : Fragment() {
     }
 
     private fun bindTransactionListFilter(filter: TransactionListFilter) {
-        filterSpinner.setSelection(filter.transactionDirectionFilter.ordinal)
+        filterSpinner.setSelection(filter.transferDirectionFilter.ordinal)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_switch_locale -> {
                 LanguageSwitcher.toggleLanguageAndRestart(requireContext())
@@ -167,10 +159,5 @@ class TransactionListFragment : Fragment() {
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.transaction_list_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 }

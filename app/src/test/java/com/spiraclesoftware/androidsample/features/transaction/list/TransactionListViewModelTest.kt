@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.*
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionDirectionFilter
+import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.shared.domain.TransactionId
 import com.spiraclesoftware.androidsample.utils.LiveDataTestUtil
 import com.spiraclesoftware.core.data.Resource
@@ -45,13 +45,13 @@ class TransactionListViewModelTest {
 
     @Test
     fun dontFetchWithoutObservers() {
-        transactionListViewModel.setTransactionDirectionFilter(TransactionDirectionFilter.ALL)
+        transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
         verify(transactionsRepository, never()).loadTransactionList(any())
     }
 
     @Test
     fun fetchWhenObserved() {
-        transactionListViewModel.setTransactionDirectionFilter(TransactionDirectionFilter.ALL)
+        transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
         transactionListViewModel.transactions.observeForever(mock())
         verify(transactionsRepository).loadTransactionList(any())
     }
@@ -64,13 +64,13 @@ class TransactionListViewModelTest {
         verifyNoMoreInteractions(observer)
         verifyNoMoreInteractions(transactionsRepository)
 
-        transactionListViewModel.setTransactionDirectionFilter(TransactionDirectionFilter.ALL)
+        transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
         verify(transactionsRepository).loadTransactionList(any())
     }
 
     @Test
     fun retry() {
-        transactionListViewModel.setTransactionDirectionFilter(TransactionDirectionFilter.ALL)
+        transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
         verifyNoMoreInteractions(transactionsRepository)
 
         transactionListViewModel.transactions.observeForever(mock())

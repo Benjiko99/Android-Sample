@@ -7,17 +7,19 @@
     <string name="unknown_error">Neznámá chyba</string>
     <string name="switch_locale">Přepnout jazyk</string>
 
-    <string name="format__money">%d Kč</string>
-
     <!-- Transaction -->
-    <string name="transaction_direction__incoming">Příchozí</string>
-    <string name="transaction_direction__outgoing">Odchozí</string>
+    <string name="transaction_status__completed">Dokončený</string>
+    <string name="transaction_status__declined">Odmítnutý</string>
+    <string name="transaction_category__entertainment">Zábava</string>
+    <string name="transaction_category__restaurants">Restaurace</string>
+    <string name="transaction_category__groceries">Potraviny</string>
+    <string name="transaction_category__transfers">Převody</string>
 
     <!-- Transaction List -->
     <string name="transaction__list__title">Transakce</string>
-    <string name="transaction__list__filter__transaction_direction__all">Všechny transakce</string>
-    <string name="transaction__list__filter__transaction_direction__incoming">Příchozí transakce</string>
-    <string name="transaction__list__filter__transaction_direction__outgoing">Odchozí transakce</string>
+    <string name="transaction__list__filter__transfer_direction__all">Všechny transakce</string>
+    <string name="transaction__list__filter__transfer_direction__incoming">Příchozí transakce</string>
+    <string name="transaction__list__filter__transfer_direction__outgoing">Odchozí transakce</string>
 
     <string name="transaction__list__empty_state__no_transactions__caption">Nemáte žádné transakce</string>
     <string name="transaction__list__empty_state__no_transactions__message">Když provedete nebo obdržíte platbu, zobrazí se zde.</string>
@@ -26,8 +28,10 @@
     <string name="transaction__list__empty_state__no_results__message">Nenašli jsme žádné odpovídající transakce.</string>
 
     <!-- Transaction Detail -->
-    <string name="transaction__detail__title">Detail transakce</string>
-    <string name="transaction__detail__account_number">Číslo účtu:</string>
-    <string name="transaction__detail__account_name">Jméno účtu:</string>
-    <string name="transaction__detail__bank_code">Bankovní kód:</string>
+    <string name="transaction__detail__status">Stav</string>
+    <string name="transaction__detail__card">Karta</string>
+    <string name="transaction__detail__statement">Potvrzení</string>
+    <string name="transaction__detail__note">Poznámka</string>
+    <string name="transaction__detail__note__edit">Upravit</string>
+    <string name="transaction__detail__note__add">Přidat poznámku</string>
 </resources>

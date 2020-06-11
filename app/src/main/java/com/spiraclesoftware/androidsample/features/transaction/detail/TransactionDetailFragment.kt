@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.TextViewCompat
+import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -12,14 +12,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionDirection
 import com.spiraclesoftware.androidsample.shared.domain.TransactionId
 import com.spiraclesoftware.androidsample.shared.ui.DateTimeFormat
 import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.extensions.color
-import com.spiraclesoftware.core.extensions.drawable
-import com.spiraclesoftware.core.extensions.string
-import com.spiraclesoftware.core.utils.ResourceUtils
+import com.spiraclesoftware.core.extensions.tintedDrawable
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -65,39 +62,31 @@ class TransactionDetailFragment : Fragment() {
 
         override fun onChanged(resource: Resource<Transaction>?) {
             (resource?.data)?.let { transaction ->
-                setTransactionAmountText(transaction.amountInAccountCurrency)
-                val direction = transaction.direction
-                setTransactionDirectionText(direction.getStringRes())
-                setTransactionDirectionIcon(direction.getDrawableRes(), direction.getColorRes())
-                setTransactionAmountTextAppearance(direction)
+                //toolbar.title = transaction.name
+
+                setAmountText(transaction.formattedMoney)
+                setNameText(transaction.name)
+                setDateText(transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME))
+                setCategoryIcon(transaction.category.drawableRes, transaction.category.colorRes)
             }
-        }
-
-        private fun setTransactionAmountText(stringRes: Int) {
-            binding.transactionAmountText = string(R.string.format__money, stringRes)
-        }
-
-        private fun setTransactionDirectionText(stringRes: Int) {
-            binding.transactionDirectionText = string(stringRes)
-        }
-
-        private fun setTransactionDirectionIcon(drawableRes: Int, tintRes: Int) {
-            val tintedDrawable =
-                ResourceUtils.getTintedDrawable(drawable(drawableRes)!!, color(tintRes))
-            binding.transactionDirectionDrawable = tintedDrawable
-        }
-
-        private fun setTransactionAmountTextAppearance(direction: TransactionDirection) {
-            val transactionAmountTextAppearance = when (direction) {
-                TransactionDirection.INCOMING -> R.style.TextAppearance_Transaction_Amount_Incoming
-                TransactionDirection.OUTGOING -> R.style.TextAppearance_Transaction_Amount_Outgoing
-            }
-            TextViewCompat.setTextAppearance(
-                binding.transactionAmountView,
-                transactionAmountTextAppearance
-            )
         }
     }
+
+    private fun setAmountText(string: String) {
+        binding.amountText = string
+    }
+
+    private fun setNameText(string: String) {
+        binding.nameText = string
+    }
+
+    private fun setDateText(string: String) {
+        binding.dateText = string
+    }
+
+    private fun setCategoryIcon(drawableRes: Int, tintRes: Int) {
+        val tint = color(tintRes)
+        val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
 
         binding.iconDrawable = tintedDrawable(drawableRes, tint)
         binding.iconBgDrawable = tintedDrawable(R.drawable.shp_circle, fadedTint)

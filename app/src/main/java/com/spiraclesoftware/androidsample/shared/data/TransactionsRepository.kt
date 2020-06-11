@@ -17,7 +17,7 @@ class TransactionsRepository(
 
     fun loadTransactionList() = loadTransactionList(
         TransactionListFilter(
-            TransactionDirectionFilter.ALL
+            TransferDirectionFilter.ALL
         )
     )
 
@@ -42,10 +42,10 @@ class TransactionsRepository(
                     MutableLiveData<List<Transaction>>().apply {
                         value = cachedData
                             .filter {
-                                if (filter.transactionDirectionFilter == TransactionDirectionFilter.ALL)
+                                if (filter.transferDirectionFilter == TransferDirectionFilter.ALL)
                                     true
                                 else
-                                    filter.transactionDirectionFilter.mapsTo(it.direction)
+                                    filter.transferDirectionFilter.mapsTo(it.transferDirection)
                             }
                     }
                 }

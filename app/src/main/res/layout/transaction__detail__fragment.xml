@@ -6,26 +6,26 @@
 
     <data>
 
-
         <variable
-            name="transactionAmountText"
+            name="amountText"
             type="String" />
 
         <variable
-            name="transactionDirectionDrawable"
+            name="nameText"
+            type="String" />
+
+        <variable
+            name="dateText"
+            type="String" />
+
+        <variable
+            name="iconDrawable"
             type="android.graphics.drawable.Drawable" />
 
         <variable
-            name="transactionDirectionText"
-            type="String" />
+            name="iconBgDrawable"
+            type="android.graphics.drawable.Drawable" />
 
-        <variable
-            name="transactionDetail"
-            type="com.spiraclesoftware.androidsample.shared.domain.TransactionDetail" />
-
-        <variable
-            name="transactionDetailResource"
-            type="com.spiraclesoftware.core.data.Resource" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -55,59 +55,74 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/edge__margin">
+                android:paddingLeft="@dimen/edge__margin"
+                android:paddingRight="@dimen/edge__margin"
+                android:paddingBottom="@dimen/edge__margin">
 
                 <ImageView
                     android:id="@+id/iconView"
-                    android:layout_width="@dimen/icon__large"
-                    android:layout_height="@dimen/icon__large"
-                    android:src="@{transactionDirectionDrawable}"
-                    app:layout_constraintBottom_toBottomOf="@id/transactionDirectionView"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/transactionAmountView"
-                    tools:src="@drawable/ic_transaction_incoming" />
-
-                <TextView
-                    android:id="@+id/transactionAmountView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/content__spacing__medium"
-                    android:text='@{transactionAmountText}'
-                    android:textAppearance="@style/TextAppearance.Transaction.Amount"
-                    app:layout_constraintBottom_toTopOf="@id/transactionDirectionView"
-                    app:layout_constraintLeft_toRightOf="@id/iconView"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="1234 CZK" />
-
-                <TextView
-                    android:id="@+id/transactionDirectionView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/content__spacing__medium"
-                    android:text='@{transactionDirectionText}'
-                    app:layout_constraintBottom_toTopOf="@id/divider"
-                    app:layout_constraintLeft_toRightOf="@id/iconView"
-                    app:layout_constraintTop_toBottomOf="@id/transactionAmountView"
-                    tools:text="Incoming" />
-
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/content__spacing__medium"
-                    android:layout_marginBottom="@dimen/content__spacing__medium"
-                    android:background="?android:listDivider"
-                    app:layout_constraintBottom_toTopOf="@id/detailsBarrier"
-                    app:layout_constraintLeft_toLeftOf="@id/transactionDirectionView"
+                    android:layout_width="@dimen/icon__xlarge"
+                    android:layout_height="@dimen/icon__xlarge"
+                    android:background="@{iconBgDrawable}"
+                    android:padding="10dp"
+                    android:src="@{iconDrawable}"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/transactionDirectionView" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@drawable/shp_circle"
+                    tools:backgroundTint="#26FF0000"
+                    tools:src="@drawable/ic_category_entertainment"
+                    tools:tint="#FF0000" />
 
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/detailsBarrier"
+                <TextView
+                    android:id="@+id/amountView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:barrierDirection="top"
-                    app:constraint_referenced_ids="detailsContainer, loadingState" />
+                    android:layout_marginRight="@dimen/content__spacing__medium"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text='@{amountText}'
+                    android:textAppearance="@style/TextAppearance.Transaction.Amount.Large"
+                    app:layout_constraintBottom_toTopOf="@id/nameView"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/iconView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="- $49.99" />
+
+                <TextView
+                    android:id="@+id/nameView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="@dimen/content__spacing__medium"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text='@{nameText}'
+                    android:textAppearance="@style/TextAppearance.Transaction.Name"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toTopOf="@id/dateView"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/iconView"
+                    app:layout_constraintTop_toBottomOf="@id/amountView"
+                    tools:text="Paypal *Steam" />
+
+                <TextView
+                    android:id="@+id/dateView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="@dimen/content__spacing__medium"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text='@{dateText}'
+                    android:textAppearance="@style/TextAppearance.Transaction.Date"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/iconView"
+                    app:layout_constraintTop_toBottomOf="@id/nameView"
+                    tools:text="12:00, Fri, 15 May" />
 
                 <!--<LinearLayout
                     android:id="@+id/detailsContainer"
@@ -133,8 +148,7 @@
                     <include
                         layout="@layout/transaction__detail__detail_item"
                         app:itemLabel='@{@string/transaction__detail__bank_code}'
-                        app:itemValue='@{transactionDetail.contraAccount.bankCode}' />
-                </LinearLayout>
+                        app:itemValue='@{transaction.contraAccount.bankCode}' />
 
                 </LinearLayout>-->
 

@@ -50,13 +50,25 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <!--<TextView
+                android:id="@+id/headerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/edge__margin"
+                android:layout_marginRight="@dimen/edge__margin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/transaction__list__title"
+                android:textAppearance="@style/TextAppearance.ScreenHeader" />-->
+
             <Spinner
                 android:id="@+id/filterSpinner"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/content__spacing__medium"
-                android:layout_marginRight="@dimen/content__spacing__medium"
-                android:minHeight="48dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="@dimen/edge__margin"
+                android:minHeight="48dp"
+                tools:listitem="@android:layout/simple_spinner_item" />
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/scrollView"

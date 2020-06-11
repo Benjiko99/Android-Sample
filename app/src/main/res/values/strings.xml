@@ -7,17 +7,19 @@
     <string name="unknown_error">Unknown error</string>
     <string name="switch_locale">Switch locale</string>
 
-    <string name="format__money">%d CZK</string>
-
     <!-- Transaction -->
-    <string name="transaction_direction__incoming">Incoming</string>
-    <string name="transaction_direction__outgoing">Outgoing</string>
+    <string name="transaction_status__completed">Completed</string>
+    <string name="transaction_status__declined">Declined</string>
+    <string name="transaction_category__entertainment">Entertainment</string>
+    <string name="transaction_category__restaurants">Restaurants</string>
+    <string name="transaction_category__groceries">Groceries</string>
+    <string name="transaction_category__transfers">Transfers</string>
 
     <!-- Transaction List -->
     <string name="transaction__list__title">Transactions</string>
-    <string name="transaction__list__filter__transaction_direction__all">All transactions</string>
-    <string name="transaction__list__filter__transaction_direction__incoming">Incoming transactions</string>
-    <string name="transaction__list__filter__transaction_direction__outgoing">Outgoing transactions</string>
+    <string name="transaction__list__filter__transfer_direction__all">All transactions</string>
+    <string name="transaction__list__filter__transfer_direction__incoming">Incoming transactions</string>
+    <string name="transaction__list__filter__transfer_direction__outgoing">Outgoing transactions</string>
 
     <string name="transaction__list__empty_state__no_transactions__caption">You have no transactions</string>
     <string name="transaction__list__empty_state__no_transactions__message">When you make or receive a payment, it will show up here.</string>
@@ -26,8 +28,10 @@
     <string name="transaction__list__empty_state__no_results__message">We didn\'t find any matching transactions.</string>
 
     <!-- Transaction Detail -->
-    <string name="transaction__detail__title">Transaction detail</string>
-    <string name="transaction__detail__account_number">Account number:</string>
-    <string name="transaction__detail__account_name">Account name:</string>
-    <string name="transaction__detail__bank_code">Bank code:</string>
+    <string name="transaction__detail__status">Status</string>
+    <string name="transaction__detail__card">Card</string>
+    <string name="transaction__detail__statement">Statement</string>
+    <string name="transaction__detail__note">Note</string>
+    <string name="transaction__detail__note__edit">Edit</string>
+    <string name="transaction__detail__note__add">Add note</string>
 </resources>

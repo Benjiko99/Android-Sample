@@ -6,7 +6,10 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.stub
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.application.data.ApiService
-import com.spiraclesoftware.androidsample.shared.domain.*
+import com.spiraclesoftware.androidsample.shared.domain.Transaction
+import com.spiraclesoftware.androidsample.shared.domain.TransactionId
+import com.spiraclesoftware.androidsample.shared.domain.TransactionListFilter
+import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.utils.LiveDataTestUtil
 import com.spiraclesoftware.core.data.AssociatedListCache
 import com.spiraclesoftware.core.data.InstantAppExecutors
@@ -69,7 +72,7 @@ class TransactionsRepositoryTest {
     fun `Test filtering incoming transactions`() {
         stubTransactionListCache(list = TestData.transactions)
 
-        val filter = TransactionListFilter(TransactionDirectionFilter.INCOMING_ONLY)
+        val filter = TransactionListFilter(TransferDirectionFilter.INCOMING_ONLY)
 
         val transactionsLiveData = transactionsRepository.loadTransactionList(filter)
 
@@ -82,7 +85,7 @@ class TransactionsRepositoryTest {
     fun `Test filtering outgoing transactions`() {
         stubTransactionListCache(list = TestData.transactions)
 
-        val filter = TransactionListFilter(TransactionDirectionFilter.OUTGOING_ONLY)
+        val filter = TransactionListFilter(TransferDirectionFilter.OUTGOING_ONLY)
 
         val transactionsLiveData = transactionsRepository.loadTransactionList(filter)
 

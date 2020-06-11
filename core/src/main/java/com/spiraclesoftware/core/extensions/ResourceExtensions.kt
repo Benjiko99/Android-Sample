@@ -8,10 +8,15 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.spiraclesoftware.core.utils.ResourceUtils
 
 //region Context
 fun Context.drawable(@DrawableRes resId: Int): Drawable? {
     return ContextCompat.getDrawable(this, resId)
+}
+
+fun Context.tintedDrawable(@DrawableRes resId: Int, @ColorInt tint: Int): Drawable? {
+    return ResourceUtils.getTintedDrawable(drawable(resId)!!.mutate(), tint)
 }
 
 @ColorInt
@@ -32,6 +37,10 @@ fun Context.string(@StringRes resId: Int, vararg formatArgs: Any): String {
 //region Fragment
 fun Fragment.drawable(@DrawableRes resId: Int): Drawable? {
     return requireContext().drawable(resId)
+}
+
+fun Fragment.tintedDrawable(@DrawableRes resId: Int, @ColorInt tint: Int): Drawable? {
+    return ResourceUtils.getTintedDrawable(drawable(resId)!!.mutate(), tint)
 }
 
 @ColorInt

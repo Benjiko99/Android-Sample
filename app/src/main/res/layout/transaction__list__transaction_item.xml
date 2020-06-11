@@ -5,55 +5,96 @@
 
     <data>
 
-        <import type="androidx.core.content.ContextCompat" />
+        <variable
+            name="amountText"
+            type="String" />
 
         <variable
-            name="transaction"
-            type="com.spiraclesoftware.androidsample.shared.domain.Transaction" />
+            name="nameText"
+            type="String" />
+
+        <variable
+            name="dateText"
+            type="String" />
+
+        <variable
+            name="iconDrawable"
+            type="android.graphics.drawable.Drawable" />
+
+        <variable
+            name="iconBgDrawable"
+            type="android.graphics.drawable.Drawable" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:paddingLeft="@dimen/content__spacing__medium"
-        android:paddingTop="@dimen/content__spacing__medium"
-        android:paddingRight="@dimen/content__spacing__medium"
-        android:paddingBottom="@dimen/content__spacing__medium">
+        android:paddingLeft="@dimen/content__spacing__small"
+        android:paddingTop="@dimen/content__spacing__small"
+        android:paddingRight="@dimen/content__spacing__small"
+        android:paddingBottom="@dimen/content__spacing__small">
 
         <ImageView
             android:id="@+id/iconView"
             android:layout_width="@dimen/icon__large"
             android:layout_height="@dimen/icon__large"
-            android:src="@{context.getDrawable(transaction.direction.getDrawableRes())}"
-            android:tint="@{ContextCompat.getColor(context, transaction.direction.getColorRes())}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@{iconBgDrawable}"
+            android:padding="7dp"
+            android:src="@{iconDrawable}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_transaction_incoming" />
+            tools:background="@drawable/shp_circle"
+            tools:backgroundTint="#26FF0000"
+            tools:src="@drawable/ic_category_entertainment"
+            tools:tint="#FF0000" />
 
         <TextView
-            android:id="@+id/transactionAmountView"
+            android:id="@+id/nameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/content__spacing__medium"
-            android:text='@{@string/format__money(transaction.amountInAccountCurrency)}'
-            android:textAppearance="@style/TextAppearance.Transaction.Amount"
-            app:layout_constraintBottom_toTopOf="@id/transactionDirectionView"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="@dimen/content__spacing__small"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text='@{nameText}'
+            android:textAppearance="@style/TextAppearance.Transaction.Name"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@id/dateView"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@id/iconView"
+            app:layout_constraintRight_toLeftOf="@id/amountView"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="1234 CZK" />
+            tools:text="Paypal *Steam" />
 
         <TextView
-            android:id="@+id/transactionDirectionView"
+            android:id="@+id/dateView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/content__spacing__medium"
-            android:text='@{transaction.direction.getStringRes()}'
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="@dimen/content__spacing__small"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text='@{dateText}'
+            android:textAppearance="@style/TextAppearance.Transaction.Date"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@id/iconView"
-            app:layout_constraintTop_toBottomOf="@id/transactionAmountView"
-            tools:text="Incoming" />
+            app:layout_constraintRight_toLeftOf="@id/amountView"
+            app:layout_constraintTop_toBottomOf="@id/nameView"
+            tools:text="12:00, Fri, 15 May" />
+
+        <TextView
+            android:id="@+id/amountView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{amountText}'
+            android:textAppearance="@style/TextAppearance.Transaction.Amount"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="- $49.99" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
