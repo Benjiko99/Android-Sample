@@ -1,16 +1,33 @@
 <component name="ProjectDictionaryState">
   <dictionary name="benji">
     <words>
+      <w>allopen</w>
       <w>androidsample</w>
+      <w>constraintlayout</w>
       <w>databinding</w>
       <w>dont</w>
+      <w>fastadapter</w>
       <w>gson</w>
+      <w>jakewharton</w>
+      <w>jmailen</w>
+      <w>kapt</w>
+      <w>koin</w>
+      <w>kotlinter</w>
+      <w>kotlinx</w>
+      <w>leakcanary</w>
+      <w>mikepenz</w>
       <w>mmmm</w>
+      <w>nhaarman</w>
+      <w>okhttp</w>
       <w>paypal</w>
       <w>spiraclesoftware</w>
       <w>sqlite</w>
+      <w>squareup</w>
+      <w>stetho</w>
       <w>subcomponents</w>
       <w>threeten</w>
+      <w>threetenabp</w>
+      <w>viewmodel</w>
     </words>
   </dictionary>
 </component>

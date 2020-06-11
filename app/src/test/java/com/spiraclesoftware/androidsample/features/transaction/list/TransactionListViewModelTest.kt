@@ -5,13 +5,12 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.*
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.shared.domain.TransactionId
+import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.utils.LiveDataTestUtil
 import com.spiraclesoftware.core.data.Resource
-import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThat
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -38,8 +37,8 @@ class TransactionListViewModelTest {
 
     @Test
     fun testNull() {
-        assertThat(transactionListViewModel.transactions, notNullValue())
-        assertThat(transactionListViewModel.transactionListFilter, notNullValue())
+        assertNotNull(transactionListViewModel.transactions)
+        assertNotNull(transactionListViewModel.transactionListFilter)
         verify(transactionsRepository, never()).loadTransactionList(any())
     }
 

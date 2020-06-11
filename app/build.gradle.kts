@@ -6,6 +6,7 @@ plugins {
     id("kotlin-android-extensions")
     id("androidx.navigation.safeargs.kotlin")
 }
+apply(plugin = "org.jmailen.kotlinter")
 
 android {
     compileSdkVersion(AppDeps.compileSdk)
@@ -61,5 +62,5 @@ dependencies {
 
     testImplementation("org.mockito:mockito-core:${Deps.mockito}")
     testImplementation("com.nhaarman:mockito-kotlin:${Deps.mockitoKotlin}")
-    //androidTestImplementation("org.mockito:mockito-android:${Deps.mockito}")
+    androidTestImplementation("org.mockito:mockito-android:${Deps.mockito}")
 }

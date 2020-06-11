@@ -7,8 +7,7 @@ import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionId
 import com.spiraclesoftware.core.data.Resource
-import org.hamcrest.CoreMatchers.notNullValue
-import org.junit.Assert.assertThat
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -35,7 +34,7 @@ class TransactionDetailViewModelTest {
 
     @Test
     fun testNull() {
-        assertThat(transactionDetailViewModel.transaction, notNullValue())
+        assertNotNull(transactionDetailViewModel.transaction)
         verify(transactionsRepository, never()).loadTransaction(any())
     }
 

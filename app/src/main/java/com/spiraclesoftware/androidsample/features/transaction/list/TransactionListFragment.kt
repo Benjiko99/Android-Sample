@@ -127,9 +127,12 @@ class TransactionListFragment : Fragment() {
                 Observer(::bindTransactionListFilter)
             )
 
-            viewModel.navigateToDetailAction.observe(viewLifecycleOwner, EventObserver { transactionId ->
-                findNavController().navigate(toTransactionDetail(transactionId.value))
-            })
+            viewModel.navigateToDetailAction.observe(
+                viewLifecycleOwner,
+                EventObserver { transactionId ->
+                    findNavController().navigate(toTransactionDetail(transactionId.value))
+                }
+            )
         }
         subscribeUi()
     }

@@ -33,7 +33,6 @@ fun Context.string(@StringRes resId: Int, vararg formatArgs: Any): String {
 }
 //endregion
 
-
 //region Fragment
 fun Fragment.drawable(@DrawableRes resId: Int): Drawable? {
     return requireContext().drawable(resId)

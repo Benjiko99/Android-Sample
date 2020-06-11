@@ -86,7 +86,6 @@ data class ApiSuccessResponse<T>(
             }
             return links
         }
-
     }
 }
 

@@ -5,6 +5,7 @@ plugins {
     kotlin("kapt")
     id("kotlin-android-extensions")
 }
+apply(plugin = "org.jmailen.kotlinter")
 
 android {
     compileSdkVersion(AppDeps.compileSdk)

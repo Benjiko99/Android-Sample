@@ -1,9 +1,15 @@
+import org.jmailen.gradle.kotlinter.KotlinterExtension
+import org.jmailen.gradle.kotlinter.KotlinterPlugin
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
     }
 
     dependencies {
@@ -11,6 +17,7 @@ buildscript {
         classpath(kotlin("gradle-plugin", version = Deps.kotlin))
         classpath("org.jetbrains.kotlin:kotlin-allopen:${Deps.kotlin}")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Deps.navigation}")
+        classpath("org.jmailen.gradle:kotlinter-gradle:${Deps.kotlinter}")
     }
 }
 
@@ -18,6 +25,16 @@ allprojects {
     repositories {
         google()
         jcenter()
+    }
+}
+
+subprojects {
+    plugins.withType<KotlinterPlugin> {
+        the<KotlinterExtension>().disabledRules = arrayOf(
+            "no-wildcard-imports",
+            "final-newline",
+            "comment-spacing"
+        )
     }
 }
 
