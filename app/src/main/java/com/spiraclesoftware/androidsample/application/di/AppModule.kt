@@ -7,6 +7,8 @@ import com.google.gson.GsonBuilder
 import com.spiraclesoftware.androidsample.BuildConfig
 import com.spiraclesoftware.androidsample.application.SampleApplication
 import com.spiraclesoftware.androidsample.application.data.ApiService
+import com.spiraclesoftware.androidsample.application.data.MoneyAdapter
+import com.spiraclesoftware.androidsample.shared.domain.Money
 import com.spiraclesoftware.core.data.LiveDataCallAdapterFactory
 import com.spiraclesoftware.core.data.UniqueIdentifier
 import com.spiraclesoftware.core.data.UniqueIdentifierAdapter
@@ -45,6 +47,10 @@ val appModule = module {
             .registerTypeAdapter(
                 ZonedDateTime::class.java,
                 ZonedDateTimeAdapter()
+            )
+            .registerTypeAdapter(
+                Money::class.java,
+                MoneyAdapter()
             )
             .create()
     }
