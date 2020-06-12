@@ -34,7 +34,8 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:liftOnScroll="true">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -44,74 +45,75 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <!--<TextView
-                android:id="@+id/headerView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/edge__margin"
-                android:layout_marginRight="@dimen/edge__margin"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/transaction__list__title"
-                android:textAppearance="@style/TextAppearance.ScreenHeader" />-->
-
-            <Spinner
-                android:id="@+id/filterSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="@dimen/edge__margin"
-                android:minHeight="48dp"
-                tools:listitem="@android:layout/simple_spinner_item" />
-
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/scrollView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
+                    android:id="@+id/headerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/edge__margin"
+                    android:layout_marginRight="@dimen/edge__margin"
+                    android:text="@string/transaction__list__title"
+                    android:textAppearance="@style/TextAppearance.ScreenHeader"
+                    app:layout_constraintBottom_toTopOf="@id/filterSpinner"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:goneUnless="@{!showEmptyState}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:listitem="@layout/transaction__list__transaction_item" />
+                <Spinner
+                    android:id="@+id/filterSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/edge__margin"
+                    android:layout_marginRight="@dimen/edge__margin"
+                    android:minHeight="32dp"
+                    android:spinnerMode="dialog"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toTopOf="@id/recyclerView"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/headerView"
+                    tools:listitem="@layout/stylized_spinner_item" />
 
-                    <include
-                        android:id="@+id/emptyState"
-                        layout="@layout/empty_state"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:caption="@{emptyStateCaption}"
-                        app:isShown="@{showEmptyState}"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:message="@{emptyStateMessage}"
-                        tools:visibility="gone" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:goneUnless="@{!showEmptyState}"
+                    app:layout_constrainedHeight="true"
+                    app:layout_constraintTop_toBottomOf="@id/filterSpinner"
+                    tools:listitem="@layout/transaction__list__transaction_item" />
 
-                    <include
-                        android:id="@+id/loadingState"
-                        layout="@layout/loading_state"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:callback="@{() -> retryCallback.retry()}"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:resource="@{transactionListResource}"
-                        tools:visibility="gone" />
+                <include
+                    android:id="@+id/emptyState"
+                    layout="@layout/empty_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:caption="@{emptyStateCaption}"
+                    app:isShown="@{showEmptyState}"
+                    app:layout_constraintTop_toBottomOf="@id/filterSpinner"
+                    app:message="@{emptyStateMessage}"
+                    tools:visibility="gone" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.core.widget.NestedScrollView>
-        </LinearLayout>
+                <include
+                    android:id="@+id/loadingState"
+                    layout="@layout/loading_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:callback="@{() -> retryCallback.retry()}"
+                    app:layout_constraintTop_toBottomOf="@id/filterSpinner"
+                    app:resource="@{transactionListResource}"
+                    tools:visibility="gone" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

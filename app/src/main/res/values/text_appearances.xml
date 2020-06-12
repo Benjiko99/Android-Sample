@@ -3,16 +3,11 @@
 
     <style name="TextAppearance.ScreenHeader" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textSize">36sp</item>
-        <item name="fontFamily">sans-serif</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="TextAppearance.Transaction.Amount" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="TextAppearance.Transaction.Amount.Large" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:textSize">36sp</item>
-        <item name="fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="TextAppearance.Transaction.Name" parent="TextAppearance.MaterialComponents.Body2">

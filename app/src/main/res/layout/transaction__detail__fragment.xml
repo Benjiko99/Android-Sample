@@ -81,7 +81,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text='@{amountText}'
-                    android:textAppearance="@style/TextAppearance.Transaction.Amount.Large"
+                    android:textAppearance="@style/TextAppearance.ScreenHeader"
                     app:layout_constraintBottom_toTopOf="@id/nameView"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintLeft_toLeftOf="parent"

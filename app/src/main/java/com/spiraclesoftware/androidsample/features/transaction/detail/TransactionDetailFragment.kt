@@ -14,6 +14,7 @@ import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentB
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionId
 import com.spiraclesoftware.androidsample.shared.ui.DateTimeFormat
+import com.spiraclesoftware.androidsample.shared.ui.DelightUI
 import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.tintedDrawable
@@ -41,6 +42,8 @@ class TransactionDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         toolbar.setupWithNavController(findNavController())
+
+        DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -62,7 +65,7 @@ class TransactionDetailFragment : Fragment() {
 
         override fun onChanged(resource: Resource<Transaction>?) {
             (resource?.data)?.let { transaction ->
-                //toolbar.title = transaction.name
+                toolbar.title = transaction.name
 
                 setAmountText(transaction.formattedMoney)
                 setNameText(transaction.name)

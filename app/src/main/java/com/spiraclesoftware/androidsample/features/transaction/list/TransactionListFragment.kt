@@ -19,6 +19,7 @@ import com.spiraclesoftware.androidsample.features.transaction.list.TransactionL
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionListFilter
 import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
+import com.spiraclesoftware.androidsample.shared.ui.DelightUI
 import com.spiraclesoftware.androidsample.shared.ui.RetryCallback
 import com.spiraclesoftware.core.data.EventObserver
 import com.spiraclesoftware.core.data.Resource
@@ -59,6 +60,8 @@ class TransactionListFragment : Fragment() {
         toolbar.inflateMenu(R.menu.transaction_list_menu)
         toolbar.setOnMenuItemClickListener(::onMenuItemClicked)
 
+        DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
+
         fun setupFastItemAdapter() {
             fastItemAdapter = FastItemAdapter()
             fastItemAdapter.apply {
@@ -87,7 +90,7 @@ class TransactionListFragment : Fragment() {
             fun createSpinnerAdapter(): ArrayAdapter<String> {
                 return ArrayAdapter(
                     requireContext(),
-                    android.R.layout.simple_spinner_item,
+                    R.layout.stylized_spinner_item,
                     TransferDirectionFilter.values().map { string(it.stringRes) }
                 ).also {
                     it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
