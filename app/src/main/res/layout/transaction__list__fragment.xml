@@ -50,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
+            android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,7 +65,6 @@
                     android:layout_marginRight="@dimen/edge__margin"
                     android:text="@string/transaction__list__title"
                     android:textAppearance="@style/TextAppearance.ScreenHeader"
-                    app:layout_constraintBottom_toTopOf="@id/filterSpinner"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Spinner
@@ -76,7 +76,6 @@
                     android:minHeight="32dp"
                     android:spinnerMode="dialog"
                     app:layout_constrainedWidth="true"
-                    app:layout_constraintBottom_toTopOf="@id/recyclerView"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -87,9 +86,14 @@
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/content__spacing__small"
+                    android:overScrollMode="never"
                     app:goneUnless="@{!showEmptyState}"
                     app:layout_constrainedHeight="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/filterSpinner"
+                    app:layout_constraintVertical_bias="0"
+                    tools:itemCount="5"
                     tools:listitem="@layout/transaction__list__transaction_item" />
 
                 <include
