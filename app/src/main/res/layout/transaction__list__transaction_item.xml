@@ -18,6 +18,10 @@
             type="String" />
 
         <variable
+            name="statusText"
+            type="String" />
+
+        <variable
             name="iconDrawable"
             type="android.graphics.drawable.Drawable" />
 
@@ -79,12 +83,28 @@
             android:maxLines="1"
             android:text='@{dateText}'
             android:textAppearance="@style/TextAppearance.Transaction.Date"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/statusView"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@id/iconView"
             app:layout_constraintRight_toLeftOf="@id/amountView"
             app:layout_constraintTop_toBottomOf="@id/nameView"
             tools:text="12:00, Fri, 15 May" />
+
+        <TextView
+            android:id="@+id/statusView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="@dimen/content__spacing__small"
+            android:text='@{statusText}'
+            android:textAppearance="@style/TextAppearance.Transaction.Date"
+            app:goneUnless="@{statusText != null}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toLeftOf="@id/dateView"
+            app:layout_constraintRight_toLeftOf="@id/amountView"
+            app:layout_constraintTop_toBottomOf="@id/dateView"
+            tools:text="Monthly spending limit exceeded" />
 
         <TextView
             android:id="@+id/amountView"

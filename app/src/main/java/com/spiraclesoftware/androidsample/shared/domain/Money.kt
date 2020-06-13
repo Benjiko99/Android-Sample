@@ -9,7 +9,10 @@ data class Money(
     val currency: Currency
 ) {
 
-    fun format(transferDirection: TransferDirection? = null): String {
+    fun format(
+        transferDirection: TransferDirection? = null,
+        statusCode: TransactionStatusCode? = null
+    ): String {
         val formatter = NumberFormat.getCurrencyInstance().apply {
             currency = this@Money.currency
             minimumFractionDigits = 0
@@ -17,7 +20,7 @@ data class Money(
 
         val currencyAmount = formatter.format(amount)
 
-        return if (transferDirection == null) {
+        return if (transferDirection == null || statusCode != TransactionStatusCode.SUCCESSFUL) {
             currencyAmount
         } else {
             "${transferDirection.symbol} $currencyAmount"

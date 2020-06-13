@@ -19,5 +19,5 @@ data class Transaction(
     override fun getUniqueId() = id
 
     val formattedMoney: String
-        get() = money.format(transferDirection)
+        get() = money.format(transferDirection, statusCode)
 }

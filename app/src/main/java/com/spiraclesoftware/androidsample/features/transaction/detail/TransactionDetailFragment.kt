@@ -1,6 +1,7 @@
 package com.spiraclesoftware.androidsample.features.transaction.detail
 
 import android.content.Context
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -77,18 +78,21 @@ class TransactionDetailFragment : Fragment() {
             (resource?.data)?.let { transaction ->
                 toolbar.title = transaction.name
 
-                setAmountText(transaction.formattedMoney)
+                setAmountText(transaction.formattedMoney, transaction.statusCode)
                 setNameText(transaction.name)
                 setDateText(transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME))
-                setCategoryIcon(transaction.category.drawableRes, transaction.category.colorRes)
+                setCategoryIcon(transaction.category.drawableRes, transaction.category.colorRes, transaction.statusCode)
 
                 populateCards(transaction)
             }
         }
     }
 
-    private fun setAmountText(string: String) {
+    private fun setAmountText(string: String, statusCode: TransactionStatusCode) {
         binding.amountText = string
+        if (statusCode != TransactionStatusCode.SUCCESSFUL) {
+            binding.amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        }
     }
 
     private fun setNameText(string: String) {
@@ -99,11 +103,18 @@ class TransactionDetailFragment : Fragment() {
         binding.dateText = string
     }
 
-    private fun setCategoryIcon(drawableRes: Int, tintRes: Int) {
-        val tint = color(tintRes)
-        val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
+    private fun setCategoryIcon(drawableRes: Int, tintRes: Int, statusCode: TransactionStatusCode) {
+        val tint: Int
 
-        binding.iconDrawable = tintedDrawable(drawableRes, tint)
+        if (statusCode == TransactionStatusCode.SUCCESSFUL) {
+            tint = color(tintRes)
+            binding.iconDrawable = tintedDrawable(drawableRes, tint)
+        } else {
+            tint = color(R.color.transaction_status__declined)
+            binding.iconDrawable = tintedDrawable(R.drawable.ic_status_declined, tint)
+        }
+
+        val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
         binding.iconBgDrawable = tintedDrawable(R.drawable.shp_circle, fadedTint)
     }
 
