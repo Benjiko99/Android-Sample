@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.databinding.TransactionDetailDetailItemBinding
+import com.spiraclesoftware.androidsample.databinding.TransactionDetailCardItemBinding
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionId
@@ -28,7 +28,7 @@ import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.drawable
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.extensions.tintedDrawable
-import kotlinx.android.synthetic.main.transaction__detail__detail_card.view.*
+import kotlinx.android.synthetic.main.transaction__detail__card.view.*
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -211,11 +211,11 @@ class TransactionDetailFragment : Fragment() {
 
             cards.filterNot { it.isEmpty() }.forEachIndexed { cardIndex, items ->
 
-                val cardView = layoutInflater.inflate(R.layout.transaction__detail__detail_card, cardsContainer, false)
+                val cardView = layoutInflater.inflate(R.layout.transaction__detail__card, cardsContainer, false)
 
                 items.forEachIndexed { itemIndex, item ->
                     val itemBinding =
-                        TransactionDetailDetailItemBinding.inflate(layoutInflater, cardView.content, false)
+                        TransactionDetailCardItemBinding.inflate(layoutInflater, cardView.content, false)
                     itemBinding.labelText = item.label
                     itemBinding.valueText = item.value
                     itemBinding.bodyText = item.body
