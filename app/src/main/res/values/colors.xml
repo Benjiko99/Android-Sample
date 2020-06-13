@@ -5,6 +5,9 @@
     <color name="transaction_category__groceries">#C0CA33</color>
     <color name="transaction_category__transfers">#009688</color>
 
+    <!-- Transaction Status -->
+    <color name="transaction_status__declined">#9e9e9e</color>
+
     <!-- Material Palette -->
     <color name="gray_50">#fafafa</color>
     <color name="gray_200">#eeeeee</color>

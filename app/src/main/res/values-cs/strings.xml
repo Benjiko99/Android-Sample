@@ -10,6 +10,7 @@
     <!-- Transaction -->
     <string name="transaction_status__completed">Dokončený</string>
     <string name="transaction_status__declined">Odmítnutý</string>
+    <string name="transaction_status__code__spending_limit_exceeded">Byl překročen měsíční limit výdajů</string>
     <string name="transaction_category__entertainment">Zábava</string>
     <string name="transaction_category__restaurants">Restaurace</string>
     <string name="transaction_category__groceries">Potraviny</string>

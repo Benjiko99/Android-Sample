@@ -11,6 +11,7 @@ data class Transaction(
     val transferDirection: TransferDirection,
     val category: TransactionCategory,
     val status: TransactionStatus,
+    val statusCode: TransactionStatusCode,
     val cardDescription: String? = null,
     val noteToSelf: String? = null
 ) : Identifiable<TransactionId> {

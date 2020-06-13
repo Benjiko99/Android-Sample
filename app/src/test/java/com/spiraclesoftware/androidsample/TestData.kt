@@ -16,6 +16,7 @@ object TestData {
             TransferDirection.OUTGOING,
             TransactionCategory.ENTERTAINMENT,
             TransactionStatus.COMPLETED,
+            TransactionStatusCode.SUCCESSFUL,
             "VISA **9400",
             "Half-Life: Alyx"
         ),
@@ -26,7 +27,18 @@ object TestData {
             Money(BigDecimal("1000.00"), Currency.getInstance("EUR")),
             TransferDirection.INCOMING,
             TransactionCategory.TRANSFERS,
-            TransactionStatus.COMPLETED
+            TransactionStatus.COMPLETED,
+            TransactionStatusCode.SUCCESSFUL
+        ),
+        Transaction(
+            TransactionId(3),
+            "Groceries",
+            ZonedDateTime.parse("2019-05-14T09:00:00+00:00"),
+            Money(BigDecimal("14.99"), Currency.getInstance("USD")),
+            TransferDirection.OUTGOING,
+            TransactionCategory.GROCERIES,
+            TransactionStatus.DECLINED,
+            TransactionStatusCode.SPENDING_LIMIT_EXCEEDED
         )
     )
 

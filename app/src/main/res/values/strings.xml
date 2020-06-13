@@ -10,6 +10,7 @@
     <!-- Transaction -->
     <string name="transaction_status__completed">Completed</string>
     <string name="transaction_status__declined">Declined</string>
+    <string name="transaction_status__code__spending_limit_exceeded">Monthly spending limit exceeded</string>
     <string name="transaction_category__entertainment">Entertainment</string>
     <string name="transaction_category__restaurants">Restaurants</string>
     <string name="transaction_category__groceries">Groceries</string>
