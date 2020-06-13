@@ -64,6 +64,7 @@
                     android:layout_width="@dimen/icon__xlarge"
                     android:layout_height="@dimen/icon__xlarge"
                     android:background="@{iconBgDrawable}"
+                    android:contentDescription="@null"
                     android:padding="10dp"
                     android:src="@{iconDrawable}"
                     app:layout_constraintRight_toRightOf="parent"
@@ -117,40 +118,19 @@
                     android:maxLines="1"
                     android:text='@{dateText}'
                     android:textAppearance="@style/TextAppearance.Transaction.Date"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/iconView"
                     app:layout_constraintTop_toBottomOf="@id/nameView"
                     tools:text="12:00, Fri, 15 May" />
 
-                <!--<LinearLayout
-                    android:id="@+id/detailsContainer"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/cardsContainer"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
                     android:orientation="vertical"
-                    app:goneUnless="@{transaction != null}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="@id/divider"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider">
-
-                    <include
-                        layout="@layout/transaction__detail__detail_item"
-                        app:itemLabel='@{@string/transaction__detail__account_number}'
-                        app:itemValue='@{transaction.contraAccount.accountNumber}' />
-
-                    <include
-                        layout="@layout/transaction__detail__detail_item"
-                        app:itemLabel='@{@string/transaction__detail__account_name}'
-                        app:itemValue='@{transaction.contraAccount.accountName}' />
-
-                    <include
-                        layout="@layout/transaction__detail__detail_item"
-                        app:itemLabel='@{@string/transaction__detail__bank_code}'
-                        app:itemValue='@{transaction.contraAccount.bankCode}' />
-
-                </LinearLayout>-->
+                    app:layout_constraintTop_toBottomOf="@id/dateView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

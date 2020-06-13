@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="AppTheme" parent="Base.AppTheme">
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorPrimaryDark">@color/blue_700</item>
         <item name="colorAccent">@color/pink_600</item>
-        <item name="colorSurface">@color/gray_200</item>
-        <item name="android:colorBackground">@color/gray_200</item>
+        <item name="android:colorBackground">@color/gray_50</item>
 
         <item name="toolbarTextColor">@color/material_on_surface_emphasis_high_type</item>
 
@@ -26,6 +25,13 @@
 
     <style name="AppTheme.Toolbar.Button.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="tint">?toolbarTextColor</item>
+    </style>
+
+    <style name="AppTheme.CardView.Outlined" parent="Widget.MaterialComponents.CardView">
+        <item name="cardElevation">0dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="strokeColor">@color/card_outline</item>
+        <item name="strokeWidth">1dp</item>
     </style>
 
 </resources>

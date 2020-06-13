@@ -6,6 +6,7 @@
     <string name="retry">Opakovat</string>
     <string name="unknown_error">Neznámá chyba</string>
     <string name="switch_locale">Přepnout jazyk</string>
+    <string name="not_implemented">Není implementováno</string>
 
     <!-- Transaction -->
     <string name="transaction_status__completed">Dokončený</string>
@@ -32,6 +33,7 @@
     <string name="transaction__detail__status">Stav</string>
     <string name="transaction__detail__card">Karta</string>
     <string name="transaction__detail__statement">Potvrzení</string>
+    <string name="transaction__detail__download">Stáhnout</string>
     <string name="transaction__detail__note">Poznámka</string>
     <string name="transaction__detail__note__edit">Upravit</string>
     <string name="transaction__detail__note__add">Přidat poznámku</string>

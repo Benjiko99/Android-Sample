@@ -10,6 +10,7 @@
 
     <dimen name="icon__xlarge">56dp</dimen>
     <dimen name="icon__large">40dp</dimen>
+    <dimen name="icon__small">18dp</dimen>
 
     <dimen name="empty_state">200dp</dimen>
 

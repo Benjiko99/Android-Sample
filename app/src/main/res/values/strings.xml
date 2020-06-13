@@ -6,6 +6,7 @@
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown error</string>
     <string name="switch_locale">Switch locale</string>
+    <string name="not_implemented">Not implemented</string>
 
     <!-- Transaction -->
     <string name="transaction_status__completed">Completed</string>
@@ -32,6 +33,7 @@
     <string name="transaction__detail__status">Status</string>
     <string name="transaction__detail__card">Card</string>
     <string name="transaction__detail__statement">Statement</string>
+    <string name="transaction__detail__download">Download</string>
     <string name="transaction__detail__note">Note</string>
     <string name="transaction__detail__note__edit">Edit</string>
     <string name="transaction__detail__note__add">Add note</string>
