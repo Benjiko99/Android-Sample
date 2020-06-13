@@ -37,4 +37,5 @@
     <string name="transaction__detail__note">Poznámka</string>
     <string name="transaction__detail__note__edit">Upravit</string>
     <string name="transaction__detail__note__add">Přidat poznámku</string>
+    <string name="transaction__detail__category">Kategorie</string>
 </resources>

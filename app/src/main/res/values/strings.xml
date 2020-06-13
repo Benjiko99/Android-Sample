@@ -37,4 +37,5 @@
     <string name="transaction__detail__note">Note</string>
     <string name="transaction__detail__note__edit">Edit</string>
     <string name="transaction__detail__note__add">Add note</string>
+    <string name="transaction__detail__category">Category</string>
 </resources>

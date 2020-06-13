@@ -121,10 +121,11 @@ class TransactionDetailFragment : Fragment() {
     private fun populateCards(transaction: Transaction) {
         val statusCard = arrayListOf<CardItem>()
         val infoCard = arrayListOf<CardItem>()
+        val categoryCard = arrayListOf<CardItem>()
         val noteCard = arrayListOf<CardItem>()
 
         val cards = arrayListOf(
-            statusCard, infoCard, noteCard
+            statusCard, infoCard, categoryCard, noteCard
         )
 
         if (transaction.statusCode != TransactionStatusCode.SUCCESSFUL) {
@@ -162,6 +163,19 @@ class TransactionDetailFragment : Fragment() {
                     label = string(R.string.transaction__detail__statement),
                     value = string(R.string.transaction__detail__download),
                     icon = drawable(R.drawable.ic_download_statement),
+                    action = {
+                        Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
+                    }
+                )
+            )
+        }
+
+        if (transaction.statusCode == TransactionStatusCode.SUCCESSFUL) {
+            categoryCard.add(
+                CardItem(
+                    label = string(R.string.transaction__detail__category),
+                    value = string(transaction.category.stringRes),
+                    icon = drawable(transaction.category.drawableRes),
                     action = {
                         Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
                     }
