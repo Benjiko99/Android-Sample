@@ -19,9 +19,9 @@
 
     <!-- Transaction List -->
     <string name="transaction__list__title">Transakce</string>
-    <string name="transaction__list__filter__transfer_direction__all">Všechny transakce</string>
-    <string name="transaction__list__filter__transfer_direction__incoming">Příchozí transakce</string>
-    <string name="transaction__list__filter__transfer_direction__outgoing">Odchozí transakce</string>
+    <string name="transaction__list__filter__transfer_direction__all">Příchozí a Odchozí</string>
+    <string name="transaction__list__filter__transfer_direction__incoming">Pouze příchozí</string>
+    <string name="transaction__list__filter__transfer_direction__outgoing">Pouze odchozí</string>
 
     <string name="transaction__list__empty_state__no_transactions__caption">Nemáte žádné transakce</string>
     <string name="transaction__list__empty_state__no_transactions__message">Když provedete nebo obdržíte platbu, zobrazí se zde.</string>

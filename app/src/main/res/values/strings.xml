@@ -19,9 +19,9 @@
 
     <!-- Transaction List -->
     <string name="transaction__list__title">Transactions</string>
-    <string name="transaction__list__filter__transfer_direction__all">All transactions</string>
-    <string name="transaction__list__filter__transfer_direction__incoming">Incoming transactions</string>
-    <string name="transaction__list__filter__transfer_direction__outgoing">Outgoing transactions</string>
+    <string name="transaction__list__filter__transfer_direction__all">Incoming &amp; Outgoing</string>
+    <string name="transaction__list__filter__transfer_direction__incoming">Incoming only</string>
+    <string name="transaction__list__filter__transfer_direction__outgoing">Outgoing only</string>
 
     <string name="transaction__list__empty_state__no_transactions__caption">You have no transactions</string>
     <string name="transaction__list__empty_state__no_transactions__message">When you make or receive a payment, it will show up here.</string>
