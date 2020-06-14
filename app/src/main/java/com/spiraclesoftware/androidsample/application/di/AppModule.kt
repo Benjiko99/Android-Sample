@@ -27,9 +27,9 @@ val appModule = module {
         androidApplication().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
     }
 
-    single<ApiService> { (get() as Retrofit).create(ApiService::class.java) }
+    single { (get() as Retrofit).create(ApiService::class.java) }
 
-    single<Retrofit> {
+    single {
         Retrofit.Builder()
             .client(get() as OkHttpClient)
             .baseUrl(SampleApplication.API_SERVICE_BASE_URL)
@@ -55,7 +55,7 @@ val appModule = module {
             .create()
     }
 
-    single<OkHttpClient> {
+    single {
         OkHttpClient.Builder().apply {
             if (BuildConfig.DEBUG) {
                 addInterceptor(get() as HttpLoggingInterceptor)

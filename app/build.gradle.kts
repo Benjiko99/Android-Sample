@@ -55,7 +55,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:${Deps.constraintLayout}")
 
     implementation("com.mikepenz:fastadapter:${Deps.fastAdapter}")
-    implementation("com.mikepenz:fastadapter-commons:${Deps.fastAdapter}")
+    implementation("com.mikepenz:fastadapter-extensions-binding:${Deps.fastAdapter}")
 
     testImplementation("junit:junit:${Deps.junit}")
     testImplementation("androidx.arch.core:core-testing:${Deps.lifecycle}")

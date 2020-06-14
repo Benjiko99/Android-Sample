@@ -12,7 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragmentDirections.Companion.toTransactionDetail
@@ -33,7 +34,8 @@ class TransactionListFragment : Fragment() {
     private val viewModel by viewModel<TransactionListViewModel>()
 
     private lateinit var binding: TransactionListFragmentBinding
-    private lateinit var fastItemAdapter: FastItemAdapter<TransactionItem>
+    private lateinit var fastAdapter: FastAdapter<TransactionItem>
+    private lateinit var itemAdapter: ItemAdapter<TransactionItem>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,10 +65,10 @@ class TransactionListFragment : Fragment() {
         DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
 
         fun setupFastItemAdapter() {
-            fastItemAdapter = FastItemAdapter()
-            fastItemAdapter.apply {
-                withSelectable(true)
-                withOnClickListener { _, _, item, _ ->
+            itemAdapter = ItemAdapter.items()
+            fastAdapter = FastAdapter.with(itemAdapter)
+            fastAdapter.apply {
+                onClickListener = { _, _, item, _ ->
                     viewModel.openTransactionDetail(item.transaction.id)
                     true
                 }
@@ -79,7 +81,7 @@ class TransactionListFragment : Fragment() {
 
             recyclerView.apply {
                 layoutManager = linearLayoutManager
-                adapter = fastItemAdapter
+                adapter = fastAdapter
                 itemAnimator = null
             }
         }
@@ -149,7 +151,7 @@ class TransactionListFragment : Fragment() {
         fun toListItems(data: List<Transaction>?) =
             data?.map(::TransactionItem) ?: emptyList()
 
-        fastItemAdapter.set(toListItems(transactions))
+        itemAdapter.set(toListItems(transactions))
     }
 
     private fun bindTransactionListFilter(filter: TransactionListFilter) {
