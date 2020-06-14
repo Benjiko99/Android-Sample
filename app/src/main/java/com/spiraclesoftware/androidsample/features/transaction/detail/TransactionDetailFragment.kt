@@ -24,10 +24,7 @@ import com.spiraclesoftware.androidsample.shared.domain.TransactionStatusCode
 import com.spiraclesoftware.androidsample.shared.ui.DateTimeFormat
 import com.spiraclesoftware.androidsample.shared.ui.DelightUI
 import com.spiraclesoftware.core.data.Resource
-import com.spiraclesoftware.core.extensions.color
-import com.spiraclesoftware.core.extensions.drawable
-import com.spiraclesoftware.core.extensions.string
-import com.spiraclesoftware.core.extensions.tintedDrawable
+import com.spiraclesoftware.core.extensions.*
 import kotlinx.android.synthetic.main.transaction__detail__card.view.*
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -222,8 +219,10 @@ class TransactionDetailFragment : Fragment() {
 
                     if (item.action != null) {
                         itemBinding.valueView.setOnClickListener { item.action.invoke() }
-                        itemBinding.valueView.setTextColor(ctx.color(R.color.blue_700))
-                        itemBinding.iconDrawable = item.icon?.tintedDrawable(ctx.color(R.color.blue_700))
+
+                        val tintColor = ctx.colorAttr(R.attr.colorPrimaryDark)
+                        itemBinding.valueView.setTextColor(tintColor)
+                        itemBinding.iconDrawable = item.icon?.tintedDrawable(tintColor)
                     } else {
                         itemBinding.iconDrawable = item.icon
                     }

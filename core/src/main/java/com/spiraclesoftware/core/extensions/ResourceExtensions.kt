@@ -2,13 +2,12 @@ package com.spiraclesoftware.core.extensions
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import android.util.TypedValue
+import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+
 
 //region Context
 fun Context.drawable(@DrawableRes resId: Int): Drawable? {
@@ -30,6 +29,24 @@ fun Context.string(@StringRes resId: Int): String {
 
 fun Context.string(@StringRes resId: Int, vararg formatArgs: Any): String {
     return getString(resId, *formatArgs)
+}
+
+@ColorInt
+fun Context.colorAttr(@AttrRes colorAttr: Int): Int {
+    val resolvedAttr = themeAttr(colorAttr)
+    // resourceId is used if it's a ColorStateList, and data if it's a color reference or a hex color
+    return color(
+        if (resolvedAttr.resourceId != 0)
+            resolvedAttr.resourceId
+        else
+            resolvedAttr.data
+    )
+}
+
+fun Context.themeAttr(@AttrRes attrRes: Int): TypedValue {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(attrRes, typedValue, true)
+    return typedValue
 }
 //endregion
 
