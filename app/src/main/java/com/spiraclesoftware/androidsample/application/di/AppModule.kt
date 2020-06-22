@@ -8,6 +8,8 @@ import com.spiraclesoftware.androidsample.BuildConfig
 import com.spiraclesoftware.androidsample.application.SampleApplication
 import com.spiraclesoftware.androidsample.application.data.ApiService
 import com.spiraclesoftware.androidsample.application.data.MoneyAdapter
+import com.spiraclesoftware.androidsample.shared.data.adapter.ConversionRatesAdapter
+import com.spiraclesoftware.androidsample.shared.domain.ConversionRates
 import com.spiraclesoftware.androidsample.shared.domain.Money
 import com.spiraclesoftware.core.data.LiveDataCallAdapterFactory
 import com.spiraclesoftware.core.data.UniqueIdentifier
@@ -51,6 +53,10 @@ val appModule = module {
             .registerTypeAdapter(
                 Money::class.java,
                 MoneyAdapter()
+            )
+            .registerTypeAdapter(
+                ConversionRates::class.java,
+                ConversionRatesAdapter()
             )
             .create()
     }
