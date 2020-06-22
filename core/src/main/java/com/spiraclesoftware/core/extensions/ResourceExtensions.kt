@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 
-
 //region Context
 fun Context.drawable(@DrawableRes resId: Int): Drawable? {
     return ContextCompat.getDrawable(this, resId)
