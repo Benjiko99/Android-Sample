@@ -19,150 +19,101 @@ class MoneyTest {
         assertEquals(Money("18.92857", "EUR"), sum)
     }
 
+    //region Addition
     @Test
-    fun addition() {
-        fun case1() {
-            val first = Money("1", "EUR")
-            val second = Money("99", "EUR")
+    fun addition_simple() {
+        val first = Money("1", "EUR")
+        val second = Money("99", "EUR")
 
-            val sum = first.add(second.amount).amount
-            assertEquals(BigDecimal("100"), sum)
-        }
-        case1()
-
-        fun case2() {
-            val first = Money("100000", "EUR")
-            val second = Money("123456", "EUR")
-
-            val sum = first.add(second.amount).amount
-            assertEquals(BigDecimal("223456"), sum)
-        }
-        case2()
-
-        fun case3() {
-            val first = Money("1234.567", "EUR")
-            val second = Money("1.234", "EUR")
-
-            val sum = first.add(second.amount).amount
-            assertEquals(BigDecimal("1235.801"), sum)
-        }
-        case3()
+        val sum = first.add(second.amount).amount
+        assertEquals(BigDecimal("100"), sum)
     }
 
     @Test
-    fun subtraction() {
-        fun case1() {
-            val first = Money("100", "EUR")
-            val second = Money("99", "EUR")
+    fun addition_large_sums() {
+        val first = Money("100000", "EUR")
+        val second = Money("123456", "EUR")
 
-            val sum = first.subtract(second.amount).amount
-            assertEquals(BigDecimal("1"), sum)
-        }
-        case1()
-
-        fun case2() {
-            val first = Money("123456", "EUR")
-            val second = Money("100000", "EUR")
-
-            val sum = first.subtract(second.amount).amount
-            assertEquals(BigDecimal("23456"), sum)
-        }
-        case2()
-
-        fun case3() {
-            val first = Money("1234.567", "EUR")
-            val second = Money("1.234", "EUR")
-
-            val sum = first.subtract(second.amount).amount
-            assertEquals(BigDecimal("1233.333"), sum)
-        }
-        case3()
+        val sum = first.add(second.amount).amount
+        assertEquals(BigDecimal("223456"), sum)
     }
 
     @Test
-    fun multiplication() {
-        fun case1() {
-            val first = Money("100", "EUR")
-            val second = Money("42", "EUR")
+    fun addition_decimals() {
+        val first = Money("1234.567", "EUR")
+        val second = Money("1.234", "EUR")
 
-            val sum = first.multiply(second.amount).amount
-            assertEquals(BigDecimal("4200"), sum)
-        }
-        case1()
+        val sum = first.add(second.amount).amount
+        assertEquals(BigDecimal("1235.801"), sum)
+    }
+    //endregion
 
-        fun case2() {
-            val first = Money("100", "EUR")
-            val second = Money("123.456", "EUR")
+    //region Subtraction
+    @Test
+    fun subtraction_simple() {
+        val first = Money("100", "EUR")
+        val second = Money("99", "EUR")
 
-            val sum = first.multiply(second.amount).amount
-            assertEquals(BigDecimal("12345.60"), sum)
-        }
-        case2()
+        val sum = first.subtract(second.amount).amount
+        assertEquals(BigDecimal("1"), sum)
     }
 
     @Test
-    fun division() {
-        fun case1() {
-            val first = Money("100", "EUR")
-            val second = Money("50", "EUR")
+    fun subtraction_large_sums() {
+        val first = Money("123456", "EUR")
+        val second = Money("100000", "EUR")
 
-            val sum = first.divide(second.amount).amount
-            assertEquals(BigDecimal("2"), sum)
-        }
-        case1()
-
-        fun case2() {
-            val first = Money("100", "EUR")
-            val second = Money("3", "EUR")
-
-            val sum = first.divide(second.amount).amount
-            assertEquals(BigDecimal("33.33333"), sum)
-        }
-        case2()
+        val sum = first.subtract(second.amount).amount
+        assertEquals(BigDecimal("23456"), sum)
     }
 
     @Test
-    fun formatting() {
-        fun case_signed() {
-            val money = Money("100", "EUR")
-            assertEquals("+ EUR100", money.formatSigned())
-        }
-        case_signed()
+    fun subtraction_decimals() {
+        val first = Money("1234.567", "EUR")
+        val second = Money("1.234", "EUR")
 
-        fun case_signed_decimal() {
-            val money = Money("12345.67", "EUR")
-            assertEquals("+ EUR12,345.67", money.formatSigned())
-        }
-        case_signed_decimal()
-
-        fun case_signed_decimal_zeros() {
-            val money = Money("100.00", "EUR")
-            assertEquals("+ EUR100.00", money.formatSigned())
-        }
-        case_signed_decimal_zeros()
-
-        fun case_signed_without_positive_sign() {
-            val money = Money("100", "EUR")
-            assertEquals("EUR100", money.formatSigned(showSignWhenPositive = false))
-        }
-        case_signed_without_positive_sign()
-
-        fun case_unsigned() {
-            val money = Money("100", "EUR")
-            assertEquals("EUR100", money.formatUnsigned())
-        }
-        case_unsigned()
-
-        fun case_unsigned_negative() {
-            val money = Money("-100", "EUR")
-            assertEquals("EUR100", money.formatUnsigned())
-        }
-        case_unsigned_negative()
-
-        fun case_signed_negative() {
-            val money = Money("-100", "EUR")
-            assertEquals("- EUR100", money.formatSigned())
-        }
-        case_signed_negative()
+        val sum = first.subtract(second.amount).amount
+        assertEquals(BigDecimal("1233.333"), sum)
     }
+    //endregion
+
+    //region Multiplication
+    @Test
+    fun multiplication_of_integers() {
+        val first = Money("100", "EUR")
+        val second = Money("42", "EUR")
+
+        val sum = first.multiply(second.amount).amount
+        assertEquals(BigDecimal("4200"), sum)
+    }
+
+    @Test
+    fun multiplication_of_decimals() {
+        val first = Money("100", "EUR")
+        val second = Money("123.456", "EUR")
+
+        val sum = first.multiply(second.amount).amount
+        assertEquals(BigDecimal("12345.60"), sum)
+    }
+    //endregion
+
+    //region Division
+    @Test
+    fun division_without_remainder() {
+        val first = Money("100", "EUR")
+        val second = Money("50", "EUR")
+
+        val sum = first.divide(second.amount).amount
+        assertEquals(BigDecimal("2"), sum)
+    }
+
+    @Test
+    fun division_with_remainder() {
+        val first = Money("100", "EUR")
+        val second = Money("3", "EUR")
+
+        val sum = first.divide(second.amount).amount
+        assertEquals(BigDecimal("33.33333"), sum)
+    }
+    //endregion
 }
