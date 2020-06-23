@@ -27,16 +27,16 @@ class TransactionItem(val transaction: Transaction) : AbstractBindingItem<Transa
 
     override fun bindView(binding: TransactionListTransactionItemBinding, payloads: List<Any>) {
         this.binding = binding
-        setAmountText(transaction.formattedMoney, transaction.statusCode)
+        setAmountText(transaction.formattedMoney, transaction)
         setNameText(transaction.name)
         setDateText(transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME))
         setStatusText(transaction.statusCode)
         setCategoryIcon(transaction.category.drawableRes, transaction.category.colorRes, transaction.statusCode)
     }
 
-    private fun setAmountText(string: String, statusCode: TransactionStatusCode) {
+    private fun setAmountText(string: String, transaction: Transaction) {
         binding.amountText = string
-        if (statusCode != TransactionStatusCode.SUCCESSFUL) {
+        if (!transaction.contributesToBalance()) {
             binding.amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
     }

@@ -75,7 +75,7 @@ class TransactionDetailFragment : Fragment() {
             (resource?.data)?.let { transaction ->
                 toolbar.title = transaction.name
 
-                setAmountText(transaction.formattedMoney, transaction.statusCode)
+                setAmountText(transaction.formattedMoney, transaction)
                 setNameText(transaction.name)
                 setDateText(transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME))
                 setCategoryIcon(transaction.category.drawableRes, transaction.category.colorRes, transaction.statusCode)
@@ -85,9 +85,9 @@ class TransactionDetailFragment : Fragment() {
         }
     }
 
-    private fun setAmountText(string: String, statusCode: TransactionStatusCode) {
+    private fun setAmountText(string: String, transaction: Transaction) {
         binding.amountText = string
-        if (statusCode != TransactionStatusCode.SUCCESSFUL) {
+        if (!transaction.contributesToBalance()) {
             binding.amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
     }

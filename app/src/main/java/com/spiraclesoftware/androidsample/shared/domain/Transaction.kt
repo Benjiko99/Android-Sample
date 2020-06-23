@@ -2,6 +2,8 @@ package com.spiraclesoftware.androidsample.shared.domain
 
 import com.spiraclesoftware.core.data.Identifiable
 import org.threeten.bp.ZonedDateTime
+import java.math.BigDecimal
+import java.util.*
 
 data class Transaction(
     val id: TransactionId,
@@ -18,6 +20,39 @@ data class Transaction(
 
     override fun getUniqueId() = id
 
+    /**
+     * Money in transactions is always absolute and the sign has to be determined by the [TransferDirection].
+     * Returns money with the proper sign set.
+     */
+    val signedMoney
+        get() = when (transferDirection) {
+            TransferDirection.INCOMING -> money
+            TransferDirection.OUTGOING -> money.negate()
+        }
+
     val formattedMoney: String
-        get() = money.format(transferDirection, statusCode)
+        get() = if (contributesToBalance()) {
+            signedMoney.formatSigned()
+        } else {
+            signedMoney.formatUnsigned()
+        }
+
+    fun contributesToBalance(): Boolean {
+        return statusCode == TransactionStatusCode.SUCCESSFUL
+    }
+
+    /**
+     * Calculates how much a transaction contributes to the account balance (if anything).
+     * Returns contributed amount in account currency.
+     */
+    fun getContributionToBalance(
+        rates: ConversionRates,
+        accountCurrency: Currency
+    ): Money {
+        if (!contributesToBalance()) {
+            return Money(BigDecimal.ZERO, accountCurrency)
+        }
+
+        return signedMoney.convertToCurrency(accountCurrency.currencyCode(), rates)
+    }
 }

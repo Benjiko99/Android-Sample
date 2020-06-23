@@ -7,7 +7,7 @@ import org.koin.dsl.module
 
 val transactionModule = module {
 
-    viewModel { TransactionListViewModel(get()) }
+    viewModel { TransactionListViewModel(get(), get(), get()) }
 
     viewModel { TransactionDetailViewModel(get()) }
 }

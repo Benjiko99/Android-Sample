@@ -4,25 +4,32 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.spiraclesoftware.androidsample.shared.data.AccountRepository
+import com.spiraclesoftware.androidsample.shared.data.ConversionRatesRepository
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
-import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionId
-import com.spiraclesoftware.androidsample.shared.domain.TransactionListFilter
-import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
+import com.spiraclesoftware.androidsample.shared.domain.*
 import com.spiraclesoftware.core.data.*
+import com.spiraclesoftware.core.extensions.zip
 
 class TransactionListViewModel(
-    private val repository: TransactionsRepository
+    accountRepo: AccountRepository,
+    private val transactionsRepo: TransactionsRepository,
+    ratesRepo: ConversionRatesRepository
 ) : ViewModel() {
 
-    val transactions: LiveData<Resource<List<Transaction>>>
+    private val _account: LiveData<Account> = accountRepo.getAccount()
+
+    private val _transactions: LiveData<Resource<List<Transaction>>>
     val transactionListFilter: LiveData<TransactionListFilter>
         get() = _transactionListFilter
 
     private val _transactionListFilter = MutableLiveData<TransactionListFilter>()
     private val retryTrigger = LiveTrigger()
 
+    private val _conversionRates: LiveData<Resource<ConversionRates>>
+
     private val _navigateToDetailAction = MutableLiveData<Event<TransactionId>>()
+
     val navigateToDetailAction: LiveData<Event<TransactionId>> = _navigateToDetailAction
 
     init {
@@ -33,14 +40,18 @@ class TransactionListViewModel(
             addSource(retryTrigger) { trigger() }
         }
 
-        transactions = Transformations.switchMap(triggers) {
+        _transactions = Transformations.switchMap(triggers) {
             if (_transactionListFilter.value != null) {
-                repository.loadTransactionList(_transactionListFilter.value!!)
+                transactionsRepo.loadTransactionList(_transactionListFilter.value!!)
             } else {
                 AbsentLiveData.create()
             }
         }
+
+        _conversionRates = ratesRepo.getConversionRates(_account.value!!.currency.currencyCode())
     }
+
+    val listData = zip(_account, _transactions, _conversionRates)
 
     fun openTransactionDetail(transactionId: TransactionId) {
         _navigateToDetailAction.value = Event(transactionId)

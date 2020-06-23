@@ -6,6 +6,11 @@
         <item name="fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="TextAppearance.Transaction.Header" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
     <style name="TextAppearance.Transaction.Amount" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textSize">14sp</item>
     </style>
@@ -27,6 +32,7 @@
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="fontFamily">sans-serif</item>
     </style>
+
 
     <style name="TextAppearance.EmptyState.Caption" parent="TextAppearance.MaterialComponents.Headline6" />
 

@@ -2,5 +2,6 @@
 <resources>
 
     <item name="transaction__list__transaction_item" type="id" />
+    <item name="transaction__list__header_item" type="id" />
 
 </resources>

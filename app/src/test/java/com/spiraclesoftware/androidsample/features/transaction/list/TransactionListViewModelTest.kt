@@ -1,14 +1,12 @@
 package com.spiraclesoftware.androidsample.features.transaction.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.*
+import com.spiraclesoftware.androidsample.shared.data.AccountRepository
+import com.spiraclesoftware.androidsample.shared.data.ConversionRatesRepository
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
-import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionId
-import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
+import com.spiraclesoftware.androidsample.shared.domain.*
 import com.spiraclesoftware.androidsample.utils.LiveDataTestUtil
-import com.spiraclesoftware.core.data.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -23,8 +21,13 @@ class TransactionListViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
+    private val accountRepository = AccountRepository()
+
     @Mock
     private lateinit var transactionsRepository: TransactionsRepository
+
+    @Mock
+    private lateinit var ratesRepository: ConversionRatesRepository
 
     private lateinit var transactionListViewModel: TransactionListViewModel
 
@@ -32,12 +35,12 @@ class TransactionListViewModelTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        transactionListViewModel = TransactionListViewModel(transactionsRepository)
+        transactionListViewModel = TransactionListViewModel(accountRepository, transactionsRepository, ratesRepository)
     }
 
     @Test
     fun testNull() {
-        assertNotNull(transactionListViewModel.transactions)
+        assertNotNull(transactionListViewModel.listData)
         assertNotNull(transactionListViewModel.transactionListFilter)
         verify(transactionsRepository, never()).loadTransactionList(any())
     }
@@ -51,16 +54,14 @@ class TransactionListViewModelTest {
     @Test
     fun fetchWhenObserved() {
         transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
-        transactionListViewModel.transactions.observeForever(mock())
+        transactionListViewModel.listData.observeForever(mock())
         verify(transactionsRepository).loadTransactionList(any())
     }
 
     @Test
     fun transactions() {
-        val observer = mock<Observer<Resource<List<Transaction>>>>()
-        transactionListViewModel.transactions.observeForever(observer)
+        transactionListViewModel.listData.observeForever(mock())
 
-        verifyNoMoreInteractions(observer)
         verifyNoMoreInteractions(transactionsRepository)
 
         transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
@@ -72,7 +73,7 @@ class TransactionListViewModelTest {
         transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
         verifyNoMoreInteractions(transactionsRepository)
 
-        transactionListViewModel.transactions.observeForever(mock())
+        transactionListViewModel.listData.observeForever(mock())
         verify(transactionsRepository).loadTransactionList(any())
 
         reset(transactionsRepository)
