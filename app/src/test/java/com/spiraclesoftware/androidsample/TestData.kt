@@ -2,7 +2,6 @@ package com.spiraclesoftware.androidsample
 
 import com.spiraclesoftware.androidsample.shared.domain.*
 import org.threeten.bp.ZonedDateTime
-import java.math.BigDecimal
 import java.util.*
 
 object TestData {
@@ -10,7 +9,9 @@ object TestData {
     val epochDateTime = ZonedDateTime.parse("1970-01-01T00:00:00+00:00")!!
 
     val conversionRates = ConversionRates(
-        Currency.getInstance("EUR"), Date(), arrayListOf(
+        baseCurrency = Currency.getInstance("EUR"),
+        validityDate = Date(),
+        rates = arrayListOf(
             ConversionRate(Currency.getInstance("USD"), 1.12f),
             ConversionRate(Currency.getInstance("CZK"), 26.70f)
         )

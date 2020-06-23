@@ -10,16 +10,4 @@ enum class TransactionStatus {
             COMPLETED -> R.string.transaction_status__completed
             DECLINED -> R.string.transaction_status__declined
         }
-
-    val drawableRes: Int?
-        get() = when (this) {
-            DECLINED -> R.drawable.ic_status_declined
-            else -> null
-        }
-
-    val colorRes: Int?
-        get() = when (this) {
-            DECLINED -> R.string.transaction_status__declined
-            else -> null
-        }
 }
