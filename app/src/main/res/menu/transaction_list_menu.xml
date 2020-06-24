@@ -8,4 +8,10 @@
         android:title="@string/switch_locale"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/refresh"
+        app:showAsAction="ifRoom" />
+
 </menu>

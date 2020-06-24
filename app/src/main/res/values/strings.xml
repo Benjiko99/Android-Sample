@@ -3,6 +3,7 @@
     <string name="app_name">Mobile Banking</string>
 
     <!-- Common -->
+    <string name="refresh">Refresh</string>
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown error</string>
     <string name="switch_locale">Switch locale</string>

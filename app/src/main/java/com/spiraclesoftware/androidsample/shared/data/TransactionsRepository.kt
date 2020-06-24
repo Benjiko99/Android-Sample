@@ -87,4 +87,8 @@ class TransactionsRepository(
             }
         }.asLiveData()
     }
+
+    fun dirtyCache() {
+        listCache.isDirty = true
+    }
 }

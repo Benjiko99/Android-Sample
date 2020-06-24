@@ -27,6 +27,7 @@ import com.spiraclesoftware.androidsample.shared.ui.DelightUI
 import com.spiraclesoftware.androidsample.shared.ui.RetryCallback
 import com.spiraclesoftware.core.data.EventObserver
 import com.spiraclesoftware.core.data.Resource
+import com.spiraclesoftware.core.data.Status
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.utils.LanguageSwitcher
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
@@ -34,7 +35,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 import java.math.BigDecimal
-import java.util.*
 
 class TransactionListFragment : Fragment() {
 
@@ -54,7 +54,7 @@ class TransactionListFragment : Fragment() {
 
         binding.retryCallback = object : RetryCallback {
             override fun retry() {
-                viewModel.retry()
+                viewModel.refresh()
             }
         }
 
@@ -136,6 +136,10 @@ class TransactionListFragment : Fragment() {
                 LanguageSwitcher.toggleLanguageAndRestart(requireContext())
                 return true
             }
+            R.id.action_refresh -> {
+                viewModel.refresh()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -171,13 +175,18 @@ class TransactionListFragment : Fragment() {
     private fun bindListData(data: Triple<Account, Resource<List<Transaction>>, Resource<ConversionRates>>) {
         val (account, transactions, rates) = data
         binding.transactionListResource = transactions
-        setTransactions(account, transactions.data, rates.data)
+        setTransactions(account, transactions, rates)
     }
 
-    private fun setTransactions(account: Account, transactions: List<Transaction>?, rates: ConversionRates?) {
-        if (transactions != null && rates != null) {
-            itemAdapter.set(transactions.sortAndGroupByDay().toListItems(account, rates))
+    private fun setTransactions(
+        account: Account,
+        transactions: Resource<List<Transaction>>,
+        rates: Resource<ConversionRates>
+    ) {
+        if (transactions.status == Status.SUCCESS && rates.status == Status.SUCCESS) {
+            itemAdapter.set(transactions.data!!.sortAndGroupByDay().toListItems(account, rates.data!!))
         } else {
+            scrollView.scrollTo(0, 0) // otherwise toolbar elevation wouldn't reset
             itemAdapter.set(emptyList())
         }
     }

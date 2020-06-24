@@ -69,16 +69,18 @@ class TransactionListViewModelTest {
     }
 
     @Test
-    fun retry() {
+    fun refresh() {
         transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
         verifyNoMoreInteractions(transactionsRepository)
+        verifyNoMoreInteractions(ratesRepository)
 
         transactionListViewModel.listData.observeForever(mock())
         verify(transactionsRepository).loadTransactionList(any())
 
         reset(transactionsRepository)
-        transactionListViewModel.retry()
+        transactionListViewModel.refresh()
         verify(transactionsRepository).loadTransactionList(any())
+        verify(ratesRepository).getConversionRates(any())
     }
 
     @Test

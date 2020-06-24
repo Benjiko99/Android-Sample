@@ -14,7 +14,7 @@ import com.spiraclesoftware.core.extensions.zip
 class TransactionListViewModel(
     accountRepo: AccountRepository,
     private val transactionsRepo: TransactionsRepository,
-    ratesRepo: ConversionRatesRepository
+    private val ratesRepo: ConversionRatesRepository
 ) : ViewModel() {
 
     private val _account: LiveData<Account> = accountRepo.getAccount()
@@ -24,7 +24,7 @@ class TransactionListViewModel(
         get() = _transactionListFilter
 
     private val _transactionListFilter = MutableLiveData<TransactionListFilter>()
-    private val retryTrigger = LiveTrigger()
+    private val refreshTrigger = LiveTrigger()
 
     private val _conversionRates: LiveData<Resource<ConversionRates>>
 
@@ -37,7 +37,7 @@ class TransactionListViewModel(
         val triggers = MediatorLiveTrigger().apply {
             // trigger() just calls setValue() on the Mediator to cause the observers to be notified.
             addSource(_transactionListFilter) { trigger() }
-            addSource(retryTrigger) { trigger() }
+            addSource(refreshTrigger) { trigger() }
         }
 
         _transactions = Transformations.switchMap(triggers) {
@@ -48,7 +48,9 @@ class TransactionListViewModel(
             }
         }
 
-        _conversionRates = ratesRepo.getConversionRates(_account.value!!.currency.currencyCode())
+        _conversionRates = Transformations.switchMap(triggers) {
+            ratesRepo.getConversionRates(_account.value!!.currency.currencyCode())
+        }
     }
 
     val listData = zip(_account, _transactions, _conversionRates)
@@ -57,8 +59,11 @@ class TransactionListViewModel(
         _navigateToDetailAction.value = Event(transactionId)
     }
 
-    fun retry() {
-        retryTrigger.trigger()
+    fun refresh() {
+        transactionsRepo.dirtyCache()
+        ratesRepo.dirtyCache()
+
+        refreshTrigger.trigger()
     }
 
     fun setTransferDirectionFilter(transferDirectionFilter: TransferDirectionFilter) {
