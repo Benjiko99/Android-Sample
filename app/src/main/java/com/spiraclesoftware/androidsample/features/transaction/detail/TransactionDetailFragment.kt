@@ -1,13 +1,10 @@
 package com.spiraclesoftware.androidsample.features.transaction.detail
 
-import android.content.Context
 import android.graphics.Paint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
@@ -15,17 +12,20 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.databinding.TransactionDetailCardItemBinding
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionId
 import com.spiraclesoftware.androidsample.shared.domain.TransactionStatus
 import com.spiraclesoftware.androidsample.shared.domain.TransactionStatusCode
+import com.spiraclesoftware.androidsample.shared.ui.CardItem
+import com.spiraclesoftware.androidsample.shared.ui.CardsUtils
 import com.spiraclesoftware.androidsample.shared.ui.DateTimeFormat
 import com.spiraclesoftware.androidsample.shared.ui.DelightUI
 import com.spiraclesoftware.core.data.Resource
-import com.spiraclesoftware.core.extensions.*
-import kotlinx.android.synthetic.main.transaction__detail__card.view.*
+import com.spiraclesoftware.core.extensions.color
+import com.spiraclesoftware.core.extensions.drawable
+import com.spiraclesoftware.core.extensions.string
+import com.spiraclesoftware.core.extensions.tintedDrawable
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -197,61 +197,4 @@ class TransactionDetailFragment : Fragment() {
 
         CardsUtils(requireContext(), layoutInflater, cardsContainer).makeCards(cards)
     }
-
-    class CardsUtils(
-        private val ctx: Context,
-        private val layoutInflater: LayoutInflater,
-        private val cardsContainer: ViewGroup
-    ) {
-        fun makeCards(cards: ArrayList<ArrayList<CardItem>>) {
-            cardsContainer.removeAllViews()
-
-            cards.filterNot { it.isEmpty() }.forEachIndexed { cardIndex, items ->
-
-                val cardView = layoutInflater.inflate(R.layout.transaction__detail__card, cardsContainer, false)
-
-                items.forEachIndexed { itemIndex, item ->
-                    val itemBinding =
-                        TransactionDetailCardItemBinding.inflate(layoutInflater, cardView.content, false)
-                    itemBinding.labelText = item.label
-                    itemBinding.valueText = item.value
-                    itemBinding.bodyText = item.body
-
-                    if (item.action != null) {
-                        itemBinding.valueView.setOnClickListener { item.action.invoke() }
-
-                        val tintColor = ctx.colorAttr(R.attr.colorPrimaryDark)
-                        itemBinding.valueView.setTextColor(tintColor)
-                        itemBinding.iconDrawable = item.icon?.tintedDrawable(tintColor)
-                    } else {
-                        itemBinding.iconDrawable = item.icon
-                    }
-
-                    // Add a margin between items
-                    val layoutParams = itemBinding.root.layoutParams as LinearLayout.LayoutParams
-                    if (itemIndex > 0) {
-                        layoutParams.topMargin = ctx.resources.getDimensionPixelSize(R.dimen.content__spacing__medium)
-                    }
-
-                    cardView.content.addView(itemBinding.root, layoutParams)
-                }
-
-                // Add a margin between cards
-                val layoutParams = cardView.layoutParams as LinearLayout.LayoutParams
-                if (cardIndex > 0) {
-                    layoutParams.topMargin = ctx.resources.getDimensionPixelSize(R.dimen.content__spacing__medium)
-                }
-
-                cardsContainer.addView(cardView, layoutParams)
-            }
-        }
-    }
-
-    data class CardItem(
-        val label: String,
-        val value: String? = null,
-        val icon: Drawable? = null,
-        val body: String? = null,
-        val action: (() -> Unit)? = null
-    )
 }

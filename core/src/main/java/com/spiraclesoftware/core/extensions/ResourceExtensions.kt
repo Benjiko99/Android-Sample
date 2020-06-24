@@ -30,6 +30,11 @@ fun Context.string(@StringRes resId: Int, vararg formatArgs: Any): String {
     return getString(resId, *formatArgs)
 }
 
+@Px
+fun Context.dimen(@DimenRes resId: Int): Int {
+    return resources.getDimensionPixelSize(resId)
+}
+
 @ColorInt
 fun Context.colorAttr(@AttrRes colorAttr: Int): Int {
     val resolvedAttr = themeAttr(colorAttr)
@@ -69,6 +74,11 @@ fun Fragment.string(@StringRes resId: Int): String {
 
 fun Fragment.string(@StringRes resId: Int, vararg formatArgs: Any): String {
     return requireContext().string(resId, *formatArgs)
+}
+
+@Px
+fun Fragment.dimen(@DimenRes resId: Int): Int {
+    return requireContext().dimen(resId)
 }
 //endregion
 
