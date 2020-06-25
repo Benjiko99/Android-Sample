@@ -80,7 +80,6 @@ class TransactionListViewModelTest {
         reset(transactionsRepository)
         transactionListViewModel.refresh()
         verify(transactionsRepository).loadTransactionList(any())
-        verify(ratesRepository).getConversionRates(any())
     }
 
     @Test
