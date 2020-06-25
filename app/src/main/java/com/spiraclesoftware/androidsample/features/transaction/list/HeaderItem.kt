@@ -11,7 +11,7 @@ import org.threeten.bp.ZonedDateTime
 
 class HeaderItem(
     private val dateTime: ZonedDateTime,
-    private val totalMoney: Money
+    private val balance: Money
 ) : AbstractBindingItem<TransactionListHeaderItemBinding>() {
 
     lateinit var binding: TransactionListHeaderItemBinding
@@ -25,15 +25,15 @@ class HeaderItem(
 
     override fun bindView(binding: TransactionListHeaderItemBinding, payloads: List<Any>) {
         this.binding = binding
-        setDateText(dateTime.format(DateTimeFormat.PRETTY_DATE))
-        setTotalMoneyText(totalMoney.formatSigned(showSignWhenPositive = false))
+        bindDateText()
+        bindBalanceText()
     }
 
-    private fun setTotalMoneyText(string: String) {
-        binding.amountText = string
+    private fun bindBalanceText() {
+        binding.balanceText = balance.formatSigned(showSignWhenPositive = false)
     }
 
-    private fun setDateText(string: String) {
-        binding.dateText = string
+    private fun bindDateText() {
+        binding.dateText = dateTime.format(DateTimeFormat.PRETTY_DATE)
     }
 }

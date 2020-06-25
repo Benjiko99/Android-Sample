@@ -27,42 +27,42 @@ class TransactionItem(val transaction: Transaction) : AbstractBindingItem<Transa
 
     override fun bindView(binding: TransactionListTransactionItemBinding, payloads: List<Any>) {
         this.binding = binding
-        setAmountText(transaction.formattedMoney, transaction)
-        setNameText(transaction.name)
-        setDateText(transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME))
-        setStatusText(transaction.statusCode)
-        setCategoryIcon(transaction.category.drawableRes, transaction.category.colorRes, transaction.statusCode)
+        bindAmountText()
+        bindNameText()
+        bindDateText()
+        bindStatusText()
+        bindCategoryIcon()
     }
 
-    private fun setAmountText(string: String, transaction: Transaction) {
-        binding.amountText = string
+    private fun bindAmountText() {
+        binding.amountText = transaction.formattedMoney
         if (!transaction.contributesToBalance()) {
             binding.amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
     }
 
-    private fun setNameText(string: String) {
-        binding.nameText = string
+    private fun bindNameText() {
+        binding.nameText = transaction.name
     }
 
-    private fun setDateText(string: String) {
-        binding.dateText = string
+    private fun bindDateText() {
+        binding.dateText = transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME)
     }
 
-    private fun setStatusText(statusCode: TransactionStatusCode) {
-        binding.statusText = if (statusCode.stringRes != null)
-            binding.root.context.string(statusCode.stringRes!!)
-        else
-            null
+    private fun bindStatusText() {
+        val stringRes = transaction.statusCode.stringRes
+
+        binding.statusText = if (stringRes != null) binding.root.context.string(stringRes) else null
     }
 
-    private fun setCategoryIcon(drawableRes: Int, tintRes: Int, statusCode: TransactionStatusCode) {
+    private fun bindCategoryIcon() {
         val ctx = binding.root.context
         val tint: Int
+        val category = transaction.category
 
-        if (statusCode == TransactionStatusCode.SUCCESSFUL) {
-            tint = ctx.color(tintRes)
-            binding.iconDrawable = ctx.tintedDrawable(drawableRes, tint)
+        if (transaction.statusCode == TransactionStatusCode.SUCCESSFUL) {
+            tint = ctx.color(category.colorRes)
+            binding.iconDrawable = ctx.tintedDrawable(category.drawableRes, tint)
         } else {
             tint = ctx.color(R.color.transaction_status__declined)
             binding.iconDrawable = ctx.tintedDrawable(R.drawable.ic_status_declined, tint)

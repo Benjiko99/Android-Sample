@@ -71,130 +71,135 @@ class TransactionDetailFragment : Fragment() {
 
     inner class TransactionResourceObserver : Observer<Resource<Transaction>> {
 
+        lateinit var transaction: Transaction
+
         override fun onChanged(resource: Resource<Transaction>?) {
             (resource?.data)?.let { transaction ->
+                this.transaction = transaction
+
                 toolbar.title = transaction.name
 
-                setAmountText(transaction.formattedMoney, transaction)
-                setNameText(transaction.name)
-                setDateText(transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME))
-                setCategoryIcon(transaction.category.drawableRes, transaction.category.colorRes, transaction.statusCode)
+                bindAmountText()
+                bindNameText()
+                bindDateText()
+                bindCategoryIcon()
 
-                populateCards(transaction)
+                populateCards()
             }
         }
-    }
 
-    private fun setAmountText(string: String, transaction: Transaction) {
-        binding.amountText = string
-        if (!transaction.contributesToBalance()) {
-            binding.amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-        }
-    }
-
-    private fun setNameText(string: String) {
-        binding.nameText = string
-    }
-
-    private fun setDateText(string: String) {
-        binding.dateText = string
-    }
-
-    private fun setCategoryIcon(drawableRes: Int, tintRes: Int, statusCode: TransactionStatusCode) {
-        val tint: Int
-
-        if (statusCode == TransactionStatusCode.SUCCESSFUL) {
-            tint = color(tintRes)
-            binding.iconDrawable = tintedDrawable(drawableRes, tint)
-        } else {
-            tint = color(R.color.transaction_status__declined)
-            binding.iconDrawable = tintedDrawable(R.drawable.ic_status_declined, tint)
+        private fun bindAmountText() {
+            binding.amountText = transaction.formattedMoney
+            if (!transaction.contributesToBalance()) {
+                binding.amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            }
         }
 
-        val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
-        binding.iconBgDrawable = tintedDrawable(R.drawable.shp_circle, fadedTint)
-    }
+        private fun bindNameText() {
+            binding.nameText = transaction.name
+        }
 
-    private fun populateCards(transaction: Transaction) {
-        val statusCard = arrayListOf<CardItem>()
-        val infoCard = arrayListOf<CardItem>()
-        val categoryCard = arrayListOf<CardItem>()
-        val noteCard = arrayListOf<CardItem>()
+        private fun bindDateText() {
+            binding.dateText = transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME)
+        }
 
-        val cards = arrayListOf(
-            statusCard, infoCard, categoryCard, noteCard
-        )
+        private fun bindCategoryIcon() {
+            val tint: Int
+            val category = transaction.category
 
-        if (transaction.statusCode != TransactionStatusCode.SUCCESSFUL) {
-            statusCard.add(
-                CardItem(
-                    label = string(R.string.transaction__detail__status),
-                    body = "${string(transaction.status.stringRes)} ∙ ${string(transaction.statusCode.stringRes!!)}"
-                )
+            if (transaction.statusCode == TransactionStatusCode.SUCCESSFUL) {
+                tint = color(category.colorRes)
+                binding.iconDrawable = tintedDrawable(category.drawableRes, tint)
+            } else {
+                tint = color(R.color.transaction_status__declined)
+                binding.iconDrawable = tintedDrawable(R.drawable.ic_status_declined, tint)
+            }
+
+            val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
+            binding.iconBgDrawable = tintedDrawable(R.drawable.shp_circle, fadedTint)
+        }
+
+        private fun populateCards() {
+            val statusCard = arrayListOf<CardItem>()
+            val infoCard = arrayListOf<CardItem>()
+            val categoryCard = arrayListOf<CardItem>()
+            val noteCard = arrayListOf<CardItem>()
+
+            val cards = arrayListOf(
+                statusCard, infoCard, categoryCard, noteCard
             )
-        } else {
-            infoCard.add(
-                CardItem(
-                    label = string(R.string.transaction__detail__status),
-                    value = string(transaction.status.stringRes)
-                )
-            )
-        }
 
-        if (!transaction.cardDescription.isNullOrEmpty()) {
-            infoCard.add(
+            if (transaction.statusCode != TransactionStatusCode.SUCCESSFUL) {
+                statusCard.add(
+                    CardItem(
+                        label = string(R.string.transaction__detail__status),
+                        body = "${string(transaction.status.stringRes)} ∙ ${string(transaction.statusCode.stringRes!!)}"
+                    )
+                )
+            } else {
+                infoCard.add(
+                    CardItem(
+                        label = string(R.string.transaction__detail__status),
+                        value = string(transaction.status.stringRes)
+                    )
+                )
+            }
+
+            if (!transaction.cardDescription.isNullOrEmpty()) {
+                infoCard.add(
+                    CardItem(
+                        label = string(R.string.transaction__detail__card),
+                        value = transaction.cardDescription.orEmpty(),
+                        icon = drawable(R.drawable.ic_credit_card),
+                        action = {
+                            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
+                        }
+                    )
+                )
+            }
+
+            if (transaction.status == TransactionStatus.COMPLETED) {
+                infoCard.add(
+                    CardItem(
+                        label = string(R.string.transaction__detail__statement),
+                        value = string(R.string.transaction__detail__download),
+                        icon = drawable(R.drawable.ic_download_statement),
+                        action = {
+                            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
+                        }
+                    )
+                )
+            }
+
+            if (transaction.statusCode == TransactionStatusCode.SUCCESSFUL) {
+                categoryCard.add(
+                    CardItem(
+                        label = string(R.string.transaction__detail__category),
+                        value = string(transaction.category.stringRes),
+                        icon = drawable(transaction.category.drawableRes),
+                        action = {
+                            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
+                        }
+                    )
+                )
+            }
+
+            noteCard.add(
                 CardItem(
-                    label = string(R.string.transaction__detail__card),
-                    value = transaction.cardDescription.orEmpty(),
-                    icon = drawable(R.drawable.ic_credit_card),
+                    label = string(R.string.transaction__detail__note),
+                    value = if (transaction.noteToSelf == null)
+                        string(R.string.transaction__detail__note__add)
+                    else
+                        string(R.string.transaction__detail__note__edit),
+                    body = transaction.noteToSelf,
+                    icon = drawable(R.drawable.ic_edit_note),
                     action = {
                         Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
                     }
                 )
             )
+
+            CardsUtils(requireContext(), layoutInflater, cardsContainer).makeCards(cards)
         }
-
-        if (transaction.status == TransactionStatus.COMPLETED) {
-            infoCard.add(
-                CardItem(
-                    label = string(R.string.transaction__detail__statement),
-                    value = string(R.string.transaction__detail__download),
-                    icon = drawable(R.drawable.ic_download_statement),
-                    action = {
-                        Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
-                    }
-                )
-            )
-        }
-
-        if (transaction.statusCode == TransactionStatusCode.SUCCESSFUL) {
-            categoryCard.add(
-                CardItem(
-                    label = string(R.string.transaction__detail__category),
-                    value = string(transaction.category.stringRes),
-                    icon = drawable(transaction.category.drawableRes),
-                    action = {
-                        Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
-                    }
-                )
-            )
-        }
-
-        noteCard.add(
-            CardItem(
-                label = string(R.string.transaction__detail__note),
-                value = if (transaction.noteToSelf == null)
-                    string(R.string.transaction__detail__note__add)
-                else
-                    string(R.string.transaction__detail__note__edit),
-                body = transaction.noteToSelf,
-                icon = drawable(R.drawable.ic_edit_note),
-                action = {
-                    Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
-                }
-            )
-        )
-
-        CardsUtils(requireContext(), layoutInflater, cardsContainer).makeCards(cards)
     }
 }
