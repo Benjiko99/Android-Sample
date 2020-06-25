@@ -80,13 +80,15 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/headerView"
-                    tools:listitem="@layout/stylized_spinner_item" />
+                    tools:listitem="@layout/filter_spinner_item" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/content__spacing__small"
+                    android:layout_marginTop="@dimen/content__spacing__small"
+                    android:layout_marginBottom="@dimen/content__spacing__small"
+                    android:background="@color/white"
                     android:overScrollMode="never"
                     app:goneUnless="@{!showEmptyState}"
                     app:layout_constrainedHeight="true"

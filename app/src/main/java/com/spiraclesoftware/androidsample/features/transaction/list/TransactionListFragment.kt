@@ -104,7 +104,7 @@ class TransactionListFragment : Fragment() {
             fun createSpinnerAdapter(): ArrayAdapter<String> {
                 return ArrayAdapter(
                     requireContext(),
-                    R.layout.stylized_spinner_item,
+                    R.layout.filter_spinner_item,
                     TransferDirectionFilter.values().map { string(it.stringRes) }
                 ).also {
                     it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

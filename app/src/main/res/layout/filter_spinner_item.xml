@@ -10,4 +10,4 @@
     android:singleLine="true"
     android:textAlignment="inherit"
     android:textColor="?android:textColorSecondary"
-    tools:text="Hello World" />
+    tools:text="@string/transaction__list__filter__transfer_direction__all" />

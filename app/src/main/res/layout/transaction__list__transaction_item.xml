@@ -35,10 +35,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:paddingLeft="@dimen/content__spacing__small"
-        android:paddingTop="10dp"
-        android:paddingRight="@dimen/content__spacing__small"
-        android:paddingBottom="10dp">
+        android:paddingLeft="@dimen/content__spacing__medium"
+        android:paddingTop="12dp"
+        android:paddingRight="@dimen/content__spacing__medium"
+        android:paddingBottom="12dp">
 
         <ImageView
             android:id="@+id/iconView"
