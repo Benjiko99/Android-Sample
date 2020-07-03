@@ -21,11 +21,13 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragment.ListItemsTransformations.sortAndGroupByDay
 import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragment.ListItemsTransformations.toListItems
+import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragmentDirections.Companion.toRatesConverter
 import com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.shared.domain.*
 import com.spiraclesoftware.androidsample.shared.ui.DelightUI
 import com.spiraclesoftware.androidsample.shared.ui.RetryCallback
 import com.spiraclesoftware.core.data.EventObserver
+import com.spiraclesoftware.core.data.NullableEventObserver
 import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.data.Status
 import com.spiraclesoftware.core.extensions.string
@@ -117,10 +119,7 @@ class TransactionListFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
 
                 override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
                     val transferDirectionFilter = TransferDirectionFilter.values()[position]
                     viewModel.setTransferDirectionFilter(transferDirectionFilter)
@@ -132,6 +131,10 @@ class TransactionListFragment : Fragment() {
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_rates_converter -> {
+                viewModel.openRatesConverter()
+                return true
+            }
             R.id.action_switch_locale -> {
                 LanguageSwitcher.toggleLanguageAndRestart(requireContext())
                 return true
@@ -162,6 +165,13 @@ class TransactionListFragment : Fragment() {
                 viewLifecycleOwner,
                 EventObserver { transactionId ->
                     findNavController().navigate(toTransactionDetail(transactionId.value))
+                }
+            )
+
+            viewModel.navigateToRatesConverterAction.observe(
+                viewLifecycleOwner,
+                NullableEventObserver {
+                    findNavController().navigate(toRatesConverter())
                 }
             )
         }

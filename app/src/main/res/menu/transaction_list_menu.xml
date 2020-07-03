@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_rates_converter"
+        android:icon="@drawable/ic_currency_conversion"
+        android:title="@string/rates__converter__title"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_switch_locale"
         android:icon="@drawable/ic_translate"
         android:title="@string/switch_locale"

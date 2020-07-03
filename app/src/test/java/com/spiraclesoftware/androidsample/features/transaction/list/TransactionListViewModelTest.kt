@@ -5,7 +5,8 @@ import com.nhaarman.mockito_kotlin.*
 import com.spiraclesoftware.androidsample.shared.data.AccountRepository
 import com.spiraclesoftware.androidsample.shared.data.ConversionRatesRepository
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
-import com.spiraclesoftware.androidsample.shared.domain.*
+import com.spiraclesoftware.androidsample.shared.domain.TransactionId
+import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.utils.LiveDataTestUtil
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -28,66 +29,77 @@ class TransactionListViewModelTest {
     @Mock
     private lateinit var ratesRepository: ConversionRatesRepository
 
-    private lateinit var transactionListViewModel: TransactionListViewModel
+    private lateinit var viewModel: TransactionListViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        transactionListViewModel = TransactionListViewModel(accountRepository, transactionsRepository, ratesRepository)
+        viewModel = TransactionListViewModel(accountRepository, transactionsRepository, ratesRepository)
     }
 
     @Test
     fun testNull() {
-        assertNotNull(transactionListViewModel.listData)
-        assertNotNull(transactionListViewModel.transactionListFilter)
+        assertNotNull(viewModel.listData)
+        assertNotNull(viewModel.transactionListFilter)
         verify(transactionsRepository, never()).loadTransactionList(any())
     }
 
     @Test
     fun dontFetchWithoutObservers() {
-        transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
+        viewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
         verify(transactionsRepository, never()).loadTransactionList(any())
     }
 
     @Test
     fun fetchWhenObserved() {
-        transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
-        transactionListViewModel.listData.observeForever(mock())
+        viewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
+        viewModel.listData.observeForever(mock())
         verify(transactionsRepository).loadTransactionList(any())
     }
 
     @Test
     fun transactions() {
-        transactionListViewModel.listData.observeForever(mock())
+        viewModel.listData.observeForever(mock())
 
         verifyNoMoreInteractions(transactionsRepository)
 
-        transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
+        viewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
         verify(transactionsRepository).loadTransactionList(any())
     }
 
     @Test
     fun refresh() {
-        transactionListViewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
+        viewModel.setTransferDirectionFilter(TransferDirectionFilter.ALL)
         verifyNoMoreInteractions(transactionsRepository)
         verifyNoMoreInteractions(ratesRepository)
 
-        transactionListViewModel.listData.observeForever(mock())
+        viewModel.listData.observeForever(mock())
         verify(transactionsRepository).loadTransactionList(any())
 
         reset(transactionsRepository)
-        transactionListViewModel.refresh()
+        viewModel.refresh()
         verify(transactionsRepository).loadTransactionList(any())
     }
 
     @Test
     fun navigateToTransactionDetail() {
         val transactionId = TransactionId(1)
-        transactionListViewModel.openTransactionDetail(transactionId)
+        viewModel.openTransactionDetail(transactionId)
 
-        val navigateEvent =
-            LiveDataTestUtil.getValue(transactionListViewModel.navigateToDetailAction)
+        val navigateEvent = LiveDataTestUtil.getValue(viewModel.navigateToDetailAction)
         assertEquals(transactionId, navigateEvent?.getContentIfNotHandled())
+    }
+
+    @Test
+    fun navigateToRatesConverter() {
+        viewModel.navigateToRatesConverterAction.observeForever(mock())
+
+        viewModel.openRatesConverter()
+
+        verify(viewModel.navigateToRatesConverterAction).observe(any(), any())
+
+        val navigateEvent = LiveDataTestUtil.getValue(viewModel.navigateToDetailAction)
+        assertEquals(true, navigateEvent?.hasBeenHandled)
     }
 }

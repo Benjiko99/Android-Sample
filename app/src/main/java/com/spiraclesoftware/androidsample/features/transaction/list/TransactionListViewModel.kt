@@ -29,8 +29,10 @@ class TransactionListViewModel(
     private val _conversionRates: LiveData<Resource<ConversionRates>>
 
     private val _navigateToDetailAction = MutableLiveData<Event<TransactionId>>()
+    private val _navigateToRatesConverterAction = MutableLiveData<Event<Nothing>>()
 
     val navigateToDetailAction: LiveData<Event<TransactionId>> = _navigateToDetailAction
+    val navigateToRatesConverterAction: LiveData<Event<Nothing>> = _navigateToRatesConverterAction
 
     init {
         // Define all events that should cause data to be reloaded.
@@ -57,6 +59,10 @@ class TransactionListViewModel(
 
     fun openTransactionDetail(transactionId: TransactionId) {
         _navigateToDetailAction.value = Event(transactionId)
+    }
+
+    fun openRatesConverter() {
+        _navigateToRatesConverterAction.value = Event()
     }
 
     fun refresh() {

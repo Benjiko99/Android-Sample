@@ -55,10 +55,11 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:${Deps.constraintLayout}")
 
     implementation("com.mikepenz:fastadapter:${Deps.fastAdapter}")
+    implementation("com.mikepenz:fastadapter-extensions-diff:${Deps.fastAdapter}")
     implementation("com.mikepenz:fastadapter-extensions-binding:${Deps.fastAdapter}")
 
     implementation("com.github.bumptech.glide:glide:${Deps.glide}")
-    annotationProcessor("com.github.bumptech.glide:compiler:${Deps.glide}")
+    kapt("com.github.bumptech.glide:compiler:${Deps.glide}")
 
     testImplementation("junit:junit:${Deps.junit}")
     testImplementation("androidx.arch.core:core-testing:${Deps.lifecycle}")

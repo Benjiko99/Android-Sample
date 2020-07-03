@@ -44,14 +44,14 @@ class RatesConverter(
         )
     }
 
-    private fun setConversionRates(conversionRatesResource: LiveData<Resource<ConversionRates>>) {
+    fun setConversionRates(conversionRatesResource: LiveData<Resource<ConversionRates>>) {
         this.conversionRatesResource = conversionRatesResource
 
         // TODO: There's no way to stop observing because I have no callback for when
         //  this class is destroyed
         val observer = Observer<Resource<ConversionRates>> {
             if (it.status == Status.SUCCESS) {
-                adjustConversionRates(getValueOfBase()!!)
+                adjustConversionRates(getValueOfBase())
             }
         }
         this.conversionRatesResource!!.observeForever(observer)
@@ -85,14 +85,15 @@ class RatesConverter(
         val unadjustedCurrencyRate = conversionRatesResource!!.value!!.data!!.rates
             .find { it.currency == currency }!!.rate
 
-        val adjustedValueOfBase = getValueOfBase()!! / (unadjustedCurrencyRate / value)
+        val adjustedValueOfBase = getValueOfBase() / (unadjustedCurrencyRate / value)
 
         adjustConversionRates(adjustedValueOfBase)
     }
 
-    private fun getValueOfBase() = conversionRatesResource?.value?.data?.let {
+    // TODO: Isn't the base always 1f?
+    private fun getValueOfBase() = /*conversionRatesResource?.value?.data?.let {
         it.rates.findByCurrency(it.baseCurrency.currencyCode)?.rate
-    }
+    }*/1f
 
     private fun adjustConversionRates(value: Float) {
         val resource = conversionRatesResource?.value ?: return

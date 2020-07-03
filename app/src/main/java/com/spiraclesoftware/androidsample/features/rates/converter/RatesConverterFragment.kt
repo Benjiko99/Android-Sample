@@ -25,7 +25,8 @@ import com.spiraclesoftware.androidsample.shared.domain.CurrencyCode
 import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.data.Status
 import kotlinx.android.synthetic.main.rates__converter__fragment.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class RatesConverterFragment : Fragment() {
@@ -34,11 +35,12 @@ class RatesConverterFragment : Fragment() {
         // TODO: Hardcoded base currency
         parametersOf(CurrencyCode("EUR"))
     }
-//    private val ratesConverter by inject<RatesConverter> {
-//        parametersOf(lifecycle)
-//    }
+    private val ratesConverter by inject<RatesConverter> {
+        parametersOf(lifecycle)
+    }
 
     private lateinit var binding: RatesConverterFragmentBinding
+
     private lateinit var itemAdapter: ItemAdapter<ConversionRateItem>
     private lateinit var fastAdapter: FastAdapter<ConversionRateItem>
     private lateinit var itemListImpl: ComparableItemListImpl<ConversionRateItem>
@@ -63,10 +65,6 @@ class RatesConverterFragment : Fragment() {
         toolbar.setupWithNavController(findNavController())
 
         fun setupFastItemAdapter() {
-            itemAdapter = ItemAdapter()
-//            lhs.name.getText().toString().compareTo(rhs.name.getText().toString())
-            fastAdapter = FastAdapter.with(itemAdapter)
-
             itemListImpl = ComparableItemListImpl(Comparator { lhs, rhs ->
                 lhs.conversionRate.currency.currencyCode.compareTo(rhs.conversionRate.currency.currencyCode)
             })
@@ -95,26 +93,21 @@ class RatesConverterFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         fun subscribeUi() {
-            /*viewModel.conversionRates.observe(
-                viewLifecycleOwner,
-                Observer(::bindConversionRatesResource)
-            )*/
-
             // TODO: Set the items only once when entering the screen
             //  Afterwards, just update the data in each item, not the list itself
-            viewModel.adjustedConversionRates.observe(
+            viewModel.conversionRates.observe(
                 viewLifecycleOwner,
-                Observer(::bindAdjustedConversionRatesResource)
+                Observer(::bindConversionRatesResource)
             )
         }
         subscribeUi()
 
         // Map ConversionRates from the viewModel to the ratesConverter
         // TODO: Umm why doesn't the RatesConverter pull this data from the repo himself?
-        //ratesConverter.setConversionRates(viewModel.conversionRates)
+        ratesConverter.setConversionRates(viewModel.conversionRates)
     }
 
-    private fun bindAdjustedConversionRatesResource(resource: Resource<ConversionRates>) {
+    private fun bindConversionRatesResource(resource: Resource<ConversionRates>) {
         // TODO: Show loading state or error states
         when (resource.status) {
             Status.SUCCESS -> setConversionRatesToList(resource.data?.rates ?: emptyList())
@@ -125,7 +118,7 @@ class RatesConverterFragment : Fragment() {
     private fun setConversionRatesToList(rates: List<ConversionRate>) {
         fun toListItems(data: List<ConversionRate>) =
             data.map { rate ->
-                ConversionRateItem(rate, glideRequests)
+                ConversionRateItem(rate, ratesConverter, glideRequests)
             }
 
         val listItems = toListItems(rates)
@@ -170,7 +163,7 @@ class RatesConverterFragment : Fragment() {
      * When the field gains focus, the item is animated with a delay to the top of the list.
      */
     private fun moveFocusedItemToTopEventHook() =
-        object : ConversionRateItem.ViewHolder.InputFocusEventHook() {
+        object : ConversionRateItem.InputFocusEventHook() {
 
             val delayBeforeMovingItem = 300L
             var pendingMoveAction: Runnable? = null

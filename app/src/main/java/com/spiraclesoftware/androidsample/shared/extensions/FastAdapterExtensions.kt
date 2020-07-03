@@ -1,4 +1,4 @@
-package com.spiraclesoftware.core.extensions
+package com.spiraclesoftware.androidsample.shared.extensions
 
 import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.FastAdapter

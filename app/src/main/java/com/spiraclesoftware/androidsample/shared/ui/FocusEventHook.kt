@@ -1,11 +1,11 @@
-package com.spiraclesoftware.core.ui
+package com.spiraclesoftware.androidsample.shared.ui
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.listeners.CustomEventHook
-import com.spiraclesoftware.core.extensions.runWithDetails
+import com.spiraclesoftware.androidsample.shared.extensions.runWithDetails
 
 abstract class FocusEventHook<Item> : CustomEventHook<Item>() where Item : GenericItem {
 

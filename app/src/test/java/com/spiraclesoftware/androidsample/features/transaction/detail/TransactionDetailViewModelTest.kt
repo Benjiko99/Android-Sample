@@ -22,43 +22,43 @@ class TransactionDetailViewModelTest {
     @Mock
     private lateinit var transactionsRepository: TransactionsRepository
 
-    private lateinit var transactionDetailViewModel: TransactionDetailViewModel
+    private lateinit var viewModel: TransactionDetailViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        transactionDetailViewModel = TransactionDetailViewModel(transactionsRepository)
+        viewModel = TransactionDetailViewModel(transactionsRepository)
     }
 
     @Test
     fun testNull() {
-        assertNotNull(transactionDetailViewModel.transaction)
+        assertNotNull(viewModel.transaction)
         verify(transactionsRepository, never()).loadTransaction(any())
     }
 
     @Test
     fun dontFetchWithoutObservers() {
-        transactionDetailViewModel.setTransactionId(TransactionId(1))
+        viewModel.setTransactionId(TransactionId(1))
         verify(transactionsRepository, never()).loadTransaction(any())
     }
 
     @Test
     fun fetchWhenObserved() {
-        transactionDetailViewModel.setTransactionId(TransactionId(1))
-        transactionDetailViewModel.transaction.observeForever(mock())
+        viewModel.setTransactionId(TransactionId(1))
+        viewModel.transaction.observeForever(mock())
         verify(transactionsRepository).loadTransaction(any())
     }
 
     @Test
     fun transaction() {
         val observer = mock<Observer<Resource<Transaction>>>()
-        transactionDetailViewModel.transaction.observeForever(observer)
+        viewModel.transaction.observeForever(observer)
 
         verifyNoMoreInteractions(observer)
         verifyNoMoreInteractions(transactionsRepository)
 
-        transactionDetailViewModel.setTransactionId(TransactionId(1))
+        viewModel.setTransactionId(TransactionId(1))
         verify(transactionsRepository).loadTransaction(any())
     }
 }

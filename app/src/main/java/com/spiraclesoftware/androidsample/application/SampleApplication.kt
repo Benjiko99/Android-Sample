@@ -3,6 +3,8 @@ package com.spiraclesoftware.androidsample.application
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -17,6 +19,9 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
+
+@GlideModule
+class GlideModule : AppGlideModule()
 
 class SampleApplication : Application() {
 
