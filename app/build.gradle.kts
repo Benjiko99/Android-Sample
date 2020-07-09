@@ -57,6 +57,8 @@ dependencies {
     implementation("com.mikepenz:fastadapter:${Deps.fastAdapter}")
     implementation("com.mikepenz:fastadapter-extensions-binding:${Deps.fastAdapter}")
 
+    implementation("io.cabriole:decorator:${Deps.decorator}")
+
     testImplementation("junit:junit:${Deps.junit}")
     testImplementation("androidx.arch.core:core-testing:${Deps.lifecycle}")
 

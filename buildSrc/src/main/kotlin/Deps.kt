@@ -9,6 +9,7 @@ object Deps {
     const val processPhoenix = "2.0.0"
     const val stetho = "1.5.1"
     const val fastAdapter = "5.1.0"
+    const val decorator = "1.2.0"
     const val kotlin = "1.3.72"
     const val coroutines = "1.3.2"
     const val androidx = "1.1.0"
