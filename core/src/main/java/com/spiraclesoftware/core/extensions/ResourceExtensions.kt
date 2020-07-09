@@ -1,12 +1,33 @@
 package com.spiraclesoftware.core.extensions
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+
+//region Resources
+@Px
+fun Resources.dpToPx(@Dimension(unit = Dimension.DP) dp: Int): Int {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        dp.toFloat(),
+        displayMetrics
+    ).toInt()
+}
+
+@Px
+fun Resources.dpToPx(@Dimension(unit = Dimension.DP) dp: Float): Float {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        dp,
+        displayMetrics
+    )
+}
+//endregion
 
 //region Context
 fun Context.drawable(@DrawableRes resId: Int): Drawable? {
@@ -33,6 +54,16 @@ fun Context.string(@StringRes resId: Int, vararg formatArgs: Any): String {
 @Px
 fun Context.dimen(@DimenRes resId: Int): Int {
     return resources.getDimensionPixelSize(resId)
+}
+
+@Px
+fun Context.dpToPx(dp: Int): Int {
+    return resources.dpToPx(dp)
+}
+
+@Px
+fun Context.dpToPx(dp: Float): Float {
+    return resources.dpToPx(dp)
 }
 
 @ColorInt
@@ -79,6 +110,16 @@ fun Fragment.string(@StringRes resId: Int, vararg formatArgs: Any): String {
 @Px
 fun Fragment.dimen(@DimenRes resId: Int): Int {
     return requireContext().dimen(resId)
+}
+
+@Px
+fun Fragment.dpToPx(dp: Int): Int {
+    return resources.dpToPx(dp)
+}
+
+@Px
+fun Fragment.dpToPx(dp: Float): Float {
+    return resources.dpToPx(dp)
 }
 //endregion
 
