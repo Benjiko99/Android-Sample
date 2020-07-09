@@ -2,13 +2,13 @@ package com.spiraclesoftware.androidsample.features.transaction.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.spiraclesoftware.androidsample.shared.data.AccountRepository
 import com.spiraclesoftware.androidsample.shared.data.ConversionRatesRepository
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
 import com.spiraclesoftware.androidsample.shared.domain.*
 import com.spiraclesoftware.core.data.*
+import com.spiraclesoftware.core.extensions.switchMap
 import com.spiraclesoftware.core.extensions.zip
 
 class TransactionListViewModel(
@@ -40,7 +40,7 @@ class TransactionListViewModel(
             addSource(refreshTrigger) { trigger() }
         }
 
-        _transactions = Transformations.switchMap(triggers) {
+        _transactions = triggers.switchMap {
             if (_transactionListFilter.value != null) {
                 transactionsRepo.loadTransactionList(_transactionListFilter.value!!)
             } else {
@@ -48,7 +48,7 @@ class TransactionListViewModel(
             }
         }
 
-        _conversionRates = Transformations.switchMap(triggers) {
+        _conversionRates = triggers.switchMap {
             ratesRepo.getConversionRates(_account.value!!.currency.currencyCode())
         }
     }

@@ -1,84 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="labelText"
-            type="String" />
-
-        <variable
-            name="valueText"
-            type="String" />
-
-        <variable
-            name="bodyText"
-            type="String" />
-
-        <variable
-            name="iconDrawable"
-            type="android.graphics.drawable.Drawable" />
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        style="@style/AppTheme.CardView.Outlined"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:contentPadding="@dimen/content__spacing__medium">
 
-        <TextView
-            android:id="@+id/labelView"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/content__spacing__small"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text='@{labelText}'
-            android:textAppearance="@style/TextAppearance.DetailItem.Label"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/iconView"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Label" />
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iconView"
-            android:layout_width="@dimen/icon__small"
-            android:layout_height="@dimen/icon__small"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="@dimen/content__spacing__small"
-            android:contentDescription="@null"
-            android:src='@{iconDrawable}'
-            app:layout_constraintLeft_toRightOf="@id/labelView"
-            app:layout_constraintRight_toLeftOf="@id/valueView"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_credit_card" />
+            <!-- Content will be inflated at runtime -->
 
-        <TextView
-            android:id="@+id/valueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text='@{valueText}'
-            android:textAppearance="@style/TextAppearance.DetailItem.Value"
-            app:layout_constraintLeft_toRightOf="@id/iconView"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Value" />
-
-        <TextView
-            android:id="@+id/bodyView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/content__spacing__small"
-            android:text='@{bodyText}'
-            android:textAppearance="@style/TextAppearance.DetailItem.Value"
-            app:goneUnless="@{bodyText != null}"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/labelView"
-            tools:text="Hello\nWorld!" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

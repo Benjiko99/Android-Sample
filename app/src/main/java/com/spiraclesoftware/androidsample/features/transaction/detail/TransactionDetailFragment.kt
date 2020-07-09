@@ -11,21 +11,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.GenericFastAdapter
+import com.mikepenz.fastadapter.adapters.GenericItemAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
+import com.spiraclesoftware.androidsample.features.transaction.detail.cards.Card
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.androidsample.shared.domain.TransactionId
-import com.spiraclesoftware.androidsample.shared.domain.TransactionStatus
 import com.spiraclesoftware.androidsample.shared.domain.TransactionStatusCode
-import com.spiraclesoftware.androidsample.shared.ui.CardItem
-import com.spiraclesoftware.androidsample.shared.ui.CardsUtils
 import com.spiraclesoftware.androidsample.shared.ui.DateTimeFormat
 import com.spiraclesoftware.androidsample.shared.ui.DelightUI
+import com.spiraclesoftware.core.data.NullableEventObserver
 import com.spiraclesoftware.core.data.Resource
 import com.spiraclesoftware.core.extensions.color
-import com.spiraclesoftware.core.extensions.drawable
-import com.spiraclesoftware.core.extensions.string
+import com.spiraclesoftware.core.extensions.dpToPx
 import com.spiraclesoftware.core.extensions.tintedDrawable
+import io.cabriole.decorator.LinearMarginDecoration
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,6 +38,8 @@ class TransactionDetailFragment : Fragment() {
     private val viewModel by viewModel<TransactionDetailViewModel>()
 
     private lateinit var binding: TransactionDetailFragmentBinding
+    private lateinit var fastAdapter: GenericFastAdapter
+    private lateinit var itemAdapter: GenericItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +58,29 @@ class TransactionDetailFragment : Fragment() {
         toolbar.setupWithNavController(findNavController())
 
         DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
+
+        fun setupFastItemAdapter() {
+            itemAdapter = ItemAdapter.items()
+            fastAdapter = FastAdapter.with(itemAdapter)
+            fastAdapter.attachDefaultListeners = false
+        }
+        setupFastItemAdapter()
+
+        fun setupRecyclerView() {
+            val linearLayoutManager = LinearLayoutManager(requireContext())
+
+            recyclerView.apply {
+                layoutManager = linearLayoutManager
+                adapter = fastAdapter
+                itemAnimator = null
+                addItemDecoration(
+                    LinearMarginDecoration.createVertical(
+                        verticalMargin = dpToPx(16)
+                    )
+                )
+            }
+        }
+        setupRecyclerView()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -65,8 +94,35 @@ class TransactionDetailFragment : Fragment() {
                 viewLifecycleOwner,
                 TransactionResourceObserver()
             )
+
+            viewModel.cards.observe(
+                viewLifecycleOwner,
+                CardsObserver()
+            )
+
+            viewModel.notifyFeatureNotImplementedAction.observe(
+                viewLifecycleOwner,
+                NullableEventObserver {
+                    Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
+                }
+            )
         }
         subscribeUi()
+    }
+
+    inner class CardsObserver : Observer<List<Card>> {
+
+        override fun onChanged(cards: List<Card>?) {
+            itemAdapter.set(cards?.toListItems() ?: emptyList())
+        }
+
+        private fun List<Card>.toListItems() = map { card ->
+            val itemData = card.toItemData(requireContext(), viewModel.transaction.value!!.data!!)
+
+            CardItem(itemData).apply {
+                withActionClickHandler(viewModel::onCardActionClicked)
+            }
+        }
     }
 
     inner class TransactionResourceObserver : Observer<Resource<Transaction>> {
@@ -83,8 +139,6 @@ class TransactionDetailFragment : Fragment() {
                 bindNameText()
                 bindDateText()
                 bindCategoryIcon()
-
-                populateCards()
             }
         }
 
@@ -117,89 +171,6 @@ class TransactionDetailFragment : Fragment() {
 
             val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
             binding.iconBgDrawable = tintedDrawable(R.drawable.shp_circle, fadedTint)
-        }
-
-        private fun populateCards() {
-            val statusCard = arrayListOf<CardItem>()
-            val infoCard = arrayListOf<CardItem>()
-            val categoryCard = arrayListOf<CardItem>()
-            val noteCard = arrayListOf<CardItem>()
-
-            val cards = arrayListOf(
-                statusCard, infoCard, categoryCard, noteCard
-            )
-
-            if (transaction.statusCode != TransactionStatusCode.SUCCESSFUL) {
-                statusCard.add(
-                    CardItem(
-                        label = string(R.string.transaction__detail__status),
-                        body = "${string(transaction.status.stringRes)} ∙ ${string(transaction.statusCode.stringRes!!)}"
-                    )
-                )
-            } else {
-                infoCard.add(
-                    CardItem(
-                        label = string(R.string.transaction__detail__status),
-                        value = string(transaction.status.stringRes)
-                    )
-                )
-            }
-
-            if (!transaction.cardDescription.isNullOrEmpty()) {
-                infoCard.add(
-                    CardItem(
-                        label = string(R.string.transaction__detail__card),
-                        value = transaction.cardDescription.orEmpty(),
-                        icon = drawable(R.drawable.ic_credit_card),
-                        action = {
-                            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
-                        }
-                    )
-                )
-            }
-
-            if (transaction.status == TransactionStatus.COMPLETED) {
-                infoCard.add(
-                    CardItem(
-                        label = string(R.string.transaction__detail__statement),
-                        value = string(R.string.transaction__detail__download),
-                        icon = drawable(R.drawable.ic_download_statement),
-                        action = {
-                            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
-                        }
-                    )
-                )
-            }
-
-            if (transaction.statusCode == TransactionStatusCode.SUCCESSFUL) {
-                categoryCard.add(
-                    CardItem(
-                        label = string(R.string.transaction__detail__category),
-                        value = string(transaction.category.stringRes),
-                        icon = drawable(transaction.category.drawableRes),
-                        action = {
-                            Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
-                        }
-                    )
-                )
-            }
-
-            noteCard.add(
-                CardItem(
-                    label = string(R.string.transaction__detail__note),
-                    value = if (transaction.noteToSelf == null)
-                        string(R.string.transaction__detail__note__add)
-                    else
-                        string(R.string.transaction__detail__note__edit),
-                    body = transaction.noteToSelf,
-                    icon = drawable(R.drawable.ic_edit_note),
-                    action = {
-                        Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
-                    }
-                )
-            )
-
-            CardsUtils(requireContext(), layoutInflater, cardsContainer).makeCards(cards)
         }
     }
 }

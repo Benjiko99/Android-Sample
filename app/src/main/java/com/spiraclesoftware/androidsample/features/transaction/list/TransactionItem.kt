@@ -36,6 +36,7 @@ class TransactionItem(val transaction: Transaction) : AbstractBindingItem<Transa
 
     private fun bindAmountText() {
         binding.amountText = transaction.formattedMoney
+
         if (!transaction.contributesToBalance()) {
             binding.amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }

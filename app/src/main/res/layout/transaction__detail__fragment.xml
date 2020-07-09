@@ -124,13 +124,16 @@
                     app:layout_constraintTop_toBottomOf="@id/nameView"
                     tools:text="12:00, Fri, 15 May" />
 
-                <LinearLayout
-                    android:id="@+id/cardsContainer"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/dateView" />
+                    android:layout_marginTop="8dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintTop_toBottomOf="@id/dateView"
+                    tools:itemCount="5"
+                    tools:layout_marginTop="24dp"
+                    tools:listitem="@layout/transaction__detail__card_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
