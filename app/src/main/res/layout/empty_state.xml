@@ -36,8 +36,8 @@
             android:layout_height="@dimen/empty_state"
             android:layout_marginBottom="@dimen/content__spacing__medium"
             android:src="@{image}"
-            android:tint="?attr/colorAccent"
             app:goneUnless="@{image != null}"
+            app:tint="?attr/colorAccent"
             tools:src="@drawable/ic_empty_search_results" />
 
         <TextView
