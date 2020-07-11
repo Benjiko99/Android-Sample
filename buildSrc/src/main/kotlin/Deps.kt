@@ -2,6 +2,7 @@ object Deps {
 
     const val kotlinter = "2.4.0"
     const val koin = "2.1.5"
+    const val rainbowCake = "1.0.0"
     const val threetenabp = "1.2.4"
     const val okhttp = "4.7.2"
     const val retrofit = "2.9.0"
