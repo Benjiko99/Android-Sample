@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.application.data
 
 import androidx.lifecycle.LiveData
-import com.spiraclesoftware.androidsample.shared.data.dto.TransactionListResponse
+import com.spiraclesoftware.androidsample.shared.data.dto.TransactionsResponseWrapper
 import com.spiraclesoftware.androidsample.shared.domain.ConversionRates
 import com.spiraclesoftware.core.data.ApiResponse
 import retrofit2.http.GET
@@ -12,7 +12,11 @@ interface ApiService {
 
     @Headers("Accept: application/json")
     @GET("transactions")
-    fun transactionList(): LiveData<ApiResponse<TransactionListResponse>>
+    suspend fun transactionList(): TransactionsResponseWrapper
+
+    @Headers("Accept: application/json")
+    @GET("transactions")
+    fun transactionListOld(): LiveData<ApiResponse<TransactionsResponseWrapper>>
 
     @GET("conversion_rates")
     fun conversionRates(

@@ -49,7 +49,6 @@ dependencies {
     api("co.zsmb:rainbow-cake-core:${Deps.rainbowCake}")
     api("co.zsmb:rainbow-cake-koin:${Deps.rainbowCake}")
     api("co.zsmb:rainbow-cake-timber:${Deps.rainbowCake}")
-    testApi("co.zsmb:rainbow-cake-test:${Deps.rainbowCake}")
 
     debugApi("com.squareup.leakcanary:leakcanary-android:${Deps.leakCanary}")
 

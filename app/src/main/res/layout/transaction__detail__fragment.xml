@@ -1,141 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.spiraclesoftware.androidsample.features.transaction.detail.TransactionDetailFragment">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragment">
 
-    <data>
-
-        <variable
-            name="amountText"
-            type="String" />
-
-        <variable
-            name="nameText"
-            type="String" />
-
-        <variable
-            name="dateText"
-            type="String" />
-
-        <variable
-            name="iconDrawable"
-            type="android.graphics.drawable.Drawable" />
-
-        <variable
-            name="iconBgDrawable"
-            type="android.graphics.drawable.Drawable" />
-
-    </data>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/AppTheme.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:liftOnScroll="true">
+            android:paddingLeft="@dimen/edge__margin"
+            android:paddingRight="@dimen/edge__margin"
+            android:paddingBottom="@dimen/edge__margin">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/AppTheme.Toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
+            <ImageView
+                android:id="@+id/iconView"
+                android:layout_width="@dimen/icon__xlarge"
+                android:layout_height="@dimen/icon__xlarge"
+                android:contentDescription="@null"
+                android:padding="10dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@drawable/shp_circle"
+                tools:backgroundTint="#26FF0000"
+                tools:src="@drawable/ic_category_entertainment"
+                tools:tint="#FF0000" />
 
-        </com.google.android.material.appbar.AppBarLayout>
+            <TextView
+                android:id="@+id/amountView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/content__spacing__medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.ScreenHeader"
+                app:layout_constraintBottom_toTopOf="@id/nameView"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/iconView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="- $49.99" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <TextView
+                android:id="@+id/nameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/content__spacing__medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.Transaction.Name"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toTopOf="@id/dateView"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/iconView"
+                app:layout_constraintTop_toBottomOf="@id/amountView"
+                tools:text="Paypal *Steam" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <TextView
+                android:id="@+id/dateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="@dimen/content__spacing__medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.Transaction.Date"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/iconView"
+                app:layout_constraintTop_toBottomOf="@id/nameView"
+                tools:text="12:00, Fri, 15 May" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/edge__margin"
-                android:paddingRight="@dimen/edge__margin"
-                android:paddingBottom="@dimen/edge__margin">
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@id/dateView"
+                tools:itemCount="5"
+                tools:layout_marginTop="24dp"
+                tools:listitem="@layout/transaction__detail__card_item" />
 
-                <ImageView
-                    android:id="@+id/iconView"
-                    android:layout_width="@dimen/icon__xlarge"
-                    android:layout_height="@dimen/icon__xlarge"
-                    android:background="@{iconBgDrawable}"
-                    android:contentDescription="@null"
-                    android:padding="10dp"
-                    android:src="@{iconDrawable}"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:background="@drawable/shp_circle"
-                    tools:backgroundTint="#26FF0000"
-                    tools:src="@drawable/ic_category_entertainment"
-                    tools:tint="#FF0000" />
-
-                <TextView
-                    android:id="@+id/amountView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/content__spacing__medium"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text='@{amountText}'
-                    android:textAppearance="@style/TextAppearance.ScreenHeader"
-                    app:layout_constraintBottom_toTopOf="@id/nameView"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/iconView"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="- $49.99" />
-
-                <TextView
-                    android:id="@+id/nameView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="@dimen/content__spacing__medium"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text='@{nameText}'
-                    android:textAppearance="@style/TextAppearance.Transaction.Name"
-                    app:layout_constrainedWidth="true"
-                    app:layout_constraintBottom_toTopOf="@id/dateView"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/iconView"
-                    app:layout_constraintTop_toBottomOf="@id/amountView"
-                    tools:text="Paypal *Steam" />
-
-                <TextView
-                    android:id="@+id/dateView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="@dimen/content__spacing__medium"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text='@{dateText}'
-                    android:textAppearance="@style/TextAppearance.Transaction.Date"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/iconView"
-                    app:layout_constraintTop_toBottomOf="@id/nameView"
-                    tools:text="12:00, Fri, 15 May" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:nestedScrollingEnabled="false"
-                    app:layout_constraintTop_toBottomOf="@id/dateView"
-                    tools:itemCount="5"
-                    tools:layout_marginTop="24dp"
-                    tools:listitem="@layout/transaction__detail__card_item" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</layout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

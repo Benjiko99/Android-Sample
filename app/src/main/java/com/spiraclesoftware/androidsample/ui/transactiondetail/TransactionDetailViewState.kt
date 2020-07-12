@@ -1,9 +1,13 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail
 
-sealed class TransactionDetailViewState
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.Card
+import com.spiraclesoftware.androidsample.shared.domain.Transaction
 
-object Initial : TransactionDetailViewState()
+sealed class TransactionDetailViewState
 
 object Loading : TransactionDetailViewState()
 
-data class TransactionDetailReady(val data: String = "") : TransactionDetailViewState()
+data class DetailReady(
+    val transaction: Transaction,
+    val cards: List<Card>
+) : TransactionDetailViewState()

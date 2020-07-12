@@ -1,8 +1,8 @@
-package com.spiraclesoftware.androidsample.features.transaction.detail.cards
+package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 
 import android.content.Context
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.features.transaction.detail.CardItemData
+import com.spiraclesoftware.androidsample.ui.transactiondetail.CardItemData
 import com.spiraclesoftware.androidsample.shared.domain.Transaction
 import com.spiraclesoftware.core.extensions.drawable
 import com.spiraclesoftware.core.extensions.string

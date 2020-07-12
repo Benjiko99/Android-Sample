@@ -1,9 +1,9 @@
 package com.spiraclesoftware.androidsample.shared.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.stub
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.stub
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.application.data.ApiService
 import com.spiraclesoftware.androidsample.shared.domain.Transaction

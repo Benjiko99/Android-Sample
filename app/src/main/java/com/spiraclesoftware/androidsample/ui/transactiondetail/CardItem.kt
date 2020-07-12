@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.features.transaction.detail
+package com.spiraclesoftware.androidsample.ui.transactiondetail
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -45,6 +45,8 @@ class CardItem(
     }
 
     private fun inflateValuePairs() {
+        itemBinding.content.removeAllViews()
+
         itemData.forEachIndexed { index, data ->
             val ctx = itemBinding.root.context
             val binding = CardItemValuePairBinding.inflate(LayoutInflater.from(ctx), itemBinding.content, false)

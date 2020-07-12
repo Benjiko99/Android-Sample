@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.features.transaction.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockitokotlin2.*
 import com.spiraclesoftware.androidsample.shared.data.AccountRepository
 import com.spiraclesoftware.androidsample.shared.data.ConversionRatesRepository
 import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository

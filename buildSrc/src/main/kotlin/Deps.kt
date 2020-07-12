@@ -20,6 +20,6 @@ object Deps {
 
     // Tests
     const val junit = "4.13"
-    const val mockito = "2.19.0"
-    const val mockitoKotlin = "1.5.0"
+    const val mockito = "2.28.2"
+    const val mockitoKotlin = "2.2.0"
 }
