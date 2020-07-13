@@ -10,4 +10,5 @@ enum class TransactionStatus {
             COMPLETED -> R.string.transaction_status__completed
             DECLINED -> R.string.transaction_status__declined
         }
+
 }

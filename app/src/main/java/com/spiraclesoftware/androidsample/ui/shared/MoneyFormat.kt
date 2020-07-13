@@ -30,4 +30,5 @@ class MoneyFormat(val money: Money) {
             "- $formattedAmount"
         }
     }
+
 }

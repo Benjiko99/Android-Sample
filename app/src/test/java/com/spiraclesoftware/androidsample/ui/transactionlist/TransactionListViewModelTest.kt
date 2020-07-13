@@ -17,27 +17,20 @@ import java.io.IOException
 class TransactionListViewModelTest : ViewModelTest() {
 
     companion object {
-        private val MOCK_ACCOUNT = TestData.account
         private val MOCK_TRANSACTIONS = TestData.transactions
-        private val MOCK_RATES = TestData.conversionRates
+        private val MOCK_LIST_ITEMS = MOCK_TRANSACTIONS.map(::TransactionItem)
     }
 
     @Test
     fun `Data is loaded correctly from presenter upon creation`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
-        whenever(presenter.getAccount()).doReturn(MOCK_ACCOUNT)
-        whenever(presenter.getTransactions(any(), any())).doReturn(MOCK_TRANSACTIONS)
-        whenever(presenter.getConversionRates(any())).doReturn(MOCK_RATES)
+        whenever(presenter.getListItems(any(), any())).doReturn(MOCK_LIST_ITEMS)
 
         val vm = TransactionListViewModel(presenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
             stateObserver.assertObserved(
-                ListReady(
-                    MOCK_ACCOUNT,
-                    MOCK_TRANSACTIONS,
-                    MOCK_RATES
-                )
+                ListReady(MOCK_LIST_ITEMS)
             )
         }
     }
@@ -45,7 +38,7 @@ class TransactionListViewModelTest : ViewModelTest() {
     @Test
     fun `Presenter error leads to error state upon creation`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
-        whenever(presenter.getTransactions(any(), any())).thenAnswer {
+        whenever(presenter.getListItems(any(), any())).thenAnswer {
             throw IOException("Network error")
         }
 
@@ -60,14 +53,12 @@ class TransactionListViewModelTest : ViewModelTest() {
     fun `Reload after error can load items correctly`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
         var invocations = 0
-        whenever(presenter.getTransactions(any(), any())).thenAnswer {
+        whenever(presenter.getListItems(any(), any())).thenAnswer {
             when (invocations++) {
                 0 -> throw IOException("Network error")
-                else -> MOCK_TRANSACTIONS
+                else -> MOCK_LIST_ITEMS
             }
         }
-        whenever(presenter.getAccount()).doReturn(MOCK_ACCOUNT)
-        whenever(presenter.getConversionRates(any())).doReturn(MOCK_RATES)
 
         val vm = TransactionListViewModel(presenter)
 
@@ -77,11 +68,7 @@ class TransactionListViewModelTest : ViewModelTest() {
             stateObserver.assertObserved(
                 NetworkError,
                 Loading,
-                ListReady(
-                    MOCK_ACCOUNT,
-                    MOCK_TRANSACTIONS,
-                    MOCK_RATES
-                )
+                ListReady(MOCK_LIST_ITEMS)
             )
         }
     }

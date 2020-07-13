@@ -40,50 +40,6 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     private lateinit var fastAdapter: GenericFastAdapter
     private lateinit var itemAdapter: GenericItemAdapter
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initArgs()
-
-        toolbar.setupWithNavController(findNavController())
-        DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
-
-        fun setupFastItemAdapter() {
-            itemAdapter = ItemAdapter.items()
-            fastAdapter = FastAdapter.with(itemAdapter)
-            fastAdapter.attachDefaultListeners = false
-        }
-        setupFastItemAdapter()
-
-        fun setupRecyclerView() {
-            val linearLayoutManager = LinearLayoutManager(requireContext())
-
-            recyclerView.apply {
-                layoutManager = linearLayoutManager
-                adapter = fastAdapter
-                itemAnimator = null
-                addItemDecoration(
-                    LinearMarginDecoration.createVertical(
-                        verticalMargin = dpToPx(16)
-                    )
-                )
-            }
-        }
-        setupRecyclerView()
-    }
-
-    private fun initArgs() {
-        val params = TransactionDetailFragmentArgs.fromBundle(requireArguments())
-        transactionId =
-            TransactionId(params.transactionId)
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        viewModel.loadTransaction(transactionId)
-    }
-
     override fun render(viewState: TransactionDetailViewState) {
         when (viewState) {
             Loading -> {
@@ -113,6 +69,8 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         }
     }
 
+    // TODO: The logic for whether a view is shown and what business values it displays
+    //  should be moved to the ViewModel or Presenter, it needs to be in the viewState
     private fun bindAmountText(transaction: Transaction) {
         amountView.text = transaction.formattedMoney
         if (!transaction.contributesToBalance()) {
@@ -136,12 +94,54 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         iconView.background = tintedDrawable(R.drawable.shp_circle, fadedTint)
     }
 
+    // TODO: Move to Presenter or ViewModel
     private fun List<Card>.toListItems(transaction: Transaction) = map { card ->
         val itemData = card.toItemData(requireContext(), transaction)
 
         CardItem(itemData).apply {
             withActionClickHandler(viewModel::onCardActionClicked)
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        TransactionDetailFragmentArgs.fromBundle(requireArguments()).let { args ->
+            transactionId = TransactionId(args.transactionId)
+        }
+
+        fun setupToolbar() {
+            toolbar.setupWithNavController(findNavController())
+            DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
+        }
+        setupToolbar()
+
+        fun setupFastItemAdapter() {
+            itemAdapter = ItemAdapter.items()
+            fastAdapter = FastAdapter.with(itemAdapter)
+            fastAdapter.attachDefaultListeners = false
+        }
+        setupFastItemAdapter()
+
+        fun setupRecyclerView() {
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = fastAdapter
+                itemAnimator = null
+                addItemDecoration(
+                    LinearMarginDecoration.createVertical(
+                        verticalMargin = dpToPx(16)
+                    )
+                )
+            }
+        }
+        setupRecyclerView()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.loadTransaction(transactionId)
     }
 
 }

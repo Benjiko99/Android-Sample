@@ -44,4 +44,5 @@ class SampleApplication : Application() {
         super.onConfigurationChanged(newConfig)
         LanguageSwitcher.applyLocale(this)
     }
+
 }

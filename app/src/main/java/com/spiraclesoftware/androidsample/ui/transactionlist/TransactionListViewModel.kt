@@ -15,11 +15,7 @@ class TransactionListViewModel(
     data class NavigateToDetailEvent(val id: TransactionId) : OneShotEvent
 
     val listFilter: LiveData<TransactionListFilter> get() = _listFilter
-    private val _listFilter = MutableLiveData(
-        TransactionListFilter(
-            TransferDirectionFilter.ALL
-        )
-    )
+    private val _listFilter = MutableLiveData(TransactionListFilter(TransferDirectionFilter.ALL))
 
     init {
         execute { loadData() }
@@ -35,14 +31,8 @@ class TransactionListViewModel(
     private suspend fun loadData(ignoreCached: Boolean = false) {
         viewState = Loading
         viewState = try {
-            val account = listPresenter.getAccount()
-            val conversionRates = listPresenter.getConversionRates(ignoreCached)
-            val transactions = listPresenter.getTransactions(_listFilter.value!!, ignoreCached)
-            ListReady(
-                account!!,
-                transactions!!,
-                conversionRates!!
-            )
+            val transactions = listPresenter.getListItems(_listFilter.value!!, ignoreCached)
+            ListReady(transactions)
         } catch (e: Exception) {
             NetworkError
         }
@@ -50,18 +40,17 @@ class TransactionListViewModel(
 
     fun setTransferDirectionFilter(filter: TransferDirectionFilter) {
         if (_listFilter.value?.transferDirectionFilter != filter) {
-            _listFilter.value =
-                TransactionListFilter(filter)
+            _listFilter.value = TransactionListFilter(filter)
 
-            updateFilteredTransactions()
+            updateListFilter()
         }
     }
 
-    /** Updates the [viewState] with transactions that are using the latest filter. **/
-    private fun updateFilteredTransactions() {
+    /** Updates the [viewState] with list items that are using the latest filter. **/
+    private fun updateListFilter() {
         execute {
-            listPresenter.getTransactions(_listFilter.value!!)?.let { transactions ->
-                viewState = (viewState as? ListReady)?.copy(transactions = transactions) ?: viewState
+            listPresenter.getListItems(_listFilter.value!!).let { listItems ->
+                viewState = (viewState as? ListReady)?.copy(listItems = listItems) ?: viewState
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.spiraclesoftware.core.extensions
 
+import android.view.View
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 
@@ -14,3 +16,20 @@ val Toolbar.titleView: TextView?
             else -> null
         } as TextView?
     }
+
+fun AdapterView<*>.onItemSelected(
+    onNothingSelected: ((AdapterView<*>) -> Unit)? = null,
+    onItemSelected: (AdapterView<*>, View?, Int, Long) -> Unit
+) {
+    this.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+        override fun onNothingSelected(parent: AdapterView<*>) {
+            onNothingSelected?.invoke(parent)
+        }
+
+        override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            onItemSelected.invoke(parent, view, position, id)
+        }
+
+    }
+}

@@ -13,7 +13,7 @@ class ConversionRatesInteractor(
     suspend fun getConversionRates(
         baseCurrency: CurrencyCode,
         ignoreCached: Boolean = false
-    ): ConversionRates? {
+    ): ConversionRates {
         suspend fun getFromNetwork() =
             networkDataSource.getConversionRates(baseCurrency).also {
                 diskDataSource.saveConversionRates(baseCurrency, it)

@@ -30,10 +30,8 @@ class ConversionRatesAdapter : JsonDeserializer<ConversionRates> {
 
     private fun getRates(rates: JsonObject): List<ConversionRate> {
         return rates.entrySet().map {
-            ConversionRate(
-                Currency.getInstance(it.key),
-                it.value.asFloat
-            )
+            ConversionRate(Currency.getInstance(it.key), it.value.asFloat)
         }
     }
+
 }

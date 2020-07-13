@@ -30,7 +30,7 @@ object TestData {
         Transaction(
             TransactionId(1),
             "Paypal *Steam",
-            ZonedDateTime.parse("2019-05-15T22:22:00+00:00"),
+            epochDateTime,
             Money("49.99", "EUR"),
             TransferDirection.OUTGOING,
             TransactionCategory.ENTERTAINMENT,

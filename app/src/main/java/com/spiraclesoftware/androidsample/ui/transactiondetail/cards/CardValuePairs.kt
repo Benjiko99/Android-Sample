@@ -10,6 +10,7 @@ import com.spiraclesoftware.core.extensions.string
 abstract class CardValuePair {
 
     abstract fun toItemData(ctx: Context, transaction: Transaction): CardItemData
+
 }
 
 object CardValuePairs {
@@ -28,6 +29,7 @@ object CardValuePairs {
                 )
             }
         }
+
     }
 
     class CardDescription : CardValuePair() {
@@ -40,6 +42,7 @@ object CardValuePairs {
                 actionId = R.id.card_action__card_detail
             )
         }
+
     }
 
     class TransactionStatement : CardValuePair() {
@@ -52,6 +55,7 @@ object CardValuePairs {
                 actionId = R.id.card_action__download_statement
             )
         }
+
     }
 
     class TransactionCategory : CardValuePair() {
@@ -64,6 +68,7 @@ object CardValuePairs {
                 actionId = R.id.card_action__change_category
             )
         }
+
     }
 
     class NoteToSelf : CardValuePair() {
@@ -80,5 +85,7 @@ object CardValuePairs {
                 actionId = R.id.card_action__change_note
             )
         }
+
     }
+
 }

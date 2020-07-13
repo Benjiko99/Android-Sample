@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="balanceText"
+            name="contributionsText"
             type="String" />
 
         <variable
@@ -35,10 +35,10 @@
             tools:text="12:00, Fri, 15 May" />
 
         <TextView
-            android:id="@+id/balanceView"
+            android:id="@+id/contributionsView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{balanceText}'
+            android:text='@{contributionsText}'
             android:textAppearance="@style/TextAppearance.Transaction.Header"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"

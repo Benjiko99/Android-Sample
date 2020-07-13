@@ -10,4 +10,5 @@ data class ConversionRates(
 ) : Identifiable<CurrencyCode> {
 
     override fun getUniqueId() = baseCurrency.currencyCode()
+
 }

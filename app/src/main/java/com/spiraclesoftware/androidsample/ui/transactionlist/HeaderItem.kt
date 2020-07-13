@@ -11,10 +11,10 @@ import org.threeten.bp.ZonedDateTime
 
 class HeaderItem(
     private val dateTime: ZonedDateTime,
-    private val balance: Money
+    private val contributions: Money
 ) : AbstractBindingItem<TransactionListHeaderItemBinding>() {
 
-    lateinit var binding: TransactionListHeaderItemBinding
+    private lateinit var binding: TransactionListHeaderItemBinding
 
     override val type: Int
         get() = R.id.transaction__list__header_item
@@ -26,14 +26,36 @@ class HeaderItem(
     override fun bindView(binding: TransactionListHeaderItemBinding, payloads: List<Any>) {
         this.binding = binding
         bindDateText()
-        bindBalanceText()
+        bindContributionsText()
     }
 
-    private fun bindBalanceText() {
-        binding.balanceText = balance.formatSigned(showSignWhenPositive = false)
+    private fun bindContributionsText() {
+        binding.contributionsText = contributions.formatSigned(showSignWhenPositive = false)
     }
 
     private fun bindDateText() {
         binding.dateText = dateTime.format(DateTimeFormat.PRETTY_DATE)
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        //if (!super.equals(other)) return false
+
+        other as HeaderItem
+
+        if (identifier != other.identifier) return false
+        if (dateTime != other.dateTime) return false
+        if (contributions != other.contributions) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + dateTime.hashCode()
+        result = 31 * result + contributions.hashCode()
+        return result
+    }
+
 }

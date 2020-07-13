@@ -45,4 +45,5 @@ data class Money(
 
     fun negate() = copy(amount = amount.negate(mathContext))
     //endregion
+
 }

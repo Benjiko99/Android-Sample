@@ -28,4 +28,5 @@ enum class TransactionCategory {
             GROCERIES -> R.color.transaction_category__groceries
             TRANSFERS -> R.color.transaction_category__transfers
         }
+
 }

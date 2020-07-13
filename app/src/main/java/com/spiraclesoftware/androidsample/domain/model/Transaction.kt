@@ -50,12 +50,21 @@ data class Transaction(
         accountCurrency: Currency
     ): Money {
         if (!contributesToBalance()) {
-            return Money(
-                BigDecimal.ZERO,
-                accountCurrency
-            )
+            return Money(BigDecimal.ZERO, accountCurrency)
         }
 
         return signedMoney.convertToCurrency(accountCurrency.currencyCode(), rates)
+    }
+
+}
+
+fun List<Transaction>.getContributionsToBalance(
+    rates: ConversionRates,
+    accountCurrency: Currency
+): Money {
+    val initial = Money(BigDecimal.ZERO, accountCurrency)
+
+    return fold(initial) { acc, transaction ->
+        acc.add(transaction.getContributionToBalance(rates, accountCurrency).amount)
     }
 }

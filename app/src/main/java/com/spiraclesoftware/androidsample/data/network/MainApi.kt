@@ -16,4 +16,5 @@ interface MainApi {
     suspend fun getConversionRates(
         @Query("base") baseCurrencyCode: String
     ): ConversionRates
+
 }

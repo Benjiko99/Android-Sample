@@ -17,4 +17,5 @@ class Card internal constructor(
             it.toItemData(ctx, transaction)
         }
     }
+
 }

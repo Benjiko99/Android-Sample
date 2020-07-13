@@ -25,9 +25,7 @@ class MoneyAdapter : JsonSerializer<Money>, JsonDeserializer<Money> {
     ): Money {
         val amount = json.asJsonObject.get("amount").asBigDecimal
         val currency = json.asJsonObject.get("currency").asString
-        return Money(
-            amount,
-            Currency.getInstance(currency)
-        )
+        return Money(amount, Currency.getInstance(currency))
     }
+
 }

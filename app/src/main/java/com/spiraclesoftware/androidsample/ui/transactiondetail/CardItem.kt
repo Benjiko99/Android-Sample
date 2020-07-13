@@ -71,4 +71,5 @@ class CardItem(
             itemBinding.content.addView(binding.root)
         }
     }
+
 }

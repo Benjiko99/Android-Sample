@@ -7,14 +7,11 @@ import java.util.*
 
 class DiskDataSource {
 
-    private val transactionsCache =
-        AssociatedListCache<TransactionId, Transaction>()
-    private val conversionRatesCache =
-        AssociatedItemCache<CurrencyCode, ConversionRates>()
-    private val dummyAccount =
-        Account(Currency.getInstance("EUR"))
+    private val transactionsCache = AssociatedListCache<TransactionId, Transaction>()
+    private val conversionRatesCache = AssociatedItemCache<CurrencyCode, ConversionRates>()
+    private val dummyAccount = Account(Currency.getInstance("EUR"))
 
-    fun getAccount(): Account? {
+    fun getAccount(): Account {
         return dummyAccount
     }
 

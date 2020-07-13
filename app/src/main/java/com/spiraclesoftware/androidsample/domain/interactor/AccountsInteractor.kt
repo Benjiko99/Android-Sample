@@ -7,7 +7,7 @@ class AccountsInteractor(
     private val diskDataSource: DiskDataSource
 ) {
 
-    fun getAccount(): Account? {
+    fun getAccount(): Account {
         return diskDataSource.getAccount()
     }
 

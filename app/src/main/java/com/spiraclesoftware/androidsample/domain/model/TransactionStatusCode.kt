@@ -10,4 +10,5 @@ enum class TransactionStatusCode {
             SPENDING_LIMIT_EXCEEDED -> R.string.transaction_status__code__spending_limit_exceeded
             else -> null
         }
+
 }
