@@ -65,8 +65,8 @@ dependencies {
 
     testImplementation("junit:junit:${Deps.junit}")
     testImplementation("androidx.arch.core:core-testing:${Deps.lifecycle}")
-
     testImplementation("co.zsmb:rainbow-cake-test:${Deps.rainbowCake}")
+    testImplementation("org.koin:koin-test:${Deps.koin}")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Deps.coroutines}")
     testImplementation("org.mockito:mockito-inline:${Deps.mockito}")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${Deps.mockitoKotlin}")

@@ -1,8 +1,8 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 
-import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionStatus
-import com.spiraclesoftware.androidsample.shared.domain.TransactionStatusCode
+import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.domain.model.TransactionStatus
+import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 
 /**
  * Generates [Card]s from a given [Transaction].

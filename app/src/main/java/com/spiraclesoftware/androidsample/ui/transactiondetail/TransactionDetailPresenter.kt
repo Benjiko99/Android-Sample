@@ -1,9 +1,9 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail
 
 import co.zsmb.rainbowcake.withIOContext
-import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionId
-import com.spiraclesoftware.androidsample.shared.domain.TransactionsInteractor
+import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
+import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.domain.model.TransactionId
 
 class TransactionDetailPresenter(
     private val transactionsInteractor: TransactionsInteractor

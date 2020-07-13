@@ -1,7 +1,10 @@
 package com.spiraclesoftware.androidsample.ui.transactionlist
 
 import co.zsmb.rainbowcake.withIOContext
-import com.spiraclesoftware.androidsample.shared.domain.*
+import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
+import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
+import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
+import com.spiraclesoftware.androidsample.domain.model.*
 
 class TransactionListPresenter(
     private val accountsInteractor: AccountsInteractor,

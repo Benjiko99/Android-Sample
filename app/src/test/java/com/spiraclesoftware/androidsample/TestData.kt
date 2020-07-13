@@ -1,12 +1,13 @@
 package com.spiraclesoftware.androidsample
 
-import com.spiraclesoftware.androidsample.shared.domain.*
+import com.spiraclesoftware.androidsample.domain.model.*
 import org.threeten.bp.ZonedDateTime
 import java.util.*
 
 object TestData {
 
-    val account = Account(Currency.getInstance("EUR"))
+    val account =
+        Account(Currency.getInstance("EUR"))
 
     val epochDateTime = ZonedDateTime.parse("1970-01-01T00:00:00+00:00")!!
 
@@ -14,8 +15,14 @@ object TestData {
         baseCurrency = Currency.getInstance("EUR"),
         validityDate = Date(),
         rates = arrayListOf(
-            ConversionRate(Currency.getInstance("USD"), 1.12f),
-            ConversionRate(Currency.getInstance("CZK"), 26.70f)
+            ConversionRate(
+                Currency.getInstance("USD"),
+                1.12f
+            ),
+            ConversionRate(
+                Currency.getInstance("CZK"),
+                26.70f
+            )
         )
     )
 

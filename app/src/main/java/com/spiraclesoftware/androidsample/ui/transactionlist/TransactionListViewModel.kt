@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
-import com.spiraclesoftware.androidsample.shared.domain.TransactionId
-import com.spiraclesoftware.androidsample.shared.domain.TransactionListFilter
-import com.spiraclesoftware.androidsample.shared.domain.TransferDirectionFilter
+import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
+import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 
 class TransactionListViewModel(
     private val listPresenter: TransactionListPresenter
@@ -15,7 +15,11 @@ class TransactionListViewModel(
     data class NavigateToDetailEvent(val id: TransactionId) : OneShotEvent
 
     val listFilter: LiveData<TransactionListFilter> get() = _listFilter
-    private val _listFilter = MutableLiveData(TransactionListFilter(TransferDirectionFilter.ALL))
+    private val _listFilter = MutableLiveData(
+        TransactionListFilter(
+            TransferDirectionFilter.ALL
+        )
+    )
 
     init {
         execute { loadData() }
@@ -46,7 +50,8 @@ class TransactionListViewModel(
 
     fun setTransferDirectionFilter(filter: TransferDirectionFilter) {
         if (_listFilter.value?.transferDirectionFilter != filter) {
-            _listFilter.value = TransactionListFilter(filter)
+            _listFilter.value =
+                TransactionListFilter(filter)
 
             updateFilteredTransactions()
         }

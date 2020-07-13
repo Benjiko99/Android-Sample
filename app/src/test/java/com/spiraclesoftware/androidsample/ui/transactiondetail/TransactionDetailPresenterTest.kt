@@ -4,7 +4,7 @@ import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.TestData
-import com.spiraclesoftware.androidsample.shared.domain.TransactionsInteractor
+import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

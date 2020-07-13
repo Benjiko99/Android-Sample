@@ -1,8 +1,8 @@
 package com.spiraclesoftware.androidsample.ui.transactionlist
 
-import com.spiraclesoftware.androidsample.shared.domain.Account
-import com.spiraclesoftware.androidsample.shared.domain.ConversionRates
-import com.spiraclesoftware.androidsample.shared.domain.Transaction
+import com.spiraclesoftware.androidsample.domain.model.Account
+import com.spiraclesoftware.androidsample.domain.model.ConversionRates
+import com.spiraclesoftware.androidsample.domain.model.Transaction
 
 sealed class TransactionListViewState
 

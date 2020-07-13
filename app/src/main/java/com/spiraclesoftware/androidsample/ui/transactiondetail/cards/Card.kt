@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 
 import android.content.Context
-import com.spiraclesoftware.androidsample.shared.domain.Transaction
+import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.ui.transactiondetail.CardItem
 import com.spiraclesoftware.androidsample.ui.transactiondetail.CardItemData
 

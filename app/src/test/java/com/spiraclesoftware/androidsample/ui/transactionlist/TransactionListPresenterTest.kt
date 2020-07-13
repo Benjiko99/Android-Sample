@@ -4,7 +4,12 @@ import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.TestData
-import com.spiraclesoftware.androidsample.shared.domain.*
+import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
+import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
+import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
+import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
+import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
+import com.spiraclesoftware.androidsample.domain.model.applyFilter
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -41,7 +46,9 @@ class TransactionListPresenterTest : PresenterTest() {
     fun `Unfiltered transactions are returned from interactor`() = runBlockingTest {
         whenever(transactionsInteractor.getTransactions()) doReturn MOCK_TRANSACTIONS
 
-        val filter = TransactionListFilter(TransferDirectionFilter.ALL)
+        val filter = TransactionListFilter(
+            TransferDirectionFilter.ALL
+        )
         val transactions = presenter.getTransactions(filter)
         assertEquals(MOCK_TRANSACTIONS, transactions)
     }
@@ -50,7 +57,9 @@ class TransactionListPresenterTest : PresenterTest() {
     fun `Filtered transactions are returned from interactor`() = runBlockingTest {
         whenever(transactionsInteractor.getTransactions()) doReturn MOCK_TRANSACTIONS
 
-        val filter = TransactionListFilter(TransferDirectionFilter.INCOMING_ONLY)
+        val filter = TransactionListFilter(
+            TransferDirectionFilter.INCOMING_ONLY
+        )
         val transactions = presenter.getTransactions(filter)
         assertEquals(MOCK_TRANSACTIONS.applyFilter(filter), transactions)
     }

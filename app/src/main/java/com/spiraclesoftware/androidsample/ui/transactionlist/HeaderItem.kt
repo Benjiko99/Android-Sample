@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListHeaderItemBinding
-import com.spiraclesoftware.androidsample.shared.domain.Money
-import com.spiraclesoftware.androidsample.shared.ui.DateTimeFormat
+import com.spiraclesoftware.androidsample.domain.model.Money
+import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import org.threeten.bp.ZonedDateTime
 
 class HeaderItem(

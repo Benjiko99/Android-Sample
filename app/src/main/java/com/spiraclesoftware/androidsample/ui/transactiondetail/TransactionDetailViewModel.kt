@@ -3,7 +3,7 @@ package com.spiraclesoftware.androidsample.ui.transactiondetail
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.shared.domain.TransactionId
+import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsGenerator
 
 class TransactionDetailViewModel(

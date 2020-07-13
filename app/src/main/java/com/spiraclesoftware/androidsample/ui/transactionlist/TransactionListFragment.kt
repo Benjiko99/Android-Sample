@@ -20,8 +20,8 @@ import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.adapters.GenericItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.shared.domain.*
-import com.spiraclesoftware.androidsample.shared.ui.DelightUI
+import com.spiraclesoftware.androidsample.domain.model.*
+import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.NavigateToDetailEvent
 import com.spiraclesoftware.core.extensions.string
@@ -203,7 +203,10 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
         this.forEach { (day, transactionsInDay) ->
             // header will be inserted at what used to be the end of the list before be added new items
             val headerPos = listItems.count()
-            var contributionToBalance = Money(BigDecimal.ZERO, account.currency)
+            var contributionToBalance = Money(
+                BigDecimal.ZERO,
+                account.currency
+            )
 
             transactionsInDay.forEach { transaction ->
                 listItems.add(

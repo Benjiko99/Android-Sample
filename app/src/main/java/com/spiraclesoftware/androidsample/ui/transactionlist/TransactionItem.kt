@@ -7,9 +7,9 @@ import androidx.core.graphics.ColorUtils
 import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListTransactionItemBinding
-import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionStatusCode
-import com.spiraclesoftware.androidsample.shared.ui.DateTimeFormat
+import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
+import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.extensions.tintedDrawable

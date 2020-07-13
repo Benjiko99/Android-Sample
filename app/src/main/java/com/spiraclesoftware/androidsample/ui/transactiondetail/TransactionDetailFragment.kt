@@ -16,11 +16,11 @@ import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.shared.domain.Transaction
-import com.spiraclesoftware.androidsample.shared.domain.TransactionId
-import com.spiraclesoftware.androidsample.shared.domain.TransactionStatusCode
-import com.spiraclesoftware.androidsample.shared.ui.DateTimeFormat
-import com.spiraclesoftware.androidsample.shared.ui.DelightUI
+import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
+import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
+import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.LoadFailedEvent
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.Card
@@ -74,7 +74,8 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
 
     private fun initArgs() {
         val params = TransactionDetailFragmentArgs.fromBundle(requireArguments())
-        transactionId = TransactionId(params.transactionId)
+        transactionId =
+            TransactionId(params.transactionId)
     }
 
     override fun onStart() {
