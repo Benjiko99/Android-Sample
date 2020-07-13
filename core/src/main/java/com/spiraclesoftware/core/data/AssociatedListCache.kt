@@ -18,7 +18,7 @@ class AssociatedListCache<Key, Value> where Key : UniqueIdentifier<*>, Value : I
     fun set(data: List<Value>) {
         isDirty = false
 
-        cache = LinkedHashMap(data.associate { it.getUniqueId() to it })
+        cache = LinkedHashMap(data.associateBy { it.getUniqueId() })
     }
 
     fun get(): List<Value>? = cache?.values?.toList()

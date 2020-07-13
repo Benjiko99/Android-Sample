@@ -6,6 +6,7 @@
     <string name="refresh">Obnovit</string>
     <string name="retry">Opakovat</string>
     <string name="unknown_error">Neznámá chyba</string>
+    <string name="network_error">Nepodařilo se načíst data.\nZkontrolujte připojení.</string>
     <string name="switch_locale">Přepnout jazyk</string>
     <string name="not_implemented">Není implementováno</string>
 

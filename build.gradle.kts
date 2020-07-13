@@ -33,7 +33,8 @@ subprojects {
         the<KotlinterExtension>().disabledRules = arrayOf(
             "no-wildcard-imports",
             "final-newline",
-            "comment-spacing"
+            "comment-spacing",
+            "no-blank-line-before-rbrace"
         )
     }
 }

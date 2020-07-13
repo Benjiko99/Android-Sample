@@ -25,6 +25,7 @@
       <w>nhaarman</w>
       <w>okhttp</w>
       <w>paypal</w>
+      <w>rbrace</w>
       <w>spiraclesoftware</w>
       <w>sqlite</w>
       <w>squareup</w>
@@ -33,6 +34,7 @@
       <w>threeten</w>
       <w>threetenabp</w>
       <w>transactiondetail</w>
+      <w>transactionlist</w>
       <w>viewmodel</w>
       <w>zsmb</w>
     </words>

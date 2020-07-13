@@ -6,6 +6,8 @@ import java.util.*
 
 object TestData {
 
+    val account = Account(Currency.getInstance("EUR"))
+
     val epochDateTime = ZonedDateTime.parse("1970-01-01T00:00:00+00:00")!!
 
     val conversionRates = ConversionRates(

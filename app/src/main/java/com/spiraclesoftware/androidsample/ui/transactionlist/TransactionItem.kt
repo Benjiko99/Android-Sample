@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.features.transaction.list
+package com.spiraclesoftware.androidsample.ui.transactionlist
 
 import android.graphics.Paint
 import android.view.LayoutInflater

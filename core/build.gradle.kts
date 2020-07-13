@@ -23,6 +23,10 @@ android {
         targetCompatibility = AppDeps.targetCompat
     }
 
+    kotlinOptions {
+        jvmTarget = AppDeps.targetCompat.toString()
+    }
+
     buildTypes {
         named("release") {
             isMinifyEnabled = false

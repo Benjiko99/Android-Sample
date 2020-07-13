@@ -8,10 +8,14 @@ class TransactionsInteractor(
     private val diskDataSource: DiskDataSource
 ) {
 
-    suspend fun getTransactions(): List<Transaction> {
-        return diskDataSource.getTransactions() ?: networkDataSource.getTransactions().also {
-            diskDataSource.saveTransactions(it)
-        }
+    suspend fun getTransactions(ignoreCached: Boolean = false): List<Transaction> {
+        suspend fun getFromNetwork() =
+            networkDataSource.getTransactions().also {
+                diskDataSource.saveTransactions(it)
+            }
+
+        return if (ignoreCached) getFromNetwork()
+        else diskDataSource.getTransactions() ?: getFromNetwork()
     }
 
     suspend fun getTransactionById(id: TransactionId): Transaction? {

@@ -1,23 +1,21 @@
 package com.spiraclesoftware.androidsample.application.di
 
-import com.spiraclesoftware.androidsample.shared.data.AccountRepository
-import com.spiraclesoftware.androidsample.shared.data.ConversionRatesRepository
-import com.spiraclesoftware.androidsample.shared.data.TransactionsRepository
 import com.spiraclesoftware.androidsample.shared.data.disk.DiskDataSource
 import com.spiraclesoftware.androidsample.shared.data.network.NetworkDataSource
-import com.spiraclesoftware.core.data.AssociatedItemCache
-import com.spiraclesoftware.core.data.AssociatedListCache
+import com.spiraclesoftware.androidsample.shared.domain.AccountsInteractor
+import com.spiraclesoftware.androidsample.shared.domain.ConversionRatesInteractor
+import com.spiraclesoftware.androidsample.shared.domain.TransactionsInteractor
 import org.koin.dsl.module
 
 val sharedModule = module {
 
-    single { DiskDataSource(AssociatedListCache()) }
+    single { DiskDataSource() }
 
     single { NetworkDataSource(get()) }
 
-    single { AccountRepository() }
+    factory { AccountsInteractor(get()) }
 
-    single { TransactionsRepository(get(), get(), AssociatedListCache()) }
+    factory { TransactionsInteractor(get(), get()) }
 
-    single { ConversionRatesRepository(get(), get(), AssociatedItemCache()) }
+    factory { ConversionRatesInteractor(get(), get()) }
 }

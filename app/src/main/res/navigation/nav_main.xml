@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/transactionListFragment"
-        android:name="com.spiraclesoftware.androidsample.features.transaction.list.TransactionListFragment"
+        android:name="com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragment"
         android:label="@string/transaction__list__title"
         tools:layout="@layout/transaction__list__fragment">
         <action

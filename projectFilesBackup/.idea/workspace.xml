@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config>
+        <target>android-29</target>
+      </config>
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="30b010b2-4eb6-4c6a-b43f-787326e00c73" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/domain/AccountsInteractor.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/domain/ConversionRatesInteractor.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/spiraclesoftware/androidsample/shared/domain/AccountsInteractorTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/spiraclesoftware/androidsample/shared/domain/ConversionRatesInteractorTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/benji.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/benji.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/application/data/ApiService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/application/data/ApiService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/application/di/SharedModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/application/di/SharedModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/features/transaction/TransactionModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/features/transaction/TransactionModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/features/transaction/list/HeaderItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/ui/transactionlist/HeaderItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/features/transaction/list/TransactionItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/ui/transactionlist/TransactionItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/features/transaction/list/TransactionListFragment.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/features/transaction/list/TransactionListViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/data/AccountRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/data/ConversionRatesRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/data/TransactionsRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/data/disk/DiskDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/data/disk/DiskDataSource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/data/network/NetworkDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/data/network/NetworkDataSource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/domain/TransactionListFilter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/domain/TransactionListFilter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/domain/TransactionsInteractor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/domain/TransactionsInteractor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/loading_state.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/transaction__list__fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/transaction__list__fragment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/nav_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/nav_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-cs/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-cs/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/spiraclesoftware/androidsample/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/spiraclesoftware/androidsample/TestData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/spiraclesoftware/androidsample/features/transaction/list/TransactionListViewModelTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/spiraclesoftware/androidsample/shared/data/TransactionsRepositoryTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle.kts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="192.168.0.91:5555" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/app">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Android-Sample" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="valueResourceFile" />
+        <option value="Kotlin Object" />
+        <option value="resourceFile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="revolut" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="ProjectId" id="1cjVHLPIPK37bRNIudMoPXd3Vua" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="abbreviatePackageNames" value="true" />
+    <option name="compactDirectories" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DEBUGGABLE_DEVICE" value="lge-lg_h860-192.168.0.91:5555" />
+    <property name="DEBUGGABLE_PROCESS" value="com.spiraclesoftware.androidsample" />
+    <property name="DEBUGGER_ID" value="Auto" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="192.168.0.91:5555" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-06-24T19:05:48.461Z" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHOW_ALL_PROCESSES" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JSON" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/ui/transactionlist" />
+    <property name="project.structure.last.edited" value="Suggestions" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="recommended.upgrade.last.time.stamp" value="1591042781468" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Properties" />
+    <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/ui/transactionlist" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
+      <recent name="$PROJECT_DIR$/core/src/main/java/com/spiraclesoftware/core/extensions" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/anim" />
+      <recent name="$PROJECT_DIR$/core/src/main/java/com/spiraclesoftware/core/data" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.spiraclesoftware.androidsample.shared.domain" />
+      <recent name="com.spiraclesoftware.androidsample.ui.transactionlist" />
+      <recent name="com.spiraclesoftware.androidsample.ui" />
+      <recent name="com.spiraclesoftware.androidsample.shared.data.disk" />
+      <recent name="com.spiraclesoftware.androidsample.shared.data.network" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.spiraclesoftware.androidsample.ui.transactionlist" />
+      <recent name="com.spiraclesoftware.androidsample.ui.detail" />
+      <recent name="com.spiraclesoftware.androidsample.shared.domain" />
+      <recent name="com.spiraclesoftware.androidsample.shared.ui" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.spiraclesoftware.androidsample.ui.transactiondetail" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/ui/transactiondetail" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/features/transaction/detail/cards" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/spiraclesoftware/androidsample/shared/extensions" />
+      <recent name="$PROJECT_DIR$/buildSrc/src/main" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android App.app">
+    <configuration name="TransactionDetailPresenterTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.spiraclesoftware.androidsample.ui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.spiraclesoftware.androidsample.ui" />
+      <option name="MAIN_CLASS_NAME" value="com.spiraclesoftware.androidsample.ui.TransactionDetailPresenterTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TransactionDetailViewModelTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.spiraclesoftware.androidsample.ui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.spiraclesoftware.androidsample.ui" />
+      <option name="MAIN_CLASS_NAME" value="com.spiraclesoftware.androidsample.ui.TransactionDetailViewModelTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TransactionListPresenterTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.spiraclesoftware.androidsample.ui.transactionlist.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.spiraclesoftware.androidsample.ui.transactionlist" />
+      <option name="MAIN_CLASS_NAME" value="com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListPresenterTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TransactionsInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.spiraclesoftware.androidsample.shared.domain.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.spiraclesoftware.androidsample.shared.domain" />
+      <option name="MAIN_CLASS_NAME" value="com.spiraclesoftware.androidsample.shared.domain.TransactionsInteractorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Android App.app" />
+      <item itemvalue="Android JUnit.app tests" />
+      <item itemvalue="Android JUnit.TransactionDetailViewModelTest" />
+      <item itemvalue="JUnit.TransactionsInteractorTest" />
+      <item itemvalue="Android JUnit.TransactionDetailPresenterTest" />
+      <item itemvalue="Android JUnit.TransactionListPresenterTest" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Android JUnit.TransactionListPresenterTest" />
+        <item itemvalue="Android JUnit.TransactionDetailPresenterTest" />
+        <item itemvalue="JUnit.TransactionsInteractorTest" />
+        <item itemvalue="Android JUnit.TransactionDetailViewModelTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="30b010b2-4eb6-4c6a-b43f-787326e00c73" name="Default Changelist" comment="" />
+      <created>1591041901013</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1591041901013</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Android Studio update">
+      <created>1591305403387</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1591305403387</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Android Studio update">
+      <created>1591305496920</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1591305496920</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Update gradle">
+      <created>1591308290684</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1591308290684</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Switch to a light-themed toolbar with black text and icons">
+      <created>1591560021973</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1591560021973</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Depend on ThreeTenABP">
+      <created>1591621580949</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1591621580949</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Add adapter for ZonedDateTime">
+      <created>1591631996031</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1591631996031</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Shelving">
+      <created>1591636298479</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1591636298480</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add category card to detail screen">
+      <created>1592081499263</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1592081499264</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add category card to detail screen">
+      <created>1592081547282</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1592081547282</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Better layout names">
+      <created>1592082063136</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1592082063136</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Better layout names">
+      <created>1592082987390</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1592082987390</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Upgrade to FastAdapter 5.1.0">
+      <created>1592139841281</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1592139841281</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Resolve text color from theme attribute">
+      <created>1592157162222</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1592157162222</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Cleanup CardsUtils">
+      <created>1592987309453</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1592987309453</updated>
+    </task>
+    <task id="LOCAL-00015" summary="WIP">
+      <created>1593765029466</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1593765029466</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/revolut" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/revolut" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Android Studio update" />
+    <MESSAGE value="Update gradle" />
+    <MESSAGE value="Switch to a light-themed toolbar with black text and icons" />
+    <MESSAGE value="Depend on ThreeTenABP" />
+    <MESSAGE value="Add adapter for ZonedDateTime" />
+    <MESSAGE value="Shelving" />
+    <MESSAGE value="Add category card to detail screen" />
+    <MESSAGE value="Better layout names" />
+    <MESSAGE value="Upgrade to FastAdapter 5.1.0" />
+    <MESSAGE value="Resolve text color from theme attribute" />
+    <MESSAGE value="Cleanup CardsUtils" />
+    <MESSAGE value="WIP" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="560" y="179" key="#Auto_Import" timestamp="1592729117373">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="560" y="179" key="#Auto_Import/0.0.1920.1035@0.0.1920.1035" timestamp="1592729117373" />
+    <state x="560" y="179" key="#Notifications" timestamp="1592075322885">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="560" y="179" key="#Notifications/0.0.1920.1035@0.0.1920.1035" timestamp="1592075322885" />
+    <state x="485" y="253" key="#PSD" timestamp="1594559168482">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="485" y="253" key="#PSD/0.0.1920.1035@0.0.1920.1035" timestamp="1594559168482" />
+    <state x="547" y="123" width="826" height="789" key="#allTests" timestamp="1594491329544">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="547" y="123" width="826" height="789" key="#allTests/0.0.1920.1035@0.0.1920.1035" timestamp="1594491329544" />
+    <state x="684" y="156" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594491529827">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="684" y="156" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1594491529827" />
+    <state x="100" y="100" width="1720" height="835" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1594488747978">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="100" y="100" width="1720" height="835" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1594488747978" />
+    <state x="743" y="237" width="434" height="561" key="#com.intellij.ide.util.MemberChooser" timestamp="1594557482764">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="743" y="237" width="434" height="561" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1035@0.0.1920.1035" timestamp="1594557482764" />
+    <state x="957" y="276" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1594491444254">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="957" y="276" key="#com.intellij.ide.util.PackageChooserDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1594491444254" />
+    <state x="790" y="244" width="624" height="543" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1593688210541">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="790" y="244" width="624" height="543" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1593688210541" />
+    <state x="428" y="436" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1594483885241">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="428" y="436" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1594483885241" />
+    <state x="667" y="388" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1594483887892">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="667" y="388" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.1920.1035@0.0.1920.1035" timestamp="1594483887892" />
+    <state x="203" y="0" width="1504" height="1034" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1594498636013">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="203" y="0" width="1504" height="1034" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1594498636013" />
+    <state x="683" y="0" width="565" height="993" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1594550472987">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="683" y="0" width="565" height="993" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1594550472987" />
+    <state x="408" y="113" width="643" height="748" key="#xdebugger.evaluate" timestamp="1594551082469">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="408" y="113" width="643" height="748" key="#xdebugger.evaluate/0.0.1920.1035@0.0.1920.1035" timestamp="1594551082469" />
+    <state x="548" y="276" key="AndroidCreateResourceFileDialog" timestamp="1591961666584">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="548" y="276" key="AndroidCreateResourceFileDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1591961666584" />
+    <state x="823" y="278" key="AndroidProcessChooserDialog" timestamp="1594551016203">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="823" y="278" key="AndroidProcessChooserDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1594551016203" />
+    <state x="548" y="226" key="AndroidThemeDialog" timestamp="1591965641841">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="548" y="226" key="AndroidThemeDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1591965641841" />
+    <state x="217" y="54" key="CommitChangelistDialog2" timestamp="1593765029196">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="217" y="54" key="CommitChangelistDialog2/0.0.1920.1035@0.0.1920.1035" timestamp="1593765029196" />
+    <state width="531" height="646" key="DebuggerActiveHint" timestamp="1592505119212">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state width="531" height="646" key="DebuggerActiveHint/0.0.1920.1035@0.0.1920.1035" timestamp="1592505119212" />
+    <state x="100" y="100" width="1720" height="835" key="DiffContextDialog" timestamp="1593697627725">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="100" y="100" width="1720" height="835" key="DiffContextDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1593697627725" />
+    <state x="743" y="275" width="424" height="483" key="FileChooserDialogImpl" timestamp="1594491474679">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="743" y="275" width="424" height="483" key="FileChooserDialogImpl/0.0.1920.1035@0.0.1920.1035" timestamp="1594491474679" />
+    <state width="1874" height="276" key="GridCell.Tab.0.bottom" timestamp="1594574676151">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state width="1874" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1035@0.0.1920.1035" timestamp="1594574676151" />
+    <state width="1874" height="276" key="GridCell.Tab.0.center" timestamp="1594574676151">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state width="1874" height="276" key="GridCell.Tab.0.center/0.0.1920.1035@0.0.1920.1035" timestamp="1594574676151" />
+    <state width="1874" height="276" key="GridCell.Tab.0.left" timestamp="1594574676151">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state width="1874" height="276" key="GridCell.Tab.0.left/0.0.1920.1035@0.0.1920.1035" timestamp="1594574676151" />
+    <state width="1874" height="276" key="GridCell.Tab.0.right" timestamp="1594574676151">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state width="1874" height="276" key="GridCell.Tab.0.right/0.0.1920.1035@0.0.1920.1035" timestamp="1594574676151" />
+    <state width="1874" height="299" key="GridCell.Tab.1.bottom" timestamp="1594551250400">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state width="1874" height="299" key="GridCell.Tab.1.bottom/0.0.1920.1035@0.0.1920.1035" timestamp="1594551250400" />
+    <state width="1874" height="299" key="GridCell.Tab.1.center" timestamp="1594551250399">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state width="1874" height="299" key="GridCell.Tab.1.center/0.0.1920.1035@0.0.1920.1035" timestamp="1594551250399" />
+    <state width="1874" height="299" key="GridCell.Tab.1.left" timestamp="1594551250399">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state width="1874" height="299" key="GridCell.Tab.1.left/0.0.1920.1035@0.0.1920.1035" timestamp="1594551250399" />
+    <state width="1874" height="299" key="GridCell.Tab.1.right" timestamp="1594551250400">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state width="1874" height="299" key="GridCell.Tab.1.right/0.0.1920.1035@0.0.1920.1035" timestamp="1594551250400" />
+    <state x="0" y="0" width="1920" height="1035" key="MergeDialog" timestamp="1593697189720">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="0" y="0" width="1920" height="1035" key="MergeDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1593697189720" />
+    <state x="670" y="226" key="MultipleFileMergeDialog" timestamp="1593697189723">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="670" y="226" key="MultipleFileMergeDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1593697189723" />
+    <state x="1022" y="125" width="385" height="743" key="RollbackChangesDialog" timestamp="1594476113032">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="1022" y="125" width="385" height="743" key="RollbackChangesDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1594476113032" />
+    <state x="461" y="153" key="SettingsEditor" timestamp="1594549851587">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="461" y="153" key="SettingsEditor/0.0.1920.1035@0.0.1920.1035" timestamp="1594549851587" />
+    <state width="554" height="541" key="SwitcherDM" timestamp="1594295039553">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state width="554" height="541" key="SwitcherDM/0.0.1920.1035@0.0.1920.1035" timestamp="1594295039553" />
+    <state x="812" y="427" key="VCS.ChangelistChooser" timestamp="1591636353888">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="812" y="427" key="VCS.ChangelistChooser/0.0.1920.1035@0.0.1920.1035" timestamp="1591636353888" />
+    <state x="560" y="250" key="Vcs.Push.Dialog.v2" timestamp="1593765045334">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="560" y="250" key="Vcs.Push.Dialog.v2/0.0.1920.1035@0.0.1920.1035" timestamp="1593765045334" />
+    <state x="360" y="120" width="1200" height="795" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1592076987477">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="360" y="120" width="1200" height="795" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1592076987477" />
+    <state x="622" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1591042061912">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="622" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1591042061912" />
+    <state x="615" y="136" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1594536039756">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="615" y="136" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1035@0.0.1920.1035" timestamp="1594536039756" />
+    <state x="755" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592819537376">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="755" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1035@0.0.1920.1035" timestamp="1592819537375" />
+    <state x="437" y="175" width="910" height="685" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1594556508220">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="437" y="175" width="910" height="685" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1035@0.0.1920.1035" timestamp="1594556508220" />
+    <state x="623" y="102" width="954" height="831" key="find.popup" timestamp="1594481064798">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="623" y="102" width="954" height="831" key="find.popup/0.0.1920.1035@0.0.1920.1035" timestamp="1594481064798" />
+    <state x="674" y="149" width="561" height="735" key="git4idea.branch.GitSmartOperationDialog" timestamp="1593765017766">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="674" y="149" width="561" height="735" key="git4idea.branch.GitSmartOperationDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1593765017766" />
+    <state x="658" y="293" key="git4idea.merge.GitPullDialog" timestamp="1591636306142">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="658" y="293" key="git4idea.merge.GitPullDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1591636306142" />
+    <state x="709" y="161" key="refactoring.ChangeSignatureDialog" timestamp="1594148671454">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="709" y="161" key="refactoring.ChangeSignatureDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1594148671454" />
+    <state x="624" y="236" key="run.anything.popup" timestamp="1594114635283">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="624" y="236" key="run.anything.popup/0.0.1920.1035@0.0.1920.1035" timestamp="1594114635283" />
+    <state x="770" y="236" width="672" height="678" key="search.everywhere.popup" timestamp="1594556505966">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="770" y="236" width="672" height="678" key="search.everywhere.popup/0.0.1920.1035@0.0.1920.1035" timestamp="1594556505966" />
+    <state x="334" y="254" key="vcs.ApplyPatchDifferentiatedDialog" timestamp="1591636335126">
+      <screen x="0" y="0" width="1920" height="1035" />
+    </state>
+    <state x="334" y="254" key="vcs.ApplyPatchDifferentiatedDialog/0.0.1920.1035@0.0.1920.1035" timestamp="1591636335126" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint suspend="THREAD" type="dart-exception" />
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
