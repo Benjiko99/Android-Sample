@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeFragment
 import co.zsmb.rainbowcake.koin.getViewModelFromFactory
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericItemAdapter
@@ -19,7 +20,7 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragmentDirections.Companion.toTransactionDetail
-import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.NavigateToDetailEvent
+import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.*
 import com.spiraclesoftware.core.extensions.onItemSelected
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.utils.LanguageSwitcher
@@ -58,7 +59,29 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             is NavigateToDetailEvent -> {
                 findNavController().navigate(toTransactionDetail(event.id.value))
             }
+            ShowLanguageChangeDialogEvent -> {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setMessage(R.string.change_language__dialog__message)
+                    .setNegativeButton(R.string.change_language__dialog__cancel) { dialog, _ -> dialog.dismiss() }
+                    .setPositiveButton(R.string.change_language__dialog__confirm) { _, _ ->
+                        LanguageSwitcher.toggleLanguageAndRestart(requireContext())
+                    }.show()
+            }
         }
+    }
+
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_change_language -> {
+                viewModel.showLanguageChangeDialog()
+                return true
+            }
+            R.id.action_refresh -> {
+                viewModel.reload()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -123,20 +146,6 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
     override fun onDestroyView() {
         recyclerView.adapter = null
         super.onDestroyView()
-    }
-
-    private fun onMenuItemClicked(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_switch_locale -> {
-                LanguageSwitcher.toggleLanguageAndRestart(requireContext())
-                return true
-            }
-            R.id.action_refresh -> {
-                viewModel.reload()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 }

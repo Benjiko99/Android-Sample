@@ -106,5 +106,4 @@ class CardItem(
         return result
     }
 
-
 }

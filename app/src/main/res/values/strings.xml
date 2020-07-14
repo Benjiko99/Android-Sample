@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Mobile Banking</string>
 
     <!-- Common -->
@@ -7,7 +8,6 @@
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown error</string>
     <string name="network_error">Failed to load the data.\nPlease check your connection.</string>
-    <string name="switch_locale">Switch locale</string>
     <string name="not_implemented">Not implemented</string>
 
     <!-- Transaction -->
@@ -40,4 +40,11 @@
     <string name="transaction__detail__note__edit">Edit</string>
     <string name="transaction__detail__note__add">Add note</string>
     <string name="transaction__detail__category">Category</string>
+
+    <!-- Change language dialog -->
+    <string name="change_language">Change language</string>
+    <string name="change_language__dialog__message">Change language to czech?</string>
+    <string name="change_language__dialog__confirm">Change</string>
+    <string name="change_language__dialog__cancel">Cancel</string>
+
 </resources>

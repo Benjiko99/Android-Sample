@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Mobile Banking</string>
 
     <!-- Common -->
@@ -7,7 +8,6 @@
     <string name="retry">Opakovat</string>
     <string name="unknown_error">Neznámá chyba</string>
     <string name="network_error">Nepodařilo se načíst data.\nZkontrolujte připojení.</string>
-    <string name="switch_locale">Přepnout jazyk</string>
     <string name="not_implemented">Není implementováno</string>
 
     <!-- Transaction -->
@@ -40,4 +40,11 @@
     <string name="transaction__detail__note__edit">Upravit</string>
     <string name="transaction__detail__note__add">Přidat poznámku</string>
     <string name="transaction__detail__category">Kategorie</string>
+
+    <!-- Change language dialog -->
+    <string name="change_language">Změnit jazyk</string>
+    <string name="change_language__dialog__message">Změnit jazyk na angličtinu?</string>
+    <string name="change_language__dialog__confirm">Změnit</string>
+    <string name="change_language__dialog__cancel">Zrušit</string>
+
 </resources>
