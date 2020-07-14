@@ -8,6 +8,7 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.TestData
+import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.LoadFailedEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -50,7 +51,12 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             stateObserver.assertObserved(
                 Loading,
                 DetailReady(
-                    MOCK_TRANSACTION,
+                    MOCK_TRANSACTION.name,
+                    MOCK_TRANSACTION.processingDate,
+                    MOCK_TRANSACTION.formattedMoney,
+                    MOCK_TRANSACTION.contributesToBalance(),
+                    MOCK_TRANSACTION.statusCode == TransactionStatusCode.SUCCESSFUL,
+                    MOCK_TRANSACTION.category,
                     MOCK_CARD_ITEMS
                 )
             )

@@ -17,6 +17,7 @@ import com.mikepenz.fastadapter.adapters.GenericItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
@@ -44,15 +45,13 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
             Loading -> {
             }
             is DetailReady -> {
-                val transaction = viewState.transaction
-
                 itemAdapter.set(viewState.cardItems)
 
-                toolbar.title = transaction.name
-                nameView.text = transaction.name
-                dateView.text = transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME)
-                bindAmountText(transaction)
-                bindCategoryIcon(transaction)
+                toolbar.title = viewState.name
+                nameView.text = viewState.name
+                dateView.text = viewState.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME)
+                bindAmountText(viewState.formattedMoney, viewState.contributesToBalance)
+                bindCategoryIcon(viewState.category, viewState.isSuccessful)
             }
         }
     }
@@ -68,20 +67,17 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         }
     }
 
-    // TODO: The logic for whether a view is shown and what business values it displays
-    //  should be moved to the ViewModel or Presenter, it needs to be in the viewState...
-    private fun bindAmountText(transaction: Transaction) {
-        amountView.text = transaction.formattedMoney
-        if (!transaction.contributesToBalance()) {
+    private fun bindAmountText(formattedMoney: String, contributesToBalance: Boolean) {
+        amountView.text = formattedMoney
+        if (!contributesToBalance) {
             amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
     }
 
-    private fun bindCategoryIcon(transaction: Transaction) {
+    private fun bindCategoryIcon(category: TransactionCategory, isSuccessful: Boolean) {
         val tint: Int
-        val category = transaction.category
 
-        if (transaction.statusCode == TransactionStatusCode.SUCCESSFUL) {
+        if (isSuccessful) {
             tint = color(category.colorRes)
             iconView.setImageDrawable(tintedDrawable(category.drawableRes, tint))
         } else {

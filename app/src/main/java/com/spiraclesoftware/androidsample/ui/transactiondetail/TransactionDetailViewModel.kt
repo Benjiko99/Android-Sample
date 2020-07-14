@@ -4,6 +4,7 @@ import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 
 class TransactionDetailViewModel(
     private val detailPresenter: TransactionDetailPresenter
@@ -16,7 +17,15 @@ class TransactionDetailViewModel(
         try {
             val transaction = detailPresenter.getTransactionById(transactionId)!!
             val cardItems = detailPresenter.getCardItems(transaction, ::onCardActionClicked)
-            viewState = DetailReady(transaction, cardItems)
+            viewState = DetailReady(
+                transaction.name,
+                transaction.processingDate,
+                transaction.formattedMoney,
+                transaction.contributesToBalance(),
+                transaction.statusCode == TransactionStatusCode.SUCCESSFUL,
+                transaction.category,
+                cardItems
+            )
         } catch (e: Exception) {
             postEvent(LoadFailedEvent)
             return@execute
