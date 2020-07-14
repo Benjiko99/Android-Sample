@@ -1,7 +1,5 @@
 package com.spiraclesoftware.androidsample.ui.transactionlist
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
@@ -14,8 +12,7 @@ class TransactionListViewModel(
 
     data class NavigateToDetailEvent(val id: TransactionId) : OneShotEvent
 
-    val listFilter: LiveData<TransactionListFilter> get() = _listFilter
-    private val _listFilter = MutableLiveData(TransactionListFilter(TransferDirectionFilter.ALL))
+    private var listFilter = TransactionListFilter(TransferDirectionFilter.ALL)
 
     init {
         execute { loadData() }
@@ -31,16 +28,19 @@ class TransactionListViewModel(
     private suspend fun loadData(ignoreCached: Boolean = false) {
         viewState = Loading
         viewState = try {
-            val transactions = listPresenter.getListItems(_listFilter.value!!, ignoreCached)
-            ListReady(transactions)
+            val transactions = listPresenter.getListItems(listFilter, ignoreCached)
+            ListReady(
+                transactions,
+                listFilter
+            )
         } catch (e: Exception) {
             NetworkError
         }
     }
 
-    fun setTransferDirectionFilter(filter: TransferDirectionFilter) {
-        if (_listFilter.value?.transferDirectionFilter != filter) {
-            _listFilter.value = TransactionListFilter(filter)
+    fun setTransferDirectionFilter(directionFilter: TransferDirectionFilter) {
+        if (listFilter.transferDirectionFilter != directionFilter) {
+            listFilter = listFilter.copy(transferDirectionFilter = directionFilter)
 
             updateListFilter()
         }
@@ -49,8 +49,11 @@ class TransactionListViewModel(
     /** Updates the [viewState] with list items that are using the latest filter. **/
     private fun updateListFilter() {
         execute {
-            listPresenter.getListItems(_listFilter.value!!).let { listItems ->
-                viewState = (viewState as? ListReady)?.copy(listItems = listItems) ?: viewState
+            listPresenter.getListItems(listFilter).let { listItems ->
+                viewState = (viewState as? ListReady)?.copy(
+                    listItems = listItems,
+                    listFilter = listFilter
+                ) ?: viewState
             }
         }
     }

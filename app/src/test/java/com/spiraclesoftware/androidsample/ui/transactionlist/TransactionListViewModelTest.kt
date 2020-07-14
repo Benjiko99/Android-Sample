@@ -8,6 +8,8 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.TestData
+import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
+import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.ALL
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
@@ -30,7 +32,10 @@ class TransactionListViewModelTest : ViewModelTest() {
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
             stateObserver.assertObserved(
-                ListReady(MOCK_LIST_ITEMS)
+                ListReady(
+                    MOCK_LIST_ITEMS,
+                    TransactionListFilter(ALL)
+                )
             )
         }
     }
@@ -68,7 +73,10 @@ class TransactionListViewModelTest : ViewModelTest() {
             stateObserver.assertObserved(
                 NetworkError,
                 Loading,
-                ListReady(MOCK_LIST_ITEMS)
+                ListReady(
+                    MOCK_LIST_ITEMS,
+                    TransactionListFilter(ALL)
+                )
             )
         }
     }

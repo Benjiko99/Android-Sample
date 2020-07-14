@@ -5,7 +5,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,7 +42,9 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             }
             is ListReady -> {
                 recyclerView.isVisible = true
+
                 itemAdapter.set(viewState.listItems)
+                filterSpinner.setSelection(viewState.listFilter.transferDirectionFilter.ordinal)
             }
             NetworkError -> {
                 recyclerView.isVisible = false
@@ -58,15 +59,6 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
                 findNavController().navigate(toTransactionDetail(event.id.value))
             }
         }
-    }
-
-    private fun subscribeUi() {
-        viewModel.listFilter.observe(
-            viewLifecycleOwner,
-            Observer { filter ->
-                filterSpinner.setSelection(filter.transferDirectionFilter.ordinal)
-            }
-        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -138,12 +130,6 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        subscribeUi()
     }
 
 }
