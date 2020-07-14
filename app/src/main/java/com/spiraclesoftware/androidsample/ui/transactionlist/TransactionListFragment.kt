@@ -66,7 +66,9 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
 
         fun setupToolbar() {
             toolbar.setupWithNavController(findNavController())
-            DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
+            DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
+                headerView.height
+            }
 
             toolbar.inflateMenu(R.menu.transaction_list_menu)
             toolbar.setOnMenuItemClickListener(::onMenuItemClicked)

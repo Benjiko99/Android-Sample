@@ -96,7 +96,9 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
 
         fun setupToolbar() {
             toolbar.setupWithNavController(findNavController())
-            DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
+            DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
+                toolbar.height + nameView.height
+            }
         }
         setupToolbar()
 
