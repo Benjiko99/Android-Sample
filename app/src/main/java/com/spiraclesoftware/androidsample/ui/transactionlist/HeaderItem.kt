@@ -14,8 +14,6 @@ class HeaderItem(
     private val contributions: Money
 ) : AbstractBindingItem<TransactionListHeaderItemBinding>() {
 
-    private lateinit var binding: TransactionListHeaderItemBinding
-
     override val type: Int
         get() = R.id.transaction__list__header_item
 
@@ -24,16 +22,7 @@ class HeaderItem(
     }
 
     override fun bindView(binding: TransactionListHeaderItemBinding, payloads: List<Any>) {
-        this.binding = binding
-        bindDateText()
-        bindContributionsText()
-    }
-
-    private fun bindContributionsText() {
         binding.contributionsText = contributions.formatSigned(showSignWhenPositive = false)
-    }
-
-    private fun bindDateText() {
         binding.dateText = dateTime.format(DateTimeFormat.PRETTY_DATE)
     }
 

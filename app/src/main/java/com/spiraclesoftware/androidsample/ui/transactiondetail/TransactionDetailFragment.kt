@@ -16,10 +16,8 @@ import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
-import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
@@ -122,6 +120,11 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
             }
         }
         setupRecyclerView()
+    }
+
+    override fun onDestroyView() {
+        recyclerView.adapter = null
+        super.onDestroyView()
     }
 
     override fun onStart() {

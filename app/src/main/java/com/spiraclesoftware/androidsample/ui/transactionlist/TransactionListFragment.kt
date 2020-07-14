@@ -118,6 +118,11 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
         retryButton.setOnClickListener { viewModel.reload() }
     }
 
+    override fun onDestroyView() {
+        recyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_switch_locale -> {
