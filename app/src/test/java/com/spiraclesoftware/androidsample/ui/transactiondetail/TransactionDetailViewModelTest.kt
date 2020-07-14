@@ -10,7 +10,6 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.LoadFailedEvent
-import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsGenerator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -27,14 +26,11 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
         private val MOCK_TRANSACTION_ID = MOCK_TRANSACTION.id
 
-        private val MOCK_CARDS = CardsGenerator().makeCardsFor(MOCK_TRANSACTION)
+        private val MOCK_CARD_ITEMS = emptyList<CardItem>()
     }
 
     @Mock
     private lateinit var detailPresenter: TransactionDetailPresenter
-
-    @Mock
-    private lateinit var cardsGenerator: CardsGenerator
 
     @Before
     fun setUp() {
@@ -42,35 +38,35 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `Transaction is loaded correctly from presenter by ID`() = runBlockingTest {
+    fun `Data is loaded correctly from presenter`() = runBlockingTest {
         whenever(detailPresenter.getTransactionById(MOCK_TRANSACTION_ID)) doReturn MOCK_TRANSACTION
-        whenever(cardsGenerator.makeCardsFor(MOCK_TRANSACTION)) doReturn MOCK_CARDS
+        whenever(detailPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
 
-        val vm = TransactionDetailViewModel(detailPresenter, cardsGenerator)
+        val vm = TransactionDetailViewModel(detailPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.loadTransaction(MOCK_TRANSACTION_ID)
+            vm.loadData(MOCK_TRANSACTION_ID)
 
             stateObserver.assertObserved(
                 Loading,
                 DetailReady(
                     MOCK_TRANSACTION,
-                    MOCK_CARDS
+                    MOCK_CARD_ITEMS
                 )
             )
         }
     }
 
     @Test
-    fun `Transaction loading exception produces error event`() = runBlockingTest {
+    fun `Data loading exception produces error event`() = runBlockingTest {
         whenever(detailPresenter.getTransactionById(any())).thenAnswer {
             throw IOException()
         }
 
-        val vm = TransactionDetailViewModel(detailPresenter, cardsGenerator)
+        val vm = TransactionDetailViewModel(detailPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.loadTransaction(MOCK_TRANSACTION_ID)
+            vm.loadData(MOCK_TRANSACTION_ID)
 
             eventsObserver.assertObserved(LoadFailedEvent)
         }
@@ -78,7 +74,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
     @Test
     fun `Clicking any card action produces feature not implemented event`() = runBlockingTest {
-        val vm = TransactionDetailViewModel(detailPresenter, cardsGenerator)
+        val vm = TransactionDetailViewModel(detailPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
             vm.onCardActionClicked(R.id.card_action__card_detail)

@@ -40,11 +40,10 @@ class HeaderItem(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
-        //if (!super.equals(other)) return false
+        if (!super.equals(other)) return false
 
         other as HeaderItem
 
-        if (identifier != other.identifier) return false
         if (dateTime != other.dateTime) return false
         if (contributions != other.contributions) return false
 

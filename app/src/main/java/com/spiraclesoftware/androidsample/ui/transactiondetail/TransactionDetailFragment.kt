@@ -23,7 +23,6 @@ import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.LoadFailedEvent
-import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.Card
 import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.dpToPx
 import com.spiraclesoftware.core.extensions.tintedDrawable
@@ -47,7 +46,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
             is DetailReady -> {
                 val transaction = viewState.transaction
 
-                itemAdapter.set(viewState.cards.toListItems(transaction))
+                itemAdapter.set(viewState.cardItems)
 
                 toolbar.title = transaction.name
                 nameView.text = transaction.name
@@ -70,7 +69,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     }
 
     // TODO: The logic for whether a view is shown and what business values it displays
-    //  should be moved to the ViewModel or Presenter, it needs to be in the viewState
+    //  should be moved to the ViewModel or Presenter, it needs to be in the viewState...
     private fun bindAmountText(transaction: Transaction) {
         amountView.text = transaction.formattedMoney
         if (!transaction.contributesToBalance()) {
@@ -92,15 +91,6 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
 
         val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
         iconView.background = tintedDrawable(R.drawable.shp_circle, fadedTint)
-    }
-
-    // TODO: Move to Presenter or ViewModel
-    private fun List<Card>.toListItems(transaction: Transaction) = map { card ->
-        val itemData = card.toItemData(requireContext(), transaction)
-
-        CardItem(itemData).apply {
-            withActionClickHandler(viewModel::onCardActionClicked)
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -141,7 +131,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     override fun onStart() {
         super.onStart()
 
-        viewModel.loadTransaction(transactionId)
+        viewModel.loadData(transactionId)
     }
 
 }

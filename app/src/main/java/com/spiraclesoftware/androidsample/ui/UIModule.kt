@@ -13,7 +13,7 @@ val uiModule = module {
     viewModel { TransactionListViewModel(get()) }
     factory { TransactionListPresenter(get(), get(), get()) }
 
-    viewModel { TransactionDetailViewModel(get(), get()) }
-    factory { TransactionDetailPresenter(get()) }
+    viewModel { TransactionDetailViewModel(get()) }
+    factory { TransactionDetailPresenter(get(), get()) }
     single { CardsGenerator() }
 }

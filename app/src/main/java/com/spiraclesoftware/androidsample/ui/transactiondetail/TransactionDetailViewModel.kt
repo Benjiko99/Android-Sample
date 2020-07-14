@@ -4,27 +4,23 @@ import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
-import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsGenerator
 
 class TransactionDetailViewModel(
-    private val detailPresenter: TransactionDetailPresenter,
-    private val cardsGenerator: CardsGenerator
+    private val detailPresenter: TransactionDetailPresenter
 ) : RainbowCakeViewModel<TransactionDetailViewState>(Loading) {
 
     object FeatureNotImplementedEvent : OneShotEvent
     object LoadFailedEvent : OneShotEvent
 
-    fun loadTransaction(transactionId: TransactionId) = execute {
-        val transaction = try {
-            detailPresenter.getTransactionById(transactionId)!!
+    fun loadData(transactionId: TransactionId) = execute {
+        try {
+            val transaction = detailPresenter.getTransactionById(transactionId)!!
+            val cardItems = detailPresenter.getCardItems(transaction, ::onCardActionClicked)
+            viewState = DetailReady(transaction, cardItems)
         } catch (e: Exception) {
             postEvent(LoadFailedEvent)
             return@execute
         }
-
-        val cards = cardsGenerator.makeCardsFor(transaction)
-
-        viewState = DetailReady(transaction, cards)
     }
 
     fun onCardActionClicked(actionId: Int) {

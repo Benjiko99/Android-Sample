@@ -76,11 +76,10 @@ class TransactionItem(val transaction: Transaction) : AbstractBindingItem<Transa
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
-        //if (!super.equals(other)) return false
+        if (!super.equals(other)) return false
 
         other as TransactionItem
 
-        if (identifier != other.identifier) return false
         if (transaction != other.transaction) return false
 
         return true
