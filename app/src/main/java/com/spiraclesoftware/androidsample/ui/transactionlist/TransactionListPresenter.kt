@@ -6,14 +6,20 @@ import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.model.*
+import com.spiraclesoftware.core.utils.LanguageManager
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 
 class TransactionListPresenter(
+    private val languageManager: LanguageManager,
     private val accountsInteractor: AccountsInteractor,
     private val transactionsInteractor: TransactionsInteractor,
     private val conversionRatesInteractor: ConversionRatesInteractor
 ) {
+
+    fun toggleLanguageAndRestart() {
+        languageManager.toggleLanguageAndRestart()
+    }
 
     suspend fun getAccount(): Account = withIOContext {
         accountsInteractor.getAccount()

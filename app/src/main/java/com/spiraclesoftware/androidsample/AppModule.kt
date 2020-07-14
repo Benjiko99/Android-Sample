@@ -1,6 +1,5 @@
 package com.spiraclesoftware.androidsample
 
-import android.content.Context
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -12,6 +11,7 @@ import com.spiraclesoftware.androidsample.domain.model.Money
 import com.spiraclesoftware.core.data.network.adapter.ZonedDateTimeAdapter
 import com.spiraclesoftware.core.domain.UniqueIdentifier
 import com.spiraclesoftware.core.domain.UniqueIdentifierAdapter
+import com.spiraclesoftware.core.utils.LanguageManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
@@ -22,9 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
 
-    single {
-        androidApplication().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-    }
+    single { SampleApplication.getSharedPreferences(androidApplication()) }
 
     single { (get() as Retrofit).create(MainApi::class.java) }
 
@@ -35,6 +33,7 @@ val appModule = module {
             .addConverterFactory(GsonConverterFactory.create(get() as Gson))
             .build()
     }
+
     single<Gson> {
         GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
@@ -70,4 +69,7 @@ val appModule = module {
             level = HttpLoggingInterceptor.Level.BODY
         }
     }
+
+    single { LanguageManager(androidApplication(), get()) }
+
 }

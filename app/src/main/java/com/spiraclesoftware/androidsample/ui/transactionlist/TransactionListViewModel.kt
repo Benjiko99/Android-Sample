@@ -39,6 +39,18 @@ class TransactionListViewModel(
         }
     }
 
+    fun toggleLanguage() {
+        listPresenter.toggleLanguageAndRestart()
+    }
+
+    fun showLanguageChangeDialog() {
+        postEvent(ShowLanguageChangeDialogEvent)
+    }
+
+    fun onListItemClicked(id: TransactionId) {
+        postEvent(NavigateToDetailEvent(id))
+    }
+
     fun setTransferDirectionFilter(directionFilter: TransferDirectionFilter) {
         if (listFilter.transferDirectionFilter != directionFilter) {
             listFilter = listFilter.copy(transferDirectionFilter = directionFilter)
@@ -57,14 +69,6 @@ class TransactionListViewModel(
                 ) ?: viewState
             }
         }
-    }
-
-    fun showLanguageChangeDialog() {
-        postEvent(ShowLanguageChangeDialogEvent)
-    }
-
-    fun onListItemClicked(id: TransactionId) {
-        postEvent(NavigateToDetailEvent(id))
     }
 
 }

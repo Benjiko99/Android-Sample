@@ -20,10 +20,10 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragmentDirections.Companion.toTransactionDetail
-import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.*
+import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.NavigateToDetailEvent
+import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.ShowLanguageChangeDialogEvent
 import com.spiraclesoftware.core.extensions.onItemSelected
 import com.spiraclesoftware.core.extensions.string
-import com.spiraclesoftware.core.utils.LanguageSwitcher
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
 
 class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, TransactionListViewModel>() {
@@ -62,9 +62,11 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             ShowLanguageChangeDialogEvent -> {
                 MaterialAlertDialogBuilder(requireContext())
                     .setMessage(R.string.change_language__dialog__message)
-                    .setNegativeButton(R.string.change_language__dialog__cancel) { dialog, _ -> dialog.dismiss() }
+                    .setNegativeButton(R.string.change_language__dialog__cancel) { dialog, _ ->
+                        dialog.dismiss()
+                    }
                     .setPositiveButton(R.string.change_language__dialog__confirm) { _, _ ->
-                        LanguageSwitcher.toggleLanguageAndRestart(requireContext())
+                        viewModel.toggleLanguage()
                     }.show()
             }
         }

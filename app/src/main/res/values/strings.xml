@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Mobile Banking</string>
+    <string name="shared_preferences_key" translatable="false">com.spiraclesoftware.androidsample.preferences</string>
 
     <!-- Common -->
     <string name="refresh">Refresh</string>

@@ -5,12 +5,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.spiraclesoftware.core.utils.LanguageSwitcher
+import com.spiraclesoftware.core.utils.LanguageManager
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LanguageSwitcher.applyLocale(newBase))
+        val languageManager: LanguageManager by inject()
+        super.attachBaseContext(languageManager.applyLocale(newBase))
     }
 
     private val navController by lazy { findNavController(R.id.navHostFragment) }
