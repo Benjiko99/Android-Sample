@@ -1,20 +1,27 @@
-Project Structure
+Architecture
 -----------------
-The app has two modules: **core** and **app**.
+The app is written entirely in **Kotlin** and uses the [RainbowCake](https://rainbowcake.dev/) architecture framework.
 
-The files are organized in a package-by-feature manner, where all files related to a given feature are located in a package named after that feature, e.g. "transaction".  
-There may also be sub-packages to split large features into smaller ones, e.g.: "list" and "detail".  
-The feature is then broken down into its components, like: "ui" and "domain".
+The main goals of the architecture are:
+
+- Clearly separate concerns between different layers and components,
+- Always keep views in a safe and consistent state with ViewModels,
+- Handle configuration changes (and even process death) gracefully,
+- Make offloading work to background threads trivial.
+
+<img src="/assets/architecture.png" alt="Architecture diagram" width="508" height="562" />
 
 Libraries
 ---------
-The app is written entirely in **Kotlin** and uses **AndroidX** components.
+Local caching is either done in-memory or using **Room**.
 
 Navigation is handled by the **Navigation Architecture Component**.
 
-Networking is done through **OkHttp**, **Retrofit** and **LiveData**.
+Networking is done through **OkHttp**, **Retrofit** and **Coroutines**.
 
 Dependency Injection is done through **Koin**.
+
+Creating adapters for RecyclerViews is simplified with **FastAdapter**.
 
 Debugging is facilitated by **LeakCanary** and **Stetho**.
 
