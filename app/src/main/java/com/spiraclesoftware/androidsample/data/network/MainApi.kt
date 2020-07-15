@@ -10,10 +10,10 @@ interface MainApi {
 
     @Headers("Accept: application/json")
     @GET("transactions")
-    suspend fun getTransactions(): TransactionsResponseWrapper
+    suspend fun fetchTransactions(): TransactionsResponseWrapper
 
     @GET("conversion_rates")
-    suspend fun getConversionRates(
+    suspend fun fetchConversionRates(
         @Query("base") baseCurrencyCode: String
     ): ConversionRates
 

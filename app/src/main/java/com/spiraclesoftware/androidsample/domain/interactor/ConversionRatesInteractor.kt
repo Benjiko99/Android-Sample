@@ -10,17 +10,15 @@ class ConversionRatesInteractor(
     private val memoryDataSource: MemoryDataSource
 ) {
 
-    suspend fun getConversionRates(
-        baseCurrency: CurrencyCode,
-        ignoreCache: Boolean = false
-    ): ConversionRates {
-        suspend fun getFromNetwork() =
-            networkDataSource.getConversionRates(baseCurrency).also {
-                memoryDataSource.saveConversionRates(baseCurrency, it)
-            }
+    suspend fun fetchConversionRates(baseCurrency: CurrencyCode): ConversionRates {
+        return networkDataSource.fetchConversionRates(baseCurrency).also {
+            memoryDataSource.saveConversionRates(baseCurrency, it)
+        }
+    }
 
-        return if (ignoreCache) getFromNetwork()
-        else memoryDataSource.getConversionRates(baseCurrency) ?: getFromNetwork()
+    suspend fun getConversionRates(baseCurrency: CurrencyCode): ConversionRates {
+        val cached = memoryDataSource.getConversionRates(baseCurrency)
+        return cached ?: fetchConversionRates(baseCurrency)
     }
 
 }

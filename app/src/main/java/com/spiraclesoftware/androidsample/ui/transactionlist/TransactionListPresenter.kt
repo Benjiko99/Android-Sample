@@ -26,15 +26,23 @@ class TransactionListPresenter(
     }
 
     suspend fun getConversionRates(ignoreCache: Boolean = false): ConversionRates = withIOContext {
-        conversionRatesInteractor.getConversionRates(getAccount().currency.currencyCode(), ignoreCache)
+        val baseCurrency = getAccount().currency.currencyCode()
+        if (ignoreCache)
+            conversionRatesInteractor.fetchConversionRates(baseCurrency)
+        else
+            conversionRatesInteractor.getConversionRates(baseCurrency)
     }
 
     suspend fun getTransactions(
         filter: TransactionListFilter,
         ignoreCache: Boolean = false
     ): List<Transaction> = withIOContext {
-        transactionsInteractor.getTransactions(ignoreCache)
-            .applyFilter(filter)
+        val transactions = if (ignoreCache)
+            transactionsInteractor.fetchTransactions()
+        else
+            transactionsInteractor.getTransactions()
+
+        transactions.applyFilter(filter)
     }
 
     suspend fun getListItems(

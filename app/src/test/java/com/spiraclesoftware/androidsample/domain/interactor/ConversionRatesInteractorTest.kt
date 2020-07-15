@@ -1,9 +1,6 @@
 package com.spiraclesoftware.androidsample.domain.interactor
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.data.memory.MemoryDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
@@ -49,7 +46,7 @@ class ConversionRatesInteractorTest {
     @Test
     fun `Rates are loaded correctly from network`() = runBlockingTest {
         whenever(memoryDataSource.getConversionRates(any())) doReturn null
-        whenever(networkDataSource.getConversionRates(any())) doReturn MOCK_RATES
+        whenever(networkDataSource.fetchConversionRates(any())) doReturn MOCK_RATES
 
         val interactor = ConversionRatesInteractor(networkDataSource, memoryDataSource)
 
@@ -58,31 +55,39 @@ class ConversionRatesInteractorTest {
     }
 
     @Test
-    fun `Rates are loaded from network when ignoring cached`() = runBlockingTest {
+    fun `Rates are loaded from network if cache is empty`() = runBlockingTest {
         whenever(memoryDataSource.getConversionRates(any())) doReturn null
-        whenever(networkDataSource.getConversionRates(any())) doReturn MOCK_RATES
-
-        val interactor = ConversionRatesInteractor(networkDataSource, memoryDataSource)
-
-        interactor.getConversionRates(MOCK_BASE_CURRENCY, ignoreCache = true)
-
-        verify(networkDataSource).getConversionRates(MOCK_BASE_CURRENCY)
-        verify(memoryDataSource, Times(0)).getConversionRates(any())
-    }
-
-    @Test
-    fun `Rates are saved on disk when loaded from network`() = runBlockingTest {
-        whenever(memoryDataSource.getConversionRates(any())) doReturn null
-        whenever(networkDataSource.getConversionRates(any())) doReturn MOCK_RATES
+        whenever(networkDataSource.fetchConversionRates(any())) doReturn MOCK_RATES
 
         val interactor = ConversionRatesInteractor(networkDataSource, memoryDataSource)
 
         interactor.getConversionRates(MOCK_BASE_CURRENCY)
 
-        verify(memoryDataSource).saveConversionRates(
-            MOCK_BASE_CURRENCY,
-            MOCK_RATES
-        )
+        verify(networkDataSource).fetchConversionRates(MOCK_BASE_CURRENCY)
+    }
+
+    @Test
+    fun `Rates are correctly fetched from network`() = runBlockingTest {
+        whenever(networkDataSource.fetchConversionRates(any())) doReturn MOCK_RATES
+
+        val interactor = ConversionRatesInteractor(networkDataSource, memoryDataSource)
+
+        val rates = interactor.fetchConversionRates(MOCK_BASE_CURRENCY)
+        assertEquals(MOCK_RATES, rates)
+
+        verify(networkDataSource).fetchConversionRates(MOCK_BASE_CURRENCY)
+    }
+
+    @Test
+    fun `Rates are saved on disk when fetched from network`() = runBlockingTest {
+        whenever(memoryDataSource.getConversionRates(any())) doReturn null
+        whenever(networkDataSource.fetchConversionRates(any())) doReturn MOCK_RATES
+
+        val interactor = ConversionRatesInteractor(networkDataSource, memoryDataSource)
+
+        interactor.getConversionRates(MOCK_BASE_CURRENCY)
+
+        verify(memoryDataSource).saveConversionRates(MOCK_BASE_CURRENCY, MOCK_RATES)
     }
 
 }

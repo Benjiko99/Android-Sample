@@ -68,7 +68,7 @@ class TransactionListPresenterTest : PresenterTest() {
     @Test
     fun `Conversion rates are returned from interactor`() = runBlockingTest {
         whenever(accountsInteractor.getAccount()) doReturn MOCK_ACCOUNT
-        whenever(conversionRatesInteractor.getConversionRates(any(), any())) doReturn MOCK_RATES
+        whenever(conversionRatesInteractor.getConversionRates(any())) doReturn MOCK_RATES
 
         val rates = presenter.getConversionRates()
 
@@ -104,7 +104,7 @@ class TransactionListPresenterTest : PresenterTest() {
 
         whenever(accountsInteractor.getAccount()) doReturn MOCK_ACCOUNT
         whenever(transactionsInteractor.getTransactions()) doReturn mockTransactions
-        whenever(conversionRatesInteractor.getConversionRates(any(), any())) doReturn MOCK_RATES
+        whenever(conversionRatesInteractor.getConversionRates(any())) doReturn MOCK_RATES
 
         val filter = TransactionListFilter(ALL)
         val listItems = presenter.getListItems(filter)

@@ -8,12 +8,12 @@ class NetworkDataSource(
     private val mainApi: MainApi
 ) {
 
-    suspend fun getTransactions(): List<Transaction> {
-        return mainApi.getTransactions().items
+    suspend fun fetchTransactions(): List<Transaction> {
+        return mainApi.fetchTransactions().items
     }
 
-    suspend fun getConversionRates(baseCurrency: CurrencyCode): ConversionRates {
-        return mainApi.getConversionRates(baseCurrency.value)
+    suspend fun fetchConversionRates(baseCurrency: CurrencyCode): ConversionRates {
+        return mainApi.fetchConversionRates(baseCurrency.value)
     }
 
 }
