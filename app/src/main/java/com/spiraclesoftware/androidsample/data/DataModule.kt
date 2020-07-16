@@ -3,6 +3,7 @@ package com.spiraclesoftware.androidsample.data
 import androidx.room.Room
 import com.spiraclesoftware.androidsample.data.disk.DiskDataSource
 import com.spiraclesoftware.androidsample.data.disk.MainDatabase
+import com.spiraclesoftware.androidsample.data.disk.MainDatabase.Migrations
 import com.spiraclesoftware.androidsample.data.memory.MemoryDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
@@ -15,6 +16,8 @@ private val databaseModule = module {
 
     single {
         Room.databaseBuilder(androidContext(), MainDatabase::class.java, "main.db")
+            .fallbackToDestructiveMigration()
+            .addMigrations(Migrations.MIGRATION_EXAMPLE)
             .build()
     }
 
