@@ -11,7 +11,28 @@ import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteract
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val dataModule = module {
+private val databaseModule = module {
+
+    single {
+        Room.databaseBuilder(androidContext(), MainDatabase::class.java, "main.db")
+            .build()
+    }
+
+    single { get<MainDatabase>().transactionsDao() }
+
+}
+
+private val interactorModule = module {
+
+    factory { AccountsInteractor(get()) }
+
+    factory { TransactionsInteractor(get(), get()) }
+
+    factory { ConversionRatesInteractor(get(), get()) }
+
+}
+
+val dataModules = databaseModule + interactorModule + module {
 
     single { MemoryDataSource() }
 
@@ -19,15 +40,4 @@ val dataModule = module {
 
     single { NetworkDataSource(get()) }
 
-    single {
-        Room.databaseBuilder(androidContext(), MainDatabase::class.java, "main.db").build()
-    }
-
-    single { get<MainDatabase>().transactionsDao() }
-
-    factory { AccountsInteractor(get()) }
-
-    factory { TransactionsInteractor(get(), get()) }
-
-    factory { ConversionRatesInteractor(get(), get()) }
 }
