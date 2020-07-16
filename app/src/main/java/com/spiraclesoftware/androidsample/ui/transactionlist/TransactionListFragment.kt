@@ -37,6 +37,7 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
     override fun render(viewState: TransactionListViewState) {
         loadingIndicator.isVisible = viewState is Loading
         errorGroup.isVisible = viewState is NetworkError
+        filterSpinner.isEnabled = viewState is ListReady
 
         when (viewState) {
             Loading -> {
