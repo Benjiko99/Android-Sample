@@ -15,6 +15,7 @@ import com.spiraclesoftware.core.utils.LanguageManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import org.threeten.bp.ZonedDateTime
 import retrofit2.Retrofit
@@ -22,9 +23,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
 
-    single { SampleApplication.getSharedPreferences(androidApplication()) }
+    single { androidApplication() as SampleApplication }
 
-    single { (get() as Retrofit).create(MainApi::class.java) }
+    single { SampleApplication.getSharedPreferences(androidContext()) }
+
+    single { get<Retrofit>().create(MainApi::class.java) }
 
     single {
         Retrofit.Builder()

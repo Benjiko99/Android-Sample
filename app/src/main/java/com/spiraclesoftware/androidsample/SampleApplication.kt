@@ -11,6 +11,7 @@ import com.spiraclesoftware.androidsample.data.dataModules
 import com.spiraclesoftware.androidsample.ui.uiModule
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.utils.LanguageManager
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -25,8 +26,6 @@ class SampleApplication : Application() {
             return ctx.getSharedPreferences(key, Context.MODE_PRIVATE)
         }
     }
-
-    private lateinit var languageManager: LanguageManager
 
     override fun onCreate() {
         super.onCreate()
@@ -43,14 +42,16 @@ class SampleApplication : Application() {
         }
     }
 
+    /** Executes before onCreate(), thus we cannot inject dependencies with Koin */
     override fun attachBaseContext(base: Context) {
-        languageManager = LanguageManager(base, getSharedPreferences(base))
+        val sharedPreferences = getSharedPreferences(base)
+        val languageManager = LanguageManager(base, sharedPreferences)
         super.attachBaseContext(languageManager.applyLocale(base))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        languageManager.applyLocale(this)
+        get<LanguageManager>().applyLocale(this)
     }
 
 }
