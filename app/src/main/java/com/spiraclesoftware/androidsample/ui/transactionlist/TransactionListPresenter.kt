@@ -25,25 +25,25 @@ class TransactionListPresenter(
         accountsInteractor.getAccount()
     }
 
-    suspend fun getConversionRates(ignoreCached: Boolean = false): ConversionRates = withIOContext {
-        conversionRatesInteractor.getConversionRates(getAccount().currency.currencyCode(), ignoreCached)
+    suspend fun getConversionRates(ignoreCache: Boolean = false): ConversionRates = withIOContext {
+        conversionRatesInteractor.getConversionRates(getAccount().currency.currencyCode(), ignoreCache)
     }
 
     suspend fun getTransactions(
         filter: TransactionListFilter,
-        ignoreCached: Boolean = false
+        ignoreCache: Boolean = false
     ): List<Transaction> = withIOContext {
-        transactionsInteractor.getTransactions(ignoreCached)
+        transactionsInteractor.getTransactions(ignoreCache)
             .applyFilter(filter)
     }
 
     suspend fun getListItems(
         filter: TransactionListFilter,
-        ignoreCached: Boolean = false
+        ignoreCache: Boolean = false
     ): List<GenericItem> = withIOContext {
-        getTransactions(filter, ignoreCached)
+        getTransactions(filter, ignoreCache)
             .sortAndGroupByDay()
-            .toListItems(getAccount(), getConversionRates(ignoreCached))
+            .toListItems(getAccount(), getConversionRates(ignoreCache))
     }
 
     private fun List<Transaction>.sortAndGroupByDay() =

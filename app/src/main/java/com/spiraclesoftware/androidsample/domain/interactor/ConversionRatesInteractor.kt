@@ -1,26 +1,26 @@
 package com.spiraclesoftware.androidsample.domain.interactor
 
-import com.spiraclesoftware.androidsample.data.disk.DiskDataSource
+import com.spiraclesoftware.androidsample.data.memory.MemoryDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import com.spiraclesoftware.androidsample.domain.model.CurrencyCode
 
 class ConversionRatesInteractor(
     private val networkDataSource: NetworkDataSource,
-    private val diskDataSource: DiskDataSource
+    private val memoryDataSource: MemoryDataSource
 ) {
 
     suspend fun getConversionRates(
         baseCurrency: CurrencyCode,
-        ignoreCached: Boolean = false
+        ignoreCache: Boolean = false
     ): ConversionRates {
         suspend fun getFromNetwork() =
             networkDataSource.getConversionRates(baseCurrency).also {
-                diskDataSource.saveConversionRates(baseCurrency, it)
+                memoryDataSource.saveConversionRates(baseCurrency, it)
             }
 
-        return if (ignoreCached) getFromNetwork()
-        else diskDataSource.getConversionRates(baseCurrency) ?: getFromNetwork()
+        return if (ignoreCache) getFromNetwork()
+        else memoryDataSource.getConversionRates(baseCurrency) ?: getFromNetwork()
     }
 
 }

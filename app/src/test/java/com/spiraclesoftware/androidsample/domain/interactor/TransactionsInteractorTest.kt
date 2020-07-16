@@ -39,10 +39,7 @@ class TransactionsInteractorTest {
         whenever(diskDataSource.getTransactions()) doReturn MOCK_TRANSACTIONS
         whenever(networkDataSource.getTransactions()) doReturn emptyList()
 
-        val interactor = TransactionsInteractor(
-            networkDataSource,
-            diskDataSource
-        )
+        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
         val transactions = interactor.getTransactions()
         assertEquals(MOCK_TRANSACTIONS, transactions)
@@ -53,13 +50,10 @@ class TransactionsInteractorTest {
 
     @Test
     fun `Transactions are loaded correctly from network`() = runBlockingTest {
-        whenever(diskDataSource.getTransactions()) doReturn null
+        whenever(diskDataSource.getTransactions()) doReturn emptyList()
         whenever(networkDataSource.getTransactions()) doReturn MOCK_TRANSACTIONS
 
-        val interactor = TransactionsInteractor(
-            networkDataSource,
-            diskDataSource
-        )
+        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
         val transactions = interactor.getTransactions()
         assertEquals(MOCK_TRANSACTIONS, transactions)
@@ -70,14 +64,11 @@ class TransactionsInteractorTest {
 
     @Test
     fun `Transactions are loaded from network when ignoring cached`() = runBlockingTest {
-        whenever(diskDataSource.getTransactions()) doReturn null
+        whenever(diskDataSource.getTransactions()) doReturn emptyList()
         whenever(networkDataSource.getTransactions()) doReturn MOCK_TRANSACTIONS
 
-        val interactor = TransactionsInteractor(
-            networkDataSource,
-            diskDataSource
-        )
-        interactor.getTransactions(ignoreCached = true)
+        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
+        interactor.getTransactions(ignoreCache = true)
 
         verify(networkDataSource).getTransactions()
         verify(diskDataSource, Times(0)).getTransactions()
@@ -85,13 +76,10 @@ class TransactionsInteractorTest {
 
     @Test
     fun `Transactions are saved on disk when loaded from network`() = runBlockingTest {
-        whenever(diskDataSource.getTransactions()) doReturn null
+        whenever(diskDataSource.getTransactions()) doReturn emptyList()
         whenever(networkDataSource.getTransactions()) doReturn MOCK_TRANSACTIONS
 
-        val interactor = TransactionsInteractor(
-            networkDataSource,
-            diskDataSource
-        )
+        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
         interactor.getTransactions()
 
         verify(diskDataSource).saveTransactions(MOCK_TRANSACTIONS)
@@ -102,10 +90,7 @@ class TransactionsInteractorTest {
         whenever(diskDataSource.getTransactionById(any())) doReturn MOCK_TRANSACTION
         whenever(networkDataSource.getTransactions()) doReturn emptyList()
 
-        val interactor = TransactionsInteractor(
-            networkDataSource,
-            diskDataSource
-        )
+        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
         val transaction = interactor.getTransactionById(MOCK_TRANSACTION_ID)
         assertEquals(MOCK_TRANSACTION, transaction)
@@ -119,10 +104,7 @@ class TransactionsInteractorTest {
         whenever(diskDataSource.getTransactionById(any())) doReturn null
         whenever(networkDataSource.getTransactions()) doReturn MOCK_TRANSACTIONS
 
-        val interactor = TransactionsInteractor(
-            networkDataSource,
-            diskDataSource
-        )
+        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
         val transaction = interactor.getTransactionById(MOCK_TRANSACTION_ID)
         assertEquals(MOCK_TRANSACTION, transaction)
@@ -136,10 +118,7 @@ class TransactionsInteractorTest {
         whenever(diskDataSource.getTransactionById(any())) doReturn null
         whenever(networkDataSource.getTransactions()) doReturn MOCK_TRANSACTIONS
 
-        val interactor = TransactionsInteractor(
-            networkDataSource,
-            diskDataSource
-        )
+        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
         interactor.getTransactionById(MOCK_TRANSACTION_ID)
 
         verify(diskDataSource).saveTransactions(MOCK_TRANSACTIONS)

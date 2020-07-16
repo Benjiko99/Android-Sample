@@ -10,14 +10,16 @@ class TransactionsInteractor(
     private val diskDataSource: DiskDataSource
 ) {
 
-    suspend fun getTransactions(ignoreCached: Boolean = false): List<Transaction> {
-        suspend fun getFromNetwork() =
-            networkDataSource.getTransactions().also {
-                diskDataSource.saveTransactions(it)
-            }
+    suspend fun getTransactions(ignoreCache: Boolean = false): List<Transaction> {
+        suspend fun fetchAndSaveRemote() =
+            networkDataSource.getTransactions().also { diskDataSource.saveTransactions(it) }
 
-        return if (ignoreCached) getFromNetwork()
-        else diskDataSource.getTransactions() ?: getFromNetwork()
+        return if (ignoreCache) {
+            fetchAndSaveRemote()
+        } else {
+            val cached = diskDataSource.getTransactions()
+            if (cached.isNotEmpty()) cached else fetchAndSaveRemote()
+        }
     }
 
     suspend fun getTransactionById(id: TransactionId): Transaction? {

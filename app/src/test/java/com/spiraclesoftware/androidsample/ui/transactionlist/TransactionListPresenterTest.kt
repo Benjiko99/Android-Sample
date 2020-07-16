@@ -8,9 +8,12 @@ import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
-import com.spiraclesoftware.androidsample.domain.model.*
+import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.ALL
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.INCOMING_ONLY
+import com.spiraclesoftware.androidsample.domain.model.applyFilter
+import com.spiraclesoftware.androidsample.domain.model.getContributionsToBalance
+import com.spiraclesoftware.core.utils.LanguageManager
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -29,6 +32,9 @@ class TransactionListPresenterTest : PresenterTest() {
     }
 
     @Mock
+    private lateinit var languageManager: LanguageManager
+
+    @Mock
     private lateinit var accountsInteractor: AccountsInteractor
 
     @Mock
@@ -42,7 +48,12 @@ class TransactionListPresenterTest : PresenterTest() {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        presenter = TransactionListPresenter(accountsInteractor, transactionsInteractor, conversionRatesInteractor)
+        presenter = TransactionListPresenter(
+            languageManager,
+            accountsInteractor,
+            transactionsInteractor,
+            conversionRatesInteractor
+        )
     }
 
     @Test

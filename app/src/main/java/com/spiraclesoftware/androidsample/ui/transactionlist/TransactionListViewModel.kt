@@ -16,22 +16,25 @@ class TransactionListViewModel(
     private var listFilter = TransactionListFilter(TransferDirectionFilter.ALL)
 
     init {
-        execute { loadData() }
+        // Since we don't want offline support but do have a local database
+        // for the purposes of showcasing storing data in it,
+        // we'll simply ignore the cache to get the latest data on startup.
+        execute { loadData(ignoreCache = true) }
     }
 
     fun reload() {
-        execute { loadData(ignoreCached = true) }
+        execute { loadData(ignoreCache = true) }
     }
 
     /**
-     * @param ignoreCached whether to request latest from the network instead of using cached data
+     * @param ignoreCache whether to request latest from the network instead of using cached data
      */
-    private suspend fun loadData(ignoreCached: Boolean = false) {
+    private suspend fun loadData(ignoreCache: Boolean = false) {
         viewState = Loading
         viewState = try {
-            val transactions = listPresenter.getListItems(listFilter, ignoreCached)
+            val listItems = listPresenter.getListItems(listFilter, ignoreCache)
             ListReady(
-                transactions,
+                listItems,
                 listFilter
             )
         } catch (e: Exception) {

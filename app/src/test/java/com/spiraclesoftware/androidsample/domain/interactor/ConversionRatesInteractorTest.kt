@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.TestData
-import com.spiraclesoftware.androidsample.data.disk.DiskDataSource
+import com.spiraclesoftware.androidsample.data.memory.MemoryDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
 import com.spiraclesoftware.androidsample.domain.model.currencyCode
 import junit.framework.Assert.assertEquals
@@ -29,7 +29,7 @@ class ConversionRatesInteractorTest {
     private lateinit var networkDataSource: NetworkDataSource
 
     @Mock
-    private lateinit var diskDataSource: DiskDataSource
+    private lateinit var memoryDataSource: MemoryDataSource
 
     @Before
     fun setUp() {
@@ -37,14 +37,10 @@ class ConversionRatesInteractorTest {
     }
 
     @Test
-    fun `Rates are loaded correctly from disk`() = runBlockingTest {
-        whenever(diskDataSource.getConversionRates(any())) doReturn MOCK_RATES
+    fun `Rates are loaded correctly from cache`() = runBlockingTest {
+        whenever(memoryDataSource.getConversionRates(any())) doReturn MOCK_RATES
 
-        val interactor =
-            ConversionRatesInteractor(
-                networkDataSource,
-                diskDataSource
-            )
+        val interactor = ConversionRatesInteractor(networkDataSource, memoryDataSource)
 
         val conversionRates = interactor.getConversionRates(MOCK_BASE_CURRENCY)
         assertEquals(MOCK_RATES, conversionRates)
@@ -52,14 +48,10 @@ class ConversionRatesInteractorTest {
 
     @Test
     fun `Rates are loaded correctly from network`() = runBlockingTest {
-        whenever(diskDataSource.getConversionRates(any())) doReturn null
+        whenever(memoryDataSource.getConversionRates(any())) doReturn null
         whenever(networkDataSource.getConversionRates(any())) doReturn MOCK_RATES
 
-        val interactor =
-            ConversionRatesInteractor(
-                networkDataSource,
-                diskDataSource
-            )
+        val interactor = ConversionRatesInteractor(networkDataSource, memoryDataSource)
 
         val conversionRates = interactor.getConversionRates(MOCK_BASE_CURRENCY)
         assertEquals(MOCK_RATES, conversionRates)
@@ -67,35 +59,27 @@ class ConversionRatesInteractorTest {
 
     @Test
     fun `Rates are loaded from network when ignoring cached`() = runBlockingTest {
-        whenever(diskDataSource.getConversionRates(any())) doReturn null
+        whenever(memoryDataSource.getConversionRates(any())) doReturn null
         whenever(networkDataSource.getConversionRates(any())) doReturn MOCK_RATES
 
-        val interactor =
-            ConversionRatesInteractor(
-                networkDataSource,
-                diskDataSource
-            )
+        val interactor = ConversionRatesInteractor(networkDataSource, memoryDataSource)
 
-        interactor.getConversionRates(MOCK_BASE_CURRENCY, ignoreCached = true)
+        interactor.getConversionRates(MOCK_BASE_CURRENCY, ignoreCache = true)
 
         verify(networkDataSource).getConversionRates(MOCK_BASE_CURRENCY)
-        verify(diskDataSource, Times(0)).getConversionRates(any())
+        verify(memoryDataSource, Times(0)).getConversionRates(any())
     }
 
     @Test
     fun `Rates are saved on disk when loaded from network`() = runBlockingTest {
-        whenever(diskDataSource.getConversionRates(any())) doReturn null
+        whenever(memoryDataSource.getConversionRates(any())) doReturn null
         whenever(networkDataSource.getConversionRates(any())) doReturn MOCK_RATES
 
-        val interactor =
-            ConversionRatesInteractor(
-                networkDataSource,
-                diskDataSource
-            )
+        val interactor = ConversionRatesInteractor(networkDataSource, memoryDataSource)
 
         interactor.getConversionRates(MOCK_BASE_CURRENCY)
 
-        verify(diskDataSource).saveConversionRates(
+        verify(memoryDataSource).saveConversionRates(
             MOCK_BASE_CURRENCY,
             MOCK_RATES
         )

@@ -56,6 +56,11 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:${Deps.navigation}")
     implementation("androidx.navigation:navigation-ui-ktx:${Deps.navigation}")
 
+    kapt("androidx.room:room-compiler:${Deps.room}")
+    implementation("androidx.room:room-runtime:${Deps.room}")
+    implementation("androidx.room:room-ktx:${Deps.room}")
+    testImplementation("androidx.room:room-testing:${Deps.room}")
+
     implementation("androidx.constraintlayout:constraintlayout:${Deps.constraintLayout}")
 
     implementation("com.mikepenz:fastadapter:${Deps.fastAdapter}")

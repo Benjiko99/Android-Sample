@@ -3,7 +3,7 @@ package com.spiraclesoftware.androidsample.domain.interactor
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.TestData
-import com.spiraclesoftware.androidsample.data.disk.DiskDataSource
+import com.spiraclesoftware.androidsample.data.memory.MemoryDataSource
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -20,7 +20,7 @@ class AccountsInteractorTest {
     }
 
     @Mock
-    private lateinit var diskDataSource: DiskDataSource
+    private lateinit var memoryDataSource: MemoryDataSource
 
     @Before
     fun setUp() {
@@ -28,11 +28,10 @@ class AccountsInteractorTest {
     }
 
     @Test
-    fun `Account is loaded correctly from disk`() = runBlockingTest {
-        whenever(diskDataSource.getAccount()) doReturn MOCK_ACCOUNT
+    fun `Account is loaded correctly from cache`() = runBlockingTest {
+        whenever(memoryDataSource.getAccount()) doReturn MOCK_ACCOUNT
 
-        val interactor =
-            AccountsInteractor(diskDataSource)
+        val interactor = AccountsInteractor(memoryDataSource)
 
         assertEquals(MOCK_ACCOUNT, interactor.getAccount())
     }
