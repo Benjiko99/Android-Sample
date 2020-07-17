@@ -7,11 +7,12 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListHeaderItemBinding
 import com.spiraclesoftware.androidsample.domain.model.Money
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
+import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import org.threeten.bp.ZonedDateTime
 
 class HeaderItem(
     private val dateTime: ZonedDateTime,
-    private val contributions: Money
+    private val contributionToBalance: Money
 ) : AbstractBindingItem<TransactionListHeaderItemBinding>() {
 
     override val type: Int
@@ -22,7 +23,10 @@ class HeaderItem(
     }
 
     override fun bindView(binding: TransactionListHeaderItemBinding, payloads: List<Any>) {
-        binding.contributionsText = contributions.formatSigned(showSignWhenPositive = false)
+        val formattedContribution = MoneyFormat(contributionToBalance)
+            .formatSigned(showSignWhenPositive = false)
+
+        binding.contributionsText = formattedContribution
         binding.dateText = dateTime.format(DateTimeFormat.PRETTY_DATE)
     }
 
@@ -34,7 +38,7 @@ class HeaderItem(
         other as HeaderItem
 
         if (dateTime != other.dateTime) return false
-        if (contributions != other.contributions) return false
+        if (contributionToBalance != other.contributionToBalance) return false
 
         return true
     }
@@ -42,7 +46,7 @@ class HeaderItem(
     override fun hashCode(): Int {
         var result = super.hashCode()
         result = 31 * result + dateTime.hashCode()
-        result = 31 * result + contributions.hashCode()
+        result = 31 * result + contributionToBalance.hashCode()
         return result
     }
 

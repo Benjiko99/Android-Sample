@@ -22,10 +22,8 @@ class TransactionsInteractor(
     }
 
     suspend fun getTransactionById(id: TransactionId): Transaction? {
-        return diskDataSource.getTransactionById(id) ?: networkDataSource.fetchTransactions().run {
-            diskDataSource.saveTransactions(this)
-            this.find { it.id == id }
-        }
+        val cached = diskDataSource.getTransactionById(id)
+        return cached ?: fetchTransactions().run { find { it.id == id } }
     }
 
 }

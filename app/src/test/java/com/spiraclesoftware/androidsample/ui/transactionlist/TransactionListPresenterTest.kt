@@ -3,16 +3,18 @@ package com.spiraclesoftware.androidsample.ui.transactionlist
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
-import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
+import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.ALL
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.INCOMING_ONLY
 import com.spiraclesoftware.androidsample.domain.model.applyFilter
-import com.spiraclesoftware.androidsample.domain.model.getContributionsToBalance
+import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
+import com.spiraclesoftware.androidsample.money
 import com.spiraclesoftware.core.utils.LanguageManager
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,7 +29,6 @@ class TransactionListPresenterTest : PresenterTest() {
 
     companion object {
         private val MOCK_ACCOUNT = TestData.account
-        private val MOCK_RATES = TestData.conversionRates
         private val MOCK_TRANSACTIONS = TestData.transactions
     }
 
@@ -35,13 +36,13 @@ class TransactionListPresenterTest : PresenterTest() {
     private lateinit var languageManager: LanguageManager
 
     @Mock
+    private lateinit var transactionsPolicy: TransactionsPolicy
+
+    @Mock
     private lateinit var accountsInteractor: AccountsInteractor
 
     @Mock
     private lateinit var transactionsInteractor: TransactionsInteractor
-
-    @Mock
-    private lateinit var conversionRatesInteractor: ConversionRatesInteractor
 
     private lateinit var presenter: TransactionListPresenter
 
@@ -50,9 +51,9 @@ class TransactionListPresenterTest : PresenterTest() {
         MockitoAnnotations.initMocks(this)
         presenter = TransactionListPresenter(
             languageManager,
+            transactionsPolicy,
             accountsInteractor,
-            transactionsInteractor,
-            conversionRatesInteractor
+            transactionsInteractor
         )
     }
 
@@ -63,16 +64,6 @@ class TransactionListPresenterTest : PresenterTest() {
         val account = presenter.getAccount()
 
         assertEquals(MOCK_ACCOUNT, account)
-    }
-
-    @Test
-    fun `Conversion rates are returned from interactor`() = runBlockingTest {
-        whenever(accountsInteractor.getAccount()) doReturn MOCK_ACCOUNT
-        whenever(conversionRatesInteractor.getConversionRates(any())) doReturn MOCK_RATES
-
-        val rates = presenter.getConversionRates()
-
-        assertEquals(MOCK_RATES, rates)
     }
 
     @Test
@@ -96,20 +87,34 @@ class TransactionListPresenterTest : PresenterTest() {
     }
 
     @Test
+    fun `Transactions are returned from network when force fetching them`() = runBlockingTest {
+        whenever(transactionsInteractor.fetchTransactions()) doReturn MOCK_TRANSACTIONS
+
+        val filter = TransactionListFilter(ALL)
+        val transactions = presenter.getTransactions(filter, forceFetch = true)
+
+        verify(transactionsInteractor).fetchTransactions()
+        assertEquals(MOCK_TRANSACTIONS, transactions)
+    }
+
+    @Test
     fun `All list items are returned from interactor`() = runBlockingTest {
         val mockTransactions = listOf(
             TestData.transactions[0],
             TestData.transactions[0]
         )
 
+        val mockContribution = money("100", "EUR")
+
         whenever(accountsInteractor.getAccount()) doReturn MOCK_ACCOUNT
-        whenever(transactionsInteractor.getTransactions()) doReturn mockTransactions
-        whenever(conversionRatesInteractor.getConversionRates(any())) doReturn MOCK_RATES
+        whenever(
+            transactionsPolicy.getContributionToBalance(any<List<Transaction>>(), any())
+        ) doReturn mockContribution
 
-        val filter = TransactionListFilter(ALL)
-        val listItems = presenter.getListItems(filter)
+        val listItems = presenter.getListItems(mockTransactions)
 
-        val contributions = mockTransactions.getContributionsToBalance(MOCK_RATES, MOCK_ACCOUNT.currency)
+        val contributions = transactionsPolicy
+            .getContributionToBalance(mockTransactions, MOCK_ACCOUNT.currency)
 
         val expectedListItems = listOf(
             HeaderItem(TestData.epochDateTime, contributions),

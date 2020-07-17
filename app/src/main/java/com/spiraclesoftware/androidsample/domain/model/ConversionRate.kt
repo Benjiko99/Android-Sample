@@ -8,6 +8,8 @@ data class ConversionRate(
     val rate: Float
 ) : Identifiable<CurrencyCode> {
 
+    constructor(currencyCode: String, rate: Float) : this(Currency.getInstance(currencyCode), rate)
+
     override fun getUniqueId() = currency.currencyCode()
 
 }

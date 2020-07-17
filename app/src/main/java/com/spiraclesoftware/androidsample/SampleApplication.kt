@@ -15,11 +15,18 @@ import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import timber.log.Timber
+import timber.log.Timber.DebugTree
+import java.math.MathContext
+
 
 class SampleApplication : Application() {
 
     companion object {
         const val API_SERVICE_BASE_URL = "https://benjiko99-android-sample.builtwithdark.com/"
+
+        /** Keep the MathContext consistent across the application */
+        val mathContext = MathContext.DECIMAL32!!
 
         fun getSharedPreferences(ctx: Context): SharedPreferences {
             val key = ctx.string(R.string.shared_preferences_key)
@@ -34,6 +41,10 @@ class SampleApplication : Application() {
 
         Stetho.initializeWithDefaults(this)
         AndroidThreeTen.init(this)
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        }
 
         startKoin {
             androidLogger()

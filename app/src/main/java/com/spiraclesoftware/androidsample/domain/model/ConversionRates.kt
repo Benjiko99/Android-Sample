@@ -11,4 +11,15 @@ data class ConversionRates(
 
     override fun getUniqueId() = baseCurrency.currencyCode()
 
+    /**
+     * @return the conversion rate for a given currency
+     */
+    fun findByCurrency(currency: Currency): ConversionRate? {
+        return if (currency == baseCurrency) {
+            ConversionRate(baseCurrency, 1f)
+        } else {
+            rates.find { it.currency == currency }
+        }
+    }
+
 }

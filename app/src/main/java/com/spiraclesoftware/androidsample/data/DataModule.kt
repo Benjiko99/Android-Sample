@@ -6,6 +6,8 @@ import com.spiraclesoftware.androidsample.data.disk.MainDatabase
 import com.spiraclesoftware.androidsample.data.disk.MainDatabase.Migrations
 import com.spiraclesoftware.androidsample.data.memory.MemoryDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
+import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
+import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
@@ -35,7 +37,15 @@ private val interactorModule = module {
 
 }
 
-val dataModules = databaseModule + interactorModule + module {
+private val serviceModule = module {
+
+    factory { CurrencyConverter(get()) }
+
+    factory { TransactionsPolicy(get()) }
+
+}
+
+val dataModules = databaseModule + interactorModule + serviceModule + module {
 
     single { MemoryDataSource() }
 

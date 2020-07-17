@@ -5,6 +5,7 @@ import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
+import timber.log.Timber
 
 class TransactionListViewModel(
     private val listPresenter: TransactionListPresenter
@@ -19,25 +20,26 @@ class TransactionListViewModel(
         // Since we don't want offline support but do have a local database
         // for the purposes of showcasing storing data in it,
         // we'll simply ignore the cache to get the latest data on startup.
-        execute { loadData(ignoreCache = true) }
+        execute { loadData(forceFetch = true) }
     }
 
     fun reload() {
-        execute { loadData(ignoreCache = true) }
+        execute { loadData(forceFetch = true) }
     }
 
-    /**
-     * @param ignoreCache whether to request latest from the network instead of using cached data
-     */
-    private suspend fun loadData(ignoreCache: Boolean = false) {
+    private suspend fun loadData(forceFetch: Boolean) {
         viewState = Loading
         viewState = try {
-            val listItems = listPresenter.getListItems(listFilter, ignoreCache)
+            val transactions = listPresenter.getTransactions(listFilter, forceFetch)
+            val listItems = listPresenter.getListItems(transactions)
+
+            Timber.d("Loaded data for list of transactions; forceFetch=$forceFetch")
             ListReady(
                 listItems,
                 listFilter
             )
         } catch (e: Exception) {
+            Timber.e(e)
             NetworkError
         }
     }
@@ -65,11 +67,14 @@ class TransactionListViewModel(
     /** Updates the [viewState] with list items that are using the latest filter. **/
     private fun updateListFilter() {
         execute {
-            listPresenter.getListItems(listFilter).let { listItems ->
-                viewState = (viewState as? ListReady)?.copy(
+            val transactions = listPresenter.getTransactions(listFilter)
+            val listItems = listPresenter.getListItems(transactions)
+
+            (viewState as? ListReady)?.let {
+                viewState = it.copy(
                     listItems = listItems,
                     listFilter = listFilter
-                ) ?: viewState
+                )
             }
         }
     }

@@ -34,7 +34,8 @@ subprojects {
             "no-wildcard-imports",
             "final-newline",
             "comment-spacing",
-            "no-blank-line-before-rbrace"
+            "no-blank-line-before-rbrace",
+            "no-multi-spaces"
         )
     }
 }

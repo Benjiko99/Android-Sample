@@ -6,23 +6,16 @@ import java.util.*
 
 object TestData {
 
-    val account =
-        Account(Currency.getInstance("EUR"))
+    val account = Account(Currency.getInstance("EUR"))
 
     val epochDateTime = ZonedDateTime.parse("1970-01-01T00:00:00+00:00")!!
 
     val conversionRates = ConversionRates(
         baseCurrency = Currency.getInstance("EUR"),
         validityDate = Date(),
-        rates = arrayListOf(
-            ConversionRate(
-                Currency.getInstance("USD"),
-                1.12f
-            ),
-            ConversionRate(
-                Currency.getInstance("CZK"),
-                26.70f
-            )
+        rates = listOf(
+            ConversionRate("USD", 1.12f),
+            ConversionRate("CZK", 26.70f)
         )
     )
 
@@ -31,7 +24,7 @@ object TestData {
             TransactionId(1),
             "Paypal *Steam",
             epochDateTime,
-            Money("49.99", "EUR"),
+            money("49.99", "EUR"),
             TransferDirection.OUTGOING,
             TransactionCategory.ENTERTAINMENT,
             TransactionStatus.COMPLETED,
@@ -43,7 +36,7 @@ object TestData {
             TransactionId(2),
             "Salary",
             ZonedDateTime.parse("2019-05-14T09:00:00+00:00"),
-            Money("1000", "EUR"),
+            money("1000", "EUR"),
             TransferDirection.INCOMING,
             TransactionCategory.TRANSFERS,
             TransactionStatus.COMPLETED,
@@ -53,7 +46,7 @@ object TestData {
             TransactionId(3),
             "Groceries",
             ZonedDateTime.parse("2019-05-14T09:00:00+00:00"),
-            Money("14.99", "USD"),
+            money("14.99", "USD"),
             TransferDirection.OUTGOING,
             TransactionCategory.GROCERIES,
             TransactionStatus.DECLINED,

@@ -3,6 +3,7 @@ package com.spiraclesoftware.androidsample.data.network
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import com.spiraclesoftware.androidsample.domain.model.CurrencyCode
 import com.spiraclesoftware.androidsample.domain.model.Transaction
+import java.util.*
 
 class NetworkDataSource(
     private val mainApi: MainApi
@@ -12,8 +13,8 @@ class NetworkDataSource(
         return mainApi.fetchTransactions().items
     }
 
-    suspend fun fetchConversionRates(baseCurrency: CurrencyCode): ConversionRates {
-        return mainApi.fetchConversionRates(baseCurrency.value)
+    suspend fun fetchConversionRates(baseCurrency: Currency): ConversionRates {
+        return mainApi.fetchConversionRates(baseCurrency.currencyCode)
     }
 
 }

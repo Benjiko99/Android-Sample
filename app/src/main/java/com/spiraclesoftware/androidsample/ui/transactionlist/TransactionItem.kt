@@ -9,7 +9,9 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListTransactionItemBinding
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
+import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
+import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.extensions.tintedDrawable
@@ -31,9 +33,11 @@ class TransactionItem(val transaction: Transaction) : AbstractBindingItem<Transa
         binding.statusText = if (stringRes != null) binding.root.context.string(stringRes) else null
 
         fun bindAmountText() {
-            binding.amountText = transaction.formattedMoney
+            val moneyFormat = MoneyFormat(transaction.signedMoney)
 
-            if (!transaction.contributesToBalance()) {
+            binding.amountText = moneyFormat.format(transaction)
+
+            if (!TransactionsPolicy.contributesToBalance(transaction)) {
                 binding.amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             }
         }

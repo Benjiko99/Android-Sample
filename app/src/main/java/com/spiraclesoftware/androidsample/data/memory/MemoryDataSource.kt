@@ -3,6 +3,7 @@ package com.spiraclesoftware.androidsample.data.memory
 import com.spiraclesoftware.androidsample.domain.model.Account
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import com.spiraclesoftware.androidsample.domain.model.CurrencyCode
+import com.spiraclesoftware.androidsample.domain.model.currencyCode
 import com.spiraclesoftware.core.data.memory.AssociatedItemMemoryCache
 import java.util.*
 
@@ -14,12 +15,12 @@ class MemoryDataSource {
 
     fun getAccount() = dummyAccount
 
-    fun saveConversionRates(baseCurrency: CurrencyCode, rates: ConversionRates) {
-        return conversionRatesCache.set(baseCurrency, rates)
+    fun saveConversionRates(baseCurrency: Currency, rates: ConversionRates) {
+        return conversionRatesCache.set(baseCurrency.currencyCode(), rates)
     }
 
-    fun getConversionRates(baseCurrency: CurrencyCode): ConversionRates? {
-        return conversionRatesCache.get(baseCurrency)
+    fun getConversionRates(baseCurrency: Currency): ConversionRates? {
+        return conversionRatesCache.get(baseCurrency.currencyCode())
     }
 
 }

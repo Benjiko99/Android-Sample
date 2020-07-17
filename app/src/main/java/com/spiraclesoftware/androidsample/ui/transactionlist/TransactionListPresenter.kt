@@ -3,18 +3,21 @@ package com.spiraclesoftware.androidsample.ui.transactionlist
 import co.zsmb.rainbowcake.withIOContext
 import com.mikepenz.fastadapter.GenericItem
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
-import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
-import com.spiraclesoftware.androidsample.domain.model.*
+import com.spiraclesoftware.androidsample.domain.model.Account
+import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
+import com.spiraclesoftware.androidsample.domain.model.applyFilter
+import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.core.utils.LanguageManager
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 
 class TransactionListPresenter(
     private val languageManager: LanguageManager,
+    private val transactionsPolicy: TransactionsPolicy,
     private val accountsInteractor: AccountsInteractor,
-    private val transactionsInteractor: TransactionsInteractor,
-    private val conversionRatesInteractor: ConversionRatesInteractor
+    private val transactionsInteractor: TransactionsInteractor
 ) {
 
     fun toggleLanguageAndRestart() {
@@ -25,19 +28,11 @@ class TransactionListPresenter(
         accountsInteractor.getAccount()
     }
 
-    suspend fun getConversionRates(ignoreCache: Boolean = false): ConversionRates = withIOContext {
-        val baseCurrency = getAccount().currency.currencyCode()
-        if (ignoreCache)
-            conversionRatesInteractor.fetchConversionRates(baseCurrency)
-        else
-            conversionRatesInteractor.getConversionRates(baseCurrency)
-    }
-
     suspend fun getTransactions(
         filter: TransactionListFilter,
-        ignoreCache: Boolean = false
+        forceFetch: Boolean = false
     ): List<Transaction> = withIOContext {
-        val transactions = if (ignoreCache)
+        val transactions = if (forceFetch)
             transactionsInteractor.fetchTransactions()
         else
             transactionsInteractor.getTransactions()
@@ -46,28 +41,25 @@ class TransactionListPresenter(
     }
 
     suspend fun getListItems(
-        filter: TransactionListFilter,
-        ignoreCache: Boolean = false
+        transactions: List<Transaction>
     ): List<GenericItem> = withIOContext {
-        getTransactions(filter, ignoreCache)
+        transactions
             .sortAndGroupByDay()
-            .toListItems(getAccount(), getConversionRates(ignoreCache))
+            .toListItems()
     }
 
     private fun List<Transaction>.sortAndGroupByDay() =
         this.sortedByDescending { it.processingDate }
             .groupBy { it.processingDate.truncatedTo(ChronoUnit.DAYS) }
 
-    private fun Map<ZonedDateTime, List<Transaction>>.toListItems(
-        account: Account,
-        rates: ConversionRates
-    ): List<GenericItem> {
+    private suspend fun Map<ZonedDateTime, List<Transaction>>.toListItems(): List<GenericItem> {
         val listItems = arrayListOf<GenericItem>()
 
         this.forEach { (day, transactions) ->
-            val contributions = transactions.getContributionsToBalance(rates, account.currency)
+            val contribution = transactionsPolicy
+                .getContributionToBalance(transactions, getAccount().currency)
 
-            listItems.add(HeaderItem(day, contributions))
+            listItems.add(HeaderItem(day, contribution))
             listItems.addAll(transactions.map(::TransactionItem))
         }
 

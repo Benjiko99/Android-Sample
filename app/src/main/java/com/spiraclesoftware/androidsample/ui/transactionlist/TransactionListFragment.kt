@@ -50,6 +50,7 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             }
             NetworkError -> {
                 recyclerView.isVisible = false
+
                 itemAdapter.set(emptyList())
             }
         }

@@ -9,6 +9,8 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
+import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
+import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.LoadFailedEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,8 +42,13 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
     @Test
     fun `Data is loaded correctly from presenter`() = runBlockingTest {
+        val contributesToBalance = true
+        val isSuccessful = true
+
         whenever(detailPresenter.getTransactionById(MOCK_TRANSACTION_ID)) doReturn MOCK_TRANSACTION
         whenever(detailPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
+        whenever(detailPresenter.contributesToBalance(any())) doReturn contributesToBalance
+        whenever(detailPresenter.isSuccessful(any())) doReturn isSuccessful
 
         val vm = TransactionDetailViewModel(detailPresenter)
 
@@ -53,9 +60,9 @@ class TransactionDetailViewModelTest : ViewModelTest() {
                 DetailReady(
                     MOCK_TRANSACTION.name,
                     MOCK_TRANSACTION.processingDate,
-                    MOCK_TRANSACTION.formattedMoney,
-                    MOCK_TRANSACTION.contributesToBalance(),
-                    MOCK_TRANSACTION.statusCode == TransactionStatusCode.SUCCESSFUL,
+                    MoneyFormat(MOCK_TRANSACTION.signedMoney).format(MOCK_TRANSACTION),
+                    contributesToBalance,
+                    isSuccessful,
                     MOCK_TRANSACTION.category,
                     MOCK_CARD_ITEMS
                 )

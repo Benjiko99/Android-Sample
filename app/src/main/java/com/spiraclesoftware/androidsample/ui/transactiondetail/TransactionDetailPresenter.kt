@@ -4,6 +4,7 @@ import co.zsmb.rainbowcake.withIOContext
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.Card
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsGenerator
 
@@ -11,6 +12,14 @@ class TransactionDetailPresenter(
     private val transactionsInteractor: TransactionsInteractor,
     private val cardsGenerator: CardsGenerator
 ) {
+
+    fun isSuccessful(transaction: Transaction): Boolean {
+        return TransactionsPolicy.isSuccessful(transaction)
+    }
+
+    fun contributesToBalance(transaction: Transaction): Boolean {
+        return TransactionsPolicy.contributesToBalance(transaction)
+    }
 
     suspend fun getTransactionById(id: TransactionId): Transaction? = withIOContext {
         transactionsInteractor.getTransactionById(id)
