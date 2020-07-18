@@ -6,11 +6,11 @@ import com.google.gson.GsonBuilder
 import com.spiraclesoftware.androidsample.data.network.MainApi
 import com.spiraclesoftware.androidsample.data.network.adapter.ConversionRatesAdapter
 import com.spiraclesoftware.androidsample.data.network.adapter.MoneyAdapter
+import com.spiraclesoftware.androidsample.data.network.adapter.UniqueIdentifierAdapter
+import com.spiraclesoftware.androidsample.data.network.adapter.ZonedDateTimeAdapter
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import com.spiraclesoftware.androidsample.domain.model.Money
-import com.spiraclesoftware.core.data.network.adapter.ZonedDateTimeAdapter
-import com.spiraclesoftware.core.domain.UniqueIdentifier
-import com.spiraclesoftware.core.domain.UniqueIdentifierAdapter
+import com.spiraclesoftware.androidsample.domain.model.UniqueIdentifier
 import com.spiraclesoftware.core.utils.LanguageManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

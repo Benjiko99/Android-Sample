@@ -1,4 +1,4 @@
-package com.spiraclesoftware.core.data.network.adapter
+package com.spiraclesoftware.androidsample.data.network.adapter
 
 import com.google.gson.*
 import org.threeten.bp.ZonedDateTime

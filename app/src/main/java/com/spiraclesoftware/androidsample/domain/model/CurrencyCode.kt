@@ -1,6 +1,5 @@
 package com.spiraclesoftware.androidsample.domain.model
 
-import com.spiraclesoftware.core.domain.UniqueIdentifier
 import java.util.*
 
 typealias CurrencyCode = UniqueIdentifier<String>

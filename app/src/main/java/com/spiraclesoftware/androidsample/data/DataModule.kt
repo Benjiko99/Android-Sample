@@ -6,11 +6,11 @@ import com.spiraclesoftware.androidsample.data.disk.MainDatabase
 import com.spiraclesoftware.androidsample.data.disk.MainDatabase.Migrations
 import com.spiraclesoftware.androidsample.data.memory.MemoryDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
-import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
-import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
+import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
+import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

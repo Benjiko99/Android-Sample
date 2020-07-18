@@ -1,3 +1,3 @@
 package com.spiraclesoftware.androidsample.domain.model
 
-typealias TransactionId = UniqueIdentifier<Int>
+data class UniqueIdentifier<T>(val value: T)

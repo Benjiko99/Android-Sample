@@ -1,7 +1,6 @@
 package com.spiraclesoftware.androidsample.domain.model
 
 import com.spiraclesoftware.androidsample.domain.policy.negate
-import com.spiraclesoftware.core.domain.Identifiable
 import org.threeten.bp.ZonedDateTime
 
 data class Transaction(

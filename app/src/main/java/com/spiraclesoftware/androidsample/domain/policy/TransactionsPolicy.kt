@@ -15,8 +15,9 @@ class TransactionsPolicy(
     companion object {
 
         fun isSuccessful(transaction: Transaction): Boolean {
-            return transaction.statusCode == TransactionStatusCode.SUCCESSFUL
-                    && transaction.status == TransactionStatus.COMPLETED
+            val successful = transaction.statusCode == TransactionStatusCode.SUCCESSFUL
+            val completed = transaction.status == TransactionStatus.COMPLETED
+            return successful && completed
         }
 
         fun contributesToBalance(transaction: Transaction): Boolean {

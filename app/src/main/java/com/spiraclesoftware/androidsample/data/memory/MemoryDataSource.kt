@@ -4,14 +4,13 @@ import com.spiraclesoftware.androidsample.domain.model.Account
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import com.spiraclesoftware.androidsample.domain.model.CurrencyCode
 import com.spiraclesoftware.androidsample.domain.model.currencyCode
-import com.spiraclesoftware.core.data.memory.AssociatedItemMemoryCache
 import java.util.*
 
 class MemoryDataSource {
 
     private val dummyAccount = Account(Currency.getInstance("EUR"))
 
-    private val conversionRatesCache = AssociatedItemMemoryCache<CurrencyCode, ConversionRates>()
+    private val conversionRatesCache = AssociatedItemCache<CurrencyCode, ConversionRates>()
 
     fun getAccount() = dummyAccount
 

@@ -1,4 +1,4 @@
-package com.spiraclesoftware.core.domain
+package com.spiraclesoftware.androidsample.domain.model
 
 interface Identifiable<out T> where T : UniqueIdentifier<*> {
 

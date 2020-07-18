@@ -1,12 +1,12 @@
-package com.spiraclesoftware.core.data.memory
+package com.spiraclesoftware.androidsample.data.memory
 
-import com.spiraclesoftware.core.domain.Identifiable
-import com.spiraclesoftware.core.domain.UniqueIdentifier
+import com.spiraclesoftware.androidsample.domain.model.Identifiable
+import com.spiraclesoftware.androidsample.domain.model.UniqueIdentifier
 
 /**
  * Provides a generic cache for [List] data, mapped to an [Identifiable] key.
  */
-class AssociatedListMemoryCache<Key, Value> where Key : UniqueIdentifier<*>, Value : Identifiable<Key> {
+class AssociatedListCache<Key, Value> where Key : UniqueIdentifier<*>, Value : Identifiable<Key> {
 
     private var cache: HashMap<Key, Value>? = null
 

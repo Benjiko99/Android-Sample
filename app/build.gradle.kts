@@ -9,24 +9,24 @@ plugins {
 apply(plugin = "org.jmailen.kotlinter")
 
 android {
-    compileSdkVersion(AppDeps.compileSdk)
+    compileSdkVersion(Application.compileSdk)
 
     defaultConfig {
-        applicationId = AppDeps.id
-        minSdkVersion(AppDeps.minSdk)
-        targetSdkVersion(AppDeps.targetSdk)
-        versionCode = AppDeps.versionCode
-        versionName = AppDeps.versionName
+        applicationId = Application.id
+        minSdkVersion(Application.minSdk)
+        targetSdkVersion(Application.targetSdk)
+        versionCode = Application.versionCode
+        versionName = Application.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
-        sourceCompatibility = AppDeps.sourceCompat
-        targetCompatibility = AppDeps.targetCompat
+        sourceCompatibility = Application.sourceCompat
+        targetCompatibility = Application.targetCompat
     }
 
     kotlinOptions {
-        jvmTarget = AppDeps.targetCompat.toString()
+        jvmTarget = Application.targetCompat.toString()
     }
 
     buildTypes {
@@ -51,29 +51,50 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":core"))
 
-    implementation("com.facebook.stetho:stetho:${Deps.stetho}")
+    implementation("co.zsmb:rainbow-cake-core:${Dependencies.rainbowCake}")
+    implementation("co.zsmb:rainbow-cake-koin:${Dependencies.rainbowCake}")
+    implementation("co.zsmb:rainbow-cake-timber:${Dependencies.rainbowCake}")
 
-    implementation("androidx.navigation:navigation-fragment-ktx:${Deps.navigation}")
-    implementation("androidx.navigation:navigation-ui-ktx:${Deps.navigation}")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:${Dependencies.leakCanary}")
+    implementation("com.facebook.stetho:stetho:${Dependencies.stetho}")
 
-    kapt("androidx.room:room-compiler:${Deps.room}")
-    implementation("androidx.room:room-runtime:${Deps.room}")
-    implementation("androidx.room:room-ktx:${Deps.room}")
-    testImplementation("androidx.room:room-testing:${Deps.room}")
+    implementation("com.jakewharton.threetenabp:threetenabp:${Dependencies.threetenabp}")
 
-    implementation("androidx.constraintlayout:constraintlayout:${Deps.constraintLayout}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.coroutines}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Dependencies.coroutines}")
 
-    implementation("com.mikepenz:fastadapter:${Deps.fastAdapter}")
-    implementation("com.mikepenz:fastadapter-extensions-binding:${Deps.fastAdapter}")
+    implementation("org.koin:koin-android:${Dependencies.koin}")
+    implementation("org.koin:koin-androidx-viewmodel:${Dependencies.koin}")
 
-    implementation("io.cabriole:decorator:${Deps.decorator}")
+    implementation("com.squareup.okhttp3:okhttp:${Dependencies.okhttp}")
+    implementation("com.squareup.okhttp3:logging-interceptor:${Dependencies.okhttp}")
 
-    testImplementation("junit:junit:${Deps.junit}")
-    testImplementation("androidx.arch.core:core-testing:${Deps.lifecycle}")
-    testImplementation("co.zsmb:rainbow-cake-test:${Deps.rainbowCake}")
-    testImplementation("org.koin:koin-test:${Deps.koin}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Deps.coroutines}")
-    testImplementation("org.mockito:mockito-inline:${Deps.mockito}")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${Deps.mockitoKotlin}")
-    androidTestImplementation("org.mockito:mockito-android:${Deps.mockito}")
+    implementation("com.squareup.retrofit2:retrofit:${Dependencies.retrofit}")
+    implementation("com.squareup.retrofit2:converter-gson:${Dependencies.retrofit}")
+
+    implementation("androidx.navigation:navigation-fragment-ktx:${Dependencies.navigation}")
+    implementation("androidx.navigation:navigation-ui-ktx:${Dependencies.navigation}")
+
+    kapt("androidx.room:room-compiler:${Dependencies.room}")
+    implementation("androidx.room:room-runtime:${Dependencies.room}")
+    implementation("androidx.room:room-ktx:${Dependencies.room}")
+    testImplementation("androidx.room:room-testing:${Dependencies.room}")
+
+    implementation("com.google.android.material:material:${Dependencies.androidx}")
+    implementation("androidx.appcompat:appcompat:${Dependencies.androidx}")
+    implementation("androidx.recyclerview:recyclerview:${Dependencies.androidx}")
+    implementation("androidx.constraintlayout:constraintlayout:${Dependencies.constraintLayout}")
+
+    implementation("com.mikepenz:fastadapter:${Dependencies.fastAdapter}")
+    implementation("com.mikepenz:fastadapter-extensions-binding:${Dependencies.fastAdapter}")
+    implementation("io.cabriole:decorator:${Dependencies.decorator}")
+
+    testImplementation("junit:junit:${Dependencies.junit}")
+    testImplementation("androidx.arch.core:core-testing:${Dependencies.lifecycle}")
+    testImplementation("co.zsmb:rainbow-cake-test:${Dependencies.rainbowCake}")
+    testImplementation("org.koin:koin-test:${Dependencies.koin}")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Dependencies.coroutines}")
+    testImplementation("org.mockito:mockito-inline:${Dependencies.mockito}")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${Dependencies.mockitoKotlin}")
+    androidTestImplementation("org.mockito:mockito-android:${Dependencies.mockito}")
 }

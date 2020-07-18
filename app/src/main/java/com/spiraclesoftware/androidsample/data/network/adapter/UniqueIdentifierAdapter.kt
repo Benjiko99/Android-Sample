@@ -1,10 +1,9 @@
-package com.spiraclesoftware.core.domain
+package com.spiraclesoftware.androidsample.data.network.adapter
 
 import com.google.gson.*
+import com.spiraclesoftware.androidsample.domain.model.UniqueIdentifier
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
-
-data class UniqueIdentifier<T>(val value: T)
 
 /**
  * Serializes only the value of the [UniqueIdentifier].

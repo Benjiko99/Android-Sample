@@ -14,10 +14,10 @@ buildscript {
 
     dependencies {
         classpath("com.android.tools.build:gradle:4.0.1")
-        classpath(kotlin("gradle-plugin", version = Deps.kotlin))
-        classpath("org.jetbrains.kotlin:kotlin-allopen:${Deps.kotlin}")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Deps.navigation}")
-        classpath("org.jmailen.gradle:kotlinter-gradle:${Deps.kotlinter}")
+        classpath(kotlin("gradle-plugin", version = Dependencies.kotlin))
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${Dependencies.kotlin}")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Dependencies.navigation}")
+        classpath("org.jmailen.gradle:kotlinter-gradle:${Dependencies.kotlinter}")
     }
 }
 

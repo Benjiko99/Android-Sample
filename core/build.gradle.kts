@@ -3,28 +3,27 @@ plugins {
     id("kotlin-allopen")
     kotlin("android")
     kotlin("kapt")
-    id("kotlin-android-extensions")
 }
 apply(plugin = "org.jmailen.kotlinter")
 
 android {
-    compileSdkVersion(AppDeps.compileSdk)
+    compileSdkVersion(Application.compileSdk)
 
     defaultConfig {
-        minSdkVersion(AppDeps.minSdk)
-        targetSdkVersion(AppDeps.targetSdk)
-        versionCode = AppDeps.versionCode
-        versionName = AppDeps.versionName
+        minSdkVersion(Application.minSdk)
+        targetSdkVersion(Application.targetSdk)
+        versionCode = Application.versionCode
+        versionName = Application.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
-        sourceCompatibility = AppDeps.sourceCompat
-        targetCompatibility = AppDeps.targetCompat
+        sourceCompatibility = Application.sourceCompat
+        targetCompatibility = Application.targetCompat
     }
 
     kotlinOptions {
-        jvmTarget = AppDeps.targetCompat.toString()
+        jvmTarget = Application.targetCompat.toString()
     }
 
     buildTypes {
@@ -48,31 +47,9 @@ allOpen {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    api(kotlin("stdlib-jdk8", Deps.kotlin))
+    api(kotlin("stdlib-jdk8", Dependencies.kotlin))
 
-    api("co.zsmb:rainbow-cake-core:${Deps.rainbowCake}")
-    api("co.zsmb:rainbow-cake-koin:${Deps.rainbowCake}")
-    api("co.zsmb:rainbow-cake-timber:${Deps.rainbowCake}")
+    api("com.jakewharton:process-phoenix:${Dependencies.processPhoenix}")
 
-    debugApi("com.squareup.leakcanary:leakcanary-android:${Deps.leakCanary}")
-
-    api("com.jakewharton.threetenabp:threetenabp:${Deps.threetenabp}")
-    api("com.jakewharton:process-phoenix:${Deps.processPhoenix}")
-
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Deps.coroutines}")
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Deps.coroutines}")
-
-    api("org.koin:koin-android:${Deps.koin}")
-    api("org.koin:koin-androidx-viewmodel:${Deps.koin}")
-
-    api("com.squareup.okhttp3:okhttp:${Deps.okhttp}")
-    api("com.squareup.okhttp3:logging-interceptor:${Deps.okhttp}")
-
-    api("com.squareup.retrofit2:retrofit:${Deps.retrofit}")
-    api("com.squareup.retrofit2:converter-gson:${Deps.retrofit}")
-
-    api("androidx.appcompat:appcompat:${Deps.androidx}")
-    api("androidx.recyclerview:recyclerview:${Deps.androidx}")
-
-    api("com.google.android.material:material:${Deps.androidx}")
+    implementation("androidx.appcompat:appcompat:${Dependencies.androidx}")
 }

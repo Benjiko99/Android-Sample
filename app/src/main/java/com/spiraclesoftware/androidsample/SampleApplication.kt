@@ -19,7 +19,6 @@ import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.math.MathContext
 
-
 class SampleApplication : Application() {
 
     companion object {

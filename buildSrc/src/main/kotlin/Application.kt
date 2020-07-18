@@ -1,6 +1,6 @@
 import org.gradle.api.JavaVersion
 
-object AppDeps {
+object Application {
 
     const val id = "com.spiraclesoftware.androidsample"
     const val versionCode = 1

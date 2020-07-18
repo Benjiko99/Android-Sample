@@ -1,4 +1,4 @@
-object Deps {
+object Dependencies {
 
     const val kotlinter = "2.4.0"
     const val koin = "2.1.5"
