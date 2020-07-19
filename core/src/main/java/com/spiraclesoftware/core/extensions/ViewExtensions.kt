@@ -2,6 +2,7 @@ package com.spiraclesoftware.core.extensions
 
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 
 //region Margins
 var View.topMargin: Int?
@@ -27,4 +28,14 @@ var View.leftMargin: Int?
     set(marginPx) {
         (layoutParams as? LinearLayout.LayoutParams)?.leftMargin = marginPx
     }
+//endregion
+
+//region TextView
+fun TextView.addPaintFlag(flag: Int) {
+    paintFlags = paintFlags or flag
+}
+
+fun TextView.removePaintFlag(flag: Int) {
+    paintFlags = paintFlags and flag.inv()
+}
 //endregion

@@ -12,9 +12,8 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
-import com.spiraclesoftware.core.extensions.color
-import com.spiraclesoftware.core.extensions.string
-import com.spiraclesoftware.core.extensions.tintedDrawable
+import com.spiraclesoftware.core.extensions.*
+import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 
 class TransactionItem(val transaction: Transaction) : AbstractBindingItem<TransactionListTransactionItemBinding>() {
 
@@ -38,7 +37,9 @@ class TransactionItem(val transaction: Transaction) : AbstractBindingItem<Transa
             binding.amountText = moneyFormat.format(transaction)
 
             if (!TransactionsPolicy.contributesToBalance(transaction)) {
-                binding.amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                binding.amountView.addPaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
+            } else {
+                binding.amountView.removePaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
             }
         }
         bindAmountText()

@@ -22,6 +22,7 @@ import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.LoadFailedEvent
+import com.spiraclesoftware.core.extensions.addPaintFlag
 import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.dpToPx
 import com.spiraclesoftware.core.extensions.tintedDrawable
@@ -68,7 +69,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     private fun bindAmountText(formattedMoney: String, contributesToBalance: Boolean) {
         amountView.text = formattedMoney
         if (!contributesToBalance) {
-            amountView.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            amountView.addPaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
         }
     }
 
