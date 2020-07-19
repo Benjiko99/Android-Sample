@@ -84,6 +84,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:${Dependencies.androidx}")
     implementation("androidx.recyclerview:recyclerview:${Dependencies.androidx}")
     implementation("androidx.constraintlayout:constraintlayout:${Dependencies.constraintLayout}")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:${Dependencies.swipeRefreshLayout}")
 
     implementation("com.mikepenz:fastadapter:${Dependencies.fastAdapter}")
     implementation("com.mikepenz:fastadapter-extensions-binding:${Dependencies.fastAdapter}")

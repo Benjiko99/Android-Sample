@@ -35,7 +35,7 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
     private lateinit var itemAdapter: GenericItemAdapter
 
     override fun render(viewState: TransactionListViewState) {
-        loadingIndicator.isVisible = viewState is Loading
+        swipeRefreshLayout.isRefreshing = viewState is Loading
         errorGroup.isVisible = viewState is NetworkError
         filterSpinner.isEnabled = viewState is ListReady
 
@@ -78,10 +78,6 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
         when (item.itemId) {
             R.id.action_change_language -> {
                 viewModel.showLanguageChangeDialog()
-                return true
-            }
-            R.id.action_refresh -> {
-                viewModel.reload()
                 return true
             }
         }
@@ -143,6 +139,13 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             }
         }
         setupFilterSpinner()
+
+        fun setupSwipeRefreshLayout() {
+            swipeRefreshLayout.scrollUpChild = scrollView
+            swipeRefreshLayout.setProgressViewEndTarget(true, 360)
+            swipeRefreshLayout.setOnRefreshListener { viewModel.reload() }
+        }
+        setupSwipeRefreshLayout()
 
         retryButton.setOnClickListener { viewModel.reload() }
     }

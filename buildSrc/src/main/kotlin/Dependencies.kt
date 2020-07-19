@@ -15,6 +15,7 @@ object Dependencies {
     const val coroutines = "1.3.2"
     const val androidx = "1.1.0"
     const val room = "2.2.5"
+    const val swipeRefreshLayout = "1.1.0"
     const val constraintLayout = "2.0.0-beta6"
     const val navigation = "2.2.2"
     const val lifecycle = "2.1.0"
