@@ -24,11 +24,12 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingLeft="@dimen/edge__margin"
             android:paddingRight="@dimen/edge__margin"
             android:paddingBottom="@dimen/edge__margin">
@@ -103,6 +104,15 @@
                 tools:itemCount="5"
                 tools:layout_marginTop="24dp"
                 tools:listitem="@layout/transaction__detail__card_item" />
+
+            <include
+                android:id="@+id/errorLayout"
+                layout="@layout/error_with_retry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

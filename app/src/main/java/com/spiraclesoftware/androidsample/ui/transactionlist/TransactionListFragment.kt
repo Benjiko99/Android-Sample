@@ -24,7 +24,11 @@ import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListView
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.ShowLanguageChangeDialogEvent
 import com.spiraclesoftware.core.extensions.onItemSelected
 import com.spiraclesoftware.core.extensions.string
+import kotlinx.android.synthetic.main.error_with_retry.view.*
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
+import kotlinx.android.synthetic.main.transaction__list__fragment.recyclerView
+import kotlinx.android.synthetic.main.transaction__list__fragment.scrollView
+import kotlinx.android.synthetic.main.transaction__list__fragment.toolbar
 
 class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, TransactionListViewModel>() {
 
@@ -49,6 +53,7 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             Error -> {
                 recyclerView.isVisible = false
 
+                errorLayout.errorMessageView.text = string(R.string.network_error)
                 itemAdapter.set(emptyList())
             }
         }
@@ -140,12 +145,12 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
 
         fun setupSwipeRefreshLayout() {
             swipeRefreshLayout.scrollUpChild = scrollView
-            swipeRefreshLayout.setProgressViewEndTarget(true, 360)
+            swipeRefreshLayout.setProgressViewOffset(true, 120, 360)
             swipeRefreshLayout.setOnRefreshListener { viewModel.reload() }
         }
         setupSwipeRefreshLayout()
 
-        retryButton.setOnClickListener { viewModel.reload() }
+        errorLayout.retryButton.setOnClickListener { viewModel.reload() }
     }
 
     override fun onDestroyView() {

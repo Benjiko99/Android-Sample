@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,12 +22,12 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
-import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.LoadFailedEvent
 import com.spiraclesoftware.core.extensions.addPaintFlag
 import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.dpToPx
 import com.spiraclesoftware.core.extensions.tintedDrawable
 import io.cabriole.decorator.LinearMarginDecoration
+import kotlinx.android.synthetic.main.error_with_retry.view.*
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 
 class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState, TransactionDetailViewModel>() {
@@ -38,6 +39,8 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     private lateinit var itemAdapter: GenericItemAdapter
 
     override fun render(viewState: TransactionDetailViewState) {
+        errorLayout.isVisible = viewState is Error
+
         when (viewState) {
             is DetailReady -> {
                 itemAdapter.set(viewState.cardItems)
@@ -55,9 +58,6 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         when (event) {
             FeatureNotImplementedEvent -> {
                 Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
-            }
-            LoadFailedEvent -> {
-                Toast.makeText(requireContext(), R.string.unknown_error, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -116,6 +116,8 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
             }
         }
         setupRecyclerView()
+
+        errorLayout.retryButton.setOnClickListener { viewModel.retry() }
     }
 
     override fun onDestroyView() {

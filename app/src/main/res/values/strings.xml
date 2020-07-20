@@ -7,7 +7,7 @@
     <!-- Common -->
     <string name="refresh">Refresh</string>
     <string name="retry">Retry</string>
-    <string name="unknown_error">Unknown error</string>
+    <string name="unknown_error">Something went wrong</string>
     <string name="network_error">Failed to load the data.\nPlease check your connection.</string>
     <string name="not_implemented">Not implemented</string>
 

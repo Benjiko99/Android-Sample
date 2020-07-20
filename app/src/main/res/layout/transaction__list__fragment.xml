@@ -77,38 +77,14 @@
                     tools:itemCount="5"
                     tools:listitem="@layout/transaction__list__transaction_item" />
 
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/errorGroup"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:constraint_referenced_ids="errorMessageView, retryButton"
-                    tools:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/errorMessageView"
-                    android:layout_width="wrap_content"
+                <include
+                    android:id="@+id/errorLayout"
+                    layout="@layout/error_with_retry"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/network_error"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toTopOf="@+id/retryButton"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/filterSpinner"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/retryButton"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/retry"
-                    app:layout_constrainedWidth="true"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/errorMessageView" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

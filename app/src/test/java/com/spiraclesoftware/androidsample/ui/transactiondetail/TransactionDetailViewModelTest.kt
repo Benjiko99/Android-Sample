@@ -10,7 +10,6 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
-import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.LoadFailedEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -78,8 +77,51 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
             vm.loadData(MOCK_TRANSACTION_ID)
+            stateObserver.assertObserved(
+                Loading,
+                Error
+            )
+        }
+    }
 
-            eventsObserver.assertObserved(LoadFailedEvent)
+    @Test
+    fun `Retrying after error loads correctly into ready state`() = runBlockingTest {
+        val contributesToBalance = true
+        val isSuccessful = true
+
+        whenever(detailPresenter.getTransactionById(any())) doReturn MOCK_TRANSACTION
+        whenever(detailPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
+        whenever(detailPresenter.contributesToBalance(any())) doReturn contributesToBalance
+        whenever(detailPresenter.isSuccessful(any())) doReturn isSuccessful
+
+        var invocations = 0
+        whenever(detailPresenter.getTransactionById(any())).thenAnswer {
+            when (invocations++) {
+                0 -> throw IOException()
+                else -> MOCK_TRANSACTION
+            }
+        }
+
+        val vm = TransactionDetailViewModel(detailPresenter)
+
+        vm.observeStateAndEvents { stateObserver, eventsObserver ->
+            vm.loadData(MOCK_TRANSACTION_ID)
+            vm.retry()
+
+            stateObserver.assertObserved(
+                Loading,
+                Error,
+                Loading,
+                DetailReady(
+                    MOCK_TRANSACTION.name,
+                    MOCK_TRANSACTION.processingDate,
+                    MoneyFormat(MOCK_TRANSACTION.signedMoney).format(MOCK_TRANSACTION),
+                    contributesToBalance,
+                    isSuccessful,
+                    MOCK_TRANSACTION.category,
+                    MOCK_CARD_ITEMS
+                )
+            )
         }
     }
 

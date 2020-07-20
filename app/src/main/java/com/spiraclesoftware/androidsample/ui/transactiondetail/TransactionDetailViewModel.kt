@@ -12,7 +12,6 @@ class TransactionDetailViewModel(
 ) : RainbowCakeViewModel<TransactionDetailViewState>(Loading) {
 
     object FeatureNotImplementedEvent : OneShotEvent
-    object LoadFailedEvent : OneShotEvent
 
     private lateinit var transactionId: TransactionId
 
@@ -39,9 +38,13 @@ class TransactionDetailViewModel(
             )
         } catch (e: Exception) {
             Timber.e(e)
-            postEvent(LoadFailedEvent)
+            viewState = Error
             return@execute
         }
+    }
+
+    fun retry() {
+        loadData(transactionId)
     }
 
     fun onCardActionClicked(actionId: Int) {

@@ -7,6 +7,8 @@ sealed class TransactionDetailViewState
 
 object Loading : TransactionDetailViewState()
 
+object Error : TransactionDetailViewState()
+
 data class DetailReady(
     val name: String,
     val processingDate: ZonedDateTime,
