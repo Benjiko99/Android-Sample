@@ -39,11 +39,11 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `Data is loaded correctly from presenter`() = runBlockingTest {
+    fun `Data is loaded correctly from presenter and leads to ready state`() = runBlockingTest {
         val contributesToBalance = true
         val isSuccessful = true
 
-        whenever(detailPresenter.getTransactionById(MOCK_TRANSACTION_ID)) doReturn MOCK_TRANSACTION
+        whenever(detailPresenter.getTransactionById(any())) doReturn MOCK_TRANSACTION
         whenever(detailPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
         whenever(detailPresenter.contributesToBalance(any())) doReturn contributesToBalance
         whenever(detailPresenter.isSuccessful(any())) doReturn isSuccessful
@@ -69,7 +69,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `Data loading exception produces error event`() = runBlockingTest {
+    fun `Presenter error when loading data leads to error state`() = runBlockingTest {
         whenever(detailPresenter.getTransactionById(any())).thenAnswer {
             throw IOException()
         }

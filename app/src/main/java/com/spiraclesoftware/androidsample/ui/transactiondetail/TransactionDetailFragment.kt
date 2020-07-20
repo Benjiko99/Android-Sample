@@ -41,8 +41,6 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
 
     override fun render(viewState: TransactionDetailViewState) {
         when (viewState) {
-            Loading -> {
-            }
             is DetailReady -> {
                 itemAdapter.set(viewState.cardItems)
 
@@ -106,6 +104,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         fun setupFastItemAdapter() {
             itemAdapter = ItemAdapter.items()
             fastAdapter = FastAdapter.with(itemAdapter)
+            // prevent the item's view from being clickable
             fastAdapter.attachDefaultListeners = false
         }
         setupFastItemAdapter()

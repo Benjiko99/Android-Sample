@@ -12,4 +12,4 @@ data class ListReady(
     val listFilter: TransactionListFilter
 ) : TransactionListViewState()
 
-object NetworkError : TransactionListViewState()
+object Error : TransactionListViewState()

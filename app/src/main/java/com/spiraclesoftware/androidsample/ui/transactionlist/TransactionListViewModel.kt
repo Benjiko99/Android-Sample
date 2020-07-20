@@ -20,14 +20,14 @@ class TransactionListViewModel(
         // Since we don't want offline support but do have a local database
         // for the purposes of showcasing storing data in it,
         // we'll simply ignore the cache to get the latest data on startup.
-        execute { loadData(forceFetch = true) }
+        loadData(forceFetch = true)
     }
 
     fun reload() {
-        execute { loadData(forceFetch = true) }
+        loadData(forceFetch = true)
     }
 
-    private suspend fun loadData(forceFetch: Boolean) {
+    private fun loadData(forceFetch: Boolean) = execute {
         viewState = Loading
         viewState = try {
             val transactions = listPresenter.getTransactions(listFilter, forceFetch)
@@ -40,7 +40,7 @@ class TransactionListViewModel(
             )
         } catch (e: Exception) {
             Timber.e(e)
-            NetworkError
+            Error
         }
     }
 

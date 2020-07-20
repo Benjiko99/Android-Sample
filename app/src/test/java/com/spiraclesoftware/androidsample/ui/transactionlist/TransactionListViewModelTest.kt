@@ -24,7 +24,7 @@ class TransactionListViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `Data is loaded correctly from presenter upon creation`() = runBlockingTest {
+    fun `Data is loaded correctly from presenter upon creation and leads to ready state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
         whenever(presenter.getTransactions(any(), any())) doReturn MOCK_TRANSACTIONS
         whenever(presenter.getListItems(any())) doReturn MOCK_LIST_ITEMS
@@ -42,27 +42,27 @@ class TransactionListViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `Presenter error leads to error state upon creation`() = runBlockingTest {
+    fun `Presenter error when loading data leads to error state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
         whenever(presenter.getListItems(any())).thenAnswer {
-            throw IOException("Network error")
+            throw IOException()
         }
 
         val vm = TransactionListViewModel(presenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            stateObserver.assertObserved(NetworkError)
+            stateObserver.assertObserved(Error)
         }
     }
 
     @Test
-    fun `Reload after error can load items correctly`() = runBlockingTest {
+    fun `Retrying after error loads correctly into ready state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
         whenever(presenter.getTransactions(any(), any())).doReturn(MOCK_TRANSACTIONS)
         var invocations = 0
         whenever(presenter.getListItems(any())).thenAnswer {
             when (invocations++) {
-                0 -> throw IOException("Network error")
+                0 -> throw IOException()
                 else -> MOCK_LIST_ITEMS
             }
         }
@@ -73,7 +73,7 @@ class TransactionListViewModelTest : ViewModelTest() {
             vm.reload()
 
             stateObserver.assertObserved(
-                NetworkError,
+                Error,
                 Loading,
                 ListReady(
                     MOCK_LIST_ITEMS,

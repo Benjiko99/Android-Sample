@@ -36,19 +36,17 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
 
     override fun render(viewState: TransactionListViewState) {
         swipeRefreshLayout.isRefreshing = viewState is Loading
-        errorGroup.isVisible = viewState is NetworkError
+        errorLayout.isVisible = viewState is Error
         filterSpinner.isEnabled = viewState is ListReady
 
         when (viewState) {
-            Loading -> {
-            }
             is ListReady -> {
                 recyclerView.isVisible = true
 
                 itemAdapter.set(viewState.listItems)
                 filterSpinner.setSelection(viewState.listFilter.transferDirectionFilter.ordinal)
             }
-            NetworkError -> {
+            Error -> {
                 recyclerView.isVisible = false
 
                 itemAdapter.set(emptyList())
