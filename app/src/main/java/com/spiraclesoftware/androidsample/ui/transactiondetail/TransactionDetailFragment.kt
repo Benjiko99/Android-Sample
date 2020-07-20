@@ -34,8 +34,6 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     override fun provideViewModel() = getViewModelFromFactory()
     override fun getViewResource() = R.layout.transaction__detail__fragment
 
-    private lateinit var transactionId: TransactionId
-
     private lateinit var fastAdapter: GenericFastAdapter
     private lateinit var itemAdapter: GenericItemAdapter
 
@@ -89,10 +87,6 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        TransactionDetailFragmentArgs.fromBundle(requireArguments()).let { args ->
-            transactionId = TransactionId(args.transactionId)
-        }
-
         fun setupToolbar() {
             toolbar.setupWithNavController(findNavController())
             DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
@@ -129,10 +123,15 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         super.onDestroyView()
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (savedInstanceState != null) {
+            return
+        }
 
-        viewModel.loadData(transactionId)
+        TransactionDetailFragmentArgs.fromBundle(requireArguments()).let { args ->
+            viewModel.loadData(TransactionId(args.transactionId))
+        }
     }
 
 }

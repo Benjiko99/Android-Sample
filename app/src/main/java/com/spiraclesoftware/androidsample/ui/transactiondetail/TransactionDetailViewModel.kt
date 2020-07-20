@@ -14,7 +14,12 @@ class TransactionDetailViewModel(
     object FeatureNotImplementedEvent : OneShotEvent
     object LoadFailedEvent : OneShotEvent
 
+    private lateinit var transactionId: TransactionId
+
     fun loadData(transactionId: TransactionId) = execute {
+        this.transactionId = transactionId
+
+        viewState = Loading
         try {
             val transaction = detailPresenter.getTransactionById(transactionId)!!
             val cardItems = detailPresenter.getCardItems(transaction, ::onCardActionClicked)
