@@ -1,3 +1,5 @@
+[![Build Status](https://app.bitrise.io/app/90d86914184610cd/status.svg?token=oQPBvmy8X1D2qFxYUjHi5w&branch=master)](https://app.bitrise.io/app/90d86914184610cd)
+
 Architecture
 -----------------
 The app is written entirely in **Kotlin** and uses the [RainbowCake](https://rainbowcake.dev/) architecture framework.
