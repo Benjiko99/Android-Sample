@@ -125,14 +125,15 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         super.onDestroyView()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (savedInstanceState != null) {
-            return
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        TransactionDetailFragmentArgs.fromBundle(requireArguments()).let { args ->
-            viewModel.loadData(TransactionId(args.transactionId))
+        if (savedInstanceState == null) {
+            TransactionDetailFragmentArgs.fromBundle(requireArguments()).let { args ->
+                viewModel.setTransactionId(TransactionId(args.transactionId))
+            }
+
+            viewModel.loadData()
         }
     }
 

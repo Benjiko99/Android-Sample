@@ -50,7 +50,8 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(detailPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.loadData(MOCK_TRANSACTION_ID)
+            vm.setTransactionId(MOCK_TRANSACTION_ID)
+            vm.loadData()
 
             stateObserver.assertObserved(
                 Loading,
@@ -76,7 +77,8 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(detailPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.loadData(MOCK_TRANSACTION_ID)
+            vm.setTransactionId(MOCK_TRANSACTION_ID)
+            vm.loadData()
             stateObserver.assertObserved(
                 Loading,
                 Error
@@ -105,7 +107,8 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(detailPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.loadData(MOCK_TRANSACTION_ID)
+            vm.setTransactionId(MOCK_TRANSACTION_ID)
+            vm.loadData()
             vm.retry()
 
             stateObserver.assertObserved(

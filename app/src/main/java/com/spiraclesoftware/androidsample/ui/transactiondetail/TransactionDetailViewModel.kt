@@ -15,9 +15,11 @@ class TransactionDetailViewModel(
 
     private lateinit var transactionId: TransactionId
 
-    fun loadData(transactionId: TransactionId) = execute {
-        this.transactionId = transactionId
+    fun setTransactionId(id: TransactionId) {
+        this.transactionId = id
+    }
 
+    fun loadData() = execute {
         viewState = Loading
         try {
             val transaction = detailPresenter.getTransactionById(transactionId)!!
@@ -44,7 +46,7 @@ class TransactionDetailViewModel(
     }
 
     fun retry() {
-        loadData(transactionId)
+        loadData()
     }
 
     fun onCardActionClicked(actionId: Int) {
