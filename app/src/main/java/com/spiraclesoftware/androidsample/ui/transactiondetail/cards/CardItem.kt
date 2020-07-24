@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.ui.transactiondetail
+package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -10,7 +10,6 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.CardItemValuePairBinding
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailCardItemBinding
 import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.Card
 import com.spiraclesoftware.core.extensions.colorAttr
 import com.spiraclesoftware.core.extensions.dimen
 import com.spiraclesoftware.core.extensions.tintedDrawable

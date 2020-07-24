@@ -10,6 +10,8 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardItem
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsPresenter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -32,6 +34,9 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     @Mock
     private lateinit var detailPresenter: TransactionDetailPresenter
 
+    @Mock
+    private lateinit var cardsPresenter: CardsPresenter
+
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
@@ -43,11 +48,11 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val isSuccessful = true
 
         whenever(detailPresenter.getTransactionById(any())) doReturn MOCK_TRANSACTION
-        whenever(detailPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
+        whenever(cardsPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
         whenever(detailPresenter.contributesToBalance(any())) doReturn contributesToBalance
         whenever(detailPresenter.isSuccessful(any())) doReturn isSuccessful
 
-        val vm = TransactionDetailViewModel(detailPresenter)
+        val vm = TransactionDetailViewModel(detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
             vm.setTransactionId(MOCK_TRANSACTION_ID)
@@ -74,7 +79,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             throw IOException()
         }
 
-        val vm = TransactionDetailViewModel(detailPresenter)
+        val vm = TransactionDetailViewModel(detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
             vm.setTransactionId(MOCK_TRANSACTION_ID)
@@ -92,7 +97,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val isSuccessful = true
 
         whenever(detailPresenter.getTransactionById(any())) doReturn MOCK_TRANSACTION
-        whenever(detailPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
+        whenever(cardsPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
         whenever(detailPresenter.contributesToBalance(any())) doReturn contributesToBalance
         whenever(detailPresenter.isSuccessful(any())) doReturn isSuccessful
 
@@ -104,7 +109,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             }
         }
 
-        val vm = TransactionDetailViewModel(detailPresenter)
+        val vm = TransactionDetailViewModel(detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
             vm.setTransactionId(MOCK_TRANSACTION_ID)
@@ -130,7 +135,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
     @Test
     fun `Clicking any card action produces feature not implemented event`() = runBlockingTest {
-        val vm = TransactionDetailViewModel(detailPresenter)
+        val vm = TransactionDetailViewModel(detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
             vm.onCardActionClicked(R.id.card_action__card_detail)

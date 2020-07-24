@@ -1,6 +1,7 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail
 
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardItem
 import org.threeten.bp.ZonedDateTime
 
 sealed class TransactionDetailViewState

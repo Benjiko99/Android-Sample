@@ -5,10 +5,12 @@ import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsPresenter
 import timber.log.Timber
 
 class TransactionDetailViewModel(
-    private val detailPresenter: TransactionDetailPresenter
+    private val detailPresenter: TransactionDetailPresenter,
+    private val cardsPresenter: CardsPresenter
 ) : RainbowCakeViewModel<TransactionDetailViewState>(Loading) {
 
     object FeatureNotImplementedEvent : OneShotEvent
@@ -23,7 +25,7 @@ class TransactionDetailViewModel(
         viewState = Loading
         try {
             val transaction = detailPresenter.getTransactionById(transactionId)!!
-            val cardItems = detailPresenter.getCardItems(transaction, ::onCardActionClicked)
+            val cardItems = cardsPresenter.getCardItems(transaction, ::onCardActionClicked)
             val contributesToBalance = detailPresenter.contributesToBalance(transaction)
             val isSuccessful = detailPresenter.isSuccessful(transaction)
             val formattedMoney = MoneyFormat(transaction.signedMoney).format(transaction)

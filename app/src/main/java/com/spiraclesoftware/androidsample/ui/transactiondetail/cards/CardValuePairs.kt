@@ -3,7 +3,6 @@ package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 import android.content.Context
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.ui.transactiondetail.CardItemData
 import com.spiraclesoftware.core.extensions.drawable
 import com.spiraclesoftware.core.extensions.string
 
