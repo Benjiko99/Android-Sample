@@ -80,6 +80,7 @@ dependencies {
     implementation("androidx.room:room-ktx:${Dependencies.room}")
     testImplementation("androidx.room:room-testing:${Dependencies.room}")
 
+    implementation("androidx.fragment:fragment-ktx:${Dependencies.androidxFragment}")
     implementation("androidx.recyclerview:recyclerview:${Dependencies.androidx}")
     implementation("androidx.constraintlayout:constraintlayout:${Dependencies.constraintLayout}")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:${Dependencies.swipeRefreshLayout}")
@@ -91,6 +92,7 @@ dependencies {
 
     testImplementation("junit:junit:${Dependencies.junit}")
     testImplementation("androidx.arch.core:core-testing:${Dependencies.lifecycle}")
+    testImplementation("androidx.fragment:fragment-testing:${Dependencies.androidxFragment}")
     testImplementation("co.zsmb:rainbow-cake-test:${Dependencies.rainbowCake}")
     testImplementation("org.koin:koin-test:${Dependencies.koin}")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Dependencies.coroutines}")

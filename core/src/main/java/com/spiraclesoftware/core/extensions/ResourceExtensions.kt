@@ -51,6 +51,14 @@ fun Context.string(@StringRes resId: Int, vararg formatArgs: Any): String {
     return getString(resId, *formatArgs)
 }
 
+fun Context.string(@StringRes resId: Int, formatArgs: List<Any>?): String {
+    return if (formatArgs != null) {
+        string(resId, *formatArgs.toTypedArray())
+    } else {
+        string(resId)
+    }
+}
+
 @Px
 fun Context.dimen(@DimenRes resId: Int): Int {
     return resources.getDimensionPixelSize(resId)
@@ -105,6 +113,14 @@ fun Fragment.string(@StringRes resId: Int): String {
 
 fun Fragment.string(@StringRes resId: Int, vararg formatArgs: Any): String {
     return requireContext().string(resId, *formatArgs)
+}
+
+fun Fragment.string(@StringRes resId: Int, formatArgs: List<Any>?): String {
+    return if (formatArgs != null) {
+        string(resId, *formatArgs.toTypedArray())
+    } else {
+        string(resId)
+    }
 }
 
 @Px

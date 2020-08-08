@@ -1,5 +1,8 @@
 package com.spiraclesoftware.androidsample.ui
 
+import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import com.spiraclesoftware.androidsample.ui.textinput.TextInputViewModel
+import com.spiraclesoftware.androidsample.ui.textinput.TextInputType
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailPresenter
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsPresenter
@@ -13,7 +16,11 @@ val uiModule = module {
     viewModel { TransactionListViewModel(get()) }
     factory { TransactionListPresenter(get(), get(), get(), get()) }
 
-    viewModel { TransactionDetailViewModel(get(), get()) }
+    viewModel { (id: TransactionId) -> TransactionDetailViewModel(id, get(), get()) }
     factory { TransactionDetailPresenter(get()) }
     single { CardsPresenter() }
+
+    viewModel { (inputType: TextInputType, requestKey: String, initialValue: String) ->
+        TextInputViewModel(inputType, requestKey, initialValue)
+    }
 }

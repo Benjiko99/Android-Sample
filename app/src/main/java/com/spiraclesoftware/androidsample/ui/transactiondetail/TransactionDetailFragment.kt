@@ -6,12 +6,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeFragment
-import co.zsmb.rainbowcake.koin.getViewModelFromFactory
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericItemAdapter
@@ -21,15 +21,28 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
-import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
+import com.spiraclesoftware.androidsample.ui.textinput.TextInputFragment
+import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.*
 import com.spiraclesoftware.core.extensions.*
 import io.cabriole.decorator.LinearMarginDecoration
 import kotlinx.android.synthetic.main.error_with_retry.view.*
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.core.parameter.parametersOf
 
 class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState, TransactionDetailViewModel>() {
 
-    override fun provideViewModel() = getViewModelFromFactory()
+    companion object {
+        const val NOTE_INPUT_REQUEST_KEY = "noteInputRequest"
+    }
+
+    override fun provideViewModel(): TransactionDetailViewModel {
+        TransactionDetailFragmentArgs.fromBundle(requireArguments()).let { args ->
+            val id = TransactionId(args.transactionId)
+            return getViewModel { parametersOf(id) }
+        }
+    }
+
     override fun getViewResource() = R.layout.transaction__detail__fragment
 
     private lateinit var fastAdapter: GenericFastAdapter
@@ -53,6 +66,12 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
 
     override fun onEvent(event: OneShotEvent) {
         when (event) {
+            is NavigateToNoteInputEvent -> {
+                findNavController().navigate(event.navDirections)
+            }
+            is NotifyOfFailureEvent -> {
+                showToast(event.stringRes, Toast.LENGTH_LONG)
+            }
             FeatureNotImplementedEvent -> {
                 showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
             }
@@ -126,11 +145,12 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            TransactionDetailFragmentArgs.fromBundle(requireArguments()).let { args ->
-                viewModel.setTransactionId(TransactionId(args.transactionId))
-            }
-
             viewModel.loadData()
+        }
+
+        setFragmentResultListener(NOTE_INPUT_REQUEST_KEY) { key, bundle ->
+            val note = bundle.getString(TextInputFragment.RESULT_KEY)
+            viewModel.onNoteChanged(note.orEmpty())
         }
     }
 

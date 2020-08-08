@@ -28,6 +28,28 @@
         <argument
             android:name="transactionId"
             app:argType="integer" />
+        <action
+            android:id="@+id/to_text_input"
+            app:destination="@id/inputFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/inputFragment"
+        android:name="com.spiraclesoftware.androidsample.ui.textinput.TextInputFragment"
+        tools:layout="@layout/text_input__fragment">
+        <argument
+            android:name="strategyType"
+            app:argType="com.spiraclesoftware.androidsample.ui.textinput.TextInputType" />
+        <argument
+            android:name="requestKey"
+            app:argType="string" />
+        <argument
+            android:name="initialValue"
+            app:argType="string" />
     </fragment>
 
 </navigation>

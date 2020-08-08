@@ -9,7 +9,11 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
+import com.spiraclesoftware.androidsample.ui.textinput.TextInputType
+import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
+import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
+import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.NavigateToNoteInputEvent
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardItem
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsPresenter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -52,10 +56,9 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         whenever(detailPresenter.contributesToBalance(any())) doReturn contributesToBalance
         whenever(detailPresenter.isSuccessful(any())) doReturn isSuccessful
 
-        val vm = TransactionDetailViewModel(detailPresenter, cardsPresenter)
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.setTransactionId(MOCK_TRANSACTION_ID)
             vm.loadData()
 
             stateObserver.assertObserved(
@@ -79,10 +82,9 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             throw IOException()
         }
 
-        val vm = TransactionDetailViewModel(detailPresenter, cardsPresenter)
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.setTransactionId(MOCK_TRANSACTION_ID)
             vm.loadData()
             stateObserver.assertObserved(
                 Loading,
@@ -109,10 +111,9 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             }
         }
 
-        val vm = TransactionDetailViewModel(detailPresenter, cardsPresenter)
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.setTransactionId(MOCK_TRANSACTION_ID)
             vm.loadData()
             vm.retry()
 
@@ -134,17 +135,38 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `Clicking any card action produces feature not implemented event`() = runBlockingTest {
-        val vm = TransactionDetailViewModel(detailPresenter, cardsPresenter)
+    fun `Clicking change note card action produces navigate to note input event`() = runBlockingTest {
+        val currentNote = "hello world"
+
+        whenever(detailPresenter.getNote(any())).thenReturn(currentNote)
+
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
+
+        vm.observeStateAndEvents { stateObserver, eventsObserver ->
+            vm.onCardActionClicked(R.id.card_action__change_note)
+
+            val navDirections = toTextInput(
+                TextInputType.NOTE,
+                NOTE_INPUT_REQUEST_KEY,
+                initialValue = currentNote
+            )
+
+            eventsObserver.assertObserved(
+                NavigateToNoteInputEvent(navDirections)
+            )
+        }
+    }
+
+    @Test
+    fun `Clicking unimplemented card actions produces feature not implemented event`() = runBlockingTest {
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
             vm.onCardActionClicked(R.id.card_action__card_detail)
             vm.onCardActionClicked(R.id.card_action__download_statement)
             vm.onCardActionClicked(R.id.card_action__change_category)
-            vm.onCardActionClicked(R.id.card_action__change_note)
 
             eventsObserver.assertObserved(
-                FeatureNotImplementedEvent,
                 FeatureNotImplementedEvent,
                 FeatureNotImplementedEvent,
                 FeatureNotImplementedEvent

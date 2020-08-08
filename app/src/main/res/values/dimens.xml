@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="edge__margin">16dp</dimen>
+    <dimen name="fab__margin">16dp</dimen>
 
     <dimen name="content__spacing__small">8dp</dimen>
     <dimen name="content__spacing__medium">16dp</dimen>

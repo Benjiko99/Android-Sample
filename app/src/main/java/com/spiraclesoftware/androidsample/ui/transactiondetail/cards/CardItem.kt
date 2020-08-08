@@ -68,13 +68,17 @@ class CardItem(
 
             if (data.actionId != null) {
                 val onClick: (View) -> Unit = { actionClickHandler?.invoke(data.actionId) }
-                binding.iconView.setOnClickListener(onClick)
                 binding.valueView.setOnClickListener(onClick)
+                binding.valueView.isClickable = true
 
                 val tintColor = ctx.colorAttr(R.attr.colorPrimaryDark)
                 binding.valueView.setTextColor(tintColor)
                 binding.iconDrawable = data.icon?.tintedDrawable(tintColor)
             } else {
+                binding.valueView.isClickable = false
+
+                val tintColor = ctx.colorAttr(android.R.attr.textColorPrimary)
+                binding.valueView.setTextColor(tintColor)
                 binding.iconDrawable = data.icon
             }
 

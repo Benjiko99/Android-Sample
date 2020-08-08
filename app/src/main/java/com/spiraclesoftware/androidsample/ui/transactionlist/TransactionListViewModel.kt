@@ -12,6 +12,7 @@ class TransactionListViewModel(
 ) : RainbowCakeViewModel<TransactionListViewState>(Loading) {
 
     data class NavigateToDetailEvent(val id: TransactionId) : OneShotEvent
+
     object ShowLanguageChangeDialogEvent : OneShotEvent
 
     private var listFilter = TransactionListFilter(TransferDirectionFilter.ALL)

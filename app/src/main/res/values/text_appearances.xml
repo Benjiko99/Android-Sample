@@ -29,7 +29,7 @@
     </style>
 
     <style name="TextAppearance.DetailItem.Value" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textAllCaps">false</item>
         <item name="fontFamily">sans-serif</item>
     </style>
 

@@ -48,4 +48,12 @@
     <string name="change_language__dialog__confirm">Change</string>
     <string name="change_language__dialog__cancel">Cancel</string>
 
+    <!-- Text Input -->
+    <string name="input__save_changes">Save changes</string>
+
+    <!-- Note Input -->
+    <string name="input__note__title">Edit note</string>
+    <string name="input__note__hint">Note</string>
+    <string name="input__note__error_length_exceeded">Note cannot be longer than %d characters.</string>
+
 </resources>

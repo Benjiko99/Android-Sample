@@ -22,4 +22,13 @@ class TransactionDetailPresenter(
         transactionsInteractor.getTransactionById(id)
     }
 
+    suspend fun getNote(id: TransactionId): String {
+        return getTransactionById(id)?.noteToSelf.orEmpty()
+    }
+
+    suspend fun updateNote(id: TransactionId, note: String) = withIOContext {
+        val noteOrNull = if (note.isBlank()) null else note
+        transactionsInteractor.updateNote(id, noteOrNull)
+    }
+
 }

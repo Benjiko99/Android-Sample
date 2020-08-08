@@ -1,6 +1,7 @@
 package com.spiraclesoftware.core.extensions
 
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import android.widget.TextView
 
@@ -37,5 +38,26 @@ fun TextView.addPaintFlag(flag: Int) {
 
 fun TextView.removePaintFlag(flag: Int) {
     paintFlags = paintFlags and flag.inv()
+}
+//endregion
+
+//region Click Listeners
+fun View.onClick(func: (() -> Unit)?) {
+    setOnClickListener { func?.invoke() }
+}
+
+fun View.onLongClick(func: (() -> Boolean)?) {
+    setOnLongClickListener { func?.invoke() == true }
+}
+//endregion
+
+//region Ime Action Listeners
+fun TextView.onDoneAction(func: () -> Unit) {
+    setOnEditorActionListener { _, actionId, _ ->
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            func()
+            true
+        } else false
+    }
 }
 //endregion

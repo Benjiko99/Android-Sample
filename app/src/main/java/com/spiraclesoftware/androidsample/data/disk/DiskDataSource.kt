@@ -26,4 +26,9 @@ class DiskDataSource(
         return transactionsDao.insertAll(roomItems)
     }
 
+    fun updateTransaction(transaction: Transaction) {
+        val item = transaction.let(Transaction::toRoomEntity)
+        return transactionsDao.update(item)
+    }
+
 }

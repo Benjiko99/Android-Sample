@@ -2,6 +2,7 @@ package com.spiraclesoftware.androidsample.domain.interactor
 
 import com.spiraclesoftware.androidsample.data.disk.DiskDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
+import com.spiraclesoftware.androidsample.data.network.model.TransactionUpdateRequest
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 
@@ -24,6 +25,14 @@ class TransactionsInteractor(
     suspend fun getTransactionById(id: TransactionId): Transaction? {
         val cached = diskDataSource.getTransactionById(id)
         return cached ?: fetchTransactions().run { find { it.id == id } }
+    }
+
+    suspend fun updateNote(id: TransactionId, note: String?) {
+        val request = TransactionUpdateRequest(noteToSelf = note)
+
+        networkDataSource.updateTransaction(id, request).also {
+            diskDataSource.updateTransaction(it)
+        }
     }
 
 }
