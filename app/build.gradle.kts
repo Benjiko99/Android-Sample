@@ -86,6 +86,7 @@ dependencies {
 
     implementation("com.mikepenz:fastadapter:${Dependencies.fastAdapter}")
     implementation("com.mikepenz:fastadapter-extensions-binding:${Dependencies.fastAdapter}")
+    implementation("com.mikepenz:fastadapter-extensions-diff:${Dependencies.fastAdapter}")
     implementation("io.cabriole:decorator:${Dependencies.decorator}")
 
     testImplementation("junit:junit:${Dependencies.junit}")
