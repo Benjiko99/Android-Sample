@@ -30,24 +30,4 @@ class HeaderItem(
         binding.dateText = dateTime.format(DateTimeFormat.PRETTY_DATE)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        if (!super.equals(other)) return false
-
-        other as HeaderItem
-
-        if (dateTime != other.dateTime) return false
-        if (contributionToBalance != other.contributionToBalance) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + dateTime.hashCode()
-        result = 31 * result + contributionToBalance.hashCode()
-        return result
-    }
-
 }

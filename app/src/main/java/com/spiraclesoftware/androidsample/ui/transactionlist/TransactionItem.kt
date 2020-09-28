@@ -13,7 +13,6 @@ import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.core.extensions.*
-import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 
 class TransactionItem(val transaction: Transaction) : AbstractBindingItem<TransactionListTransactionItemBinding>() {
 
@@ -61,24 +60,6 @@ class TransactionItem(val transaction: Transaction) : AbstractBindingItem<Transa
             binding.iconBgDrawable = ctx.tintedDrawable(R.drawable.shp_circle, fadedTint)
         }
         bindCategoryIcon()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        if (!super.equals(other)) return false
-
-        other as TransactionItem
-
-        if (transaction != other.transaction) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + transaction.hashCode()
-        return result
     }
 
 }
