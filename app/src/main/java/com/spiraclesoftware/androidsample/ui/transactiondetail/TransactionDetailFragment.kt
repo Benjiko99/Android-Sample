@@ -22,10 +22,7 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
-import com.spiraclesoftware.core.extensions.addPaintFlag
-import com.spiraclesoftware.core.extensions.color
-import com.spiraclesoftware.core.extensions.dpToPx
-import com.spiraclesoftware.core.extensions.tintedDrawable
+import com.spiraclesoftware.core.extensions.*
 import io.cabriole.decorator.LinearMarginDecoration
 import kotlinx.android.synthetic.main.error_with_retry.view.*
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
@@ -57,7 +54,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     override fun onEvent(event: OneShotEvent) {
         when (event) {
             FeatureNotImplementedEvent -> {
-                Toast.makeText(requireContext(), R.string.not_implemented, Toast.LENGTH_SHORT).show()
+                showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
             }
         }
     }

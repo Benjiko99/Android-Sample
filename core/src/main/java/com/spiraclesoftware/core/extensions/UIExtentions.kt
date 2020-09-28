@@ -3,7 +3,9 @@ package com.spiraclesoftware.core.extensions
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 
 val Toolbar.titleView: TextView?
     get() {
@@ -32,4 +34,12 @@ fun AdapterView<*>.onItemSelected(
         }
 
     }
+}
+
+fun Fragment.showToast(resId: Int, duration: Int) {
+    Toast.makeText(requireContext(), resId, duration).show()
+}
+
+fun Fragment.showToast(text: CharSequence, duration: Int) {
+    Toast.makeText(requireContext(), text, duration).show()
 }
