@@ -80,8 +80,6 @@ dependencies {
     implementation("androidx.room:room-ktx:${Dependencies.room}")
     testImplementation("androidx.room:room-testing:${Dependencies.room}")
 
-    implementation("com.google.android.material:material:${Dependencies.androidx}")
-    implementation("androidx.appcompat:appcompat:${Dependencies.androidx}")
     implementation("androidx.recyclerview:recyclerview:${Dependencies.androidx}")
     implementation("androidx.constraintlayout:constraintlayout:${Dependencies.constraintLayout}")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:${Dependencies.swipeRefreshLayout}")

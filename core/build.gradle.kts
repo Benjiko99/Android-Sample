@@ -51,5 +51,6 @@ dependencies {
 
     api("com.jakewharton:process-phoenix:${Dependencies.processPhoenix}")
 
-    implementation("androidx.appcompat:appcompat:${Dependencies.androidx}")
+    api("com.google.android.material:material:${Dependencies.androidx}")
+    api("androidx.appcompat:appcompat:${Dependencies.androidx}")
 }

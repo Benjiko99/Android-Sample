@@ -6,6 +6,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 
 val Toolbar.titleView: TextView?
     get() {
@@ -42,4 +43,20 @@ fun Fragment.showToast(resId: Int, duration: Int) {
 
 fun Fragment.showToast(text: CharSequence, duration: Int) {
     Toast.makeText(requireContext(), text, duration).show()
+}
+
+fun Fragment.showSnackbar(resId: Int, duration: Int) {
+    makeSnackbar(resId, duration).show()
+}
+
+fun Fragment.showSnackbar(text: CharSequence, duration: Int) {
+    makeSnackbar(text, duration).show()
+}
+
+fun Fragment.makeSnackbar(resId: Int, duration: Int): Snackbar {
+    return Snackbar.make(requireView(), resId, duration)
+}
+
+fun Fragment.makeSnackbar(text: CharSequence, duration: Int): Snackbar {
+    return Snackbar.make(requireView(), text, duration)
 }
