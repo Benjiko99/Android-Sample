@@ -1,8 +1,8 @@
 object Dependencies {
 
     const val kotlinter = "2.4.0"
-    const val koin = "2.1.5"
-    const val rainbowCake = "1.0.0"
+    const val koin = "2.2.0-rc-1"
+    const val rainbowCake = "1.1.0"
     const val threetenabp = "1.2.4"
     const val okhttp = "4.7.2"
     const val retrofit = "2.9.0"
@@ -11,8 +11,8 @@ object Dependencies {
     const val stetho = "1.5.1"
     const val fastAdapter = "5.2.1"
     const val decorator = "1.2.0"
-    const val kotlin = "1.3.72"
-    const val coroutines = "1.3.2"
+    const val kotlin = "1.4.10"
+    const val coroutines = "1.3.9"
     const val androidx = "1.1.0"
     const val androidxFragment = "1.3.0-alpha06"
     const val room = "2.2.5"

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/content__spacing__medium"
+    android:paddingTop="@dimen/content__spacing__small"
+    android:paddingBottom="@dimen/content__spacing__small">
+
+    <ImageView
+        android:id="@+id/iconView"
+        android:layout_width="@dimen/icon__large"
+        android:layout_height="@dimen/icon__large"
+        android:contentDescription="@null"
+        android:padding="7dp"
+        tools:background="@drawable/shp_circle"
+        tools:backgroundTint="#26FF0000"
+        tools:src="@drawable/ic_category_entertainment"
+        tools:tint="#FF0000" />
+
+    <TextView
+        android:id="@+id/nameView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/content__spacing__medium"
+        android:layout_marginRight="@dimen/content__spacing__medium"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.CategorySelect.Name"
+        tools:text="@string/transaction_category__entertainment" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/radioView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:clickable="false" />
+
+</LinearLayout>

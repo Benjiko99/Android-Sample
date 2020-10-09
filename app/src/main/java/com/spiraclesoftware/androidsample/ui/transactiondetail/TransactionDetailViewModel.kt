@@ -8,8 +8,10 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputType
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
+import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toCategorySelect
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsPresenter
+import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 class TransactionDetailViewModel(
@@ -20,63 +22,52 @@ class TransactionDetailViewModel(
 
     data class NavigateToNoteInputEvent(val navDirections: NavDirections) : OneShotEvent
 
+    data class NavigateToCategorySelectEvent(val navDirections: NavDirections) : OneShotEvent
+
     data class NotifyOfFailureEvent(val stringRes: Int) : OneShotEvent
 
     object FeatureNotImplementedEvent : OneShotEvent
 
-    fun loadData() = execute {
-        viewState = Loading
-        try {
-            val transaction = detailPresenter.getTransactionById(transactionId)!!
-            val cardItems = cardsPresenter.getCardItems(transaction, ::onCardActionClicked)
-            val contributesToBalance = detailPresenter.contributesToBalance(transaction)
-            val isSuccessful = detailPresenter.isSuccessful(transaction)
-            val formattedMoney = MoneyFormat(transaction.signedMoney).format(transaction)
-
-            Timber.d("Loaded data for detail; transactionId=$transactionId")
-            viewState = DetailReady(
-                transaction.name,
-                transaction.processingDate,
-                formattedMoney,
-                contributesToBalance,
-                isSuccessful,
-                transaction.category,
-                cardItems
-            )
-        } catch (e: Exception) {
-            Timber.e(e)
-            viewState = Error
-            return@execute
+    init {
+        executeNonBlocking {
+            collectTransaction()
         }
     }
 
-    fun retry() {
-        loadData()
-    }
+    suspend fun collectTransaction() =
+        detailPresenter.flowTransactionById(transactionId).collect { transaction ->
+            viewState = try {
+                val cardItems = cardsPresenter.getCardItems(transaction!!, ::onCardActionClicked)
+                val contributesToBalance = detailPresenter.contributesToBalance(transaction)
+                val isSuccessful = detailPresenter.isSuccessful(transaction)
+                val formattedMoney = MoneyFormat(transaction.signedMoney).format(transaction)
+
+                DetailReady(
+                    transaction.name,
+                    transaction.processingDate,
+                    formattedMoney,
+                    contributesToBalance,
+                    isSuccessful,
+                    transaction.category,
+                    cardItems
+                )
+            } catch (e: Exception) {
+                Timber.e(e)
+                Error
+            }
+        }
 
     fun onNoteChanged(note: String) = executeNonBlocking {
         try {
-            updateNote(note)
-
-            // get updated card items, with new note in them
-            val transaction = detailPresenter.getTransactionById(transactionId)!!
-            val cardItems = cardsPresenter.getCardItems(transaction, ::onCardActionClicked)
-
-            viewState = (viewState as? DetailReady)?.copy(
-                cardItems = cardItems
-            ) ?: viewState
+            detailPresenter.updateNote(transactionId, note)
+            Timber.d("Note changed to \"$note\"")
         } catch (e: Exception) {
-            Timber.e(e, "Failure while trying to change note")
+            Timber.e(e)
             postEvent(NotifyOfFailureEvent(R.string.unknown_error))
         }
     }
 
-    private suspend fun updateNote(note: String) {
-        detailPresenter.updateNote(transactionId, note)
-        Timber.d("Note was changed to \"$note\"")
-    }
-
-    private suspend fun openNoteInput() {
+    private fun openNoteInput() = execute {
         val navDirections = toTextInput(
             TextInputType.NOTE,
             NOTE_INPUT_REQUEST_KEY,
@@ -84,17 +75,25 @@ class TransactionDetailViewModel(
         )
 
         postEvent(NavigateToNoteInputEvent(navDirections))
-        Timber.d("User navigated to Note Input")
+        Timber.d("Navigating to Note Input")
+    }
+
+    private fun openCategorySelect() = execute {
+        val navDirections = toCategorySelect(
+            transactionId.value,
+            initialCategory = detailPresenter.getCategory(transactionId)!!
+        )
+        postEvent(NavigateToCategorySelectEvent(navDirections))
+        Timber.d("Navigating to Category Select")
     }
 
     fun onCardActionClicked(actionId: Int) {
         when (actionId) {
-            R.id.card_action__change_note -> execute { openNoteInput() }
+            R.id.card_action__change_note -> openNoteInput()
+            R.id.card_action__change_category -> openCategorySelect()
             R.id.card_action__card_detail,
-            R.id.card_action__download_statement,
-            R.id.card_action__change_category -> {
+            R.id.card_action__download_statement -> {
                 postEvent(FeatureNotImplementedEvent)
-                Timber.d("User clicked on an unimplemented card action")
             }
         }
     }

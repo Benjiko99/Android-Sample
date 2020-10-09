@@ -42,6 +42,11 @@
     <string name="transaction__detail__note__add">Add note</string>
     <string name="transaction__detail__category">Category</string>
 
+    <!-- Category Select -->
+    <string name="category__select__title">Select category</string>
+    <string name="category__select__progress_processing">Processing…</string>
+    <string name="category__select__progress_success">Category changed</string>
+
     <!-- Change language dialog -->
     <string name="change_language">Change language</string>
     <string name="change_language__dialog__message">Change language to czech?</string>

@@ -10,8 +10,10 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.applyFilter
 import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.core.utils.LanguageManager
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import org.threeten.bp.ZonedDateTime
-import org.threeten.bp.temporal.ChronoUnit
+import org.threeten.bp.temporal.ChronoUnit.DAYS
 
 class TransactionListPresenter(
     private val languageManager: LanguageManager,
@@ -28,29 +30,27 @@ class TransactionListPresenter(
         accountsInteractor.getAccount()
     }
 
-    suspend fun getTransactions(
-        filter: TransactionListFilter,
-        forceFetch: Boolean = false
-    ): List<Transaction> = withIOContext {
-        val transactions = if (forceFetch)
-            transactionsInteractor.fetchTransactions()
-        else
-            transactionsInteractor.getTransactions()
-
-        transactions.applyFilter(filter)
+    suspend fun fetchTransactions() = withIOContext {
+        transactionsInteractor.fetchTransactions()
     }
 
-    suspend fun getListItems(
-        transactions: List<Transaction>
-    ): List<GenericItem> = withIOContext {
-        transactions
+    fun flowFilteredTransactions(
+        listFilter: Flow<TransactionListFilter>
+    ) = transactionsInteractor
+        .flowTransactions()
+        .combine(listFilter) { list, filter ->
+            list.applyFilter(filter)
+        }
+
+    suspend fun getListItems(transactions: List<Transaction>): List<GenericItem> {
+        return transactions
             .sortAndGroupByDay()
             .toListItems()
     }
 
     private fun List<Transaction>.sortAndGroupByDay() =
         this.sortedByDescending { it.processingDate }
-            .groupBy { it.processingDate.truncatedTo(ChronoUnit.DAYS) }
+            .groupBy { it.processingDate.truncatedTo(DAYS) }
 
     private suspend fun Map<ZonedDateTime, List<Transaction>>.toListItems(): List<GenericItem> {
         val listItems = arrayListOf<GenericItem>()

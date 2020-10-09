@@ -16,6 +16,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
@@ -29,7 +30,9 @@ import kotlinx.android.synthetic.main.transaction__list__fragment.*
 import kotlinx.android.synthetic.main.transaction__list__fragment.recyclerView
 import kotlinx.android.synthetic.main.transaction__list__fragment.scrollView
 import kotlinx.android.synthetic.main.transaction__list__fragment.toolbar
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, TransactionListViewModel>() {
 
     override fun provideViewModel() = getViewModelFromFactory()
@@ -47,8 +50,8 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             is ListReady -> {
                 recyclerView.isVisible = true
 
-                itemAdapter.set(viewState.listItems)
-                filterSpinner.setSelection(viewState.listFilter.transferDirectionFilter.ordinal)
+                FastAdapterDiffUtil[itemAdapter] = viewState.listItems
+                filterSpinner.setSelection(viewState.listFilter.directionFilter.ordinal)
             }
             Error -> {
                 recyclerView.isVisible = false
@@ -103,7 +106,9 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
 
         fun setupFastItemAdapter() {
             itemAdapter = ItemAdapter.items()
-            fastAdapter = FastAdapter.with(itemAdapter)
+            fastAdapter = FastAdapter.with(itemAdapter).apply {
+                setHasStableIds(true)
+            }
             fastAdapter.onClickListener = { _, _, item, _ ->
                 when (item) {
                     is TransactionItem -> {
@@ -120,7 +125,6 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = fastAdapter
-                itemAnimator = null
             }
         }
         setupRecyclerView()

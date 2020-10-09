@@ -34,7 +34,7 @@ class CardItem(
     private val transaction: Transaction
 ) : AbstractBindingItem<TransactionDetailCardItemBinding>() {
 
-    private lateinit var itemBinding: TransactionDetailCardItemBinding
+    override val type = R.id.transaction__detail__card_item
 
     private var actionClickHandler: ((Int) -> Unit)? = null
 
@@ -42,50 +42,42 @@ class CardItem(
         actionClickHandler = func
     }
 
-    override val type: Int
-        get() = R.id.transaction__detail__card_item
-
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?): TransactionDetailCardItemBinding {
         return TransactionDetailCardItemBinding.inflate(inflater, parent, false)
     }
 
     override fun bindView(binding: TransactionDetailCardItemBinding, payloads: List<Any>) {
-        itemBinding = binding
-        inflateValuePairs()
-    }
-
-    private fun inflateValuePairs() {
-        val ctx = itemBinding.root.context
-        itemBinding.content.removeAllViews()
+        val ctx = binding.root.context
+        binding.content.removeAllViews()
 
         val itemData = card.toItemData(ctx, transaction)
         itemData.forEachIndexed { index, data ->
-            val binding = CardItemValuePairBinding.inflate(LayoutInflater.from(ctx), itemBinding.content, false)
+            val pb = CardItemValuePairBinding.inflate(LayoutInflater.from(ctx), binding.content, false)
 
-            binding.labelText = data.label
-            binding.valueText = data.value
-            binding.bodyText = data.body
+            pb.labelText = data.label
+            pb.valueText = data.value
+            pb.bodyText = data.body
 
             if (data.actionId != null) {
                 val onClick: (View) -> Unit = { actionClickHandler?.invoke(data.actionId) }
-                binding.valueView.setOnClickListener(onClick)
-                binding.valueView.isClickable = true
+                pb.valueView.setOnClickListener(onClick)
+                pb.valueView.isClickable = true
 
                 val tintColor = ctx.colorAttr(R.attr.colorPrimaryDark)
-                binding.valueView.setTextColor(tintColor)
-                binding.iconDrawable = data.icon?.tintedDrawable(tintColor)
+                pb.valueView.setTextColor(tintColor)
+                pb.iconDrawable = data.icon?.tintedDrawable(tintColor)
             } else {
-                binding.valueView.isClickable = false
+                pb.valueView.isClickable = false
 
                 val tintColor = ctx.colorAttr(android.R.attr.textColorPrimary)
-                binding.valueView.setTextColor(tintColor)
-                binding.iconDrawable = data.icon
+                pb.valueView.setTextColor(tintColor)
+                pb.iconDrawable = data.icon
             }
 
             // Add a margin between value-pairs
-            if (index > 0) binding.root.topMargin = ctx.dimen(R.dimen.content__spacing__medium)
+            if (index > 0) pb.root.topMargin = ctx.dimen(R.dimen.content__spacing__medium)
 
-            itemBinding.content.addView(binding.root)
+            binding.content.addView(pb.root)
         }
     }
 

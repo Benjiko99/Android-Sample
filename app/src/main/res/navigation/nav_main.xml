@@ -35,6 +35,13 @@
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/to_category_select"
+            app:destination="@id/categorySelectFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
     </fragment>
 
     <fragment
@@ -50,6 +57,19 @@
         <argument
             android:name="initialValue"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categorySelectFragment"
+        android:name="com.spiraclesoftware.androidsample.ui.categoryselect.CategorySelectFragment"
+        android:label="@string/category__select__title"
+        tools:layout="@layout/category__select__fragment">
+        <argument
+            android:name="transactionId"
+            app:argType="integer" />
+        <argument
+            android:name="initialCategory"
+            app:argType="com.spiraclesoftware.androidsample.domain.model.TransactionCategory" />
     </fragment>
 
 </navigation>

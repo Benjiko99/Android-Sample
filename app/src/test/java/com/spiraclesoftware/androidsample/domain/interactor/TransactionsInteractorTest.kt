@@ -9,6 +9,8 @@ import com.spiraclesoftware.androidsample.data.disk.DiskDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
@@ -38,35 +40,12 @@ class TransactionsInteractorTest {
 
     @Test
     fun `Transactions are loaded correctly from disk`() = runBlockingTest {
-        whenever(diskDataSource.getTransactions()) doReturn MOCK_TRANSACTIONS
+        whenever(diskDataSource.flowTransactions()) doReturn flowOf(MOCK_TRANSACTIONS)
 
         val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
-        val transactions = interactor.getTransactions()
-        assertEquals(MOCK_TRANSACTIONS, transactions)
-    }
-
-    @Test
-    fun `Transactions are loaded correctly from network`() = runBlockingTest {
-        whenever(diskDataSource.getTransactions()) doReturn emptyList()
-        whenever(networkDataSource.fetchTransactions()) doReturn MOCK_TRANSACTIONS
-
-        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
-
-        val transactions = interactor.getTransactions()
-        assertEquals(MOCK_TRANSACTIONS, transactions)
-    }
-
-    @Test
-    fun `Transactions are loaded from network if cache is empty`() = runBlockingTest {
-        whenever(diskDataSource.getTransactions()) doReturn emptyList()
-        whenever(networkDataSource.fetchTransactions()) doReturn MOCK_TRANSACTIONS
-
-        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
-
-        interactor.getTransactions()
-
-        verify(networkDataSource).fetchTransactions()
+        val transactions = interactor.flowTransactions()
+        assertEquals(MOCK_TRANSACTIONS, transactions.single())
     }
 
     @Test
@@ -117,7 +96,6 @@ class TransactionsInteractorTest {
         assertEquals(MOCK_TRANSACTION, transaction)
 
         verify(networkDataSource).fetchTransactions()
-        verify(diskDataSource, Times(0)).getTransactions()
     }
 
     @Test

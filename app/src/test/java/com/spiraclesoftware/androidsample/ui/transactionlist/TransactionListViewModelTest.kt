@@ -10,7 +10,11 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.ALL
+import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel
+import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModelTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 import java.io.IOException
@@ -26,7 +30,7 @@ class TransactionListViewModelTest : ViewModelTest() {
     @Test
     fun `Data is loaded correctly from presenter upon creation and leads to ready state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
-        whenever(presenter.getTransactions(any(), any())) doReturn MOCK_TRANSACTIONS
+        whenever(presenter.flowFilteredTransactions(any())) doReturn flowOf(MOCK_TRANSACTIONS)
         whenever(presenter.getListItems(any())) doReturn MOCK_LIST_ITEMS
 
         val vm = TransactionListViewModel(presenter)
@@ -44,21 +48,25 @@ class TransactionListViewModelTest : ViewModelTest() {
     @Test
     fun `Presenter error when loading data leads to error state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
-        whenever(presenter.getListItems(any())).thenAnswer {
-            throw IOException()
-        }
+        whenever(presenter.flowFilteredTransactions(any())).thenReturn(flowOf(MOCK_TRANSACTIONS))
+        whenever(presenter.getListItems(any())).thenThrow()
 
         val vm = TransactionListViewModel(presenter)
 
-        vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            stateObserver.assertObserved(Error)
+        vm.observeStateAndEvents { stateObserver, _ ->
+            launch {
+                vm.collectTransactions()
+                stateObserver.assertObserved(
+                    Error
+                )
+            }
         }
     }
 
     @Test
     fun `Retrying after error loads correctly into ready state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
-        whenever(presenter.getTransactions(any(), any())).doReturn(MOCK_TRANSACTIONS)
+        whenever(presenter.flowFilteredTransactions(any())) doReturn flowOf(MOCK_TRANSACTIONS)
         var invocations = 0
         whenever(presenter.getListItems(any())).thenAnswer {
             when (invocations++) {
@@ -70,16 +78,19 @@ class TransactionListViewModelTest : ViewModelTest() {
         val vm = TransactionListViewModel(presenter)
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.reload()
+            launch {
+                vm.collectTransactions()
+                vm.reload()
 
-            stateObserver.assertObserved(
-                Error,
-                Loading,
-                ListReady(
-                    MOCK_LIST_ITEMS,
-                    TransactionListFilter(ALL)
+                stateObserver.assertObserved(
+                    Error,
+                    ListReady(
+                        MOCK_LIST_ITEMS,
+                        TransactionListFilter(ALL)
+                    ),
+                    Loading
                 )
-            )
+            }
         }
     }
 

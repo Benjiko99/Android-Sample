@@ -27,7 +27,7 @@ class TextInputViewModel(
         val sanitizedInput = strategy.sanitizeInput(input)
 
         if (validateInput(sanitizedInput)) {
-            sendInputToCaller(sanitizedInput)
+            sendResultToCaller(sanitizedInput)
         }
     }
 
@@ -50,7 +50,7 @@ class TextInputViewModel(
         ) ?: viewState
     }
 
-    private fun sendInputToCaller(input: String) {
+    private fun sendResultToCaller(input: String) {
         postEvent(SendResultToCallerAndExitEvent(requestKey, input))
     }
 

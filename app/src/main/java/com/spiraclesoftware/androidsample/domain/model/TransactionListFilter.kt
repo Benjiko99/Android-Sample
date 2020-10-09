@@ -1,11 +1,11 @@
 package com.spiraclesoftware.androidsample.domain.model
 
 data class TransactionListFilter(
-    val transferDirectionFilter: TransferDirectionFilter
+    val directionFilter: TransferDirectionFilter
 )
 
 fun List<Transaction>.applyFilter(filter: TransactionListFilter): List<Transaction> {
-    return if (filter.transferDirectionFilter != TransferDirectionFilter.ALL) {
-        filter { filter.transferDirectionFilter.mapsTo(it.transferDirection) }
+    return if (filter.directionFilter != TransferDirectionFilter.ALL) {
+        filter { filter.directionFilter.mapsTo(it.transferDirection) }
     } else this
 }

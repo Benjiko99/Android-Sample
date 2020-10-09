@@ -11,28 +11,25 @@ class TransactionsInteractor(
     private val diskDataSource: DiskDataSource
 ) {
 
-    suspend fun fetchTransactions(): List<Transaction> {
-        return networkDataSource.fetchTransactions().also {
+    suspend fun fetchTransactions() =
+        networkDataSource.fetchTransactions().also {
             diskDataSource.saveTransactions(it)
         }
-    }
 
-    suspend fun getTransactions(): List<Transaction> {
-        val cached = diskDataSource.getTransactions()
-        return if (cached.isNotEmpty()) cached else fetchTransactions()
-    }
+    fun flowTransactions() =
+        diskDataSource.flowTransactions()
 
     suspend fun getTransactionById(id: TransactionId): Transaction? {
         val cached = diskDataSource.getTransactionById(id)
         return cached ?: fetchTransactions().run { find { it.id == id } }
     }
 
-    suspend fun updateNote(id: TransactionId, note: String?) {
-        val request = TransactionUpdateRequest(noteToSelf = note)
+    fun flowTransactionById(id: TransactionId) =
+        diskDataSource.flowTransactionById(id)
 
+    suspend fun updateTransaction(id: TransactionId, request: TransactionUpdateRequest) =
         networkDataSource.updateTransaction(id, request).also {
             diskDataSource.updateTransaction(it)
         }
-    }
 
 }

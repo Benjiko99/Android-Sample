@@ -25,7 +25,6 @@ import com.spiraclesoftware.androidsample.ui.textinput.TextInputFragment
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.*
 import com.spiraclesoftware.core.extensions.*
 import io.cabriole.decorator.LinearMarginDecoration
-import kotlinx.android.synthetic.main.error_with_retry.view.*
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -49,7 +48,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     private lateinit var itemAdapter: GenericItemAdapter
 
     override fun render(viewState: TransactionDetailViewState) {
-        errorLayout.isVisible = viewState is Error
+        errorMessageView.isVisible = viewState is Error
 
         when (viewState) {
             is DetailReady -> {
@@ -67,6 +66,9 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     override fun onEvent(event: OneShotEvent) {
         when (event) {
             is NavigateToNoteInputEvent -> {
+                findNavController().navigate(event.navDirections)
+            }
+            is NavigateToCategorySelectEvent -> {
                 findNavController().navigate(event.navDirections)
             }
             is NotifyOfFailureEvent -> {
@@ -132,8 +134,6 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
             }
         }
         setupRecyclerView()
-
-        errorLayout.retryButton.setOnClickListener { viewModel.retry() }
     }
 
     override fun onDestroyView() {
@@ -143,10 +143,6 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (savedInstanceState == null) {
-            viewModel.loadData()
-        }
 
         setFragmentResultListener(NOTE_INPUT_REQUEST_KEY) { key, bundle ->
             val note = bundle.getString(TextInputFragment.RESULT_KEY)

@@ -33,6 +33,9 @@
         <item name="fontFamily">sans-serif</item>
     </style>
 
+    <style name="TextAppearance.CategorySelect.Name" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">sans-serif</item>
+    </style>
 
     <style name="TextAppearance.EmptyState.Caption" parent="TextAppearance.MaterialComponents.Headline6" />
 

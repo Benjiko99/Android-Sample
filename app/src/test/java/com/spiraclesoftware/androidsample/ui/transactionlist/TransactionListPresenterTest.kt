@@ -3,16 +3,11 @@ package com.spiraclesoftware.androidsample.ui.transactionlist
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
-import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.ALL
-import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.INCOMING_ONLY
-import com.spiraclesoftware.androidsample.domain.model.applyFilter
 import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.androidsample.money
 import com.spiraclesoftware.core.utils.LanguageManager
@@ -64,37 +59,6 @@ class TransactionListPresenterTest : PresenterTest() {
         val account = presenter.getAccount()
 
         assertEquals(MOCK_ACCOUNT, account)
-    }
-
-    @Test
-    fun `All transactions are returned from interactor`() = runBlockingTest {
-        whenever(transactionsInteractor.getTransactions()) doReturn MOCK_TRANSACTIONS
-
-        val filter = TransactionListFilter(ALL)
-        val transactions = presenter.getTransactions(filter)
-
-        assertEquals(MOCK_TRANSACTIONS, transactions)
-    }
-
-    @Test
-    fun `Filtered transactions are returned from interactor`() = runBlockingTest {
-        whenever(transactionsInteractor.getTransactions()) doReturn MOCK_TRANSACTIONS
-
-        val filter = TransactionListFilter(INCOMING_ONLY)
-        val transactions = presenter.getTransactions(filter)
-
-        assertEquals(MOCK_TRANSACTIONS.applyFilter(filter), transactions)
-    }
-
-    @Test
-    fun `Transactions are returned from network when force fetching them`() = runBlockingTest {
-        whenever(transactionsInteractor.fetchTransactions()) doReturn MOCK_TRANSACTIONS
-
-        val filter = TransactionListFilter(ALL)
-        val transactions = presenter.getTransactions(filter, forceFetch = true)
-
-        verify(transactionsInteractor).fetchTransactions()
-        assertEquals(MOCK_TRANSACTIONS, transactions)
     }
 
     @Test

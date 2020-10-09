@@ -1,40 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
-    <data>
-
-        <variable
-            name="amountText"
-            type="String" />
-
-        <variable
-            name="nameText"
-            type="String" />
-
-        <variable
-            name="dateText"
-            type="String" />
-
-        <variable
-            name="statusText"
-            type="String" />
-
-        <variable
-            name="iconDrawable"
-            type="android.graphics.drawable.Drawable" />
-
-        <variable
-            name="iconBgDrawable"
-            type="android.graphics.drawable.Drawable" />
-
-    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
         android:paddingLeft="@dimen/content__spacing__medium"
         android:paddingTop="12dp"
         android:paddingRight="@dimen/content__spacing__medium"
@@ -44,9 +24,7 @@
             android:id="@+id/iconView"
             android:layout_width="@dimen/icon__large"
             android:layout_height="@dimen/icon__large"
-            android:background="@{iconBgDrawable}"
             android:padding="7dp"
-            android:src="@{iconDrawable}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@drawable/shp_circle"
@@ -62,7 +40,6 @@
             android:layout_marginRight="@dimen/content__spacing__small"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text='@{nameText}'
             android:textAppearance="@style/TextAppearance.Transaction.Name"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toTopOf="@id/dateView"
@@ -81,7 +58,6 @@
             android:layout_marginRight="@dimen/content__spacing__small"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text='@{dateText}'
             android:textAppearance="@style/TextAppearance.Transaction.Date"
             app:layout_constraintBottom_toTopOf="@id/statusView"
             app:layout_constraintHorizontal_bias="0"
@@ -96,9 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_marginRight="@dimen/content__spacing__small"
-            android:text='@{statusText}'
             android:textAppearance="@style/TextAppearance.Transaction.Date"
-            app:goneUnless="@{statusText != null}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toLeftOf="@id/dateView"
@@ -110,11 +84,10 @@
             android:id="@+id/amountView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{amountText}'
             android:textAppearance="@style/TextAppearance.Transaction.Amount"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="- $49.99" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</FrameLayout>

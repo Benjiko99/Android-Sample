@@ -24,9 +24,17 @@ class NetworkDataSource(
         // NOTE: We don't have a backend for this feature yet, pretend we got a successful response
         val diskDataSource = inject(DiskDataSource::class.java).value
         val transaction = diskDataSource.getTransactionById(id)
-        return transaction!!.copy(noteToSelf = request.noteToSelf)
 
-        // TODO: Once we have a backend, use this code
+        return when {
+            request.noteToSelf != null -> {
+                val noteOrNull = if (request.noteToSelf.isBlank()) null else request.noteToSelf
+                transaction!!.copy(noteToSelf = noteOrNull)
+            }
+            request.category != null -> transaction!!.copy(category = request.category)
+            else -> transaction!!
+        }
+
+        // TODO: Once we have a backend, use this code, and make the note nullable
         //return mainApi.updateTransaction(id.value, request)
     }
 

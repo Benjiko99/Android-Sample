@@ -41,6 +41,11 @@
     <string name="transaction__detail__note__add">Přidat poznámku</string>
     <string name="transaction__detail__category">Kategorie</string>
 
+    <!-- Category Select -->
+    <string name="category__select__title">Vyberte kategorii</string>
+    <string name="category__select__progress_processing">Zpracovává se…</string>
+    <string name="category__select__progress_success">Kategorie změněna</string>
+
     <!-- Change language dialog -->
     <string name="change_language">Změnit jazyk</string>
     <string name="change_language__dialog__message">Změnit jazyk na angličtinu?</string>

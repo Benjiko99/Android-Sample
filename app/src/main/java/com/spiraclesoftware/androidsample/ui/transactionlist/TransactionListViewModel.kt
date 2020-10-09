@@ -5,8 +5,13 @@ import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
+import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.ALL
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
+@ExperimentalCoroutinesApi
 class TransactionListViewModel(
     private val listPresenter: TransactionListPresenter
 ) : RainbowCakeViewModel<TransactionListViewState>(Loading) {
@@ -15,33 +20,40 @@ class TransactionListViewModel(
 
     object ShowLanguageChangeDialogEvent : OneShotEvent
 
-    private var listFilter = TransactionListFilter(TransferDirectionFilter.ALL)
+    private var listFilterFlow = MutableStateFlow(TransactionListFilter(ALL))
 
     init {
-        // Since we don't want offline support but do have a local database
-        // for the purposes of showcasing storing data in it,
-        // we'll simply ignore the cache to get the latest data on startup.
-        loadData(forceFetch = true)
+        executeNonBlocking {
+            try {
+                listPresenter.fetchTransactions()
+            } catch (e: Exception) {
+                Timber.e(e)
+                Error
+            }
+            collectTransactions()
+        }
     }
 
-    fun reload() {
-        loadData(forceFetch = true)
-    }
+    suspend fun collectTransactions() =
+        listPresenter.flowFilteredTransactions(listFilterFlow).collect { transactions ->
+            viewState = try {
+                ListReady(
+                    listItems = listPresenter.getListItems(transactions).also { Timber.d("listItems: $it") },
+                    listFilter = listFilterFlow.value
+                )
+            } catch (e: Exception) {
+                Timber.e(e)
+                Error
+            }
+        }
 
-    private fun loadData(forceFetch: Boolean) = execute {
-        viewState = Loading
-        viewState = try {
-            val transactions = listPresenter.getTransactions(listFilter, forceFetch)
-            val listItems = listPresenter.getListItems(transactions)
-
-            Timber.d("Loaded data for list of transactions; forceFetch=$forceFetch")
-            ListReady(
-                listItems,
-                listFilter
-            )
+    fun reload() = executeNonBlocking {
+        try {
+            viewState = Loading
+            listPresenter.fetchTransactions()
         } catch (e: Exception) {
             Timber.e(e)
-            Error
+            viewState = Error
         }
     }
 
@@ -55,28 +67,12 @@ class TransactionListViewModel(
 
     fun onListItemClicked(id: TransactionId) {
         postEvent(NavigateToDetailEvent(id))
+        Timber.d("Navigating to Transaction Detail: id=$id")
     }
 
-    fun setTransferDirectionFilter(directionFilter: TransferDirectionFilter) {
-        if (listFilter.transferDirectionFilter != directionFilter) {
-            listFilter = listFilter.copy(transferDirectionFilter = directionFilter)
-
-            updateListFilter()
-        }
-    }
-
-    /** Updates the [viewState] with list items that are using the latest filter. **/
-    private fun updateListFilter() {
-        execute {
-            val transactions = listPresenter.getTransactions(listFilter)
-            val listItems = listPresenter.getListItems(transactions)
-
-            (viewState as? ListReady)?.let {
-                viewState = it.copy(
-                    listItems = listItems,
-                    listFilter = listFilter
-                )
-            }
+    fun setTransferDirectionFilter(directionFilter: TransferDirectionFilter) = execute {
+        if (listFilterFlow.value.directionFilter != directionFilter) {
+            listFilterFlow.value = listFilterFlow.value.copy(directionFilter = directionFilter)
         }
     }
 

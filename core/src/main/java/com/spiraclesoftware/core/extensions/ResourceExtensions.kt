@@ -59,6 +59,10 @@ fun Context.string(@StringRes resId: Int, formatArgs: List<Any>?): String {
     }
 }
 
+fun Context.stringOrNull(@StringRes resId: Int?): String? {
+    return if (resId != null) string(resId) else null
+}
+
 @Px
 fun Context.dimen(@DimenRes resId: Int): Int {
     return resources.getDimensionPixelSize(resId)

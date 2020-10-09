@@ -1,65 +1,97 @@
 package com.spiraclesoftware.androidsample.ui.transactionlist
 
 import android.graphics.Paint
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
 import androidx.core.graphics.ColorUtils
-import com.mikepenz.fastadapter.binding.AbstractBindingItem
+import androidx.core.view.isGone
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.items.AbstractItem
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.databinding.TransactionListTransactionItemBinding
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.core.extensions.*
+import kotlinx.android.synthetic.main.transaction__list__transaction_item.view.*
 
-class TransactionItem(val transaction: Transaction) : AbstractBindingItem<TransactionListTransactionItemBinding>() {
+class TransactionItem(val transaction: Transaction) : AbstractItem<TransactionItem.ViewHolder>() {
 
-    override val type: Int
-        get() = R.id.transaction__list__transaction_item
+    override var identifier: Long = transaction.id.value.toLong()
 
-    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?): TransactionListTransactionItemBinding {
-        return TransactionListTransactionItemBinding.inflate(inflater, parent, false)
+    override val type = R.id.transaction__list__transaction_item
+
+    override val layoutRes = R.layout.transaction__list__transaction_item
+
+    override fun getViewHolder(v: View) = ViewHolder(v)
+
+    class ViewHolder(val view: View) : FastAdapter.ViewHolder<TransactionItem>(view) {
+
+        override fun bindView(item: TransactionItem, payloads: List<Any>) {
+            val ctx = view.context
+            val transaction = item.transaction
+            view.nameView.text = transaction.name
+            view.dateView.text = transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME)
+
+            view.statusView.text = view.context.stringOrNull(transaction.statusCode.stringRes).also {
+                view.statusView.isGone = it == null
+            }
+
+            fun bindAmountText() {
+                val moneyFormat = MoneyFormat(transaction.signedMoney)
+
+                view.amountView.text = moneyFormat.format(transaction)
+
+                if (!TransactionsPolicy.contributesToBalance(transaction)) {
+                    view.amountView.addPaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
+                } else {
+                    view.amountView.removePaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
+                }
+            }
+            bindAmountText()
+
+            fun bindCategoryIcon() {
+                val tint: Int
+                val category = transaction.category
+
+                if (transaction.statusCode == TransactionStatusCode.SUCCESSFUL) {
+                    tint = ctx.color(category.colorRes)
+                    view.iconView.setImageDrawable(ctx.tintedDrawable(category.drawableRes, tint))
+                } else {
+                    tint = ctx.color(R.color.transaction_status__declined)
+                    view.iconView.setImageDrawable(ctx.tintedDrawable(R.drawable.ic_status_declined, tint))
+                }
+
+                val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
+                view.iconView.background = ctx.tintedDrawable(R.drawable.shp_circle, fadedTint)
+            }
+            bindCategoryIcon()
+        }
+
+        override fun unbindView(item: TransactionItem) {
+            view.nameView.text = null
+            view.dateView.text = null
+            view.amountView.text = null
+            view.statusView.text = null
+            view.iconView.setImageDrawable(null)
+        }
+
     }
 
-    override fun bindView(binding: TransactionListTransactionItemBinding, payloads: List<Any>) {
-        binding.nameText = transaction.name
-        binding.dateText = transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME)
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        if (!super.equals(other)) return false
 
-        val stringRes = transaction.statusCode.stringRes
-        binding.statusText = if (stringRes != null) binding.root.context.string(stringRes) else null
+        other as TransactionItem
+        if (transaction != other.transaction) return false
+        return true
+    }
 
-        fun bindAmountText() {
-            val moneyFormat = MoneyFormat(transaction.signedMoney)
-
-            binding.amountText = moneyFormat.format(transaction)
-
-            if (!TransactionsPolicy.contributesToBalance(transaction)) {
-                binding.amountView.addPaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
-            } else {
-                binding.amountView.removePaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
-            }
-        }
-        bindAmountText()
-
-        fun bindCategoryIcon() {
-            val ctx = binding.root.context
-            val tint: Int
-            val category = transaction.category
-
-            if (transaction.statusCode == TransactionStatusCode.SUCCESSFUL) {
-                tint = ctx.color(category.colorRes)
-                binding.iconDrawable = ctx.tintedDrawable(category.drawableRes, tint)
-            } else {
-                tint = ctx.color(R.color.transaction_status__declined)
-                binding.iconDrawable = ctx.tintedDrawable(R.drawable.ic_status_declined, tint)
-            }
-
-            val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
-            binding.iconBgDrawable = ctx.tintedDrawable(R.drawable.shp_circle, fadedTint)
-        }
-        bindCategoryIcon()
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + transaction.hashCode()
+        return result
     }
 
 }

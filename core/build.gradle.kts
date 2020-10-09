@@ -53,4 +53,6 @@ dependencies {
 
     api("com.google.android.material:material:${Dependencies.androidx}")
     api("androidx.appcompat:appcompat:${Dependencies.androidx}")
+
+    testImplementation("junit:junit:${Dependencies.junit}")
 }

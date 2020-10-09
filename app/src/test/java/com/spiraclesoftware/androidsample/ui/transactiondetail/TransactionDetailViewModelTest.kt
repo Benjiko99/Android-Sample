@@ -8,21 +8,23 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.TestData
+import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputType
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
+import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toCategorySelect
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toTextInput
-import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.FeatureNotImplementedEvent
-import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.NavigateToNoteInputEvent
+import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardItem
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsPresenter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import java.io.IOException
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionDetailViewModelTest : ViewModelTest() {
@@ -51,18 +53,15 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val contributesToBalance = true
         val isSuccessful = true
 
-        whenever(detailPresenter.getTransactionById(any())) doReturn MOCK_TRANSACTION
+        whenever(detailPresenter.flowTransactionById(any())) doReturn flowOf(MOCK_TRANSACTION)
         whenever(cardsPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
         whenever(detailPresenter.contributesToBalance(any())) doReturn contributesToBalance
         whenever(detailPresenter.isSuccessful(any())) doReturn isSuccessful
 
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
-        vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.loadData()
-
+        vm.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
-                Loading,
                 DetailReady(
                     MOCK_TRANSACTION.name,
                     MOCK_TRANSACTION.processingDate,
@@ -78,59 +77,19 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
     @Test
     fun `Presenter error when loading data leads to error state`() = runBlockingTest {
-        whenever(detailPresenter.getTransactionById(any())).thenAnswer {
-            throw IOException()
-        }
+        whenever(detailPresenter.flowTransactionById(any())).thenReturn(flowOf(MOCK_TRANSACTION))
+        whenever(detailPresenter.isSuccessful(any())).thenThrow()
 
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
-        vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.loadData()
-            stateObserver.assertObserved(
-                Loading,
-                Error
-            )
-        }
-    }
-
-    @Test
-    fun `Retrying after error loads correctly into ready state`() = runBlockingTest {
-        val contributesToBalance = true
-        val isSuccessful = true
-
-        whenever(detailPresenter.getTransactionById(any())) doReturn MOCK_TRANSACTION
-        whenever(cardsPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
-        whenever(detailPresenter.contributesToBalance(any())) doReturn contributesToBalance
-        whenever(detailPresenter.isSuccessful(any())) doReturn isSuccessful
-
-        var invocations = 0
-        whenever(detailPresenter.getTransactionById(any())).thenAnswer {
-            when (invocations++) {
-                0 -> throw IOException()
-                else -> MOCK_TRANSACTION
-            }
-        }
-
-        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
-
-        vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.loadData()
-            vm.retry()
-
-            stateObserver.assertObserved(
-                Loading,
-                Error,
-                Loading,
-                DetailReady(
-                    MOCK_TRANSACTION.name,
-                    MOCK_TRANSACTION.processingDate,
-                    MoneyFormat(MOCK_TRANSACTION.signedMoney).format(MOCK_TRANSACTION),
-                    contributesToBalance,
-                    isSuccessful,
-                    MOCK_TRANSACTION.category,
-                    MOCK_CARD_ITEMS
+        vm.observeStateAndEvents { stateObserver, _ ->
+            launch {
+                vm.collectTransaction()
+                stateObserver.assertObserved(
+                    Loading,
+                    Error
                 )
-            )
+            }
         }
     }
 
@@ -142,7 +101,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
-        vm.observeStateAndEvents { stateObserver, eventsObserver ->
+        vm.observeStateAndEvents { _, eventsObserver ->
             vm.onCardActionClicked(R.id.card_action__change_note)
 
             val navDirections = toTextInput(
@@ -158,16 +117,36 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     }
 
     @Test
+    fun `Clicking category select card action produces navigate to category select event`() = runBlockingTest {
+        val currentCategory = TransactionCategory.ENTERTAINMENT
+
+        whenever(detailPresenter.getCategory(any())).thenReturn(currentCategory)
+
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
+
+        vm.observeStateAndEvents { _, eventsObserver ->
+            vm.onCardActionClicked(R.id.card_action__change_category)
+
+            val navDirections = toCategorySelect(
+                1,
+                currentCategory
+            )
+
+            eventsObserver.assertObserved(
+                NavigateToCategorySelectEvent(navDirections)
+            )
+        }
+    }
+
+    @Test
     fun `Clicking unimplemented card actions produces feature not implemented event`() = runBlockingTest {
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
-        vm.observeStateAndEvents { stateObserver, eventsObserver ->
+        vm.observeStateAndEvents { _, eventsObserver ->
             vm.onCardActionClicked(R.id.card_action__card_detail)
             vm.onCardActionClicked(R.id.card_action__download_statement)
-            vm.onCardActionClicked(R.id.card_action__change_category)
 
             eventsObserver.assertObserved(
-                FeatureNotImplementedEvent,
                 FeatureNotImplementedEvent,
                 FeatureNotImplementedEvent
             )

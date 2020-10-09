@@ -6,14 +6,16 @@ import com.spiraclesoftware.androidsample.data.disk.entities.toDomain
 import com.spiraclesoftware.androidsample.data.disk.entities.toRoomEntity
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class DiskDataSource(
     private val transactionsDao: TransactionsDao
 ) {
 
-    fun getTransactions(): List<Transaction> {
-        val roomItems = transactionsDao.getAll()
-        return roomItems.map(TransactionEntity::toDomain)
+    fun flowTransactions(): Flow<List<Transaction>> {
+        val roomItems = transactionsDao.flowAll()
+        return roomItems.map { it.map(TransactionEntity::toDomain) }
     }
 
     fun getTransactionById(id: TransactionId): Transaction? {
@@ -21,14 +23,19 @@ class DiskDataSource(
         return roomItem?.let(TransactionEntity::toDomain)
     }
 
+    fun flowTransactionById(id: TransactionId): Flow<Transaction?> {
+        val roomItem = transactionsDao.flowById(id.value)
+        return roomItem.map { it?.toDomain() }
+    }
+
     fun saveTransactions(transactions: List<Transaction>) {
         val roomItems = transactions.map(Transaction::toRoomEntity)
-        return transactionsDao.insertAll(roomItems)
+        transactionsDao.replaceAll(roomItems)
     }
 
     fun updateTransaction(transaction: Transaction) {
         val item = transaction.let(Transaction::toRoomEntity)
-        return transactionsDao.update(item)
+        transactionsDao.update(item)
     }
 
 }
