@@ -42,11 +42,10 @@ class TransactionListPresenter(
             list.applyFilter(filter)
         }
 
-    suspend fun getListItems(transactions: List<Transaction>): List<GenericItem> {
-        return transactions
+    suspend fun getListItems(transactions: List<Transaction>) =
+        transactions
             .sortAndGroupByDay()
             .toListItems()
-    }
 
     private fun List<Transaction>.sortAndGroupByDay() =
         this.sortedByDescending { it.processingDate }

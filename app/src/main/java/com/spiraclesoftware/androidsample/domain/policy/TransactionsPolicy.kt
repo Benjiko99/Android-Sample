@@ -11,7 +11,7 @@ class TransactionsPolicy(
     private val currencyConverter: CurrencyConverter
 ) {
 
-    /** Put here the methods that don't need injected dependencies, to simplify calling them. */
+    /** Methods that don't need injected dependencies go here */
     companion object {
 
         fun isSuccessful(transaction: Transaction): Boolean {

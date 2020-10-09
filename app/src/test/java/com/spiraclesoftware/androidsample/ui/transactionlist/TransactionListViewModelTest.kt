@@ -10,8 +10,6 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.ALL
-import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel
-import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModelTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -80,7 +78,7 @@ class TransactionListViewModelTest : ViewModelTest() {
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
             launch {
                 vm.collectTransactions()
-                vm.reload()
+                vm.refreshTransactions()
 
                 stateObserver.assertObserved(
                     Error,

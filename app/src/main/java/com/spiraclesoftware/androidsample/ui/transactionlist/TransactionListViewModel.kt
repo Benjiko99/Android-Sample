@@ -24,12 +24,7 @@ class TransactionListViewModel(
 
     init {
         executeNonBlocking {
-            try {
-                listPresenter.fetchTransactions()
-            } catch (e: Exception) {
-                Timber.e(e)
-                Error
-            }
+            fetchTransactions()
             collectTransactions()
         }
     }
@@ -38,7 +33,7 @@ class TransactionListViewModel(
         listPresenter.flowFilteredTransactions(listFilterFlow).collect { transactions ->
             viewState = try {
                 ListReady(
-                    listItems = listPresenter.getListItems(transactions).also { Timber.d("listItems: $it") },
+                    listItems = listPresenter.getListItems(transactions),
                     listFilter = listFilterFlow.value
                 )
             } catch (e: Exception) {
@@ -47,14 +42,18 @@ class TransactionListViewModel(
             }
         }
 
-    fun reload() = executeNonBlocking {
+    private suspend fun fetchTransactions() {
         try {
-            viewState = Loading
             listPresenter.fetchTransactions()
         } catch (e: Exception) {
             Timber.e(e)
             viewState = Error
         }
+    }
+
+    fun refreshTransactions() = executeNonBlocking {
+        viewState = Loading
+        fetchTransactions()
     }
 
     fun toggleLanguage() {
@@ -67,7 +66,6 @@ class TransactionListViewModel(
 
     fun onListItemClicked(id: TransactionId) {
         postEvent(NavigateToDetailEvent(id))
-        Timber.d("Navigating to Transaction Detail: id=$id")
     }
 
     fun setTransferDirectionFilter(directionFilter: TransferDirectionFilter) = execute {

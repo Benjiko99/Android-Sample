@@ -27,9 +27,6 @@ import com.spiraclesoftware.core.extensions.onItemSelected
 import com.spiraclesoftware.core.extensions.string
 import kotlinx.android.synthetic.main.error_with_retry.view.*
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
-import kotlinx.android.synthetic.main.transaction__list__fragment.recyclerView
-import kotlinx.android.synthetic.main.transaction__list__fragment.scrollView
-import kotlinx.android.synthetic.main.transaction__list__fragment.toolbar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -110,13 +107,10 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
                 setHasStableIds(true)
             }
             fastAdapter.onClickListener = { _, _, item, _ ->
-                when (item) {
-                    is TransactionItem -> {
-                        viewModel.onListItemClicked(item.transaction.id)
-                        true
-                    }
-                    else -> false
+                if (item is TransactionItem) {
+                    viewModel.onListItemClicked(item.transaction.id)
                 }
+                true
             }
         }
         setupFastItemAdapter()
@@ -150,11 +144,11 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
         fun setupSwipeRefreshLayout() {
             swipeRefreshLayout.scrollUpChild = scrollView
             swipeRefreshLayout.setProgressViewOffset(true, 120, 360)
-            swipeRefreshLayout.setOnRefreshListener { viewModel.reload() }
+            swipeRefreshLayout.setOnRefreshListener { viewModel.refreshTransactions() }
         }
         setupSwipeRefreshLayout()
 
-        errorLayout.retryButton.setOnClickListener { viewModel.reload() }
+        errorLayout.retryButton.setOnClickListener { viewModel.refreshTransactions() }
     }
 
     override fun onDestroyView() {

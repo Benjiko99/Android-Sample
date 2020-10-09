@@ -60,7 +60,6 @@ class TransactionDetailViewModel(
     fun onNoteChanged(note: String) = executeNonBlocking {
         try {
             detailPresenter.updateNote(transactionId, note)
-            Timber.d("Note changed to \"$note\"")
         } catch (e: Exception) {
             Timber.e(e)
             postEvent(NotifyOfFailureEvent(R.string.unknown_error))
@@ -75,7 +74,6 @@ class TransactionDetailViewModel(
         )
 
         postEvent(NavigateToNoteInputEvent(navDirections))
-        Timber.d("Navigating to Note Input")
     }
 
     private fun openCategorySelect() = execute {
@@ -84,7 +82,6 @@ class TransactionDetailViewModel(
             initialCategory = detailPresenter.getCategory(transactionId)!!
         )
         postEvent(NavigateToCategorySelectEvent(navDirections))
-        Timber.d("Navigating to Category Select")
     }
 
     fun onCardActionClicked(actionId: Int) {
