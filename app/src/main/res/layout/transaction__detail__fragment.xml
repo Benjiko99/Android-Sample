@@ -104,7 +104,7 @@
                 app:layout_constraintTop_toBottomOf="@id/dateView"
                 tools:itemCount="5"
                 tools:layout_marginTop="24dp"
-                tools:listitem="@layout/transaction__detail__card_item" />
+                tools:listitem="@layout/value_pair_card_item" />
 
             <TextView
                 android:id="@+id/errorMessageView"

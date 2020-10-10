@@ -4,13 +4,8 @@
     <!-- List items -->
     <item name="transaction__list__transaction_item" type="id" />
     <item name="transaction__list__header_item" type="id" />
-    <item name="transaction__detail__card_item" type="id" />
-
-    <!-- Card actions -->
-    <item name="card_action__download_statement" type="id" />
-    <item name="card_action__change_category" type="id" />
-    <item name="card_action__add_attachment" type="id" />
-    <item name="card_action__card_detail" type="id" />
-    <item name="card_action__change_note" type="id" />
+    <item name="value_pair_card_item" type="id" />
+    <item name="status_card_item" type="id" />
+    <item name="note_card_item" type="id" />
 
 </resources>

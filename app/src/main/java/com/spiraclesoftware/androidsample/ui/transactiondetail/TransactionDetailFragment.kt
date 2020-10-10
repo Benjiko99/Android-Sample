@@ -150,7 +150,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setFragmentResultListener(NOTE_INPUT_REQUEST_KEY) { key, bundle ->
+        setFragmentResultListener(NOTE_INPUT_REQUEST_KEY) { _, bundle ->
             val note = bundle.getString(TextInputFragment.RESULT_KEY)
             viewModel.onNoteChanged(note.orEmpty())
         }

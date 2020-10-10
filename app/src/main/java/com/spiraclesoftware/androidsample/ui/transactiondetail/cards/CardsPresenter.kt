@@ -3,23 +3,15 @@ package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 import co.zsmb.rainbowcake.withIOContext
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items.CardItem
 
 class CardsPresenter {
 
     suspend fun getCardItems(
         transaction: Transaction,
-        clickAction: (Int) -> Unit
-    ): List<CardItem> = withIOContext {
-        getCardsFor(transaction).toListItems(transaction, clickAction)
-    }
-
-    private fun List<Card>.toListItems(
-        transaction: Transaction,
-        clickAction: (Int) -> Unit
-    ) = map { card ->
-        CardItem(card, transaction).apply {
-            withActionClickHandler(clickAction)
-        }
+        actionsHandler: CardActionsHandler
+    ): List<CardItem<*>> = withIOContext {
+        getCardsFor(transaction).toListItems(transaction, actionsHandler)
     }
 
     /**
@@ -29,46 +21,51 @@ class CardsPresenter {
      */
     fun getCardsFor(transaction: Transaction): List<Card> {
         return cards {
-            // expanded status card
-            card {
-                if (!TransactionsPolicy.isSuccessful(transaction)) {
-                    transactionStatus(expanded = true)
-                }
+            if (!TransactionsPolicy.isSuccessful(transaction)) {
+                statusCard()
             }
 
             // details card
-            card {
+            valuePairCard {
                 if (TransactionsPolicy.isSuccessful(transaction)) {
-                    transactionStatus(expanded = false)
+                    status()
                 }
 
                 if (!transaction.cardDescription.isNullOrEmpty()) {
-                    cardDescription()
+                    paymentCard()
                 }
 
                 if (TransactionsPolicy.isSuccessful(transaction)) {
-                    transactionStatement()
+                    statement()
                 }
             }
 
             // category card
-            card {
+            valuePairCard {
                 if (TransactionsPolicy.isSuccessful(transaction)) {
-                    transactionCategory()
+                    category()
                 }
             }
 
             // attachments card
-            card {
+            valuePairCard {
                 if (TransactionsPolicy.isSuccessful(transaction)) {
                     attachments()
                 }
             }
 
-            // note card
-            card {
-                noteToSelf()
-            }
+            noteToSelfCard()
+        }
+    }
+
+    private fun List<Card>.toListItems(
+        transaction: Transaction,
+        actionsHandler: CardActionsHandler
+    ): List<CardItem<*>> = this.map { card ->
+        when (card) {
+            is ValuePairCard -> card.toListItem(transaction, actionsHandler)
+            is StatusCard -> card.toListItem(transaction)
+            is NoteCard -> card.toListItem(transaction, actionsHandler)
         }
     }
 

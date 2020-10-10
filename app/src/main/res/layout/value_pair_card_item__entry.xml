@@ -14,10 +14,6 @@
             type="String" />
 
         <variable
-            name="bodyText"
-            type="String" />
-
-        <variable
             name="iconDrawable"
             type="android.graphics.drawable.Drawable" />
 
@@ -61,20 +57,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:icon="@drawable/ic_credit_card"
             tools:text="Value" />
-
-        <TextView
-            android:id="@+id/bodyView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/content__spacing__small"
-            android:text='@{bodyText}'
-            android:textAppearance="@style/TextAppearance.DetailItem.Value"
-            app:goneUnless="@{bodyText != null}"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/labelView"
-            tools:text="Hello\nWorld!" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

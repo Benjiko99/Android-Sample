@@ -11,11 +11,9 @@ import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetail
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsPresenter
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListPresenter
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-@OptIn(ExperimentalCoroutinesApi::class)
 val uiModule = module {
 
     viewModel { TransactionListViewModel(get()) }

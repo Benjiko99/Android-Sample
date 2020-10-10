@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail
 
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
-import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardItem
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items.CardItem
 import org.threeten.bp.ZonedDateTime
 
 sealed class TransactionDetailViewState
@@ -17,5 +17,5 @@ data class DetailReady(
     val contributesToBalance: Boolean,
     val isSuccessful: Boolean,
     val category: TransactionCategory,
-    val cardItems: List<CardItem>
+    val cardItems: List<CardItem<*>>
 ) : TransactionDetailViewState()

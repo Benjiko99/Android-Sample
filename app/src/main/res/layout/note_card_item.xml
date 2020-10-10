@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="actionText"
+            type="String" />
+
+        <variable
+            name="noteText"
+            type="String" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        style="@style/AppTheme.CardView.Outlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentPadding="@dimen/content__spacing__medium">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/labelView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginRight="@dimen/content__spacing__small"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text='@string/transaction__detail__note'
+                android:textAppearance="@style/TextAppearance.DetailItem.Label"
+                app:layout_constraintBottom_toBottomOf="@id/actionView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/actionView"
+                app:layout_constraintTop_toTopOf="@id/actionView" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/actionView"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="2dp"
+                android:text='@{actionText}'
+                android:textAppearance="@style/TextAppearance.DetailItem.Value"
+                app:icon="@drawable/ic_edit_note"
+                app:iconSize="18sp"
+                app:layout_constraintLeft_toRightOf="@id/labelView"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/transaction__detail__note__edit" />
+
+            <TextView
+                android:id="@+id/noteView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content__spacing__small"
+                android:text='@{noteText}'
+                android:textAppearance="@style/TextAppearance.DetailItem.Value"
+                app:goneUnless="@{noteText != null}"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelView"
+                tools:text="Hello\nWorld!" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

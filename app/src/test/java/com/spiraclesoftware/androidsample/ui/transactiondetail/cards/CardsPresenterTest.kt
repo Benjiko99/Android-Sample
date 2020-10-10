@@ -31,15 +31,20 @@ class CardsPresenterTest : PresenterTest() {
 
         assertEquals(4, cards.count())
 
-        assert(cards[0].valuePairs[0] is CardValuePairs.TransactionStatus)
-        assert(cards[0].valuePairs[1] is CardValuePairs.CardDescription)
-        assert(cards[0].valuePairs[2] is CardValuePairs.TransactionStatement)
+        assert(cards[0] is ValuePairCard)
+        assert(cards[1] is ValuePairCard)
+        assert(cards[2] is ValuePairCard)
+        assert(cards[3] is NoteCard)
 
-        assert(cards[1].valuePairs[0] is CardValuePairs.TransactionCategory)
+        ((cards[0] as ValuePairCard).valuePairs).let { valuePairs ->
+            assert(valuePairs[0] is ValuePairs.Status)
+            assert(valuePairs[1] is ValuePairs.PaymentCard)
+            assert(valuePairs[2] is ValuePairs.Statement)
+        }
 
-        assert(cards[2].valuePairs[0] is CardValuePairs.Attachments)
+        assert((cards[1] as ValuePairCard).valuePairs[0] is ValuePairs.Category)
 
-        assert(cards[3].valuePairs[0] is CardValuePairs.NoteToSelf)
+        assert((cards[2] as ValuePairCard).valuePairs[0] is ValuePairs.Attachments)
     }
 
 }

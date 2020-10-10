@@ -4,35 +4,31 @@ package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 annotation class CardsBuilderDSL
 
 @CardsBuilderDSL
-class CardBuilder {
+class ValuePairCardBuilder {
 
-    private val valuePairs = mutableListOf<CardValuePair>()
+    private val valuePairs = mutableListOf<ValuePair>()
 
-    fun transactionStatus(expanded: Boolean) {
-        valuePairs += CardValuePairs.TransactionStatus(expanded)
+    fun status() {
+        valuePairs += ValuePairs.Status()
     }
 
-    fun cardDescription() {
-        valuePairs += CardValuePairs.CardDescription()
+    fun paymentCard() {
+        valuePairs += ValuePairs.PaymentCard()
     }
 
-    fun transactionStatement() {
-        valuePairs += CardValuePairs.TransactionStatement()
+    fun statement() {
+        valuePairs += ValuePairs.Statement()
     }
 
-    fun transactionCategory() {
-        valuePairs += CardValuePairs.TransactionCategory()
+    fun category() {
+        valuePairs += ValuePairs.Category()
     }
 
     fun attachments() {
-        valuePairs += CardValuePairs.Attachments()
+        valuePairs += ValuePairs.Attachments()
     }
 
-    fun noteToSelf() {
-        valuePairs += CardValuePairs.NoteToSelf()
-    }
-
-    fun build() = Card(valuePairs)
+    fun build() = ValuePairCard(valuePairs)
 
     fun isValid() = valuePairs.isNotEmpty()
 
@@ -47,13 +43,21 @@ class CardsBuilder {
         cards += this
     }
 
-    fun card(setup: CardBuilder.() -> Unit = {}) {
-        val cardBuilder = CardBuilder()
+    fun valuePairCard(setup: ValuePairCardBuilder.() -> Unit = {}) {
+        val cardBuilder = ValuePairCardBuilder()
         cardBuilder.setup()
 
         if (cardBuilder.isValid()) {
             cards += cardBuilder.build()
         }
+    }
+
+    fun statusCard() {
+        cards += StatusCard
+    }
+
+    fun noteToSelfCard() {
+        cards += NoteCard
     }
 
     fun build() = cards
@@ -67,7 +71,8 @@ class CardsBuilder {
         level = DeprecationLevel.ERROR,
         message = "Cards can't be nested."
     )
-    fun cards(param: () -> Unit = {}) {}
+    fun cards(param: () -> Unit = {}) {
+    }
 
 }
 

@@ -1,72 +1,58 @@
-package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
+package com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.databinding.CardItemValuePairBinding
-import com.spiraclesoftware.androidsample.databinding.TransactionDetailCardItemBinding
+import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemBinding
+import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemEntryBinding
 import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardActionsHandler
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.ValuePairCard
 import com.spiraclesoftware.core.extensions.colorAttr
 import com.spiraclesoftware.core.extensions.dimen
 import com.spiraclesoftware.core.extensions.tintedDrawable
 import com.spiraclesoftware.core.extensions.topMargin
 
-data class CardItemData(
-    val label: String,
-    val value: String? = null,
-    val icon: Drawable? = null,
-    val body: String? = null,
-    val actionId: Int? = null
-)
+class ValuePairCardItem(
+    private val card: ValuePairCard,
+    private val transaction: Transaction,
+    private val actionsHandler: CardActionsHandler
+) : CardItem<ValuePairCardItemBinding>() {
 
-fun Card.toItemData(ctx: Context, transaction: Transaction): List<CardItemData> {
-    return valuePairs.map {
-        it.toItemData(ctx, transaction)
-    }
-}
+    data class Data(
+        val label: String,
+        val value: String? = null,
+        val icon: Drawable? = null,
+        val onClickAction: ((CardActionsHandler) -> Unit)? = null
+    )
 
-class CardItem(
-    private val card: Card,
-    private val transaction: Transaction
-) : AbstractBindingItem<TransactionDetailCardItemBinding>() {
+    override val type = R.id.value_pair_card_item
 
-    override val type = R.id.transaction__detail__card_item
-
-    private var actionClickHandler: ((Int) -> Unit)? = null
-
-    fun withActionClickHandler(func: (Int) -> Unit) {
-        actionClickHandler = func
+    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?): ValuePairCardItemBinding {
+        return ValuePairCardItemBinding.inflate(inflater, parent, false)
     }
 
-    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?): TransactionDetailCardItemBinding {
-        return TransactionDetailCardItemBinding.inflate(inflater, parent, false)
-    }
-
-    override fun bindView(binding: TransactionDetailCardItemBinding, payloads: List<Any>) {
+    override fun bindView(binding: ValuePairCardItemBinding, payloads: List<Any>) {
         val ctx = binding.root.context
         binding.content.removeAllViews()
 
         val itemData = card.toItemData(ctx, transaction)
         itemData.forEachIndexed { index, data ->
-            val pb = CardItemValuePairBinding.inflate(LayoutInflater.from(ctx), binding.content, false)
+            val pb = ValuePairCardItemEntryBinding.inflate(LayoutInflater.from(ctx), binding.content, false)
 
             pb.labelText = data.label
             pb.valueText = data.value
-            pb.bodyText = data.body
 
-            if (data.actionId != null) {
-                val onClick: (View) -> Unit = { actionClickHandler?.invoke(data.actionId) }
-                pb.valueView.setOnClickListener(onClick)
+            if (data.onClickAction != null) {
+                pb.valueView.setOnClickListener { data.onClickAction.invoke(actionsHandler) }
                 pb.valueView.isClickable = true
 
                 val tintColor = ctx.colorAttr(R.attr.colorPrimaryDark)
                 pb.valueView.setTextColor(tintColor)
                 pb.iconDrawable = data.icon?.tintedDrawable(tintColor)
             } else {
+                pb.valueView.setOnClickListener(null)
                 pb.valueView.isClickable = false
 
                 val tintColor = ctx.colorAttr(android.R.attr.textColorPrimary)
@@ -86,10 +72,11 @@ class CardItem(
         if (javaClass != other?.javaClass) return false
         if (!super.equals(other)) return false
 
-        other as CardItem
+        other as ValuePairCardItem
 
         if (card != other.card) return false
         if (transaction != other.transaction) return false
+        if (actionsHandler != other.actionsHandler) return false
 
         return true
     }
@@ -98,6 +85,7 @@ class CardItem(
         var result = super.hashCode()
         result = 31 * result + card.hashCode()
         result = 31 * result + transaction.hashCode()
+        result = 31 * result + actionsHandler.hashCode()
         return result
     }
 

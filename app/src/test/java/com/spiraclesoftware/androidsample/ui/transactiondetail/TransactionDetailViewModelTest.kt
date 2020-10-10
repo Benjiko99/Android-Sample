@@ -6,7 +6,6 @@ import co.zsmb.rainbowcake.test.observeStateAndEvents
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
-import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
@@ -15,8 +14,8 @@ import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetail
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toCategorySelect
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.*
-import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardItem
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsPresenter
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items.ValuePairCardItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -34,7 +33,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
         private val MOCK_TRANSACTION_ID = MOCK_TRANSACTION.id
 
-        private val MOCK_CARD_ITEMS = emptyList<CardItem>()
+        private val MOCK_CARD_ITEMS = emptyList<ValuePairCardItem>()
     }
 
     @Mock
@@ -102,7 +101,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
-            vm.onCardActionClicked(R.id.card_action__change_note)
+            vm.onNoteAction()
 
             val navDirections = toTextInput(
                 TextInputType.NOTE,
@@ -125,7 +124,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
-            vm.onCardActionClicked(R.id.card_action__change_category)
+            vm.onCategoryAction()
 
             val navDirections = toCategorySelect(
                 1,
@@ -143,7 +142,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
-            vm.onCardActionClicked(R.id.card_action__card_detail)
+            vm.onCardAction()
 
             eventsObserver.assertObserved(
                 NavigateToCardDetailEvent
@@ -156,7 +155,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
-            vm.onCardActionClicked(R.id.card_action__download_statement)
+            vm.onStatementAction()
 
             eventsObserver.assertObserved(
                 DownloadStatementEvent

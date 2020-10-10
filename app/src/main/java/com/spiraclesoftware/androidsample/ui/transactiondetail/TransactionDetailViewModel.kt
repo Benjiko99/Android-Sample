@@ -10,6 +10,7 @@ import com.spiraclesoftware.androidsample.ui.textinput.TextInputType
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toCategorySelect
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toTextInput
+import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardActionsHandler
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsPresenter
 import kotlinx.coroutines.flow.collect
 import timber.log.Timber
@@ -18,7 +19,7 @@ class TransactionDetailViewModel(
     private val transactionId: TransactionId,
     private val detailPresenter: TransactionDetailPresenter,
     private val cardsPresenter: CardsPresenter
-) : RainbowCakeViewModel<TransactionDetailViewState>(Loading) {
+) : RainbowCakeViewModel<TransactionDetailViewState>(Loading), CardActionsHandler {
 
     data class NavigateToNoteInputEvent(val navDirections: NavDirections) : OneShotEvent
 
@@ -41,7 +42,7 @@ class TransactionDetailViewModel(
     suspend fun collectTransaction() =
         detailPresenter.flowTransactionById(transactionId).collect { transaction ->
             viewState = try {
-                val cardItems = cardsPresenter.getCardItems(transaction!!, ::onCardActionClicked)
+                val cardItems = cardsPresenter.getCardItems(transaction!!, this)
                 val contributesToBalance = detailPresenter.contributesToBalance(transaction)
                 val isSuccessful = detailPresenter.isSuccessful(transaction)
                 val formattedMoney = MoneyFormat(transaction.signedMoney).format(transaction)
@@ -100,14 +101,13 @@ class TransactionDetailViewModel(
         postEvent(DownloadStatementEvent)
     }
 
-    fun onCardActionClicked(actionId: Int) {
-        when (actionId) {
-            R.id.card_action__card_detail -> openCardDetail()
-            R.id.card_action__download_statement -> downloadStatement()
-            R.id.card_action__change_category -> openCategorySelect()
-            R.id.card_action__add_attachment -> openAttachmentPicker()
-            R.id.card_action__change_note -> openNoteInput()
-        }
-    }
+    override fun onCardAction() = openCardDetail()
 
+    override fun onStatementAction() = downloadStatement()
+
+    override fun onCategoryAction() = openCategorySelect()
+
+    override fun onAttachmentAction() = openAttachmentPicker()
+
+    override fun onNoteAction() = openNoteInput()
 }
