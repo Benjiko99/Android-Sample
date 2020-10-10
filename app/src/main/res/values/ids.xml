@@ -9,6 +9,7 @@
     <!-- Card actions -->
     <item name="card_action__download_statement" type="id" />
     <item name="card_action__change_category" type="id" />
+    <item name="card_action__add_attachment" type="id" />
     <item name="card_action__card_detail" type="id" />
     <item name="card_action__change_note" type="id" />
 

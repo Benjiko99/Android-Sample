@@ -24,11 +24,13 @@ class TransactionDetailViewModel(
 
     data class NavigateToCategorySelectEvent(val navDirections: NavDirections) : OneShotEvent
 
-    data class NotifyOfFailureEvent(val stringRes: Int) : OneShotEvent
+    object OpenAttachmentPickerEvent : OneShotEvent
 
     object NavigateToCardDetailEvent : OneShotEvent
 
     object DownloadStatementEvent : OneShotEvent
+
+    data class NotifyOfFailureEvent(val stringRes: Int) : OneShotEvent
 
     init {
         executeNonBlocking {
@@ -86,6 +88,10 @@ class TransactionDetailViewModel(
         postEvent(NavigateToCategorySelectEvent(navDirections))
     }
 
+    private fun openAttachmentPicker() {
+        postEvent(OpenAttachmentPickerEvent)
+    }
+
     private fun openCardDetail() {
         postEvent(NavigateToCardDetailEvent)
     }
@@ -99,6 +105,7 @@ class TransactionDetailViewModel(
             R.id.card_action__card_detail -> openCardDetail()
             R.id.card_action__download_statement -> downloadStatement()
             R.id.card_action__change_category -> openCategorySelect()
+            R.id.card_action__add_attachment -> openAttachmentPicker()
             R.id.card_action__change_note -> openNoteInput()
         }
     }

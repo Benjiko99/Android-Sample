@@ -77,6 +77,9 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
             is DownloadStatementEvent -> {
                 showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
             }
+            is OpenAttachmentPickerEvent -> {
+                showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
+            }
             is NotifyOfFailureEvent -> {
                 showToast(event.stringRes, Toast.LENGTH_LONG)
             }

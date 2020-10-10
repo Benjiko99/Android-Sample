@@ -70,6 +70,19 @@ object CardValuePairs {
 
     }
 
+    class Attachments : CardValuePair() {
+
+        override fun toItemData(ctx: Context, transaction: Transaction): CardItemData {
+            return CardItemData(
+                label = ctx.string(R.string.transaction__detail__attachments),
+                value = ctx.string(R.string.transaction__detail__attachments__add_photo),
+                icon = ctx.drawable(R.drawable.ic_add_photo),
+                actionId = R.id.card_action__add_attachment
+            )
+        }
+
+    }
+
     class NoteToSelf : CardValuePair() {
 
         override fun toItemData(ctx: Context, transaction: Transaction): CardItemData {

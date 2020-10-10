@@ -36,10 +36,12 @@
     <string name="transaction__detail__card">Karta</string>
     <string name="transaction__detail__statement">Potvrzení</string>
     <string name="transaction__detail__download">Stáhnout</string>
+    <string name="transaction__detail__category">Kategorie</string>
+    <string name="transaction__detail__attachments">Přílohy</string>
+    <string name="transaction__detail__attachments__add_photo">Přidat fotku</string>
     <string name="transaction__detail__note">Poznámka</string>
     <string name="transaction__detail__note__edit">Upravit</string>
     <string name="transaction__detail__note__add">Přidat poznámku</string>
-    <string name="transaction__detail__category">Kategorie</string>
 
     <!-- Category Select -->
     <string name="category__select__title">Vyberte kategorii</string>

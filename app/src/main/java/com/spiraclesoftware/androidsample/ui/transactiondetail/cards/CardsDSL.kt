@@ -24,6 +24,10 @@ class CardBuilder {
         valuePairs += CardValuePairs.TransactionCategory()
     }
 
+    fun attachments() {
+        valuePairs += CardValuePairs.Attachments()
+    }
+
     fun noteToSelf() {
         valuePairs += CardValuePairs.NoteToSelf()
     }

@@ -58,6 +58,13 @@ class CardsPresenter {
                 }
             }
 
+            // attachments card
+            card {
+                if (TransactionsPolicy.isSuccessful(transaction)) {
+                    attachments()
+                }
+            }
+
             // note card
             card {
                 noteToSelf()

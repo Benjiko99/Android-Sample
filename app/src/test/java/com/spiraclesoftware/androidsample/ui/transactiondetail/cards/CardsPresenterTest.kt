@@ -29,7 +29,7 @@ class CardsPresenterTest : PresenterTest() {
         val presenter = CardsPresenter()
         val cards = presenter.getCardsFor(transaction)
 
-        assertEquals(3, cards.count())
+        assertEquals(4, cards.count())
 
         assert(cards[0].valuePairs[0] is CardValuePairs.TransactionStatus)
         assert(cards[0].valuePairs[1] is CardValuePairs.CardDescription)
@@ -37,7 +37,9 @@ class CardsPresenterTest : PresenterTest() {
 
         assert(cards[1].valuePairs[0] is CardValuePairs.TransactionCategory)
 
-        assert(cards[2].valuePairs[0] is CardValuePairs.NoteToSelf)
+        assert(cards[2].valuePairs[0] is CardValuePairs.Attachments)
+
+        assert(cards[3].valuePairs[0] is CardValuePairs.NoteToSelf)
     }
 
 }
