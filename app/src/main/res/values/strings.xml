@@ -44,7 +44,6 @@
 
     <!-- Category Select -->
     <string name="category__select__title">Select category</string>
-    <string name="category__select__progress_processing">Processing…</string>
     <string name="category__select__progress_success">Category changed</string>
 
     <!-- Change language dialog -->

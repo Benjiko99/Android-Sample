@@ -6,7 +6,6 @@ import com.spiraclesoftware.androidsample.data.network.model.TransactionUpdateRe
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
-import kotlinx.coroutines.delay
 
 class CategorySelectPresenter(
     private val transactionsInteractor: TransactionsInteractor
@@ -28,8 +27,6 @@ class CategorySelectPresenter(
     suspend fun updateCategory(id: TransactionId, category: TransactionCategory) = withIOContext {
         val request = TransactionUpdateRequest(category = category)
         transactionsInteractor.updateTransaction(id, request)
-        // pretend we're waiting for the back-end, so you can see the loading state
-        delay(1500)
     }
 
 }

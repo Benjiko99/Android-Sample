@@ -15,7 +15,6 @@ class CategorySelectViewModel(
 ) {
 
     object NotifyOfSuccessEvent : QueuedOneShotEvent
-
     object NotifyOfFailureEvent : QueuedOneShotEvent
 
     private var selectedCategory: TransactionCategory = initialCategory
@@ -28,15 +27,15 @@ class CategorySelectViewModel(
         if (category != selectedCategory) {
             execute {
                 val oldCategory = selectedCategory
+
                 try {
-                    setProcessing(true)
                     setSelectedCategory(category)
                     presenter.updateCategory(transactionId, category)
-                    notifyOfSuccess()
+                    postQueuedEvent(NotifyOfSuccessEvent)
                 } catch (e: Exception) {
                     Timber.e(e)
-                    notifyOfFailure()
                     setSelectedCategory(oldCategory)
+                    postQueuedEvent(NotifyOfFailureEvent)
                 }
             }
         }
@@ -51,22 +50,6 @@ class CategorySelectViewModel(
         viewState = (viewState as CategorySelect).copy(
             listItems = presenter.getListItems(selectedCategory)
         )
-    }
-
-    private fun setProcessing(isProcessing: Boolean) {
-        viewState = (viewState as CategorySelect).copy(
-            isProcessing = isProcessing
-        )
-    }
-
-    private fun notifyOfSuccess() {
-        setProcessing(false)
-        postQueuedEvent(NotifyOfSuccessEvent)
-    }
-
-    private fun notifyOfFailure() {
-        setProcessing(false)
-        postQueuedEvent(NotifyOfFailureEvent)
     }
 
 }

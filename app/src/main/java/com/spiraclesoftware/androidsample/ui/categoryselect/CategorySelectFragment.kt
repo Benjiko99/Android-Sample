@@ -2,8 +2,6 @@ package com.spiraclesoftware.androidsample.ui.categoryselect
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,11 +18,10 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.categoryselect.CategorySelectViewModel.NotifyOfFailureEvent
 import com.spiraclesoftware.androidsample.ui.categoryselect.CategorySelectViewModel.NotifyOfSuccessEvent
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
-import com.spiraclesoftware.core.extensions.makeSnackbar
+import com.spiraclesoftware.core.extensions.showSnackbar
 import kotlinx.android.synthetic.main.category__select__fragment.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
-import timber.log.Timber
 
 class CategorySelectFragment : RainbowCakeFragment<CategorySelectViewState, CategorySelectViewModel>() {
 
@@ -40,30 +37,8 @@ class CategorySelectFragment : RainbowCakeFragment<CategorySelectViewState, Cate
     private lateinit var fastAdapter: GenericFastAdapter
     private lateinit var itemAdapter: GenericItemAdapter
 
-    private lateinit var onBackPressedCallback: OnBackPressedCallback
-    private var isProcessing = false
-    private val progressSnackbar: Snackbar by lazy {
-        makeSnackbar("", Snackbar.LENGTH_INDEFINITE)
-    }
-
     override fun render(viewState: CategorySelectViewState) {
         if (viewState is CategorySelect) {
-            onBackPressedCallback.isEnabled = viewState.isProcessing
-
-            val isProcessingChanged = isProcessing != viewState.isProcessing
-            isProcessing = viewState.isProcessing
-
-            if (
-                (progressSnackbar.isShown && isProcessing && isProcessingChanged) ||
-                (isProcessing && !progressSnackbar.isShown)
-            ) {
-                progressSnackbar.apply {
-                    setText(R.string.category__select__progress_processing)
-                    duration = Snackbar.LENGTH_INDEFINITE
-                    show()
-                }
-            }
-
             FastAdapterDiffUtil[itemAdapter] = viewState.listItems
         }
     }
@@ -71,17 +46,9 @@ class CategorySelectFragment : RainbowCakeFragment<CategorySelectViewState, Cate
     override fun onEvent(event: OneShotEvent) {
         when (event) {
             is NotifyOfSuccessEvent ->
-                progressSnackbar.apply {
-                    setText(R.string.category__select__progress_success)
-                    duration = Snackbar.LENGTH_LONG
-                    show()
-                }
+                showSnackbar(R.string.category__select__progress_success, Snackbar.LENGTH_SHORT)
             is NotifyOfFailureEvent ->
-                progressSnackbar.apply {
-                    setText(R.string.unknown_error)
-                    duration = Snackbar.LENGTH_LONG
-                    show()
-                }
+                showSnackbar(R.string.unknown_error, Snackbar.LENGTH_SHORT)
         }
     }
 
@@ -91,10 +58,6 @@ class CategorySelectFragment : RainbowCakeFragment<CategorySelectViewState, Cate
         fun setupToolbar() {
             toolbar.setupWithNavController(findNavController())
             DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
-
-            toolbar.setNavigationOnClickListener {
-                if (!isProcessing) requireActivity().onBackPressed()
-            }
         }
         setupToolbar()
 
@@ -127,14 +90,6 @@ class CategorySelectFragment : RainbowCakeFragment<CategorySelectViewState, Cate
     override fun onDestroyView() {
         recyclerView.adapter = null
         super.onDestroyView()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            Timber.d("Preventing leaving the screen while job is running.")
-        }
     }
 
 }

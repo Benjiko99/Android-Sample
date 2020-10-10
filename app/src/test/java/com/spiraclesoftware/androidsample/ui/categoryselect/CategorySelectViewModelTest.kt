@@ -31,8 +31,7 @@ class CategorySelectViewModelTest : ViewModelTest() {
         vm.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
                 CategorySelect(
-                    MOCK_LIST_ITEMS,
-                    isProcessing = false
+                    MOCK_LIST_ITEMS
                 )
             )
         }

@@ -43,7 +43,6 @@
 
     <!-- Category Select -->
     <string name="category__select__title">Vyberte kategorii</string>
-    <string name="category__select__progress_processing">Zpracovává se…</string>
     <string name="category__select__progress_success">Kategorie změněna</string>
 
     <!-- Change language dialog -->
