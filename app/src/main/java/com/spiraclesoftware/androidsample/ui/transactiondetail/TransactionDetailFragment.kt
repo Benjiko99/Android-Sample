@@ -71,11 +71,14 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
             is NavigateToCategorySelectEvent -> {
                 findNavController().navigate(event.navDirections)
             }
+            is NavigateToCardDetailEvent -> {
+                showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
+            }
+            is DownloadStatementEvent -> {
+                showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
+            }
             is NotifyOfFailureEvent -> {
                 showToast(event.stringRes, Toast.LENGTH_LONG)
-            }
-            FeatureNotImplementedEvent -> {
-                showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
             }
         }
     }

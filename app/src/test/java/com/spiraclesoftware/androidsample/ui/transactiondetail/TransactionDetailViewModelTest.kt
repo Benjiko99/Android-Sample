@@ -139,16 +139,27 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `Clicking unimplemented card actions produces feature not implemented event`() = runBlockingTest {
+    fun `Clicking card description card action produces navigate to card detail event`() = runBlockingTest {
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
             vm.onCardActionClicked(R.id.card_action__card_detail)
+
+            eventsObserver.assertObserved(
+                NavigateToCardDetailEvent
+            )
+        }
+    }
+
+    @Test
+    fun `Clicking download statement card action produces download statement event`() = runBlockingTest {
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
+
+        vm.observeStateAndEvents { _, eventsObserver ->
             vm.onCardActionClicked(R.id.card_action__download_statement)
 
             eventsObserver.assertObserved(
-                FeatureNotImplementedEvent,
-                FeatureNotImplementedEvent
+                DownloadStatementEvent
             )
         }
     }

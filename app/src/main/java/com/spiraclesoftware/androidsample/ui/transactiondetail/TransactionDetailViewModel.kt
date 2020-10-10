@@ -26,7 +26,9 @@ class TransactionDetailViewModel(
 
     data class NotifyOfFailureEvent(val stringRes: Int) : OneShotEvent
 
-    object FeatureNotImplementedEvent : OneShotEvent
+    object NavigateToCardDetailEvent : OneShotEvent
+
+    object DownloadStatementEvent : OneShotEvent
 
     init {
         executeNonBlocking {
@@ -84,14 +86,20 @@ class TransactionDetailViewModel(
         postEvent(NavigateToCategorySelectEvent(navDirections))
     }
 
+    private fun openCardDetail() {
+        postEvent(NavigateToCardDetailEvent)
+    }
+
+    private fun downloadStatement() {
+        postEvent(DownloadStatementEvent)
+    }
+
     fun onCardActionClicked(actionId: Int) {
         when (actionId) {
-            R.id.card_action__change_note -> openNoteInput()
+            R.id.card_action__card_detail -> openCardDetail()
+            R.id.card_action__download_statement -> downloadStatement()
             R.id.card_action__change_category -> openCategorySelect()
-            R.id.card_action__card_detail,
-            R.id.card_action__download_statement -> {
-                postEvent(FeatureNotImplementedEvent)
-            }
+            R.id.card_action__change_note -> openNoteInput()
         }
     }
 
