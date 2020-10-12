@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        style="@style/AppTheme.CardView.Outlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentPadding="@dimen/content__spacing__medium">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/labelView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginRight="@dimen/content__spacing__small"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constrainedWidth="true"
+                android:text='@string/transaction__detail__attachments'
+                android:textAppearance="@style/TextAppearance.DetailItem.Label"
+                app:layout_constraintBottom_toBottomOf="@id/valueView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/valueView"
+                app:layout_constraintTop_toTopOf="@id/valueView" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/valueView"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="2dp"
+                android:text='@string/transaction__detail__attachments__add_photo'
+                android:textAppearance="@style/TextAppearance.DetailItem.Value"
+                app:icon="@drawable/ic_add_photo"
+                app:iconSize="18sp"
+                app:layout_constraintLeft_toRightOf="@id/labelView"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content__spacing__small"
+                android:orientation="horizontal"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelView"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/attachments_card_item__entry" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

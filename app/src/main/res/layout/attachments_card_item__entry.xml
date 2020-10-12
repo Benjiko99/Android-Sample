@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/photoCard"
+            android:layout_width="@dimen/icon__xlarge"
+            android:layout_height="@dimen/icon__xlarge"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            app:cardCornerRadius="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/card_outline"
+            app:strokeWidth="1dp">
+
+            <ImageView
+                android:id="@+id/photoView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                tools:src="@drawable/ic_launcher_background" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageView
+            android:id="@+id/removeButton"
+            android:layout_width="@dimen/icon__small"
+            android:layout_height="@dimen/icon__small"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_remove_photo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/blue_700" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
