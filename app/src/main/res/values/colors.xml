@@ -5,6 +5,8 @@
     ~ Application Colors
     -->
 
+    <color name="colorBackground">#f7f7f7</color>
+
     <!-- Transaction Categories -->
     <color name="transaction_category__entertainment">#ff0000</color>
     <color name="transaction_category__restaurants">#7cb342</color>
