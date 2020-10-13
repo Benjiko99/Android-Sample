@@ -9,14 +9,11 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/AppBarLayout">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            style="@style/AppTheme.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            style="@style/Toolbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -26,7 +23,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/edge__margin"
@@ -45,10 +42,7 @@
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/saveButton"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab__margin"
+            style="@style/ExtendedFloatingActionButton"
             android:text="@string/input__save_changes"
             app:icon="@drawable/ic_edit_note"
             app:layout_constraintBottom_toBottomOf="parent"

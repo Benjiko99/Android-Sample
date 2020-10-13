@@ -8,16 +8,13 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/AppBarLayout"
         app:liftOnScroll="true"
         app:liftOnScrollTargetViewId="@id/scrollView">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            style="@style/AppTheme.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            style="@style/Toolbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

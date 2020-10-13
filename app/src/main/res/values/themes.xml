@@ -14,12 +14,6 @@
         <item name="toolbarNavigationButtonStyle">@style/AppTheme.Toolbar.Button.Navigation</item>
     </style>
 
-    <style name="AppTheme.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
-        <item name="android:theme">@style/AppTheme.ThemeOverlay.Toolbar</item>
-        <item name="android:background">?android:colorBackground</item>
-        <item name="titleTextColor">?toolbarTextColor</item>
-    </style>
-
     <style name="AppTheme.ThemeOverlay.Toolbar" parent="">
         <item name="colorControlNormal">?toolbarTextColor</item>
         <item name="actionMenuTextColor">?toolbarTextColor</item>

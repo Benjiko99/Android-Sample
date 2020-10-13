@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:theme">@style/AppTheme.ThemeOverlay.Toolbar</item>
+        <item name="android:background">?android:colorBackground</item>
+        <item name="titleTextColor">?toolbarTextColor</item>
+    </style>
+
+    <style name="ExtendedFloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/fab__margin</item>
+    </style>
+
 </resources>
