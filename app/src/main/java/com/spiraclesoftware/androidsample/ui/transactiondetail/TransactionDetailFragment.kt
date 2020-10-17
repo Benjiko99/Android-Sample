@@ -65,10 +65,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
 
     override fun onEvent(event: OneShotEvent) {
         when (event) {
-            is NavigateToNoteInputEvent -> {
-                findNavController().navigate(event.navDirections)
-            }
-            is NavigateToCategorySelectEvent -> {
+            is NavigateEvent -> {
                 findNavController().navigate(event.navDirections)
             }
             is NavigateToCardDetailEvent -> {
@@ -108,37 +105,20 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         iconView.background = tintedDrawable(R.drawable.shp_circle, fadedTint)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setFragmentResultListener(NOTE_INPUT_REQUEST_KEY) { _, bundle ->
+            val note = bundle.getString(TextInputFragment.RESULT_KEY)
+            viewModel.onNoteChanged(note.orEmpty())
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fun setupToolbar() {
-            toolbar.setupWithNavController(findNavController())
-            DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
-                toolbar.height + nameView.height
-            }
-        }
         setupToolbar()
-
-        fun setupFastItemAdapter() {
-            itemAdapter = ItemAdapter.items()
-            fastAdapter = FastAdapter.with(itemAdapter)
-            // prevent the item's view from being clickable
-            fastAdapter.attachDefaultListeners = false
-        }
         setupFastItemAdapter()
-
-        fun setupRecyclerView() {
-            recyclerView.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = fastAdapter
-                itemAnimator = null
-                addItemDecoration(
-                    LinearMarginDecoration.createVertical(
-                        verticalMargin = dpToPx(16)
-                    )
-                )
-            }
-        }
         setupRecyclerView()
     }
 
@@ -147,12 +127,30 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         super.onDestroyView()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private fun setupToolbar() {
+        toolbar.setupWithNavController(findNavController())
+        DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
+            toolbar.height + nameView.height
+        }
+    }
 
-        setFragmentResultListener(NOTE_INPUT_REQUEST_KEY) { _, bundle ->
-            val note = bundle.getString(TextInputFragment.RESULT_KEY)
-            viewModel.onNoteChanged(note.orEmpty())
+    private fun setupFastItemAdapter() {
+        itemAdapter = ItemAdapter.items()
+        fastAdapter = FastAdapter.with(itemAdapter)
+        // prevent the item's view from being clickable
+        fastAdapter.attachDefaultListeners = false
+    }
+
+    private fun setupRecyclerView() {
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = fastAdapter
+            itemAnimator = null
+            addItemDecoration(
+                LinearMarginDecoration.createVertical(
+                    verticalMargin = dpToPx(16)
+                )
+            )
         }
     }
 

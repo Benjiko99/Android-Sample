@@ -29,9 +29,8 @@ class ValuePairCardItem(
 
     override val type = R.id.value_pair_card_item
 
-    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?): ValuePairCardItemBinding {
-        return ValuePairCardItemBinding.inflate(inflater, parent, false)
-    }
+    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        ValuePairCardItemBinding.inflate(inflater, parent, false)
 
     override fun bindView(binding: ValuePairCardItemBinding, payloads: List<Any>) {
         val ctx = binding.root.context

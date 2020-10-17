@@ -52,44 +52,44 @@ class CategorySelectFragment : RainbowCakeFragment<CategorySelectViewState, Cate
         }
     }
 
+    private fun onCategoryItemClicked(item: CategoryItem) {
+        viewModel.selectCategory(item.category)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fun setupToolbar() {
-            toolbar.setupWithNavController(findNavController())
-            DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
-        }
         setupToolbar()
-
-        fun setupFastItemAdapter() {
-            itemAdapter = ItemAdapter.items()
-            fastAdapter = FastAdapter.with(itemAdapter).apply {
-                setHasStableIds(true)
-            }
-            fastAdapter.onClickListener = { _, _, item, _ ->
-                when (item) {
-                    is CategoryItem -> {
-                        viewModel.selectCategory(item.category)
-                        true
-                    }
-                    else -> false
-                }
-            }
-        }
         setupFastItemAdapter()
-
-        fun setupRecyclerView() {
-            recyclerView.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = fastAdapter
-            }
-        }
         setupRecyclerView()
     }
 
     override fun onDestroyView() {
         recyclerView.adapter = null
         super.onDestroyView()
+    }
+
+    private fun setupToolbar() {
+        toolbar.setupWithNavController(findNavController())
+        DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
+    }
+
+    private fun setupFastItemAdapter() {
+        itemAdapter = ItemAdapter.items()
+        fastAdapter = FastAdapter.with(itemAdapter).apply {
+            setHasStableIds(true)
+        }
+        fastAdapter.onClickListener = { _, _, item, _ ->
+            if (item is CategoryItem) onCategoryItemClicked(item)
+            true
+        }
+    }
+
+    private fun setupRecyclerView() {
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = fastAdapter
+        }
     }
 
 }

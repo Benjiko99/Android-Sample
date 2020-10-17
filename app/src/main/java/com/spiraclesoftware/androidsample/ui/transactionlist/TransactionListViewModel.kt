@@ -1,11 +1,13 @@
 package com.spiraclesoftware.androidsample.ui.transactionlist
 
+import androidx.navigation.NavDirections
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.ALL
+import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragmentDirections.Companion.toTransactionDetail
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -16,9 +18,9 @@ class TransactionListViewModel(
     private val listPresenter: TransactionListPresenter
 ) : RainbowCakeViewModel<TransactionListViewState>(Loading) {
 
-    data class NavigateToDetailEvent(val id: TransactionId) : OneShotEvent
+    data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
 
-    object ShowLanguageChangeDialogEvent : OneShotEvent
+    object ShowLanguageChangeConfirmationEvent : OneShotEvent
 
     private var listFilterFlow = MutableStateFlow(TransactionListFilter(ALL))
 
@@ -60,12 +62,12 @@ class TransactionListViewModel(
         listPresenter.toggleLanguageAndRestart()
     }
 
-    fun showLanguageChangeDialog() {
-        postEvent(ShowLanguageChangeDialogEvent)
+    fun onLanguageChangeClicked() {
+        postEvent(ShowLanguageChangeConfirmationEvent)
     }
 
     fun onListItemClicked(id: TransactionId) {
-        postEvent(NavigateToDetailEvent(id))
+        postEvent(NavigateEvent(toTransactionDetail(id.value)))
     }
 
     fun setTransferDirectionFilter(directionFilter: TransferDirectionFilter) = execute {

@@ -20,9 +20,8 @@ import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
-import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragmentDirections.Companion.toTransactionDetail
-import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.NavigateToDetailEvent
-import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.ShowLanguageChangeDialogEvent
+import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.NavigateEvent
+import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.ShowLanguageChangeConfirmationEvent
 import com.spiraclesoftware.core.extensions.onItemSelected
 import com.spiraclesoftware.core.extensions.string
 import kotlinx.android.synthetic.main.error_with_retry.view.*
@@ -61,26 +60,36 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
 
     override fun onEvent(event: OneShotEvent) {
         when (event) {
-            is NavigateToDetailEvent -> {
-                findNavController().navigate(toTransactionDetail(event.id.value))
-            }
-            ShowLanguageChangeDialogEvent -> {
-                MaterialAlertDialogBuilder(requireContext())
-                    .setMessage(R.string.change_language__dialog__message)
-                    .setNegativeButton(R.string.change_language__dialog__cancel) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .setPositiveButton(R.string.change_language__dialog__confirm) { _, _ ->
-                        viewModel.toggleLanguage()
-                    }.show()
-            }
+            is NavigateEvent ->
+                findNavController().navigate(event.navDirections)
+            ShowLanguageChangeConfirmationEvent ->
+                showLanguageChangeConfirmation(onConfirmed = {
+                    viewModel.toggleLanguage()
+                })
         }
+    }
+
+    private fun onTransactionItemClicked(item: TransactionItem) {
+        viewModel.onListItemClicked(item.transaction.id)
+    }
+
+    private fun onFilterItemSelected(position: Int) {
+        val filter = TransferDirectionFilter.values()[position]
+        viewModel.setTransferDirectionFilter(filter)
+    }
+
+    private fun onSwipeToRefresh() {
+        viewModel.refreshTransactions()
+    }
+
+    private fun onRetryOnError() {
+        viewModel.refreshTransactions()
     }
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_change_language -> {
-                viewModel.showLanguageChangeDialog()
+                viewModel.onLanguageChangeClicked()
                 return true
             }
         }
@@ -90,70 +99,80 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fun setupToolbar() {
-            toolbar.setupWithNavController(findNavController())
-            DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
-                headerView.height
-            }
-
-            toolbar.inflateMenu(R.menu.transaction_list_menu)
-            toolbar.setOnMenuItemClickListener(::onMenuItemClicked)
-        }
         setupToolbar()
-
-        fun setupFastItemAdapter() {
-            itemAdapter = ItemAdapter.items()
-            fastAdapter = FastAdapter.with(itemAdapter).apply {
-                setHasStableIds(true)
-            }
-            fastAdapter.onClickListener = { _, _, item, _ ->
-                if (item is TransactionItem) {
-                    viewModel.onListItemClicked(item.transaction.id)
-                }
-                true
-            }
-        }
         setupFastItemAdapter()
-
-        fun setupRecyclerView() {
-            recyclerView.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = fastAdapter
-            }
-        }
         setupRecyclerView()
-
-        fun setupFilterSpinner() {
-            val adapterItems = TransferDirectionFilter.values().map { string(it.stringRes) }
-
-            filterSpinner.adapter = ArrayAdapter(
-                requireContext(),
-                R.layout.filter_spinner_item,
-                adapterItems
-            ).apply {
-                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            }
-
-            filterSpinner.onItemSelected { _, _, position, _ ->
-                val transferDirectionFilter = TransferDirectionFilter.values()[position]
-                viewModel.setTransferDirectionFilter(transferDirectionFilter)
-            }
-        }
         setupFilterSpinner()
-
-        fun setupSwipeRefreshLayout() {
-            swipeRefreshLayout.scrollUpChild = scrollView
-            swipeRefreshLayout.setProgressViewOffset(true, 120, 360)
-            swipeRefreshLayout.setOnRefreshListener { viewModel.refreshTransactions() }
-        }
         setupSwipeRefreshLayout()
-
-        errorLayout.retryButton.setOnClickListener { viewModel.refreshTransactions() }
+        setupErrorLayout()
     }
 
     override fun onDestroyView() {
         recyclerView.adapter = null
         super.onDestroyView()
+    }
+
+    private fun showLanguageChangeConfirmation(onConfirmed: () -> Unit) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(R.string.change_language__dialog__message)
+            .setNegativeButton(R.string.change_language__dialog__cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(R.string.change_language__dialog__confirm) { _, _ ->
+                onConfirmed()
+            }.show()
+    }
+
+    private fun setupToolbar() {
+        toolbar.setupWithNavController(findNavController())
+        DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
+            headerView.height
+        }
+
+        toolbar.inflateMenu(R.menu.transaction_list_menu)
+        toolbar.setOnMenuItemClickListener(::onMenuItemClicked)
+    }
+
+    private fun setupFastItemAdapter() {
+        itemAdapter = ItemAdapter.items()
+        fastAdapter = FastAdapter.with(itemAdapter).apply {
+            setHasStableIds(true)
+        }
+        fastAdapter.onClickListener = { _, _, item, _ ->
+            if (item is TransactionItem) onTransactionItemClicked(item)
+            true
+        }
+    }
+
+    private fun setupRecyclerView() {
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = fastAdapter
+        }
+    }
+
+    private fun setupFilterSpinner() {
+        val adapterItems = TransferDirectionFilter.values().map { string(it.stringRes) }
+
+        filterSpinner.adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.filter_spinner_item,
+            adapterItems
+        ).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+
+        filterSpinner.onItemSelected { _, _, position, _ -> onFilterItemSelected(position) }
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        swipeRefreshLayout.scrollUpChild = scrollView
+        swipeRefreshLayout.setProgressViewOffset(true, 120, 360)
+        swipeRefreshLayout.setOnRefreshListener { onSwipeToRefresh() }
+    }
+
+    private fun setupErrorLayout() {
+        errorLayout.retryButton.setOnClickListener { onRetryOnError() }
     }
 
 }

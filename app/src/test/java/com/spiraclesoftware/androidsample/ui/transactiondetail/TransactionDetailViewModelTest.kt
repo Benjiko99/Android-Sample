@@ -110,7 +110,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             )
 
             eventsObserver.assertObserved(
-                NavigateToNoteInputEvent(navDirections)
+                NavigateEvent(navDirections)
             )
         }
     }
@@ -132,7 +132,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             )
 
             eventsObserver.assertObserved(
-                NavigateToCategorySelectEvent(navDirections)
+                NavigateEvent(navDirections)
             )
         }
     }

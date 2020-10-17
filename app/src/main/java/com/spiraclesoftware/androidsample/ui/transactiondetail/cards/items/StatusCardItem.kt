@@ -22,9 +22,8 @@ class StatusCardItem(
 
     override val type = R.id.status_card_item
 
-    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?): StatusCardItemBinding {
-        return StatusCardItemBinding.inflate(inflater, parent, false)
-    }
+    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        StatusCardItemBinding.inflate(inflater, parent, false)
 
     override fun bindView(binding: StatusCardItemBinding, payloads: List<Any>) {
         val ctx = binding.root.context

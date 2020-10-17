@@ -21,9 +21,7 @@ class TransactionDetailViewModel(
     private val cardsPresenter: CardsPresenter
 ) : RainbowCakeViewModel<TransactionDetailViewState>(Loading), CardActionsHandler {
 
-    data class NavigateToNoteInputEvent(val navDirections: NavDirections) : OneShotEvent
-
-    data class NavigateToCategorySelectEvent(val navDirections: NavDirections) : OneShotEvent
+    data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
 
     object OpenAttachmentPickerEvent : OneShotEvent
 
@@ -78,7 +76,7 @@ class TransactionDetailViewModel(
             initialValue = detailPresenter.getNote(transactionId)
         )
 
-        postEvent(NavigateToNoteInputEvent(navDirections))
+        postEvent(NavigateEvent(navDirections))
     }
 
     private fun openCategorySelect() = execute {
@@ -86,7 +84,7 @@ class TransactionDetailViewModel(
             transactionId.value,
             initialCategory = detailPresenter.getCategory(transactionId)!!
         )
-        postEvent(NavigateToCategorySelectEvent(navDirections))
+        postEvent(NavigateEvent(navDirections))
     }
 
     private fun openAttachmentPicker() {

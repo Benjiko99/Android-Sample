@@ -21,9 +21,8 @@ class NoteCardItem(
 
     override val type = R.id.note_card_item
 
-    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?): NoteCardItemBinding {
-        return NoteCardItemBinding.inflate(inflater, parent, false)
-    }
+    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        NoteCardItemBinding.inflate(inflater, parent, false)
 
     override fun bindView(binding: NoteCardItemBinding, payloads: List<Any>) {
         val ctx = binding.root.context

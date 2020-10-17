@@ -42,14 +42,14 @@ class TextInputFragment : RainbowCakeFragment<TextInputViewState, TextInputViewM
         const val RESULT_KEY = "textInputResult"
     }
 
-    override fun getViewResource() = R.layout.text_input__fragment
-
     override fun provideViewModel(): TextInputViewModel =
         TextInputFragmentArgs.fromBundle(requireArguments()).let { args ->
             getViewModel {
                 parametersOf(args.strategyType, args.requestKey, args.initialValue)
             }
         }
+
+    override fun getViewResource() = R.layout.text_input__fragment
 
     override fun render(viewState: TextInputViewState) {
         when (viewState) {
