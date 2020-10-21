@@ -11,6 +11,7 @@ object Dependencies {
     const val stetho = "1.5.1"
     const val fastAdapter = "5.2.1"
     const val decorator = "1.2.0"
+    const val coil = "1.0.0-rc3"
     const val kotlin = "1.4.10"
     const val coroutines = "1.3.9"
     const val androidx = "1.1.0"

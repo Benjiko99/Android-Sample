@@ -90,6 +90,7 @@ dependencies {
     implementation("com.mikepenz:fastadapter-extensions-diff:${Dependencies.fastAdapter}")
     implementation("io.cabriole:decorator:${Dependencies.decorator}")
 
+    implementation("io.coil-kt:coil:${Dependencies.coil}")
     testImplementation("junit:junit:${Dependencies.junit}")
     testImplementation("androidx.arch.core:core-testing:${Dependencies.lifecycle}")
     testImplementation("androidx.fragment:fragment-testing:${Dependencies.androidxFragment}")

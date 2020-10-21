@@ -26,6 +26,7 @@
       <w>mockitokotlin</w>
       <w>nhaarman</w>
       <w>okhttp</w>
+      <w>parceler</w>
       <w>paypal</w>
       <w>rbrace</w>
       <w>serverless</w>
