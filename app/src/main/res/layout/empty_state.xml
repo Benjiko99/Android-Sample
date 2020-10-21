@@ -26,15 +26,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:minHeight="@dimen/empty_state"
+        android:minHeight="200dp"
         android:orientation="vertical"
-        android:padding="@dimen/content__spacing__medium"
+        android:padding="@dimen/content_spacing_2x"
         app:goneUnless="@{isShown}">
 
         <ImageView
-            android:layout_width="@dimen/empty_state"
-            android:layout_height="@dimen/empty_state"
-            android:layout_marginBottom="@dimen/content__spacing__medium"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="@dimen/content_spacing_2x"
             android:src="@{image}"
             app:goneUnless="@{image != null}"
             app:tint="?attr/colorAccent"
@@ -51,7 +51,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/content__spacing__medium"
+            android:layout_marginTop="@dimen/content_spacing_2x"
             android:gravity="center_horizontal"
             android:text="@{message}"
             android:textAppearance="@style/TextAppearance.EmptyState.Message"

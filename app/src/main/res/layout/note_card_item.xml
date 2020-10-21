@@ -20,7 +20,7 @@
         style="@style/AppTheme.CardView.Outlined"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contentPadding="@dimen/content__spacing__medium">
+        app:contentPadding="@dimen/content_spacing_2x">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:id="@+id/labelView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginRight="@dimen/content__spacing__small"
+                android:layout_marginRight="@dimen/content_spacing"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text='@string/transaction__detail__note'
@@ -63,7 +63,7 @@
                 android:id="@+id/noteView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content__spacing__small"
+                android:layout_marginTop="@dimen/content_spacing"
                 android:text='@{noteText}'
                 android:textAppearance="@style/TextAppearance.DetailItem.Value"
                 app:goneUnless="@{noteText != null}"

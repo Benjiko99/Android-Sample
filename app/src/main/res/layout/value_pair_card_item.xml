@@ -7,7 +7,7 @@
         style="@style/AppTheme.CardView.Outlined"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contentPadding="@dimen/content__spacing__medium">
+        app:contentPadding="@dimen/content_spacing_2x">
 
         <LinearLayout
             android:id="@+id/content"

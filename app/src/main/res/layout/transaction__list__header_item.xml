@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:colorBackground"
-    android:paddingLeft="@dimen/content__spacing__medium"
-    android:paddingTop="@dimen/content__spacing__medium"
-    android:paddingRight="@dimen/content__spacing__medium"
-    android:paddingBottom="@dimen/content__spacing__medium">
+    android:paddingLeft="@dimen/content_spacing_2x"
+    android:paddingTop="@dimen/content_spacing_2x"
+    android:paddingRight="@dimen/content_spacing_2x"
+    android:paddingBottom="@dimen/content_spacing_2x">
 
     <TextView
         android:id="@+id/dateView"

@@ -17,7 +17,7 @@
     <style name="ExtendedFloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/fab__margin</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
     </style>
 
 </resources>

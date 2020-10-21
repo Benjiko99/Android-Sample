@@ -60,7 +60,7 @@ class ValuePairCardItem(
             }
 
             // Add a margin between value-pairs
-            if (index > 0) pb.root.topMargin = ctx.dimen(R.dimen.content__spacing__medium)
+            if (index > 0) pb.root.topMargin = ctx.dimen(R.dimen.content_spacing_2x)
 
             binding.content.addView(pb.root)
         }

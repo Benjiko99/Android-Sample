@@ -28,14 +28,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/edge__margin"
-            android:paddingRight="@dimen/edge__margin"
-            android:paddingBottom="@dimen/edge__margin">
+            android:paddingLeft="@dimen/edge_margin"
+            android:paddingRight="@dimen/edge_margin"
+            android:paddingBottom="@dimen/edge_margin">
 
             <ImageView
                 android:id="@+id/iconView"
-                android:layout_width="@dimen/icon__xlarge"
-                android:layout_height="@dimen/icon__xlarge"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:contentDescription="@null"
                 android:padding="10dp"
                 app:layout_constraintRight_toRightOf="parent"
@@ -49,7 +49,7 @@
                 android:id="@+id/amountView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/content__spacing__medium"
+                android:layout_marginRight="@dimen/content_spacing_2x"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.ScreenHeader"
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="@dimen/content__spacing__medium"
+                android:layout_marginRight="@dimen/content_spacing_2x"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.Transaction.Name"
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:layout_marginRight="@dimen/content__spacing__medium"
+                android:layout_marginRight="@dimen/content_spacing_2x"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.Transaction.Date"

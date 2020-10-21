@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="edge__margin">16dp</dimen>
-    <dimen name="fab__margin">16dp</dimen>
+    <dimen name="content_spacing">8dp</dimen>
+    <dimen name="content_spacing_2x">16dp</dimen>
 
-    <dimen name="content__spacing__small">8dp</dimen>
-    <dimen name="content__spacing__medium">16dp</dimen>
-
-    <dimen name="appbar__height__tall">150dp</dimen>
-
-    <dimen name="icon__xlarge">56dp</dimen>
-    <dimen name="icon__large">40dp</dimen>
-    <dimen name="icon__small">18dp</dimen>
-
-    <dimen name="empty_state">200dp</dimen>
+    <dimen name="edge_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

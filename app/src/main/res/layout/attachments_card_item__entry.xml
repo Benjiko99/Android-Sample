@@ -9,8 +9,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/photoCard"
-            android:layout_width="@dimen/icon__xlarge"
-            android:layout_height="@dimen/icon__xlarge"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
             app:cardCornerRadius="6dp"
@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/removeButton"
-            android:layout_width="@dimen/icon__small"
-            android:layout_height="@dimen/icon__small"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:contentDescription="@null"
             android:src="@drawable/ic_remove_photo"
             app:layout_constraintRight_toRightOf="parent"

@@ -27,7 +27,7 @@
             android:id="@+id/labelView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginRight="@dimen/content__spacing__small"
+            android:layout_marginRight="@dimen/content_spacing"
             android:ellipsize="end"
             android:maxLines="1"
             android:text='@{labelText}'
