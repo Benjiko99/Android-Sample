@@ -24,10 +24,6 @@ class ValuePairCardBuilder {
         valuePairs += ValuePairs.Category()
     }
 
-    fun attachments() {
-        valuePairs += ValuePairs.Attachments()
-    }
-
     fun build() = ValuePairCard(valuePairs)
 
     fun isValid() = valuePairs.isNotEmpty()
@@ -38,10 +34,6 @@ class ValuePairCardBuilder {
 class CardsBuilder {
 
     private val cards = mutableListOf<Card>()
-
-    operator fun Card.unaryPlus() {
-        cards += this
-    }
 
     fun valuePairCard(setup: ValuePairCardBuilder.() -> Unit = {}) {
         val cardBuilder = ValuePairCardBuilder()
@@ -56,7 +48,11 @@ class CardsBuilder {
         cards += StatusCard
     }
 
-    fun noteToSelfCard() {
+    fun attachmentsCard() {
+        cards += AttachmentsCard
+    }
+
+    fun noteCard() {
         cards += NoteCard
     }
 
@@ -72,6 +68,10 @@ class CardsBuilder {
         message = "Cards can't be nested."
     )
     fun cards(param: () -> Unit = {}) {
+    }
+
+    operator fun Card.unaryPlus() {
+        cards += this
     }
 
 }

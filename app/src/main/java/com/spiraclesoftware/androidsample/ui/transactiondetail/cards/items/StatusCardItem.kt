@@ -4,15 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.StatusCardItemBinding
-import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatus
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
-import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.StatusCard
 import com.spiraclesoftware.core.extensions.string
 
 class StatusCardItem(
-    private val card: StatusCard,
-    private val transaction: Transaction
+    private val data: Data
 ) : CardItem<StatusCardItemBinding>() {
 
     data class Data(
@@ -27,8 +24,10 @@ class StatusCardItem(
 
     override fun bindView(binding: StatusCardItemBinding, payloads: List<Any>) {
         val ctx = binding.root.context
-        val data = card.toItemData(transaction)
-        binding.bodyText = ctx.string(data.status.stringRes) + " ∙ " + ctx.string(data.statusCode.stringRes!!)
+
+        val status = ctx.string(data.status.stringRes)
+        val statusCode = ctx.string(data.statusCode.stringRes!!)
+        binding.bodyText = "$status ∙ $statusCode"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -38,16 +37,14 @@ class StatusCardItem(
 
         other as StatusCardItem
 
-        if (card != other.card) return false
-        if (transaction != other.transaction) return false
+        if (data != other.data) return false
 
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + card.hashCode()
-        result = 31 * result + transaction.hashCode()
+        result = 31 * result + data.hashCode()
         return result
     }
 

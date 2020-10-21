@@ -23,8 +23,6 @@ class TransactionDetailViewModel(
 
     data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
 
-    object OpenAttachmentPickerEvent : OneShotEvent
-
     object NavigateToCardDetailEvent : OneShotEvent
 
     object DownloadStatementEvent : OneShotEvent
@@ -60,6 +58,14 @@ class TransactionDetailViewModel(
             }
         }
 
+    override fun onOpenCardDetail() = openCardDetail()
+
+    override fun onDownloadStatement() = downloadStatement()
+
+    override fun onSelectCategory() = openCategorySelect()
+
+    override fun onChangeNote() = openNoteInput()
+
     fun onNoteChanged(note: String) = executeNonBlocking {
         try {
             detailPresenter.updateNote(transactionId, note)
@@ -67,6 +73,22 @@ class TransactionDetailViewModel(
             Timber.e(e)
             postEvent(NotifyOfFailureEvent(R.string.unknown_error))
         }
+    }
+
+    private fun downloadStatement() {
+        postEvent(DownloadStatementEvent)
+    }
+
+    private fun openCardDetail() {
+        postEvent(NavigateToCardDetailEvent)
+    }
+
+    private fun openCategorySelect() = execute {
+        val navDirections = toCategorySelect(
+            transactionId.value,
+            initialCategory = detailPresenter.getCategory(transactionId)!!
+        )
+        postEvent(NavigateEvent(navDirections))
     }
 
     private fun openNoteInput() = execute {
@@ -79,33 +101,4 @@ class TransactionDetailViewModel(
         postEvent(NavigateEvent(navDirections))
     }
 
-    private fun openCategorySelect() = execute {
-        val navDirections = toCategorySelect(
-            transactionId.value,
-            initialCategory = detailPresenter.getCategory(transactionId)!!
-        )
-        postEvent(NavigateEvent(navDirections))
-    }
-
-    private fun openAttachmentPicker() {
-        postEvent(OpenAttachmentPickerEvent)
-    }
-
-    private fun openCardDetail() {
-        postEvent(NavigateToCardDetailEvent)
-    }
-
-    private fun downloadStatement() {
-        postEvent(DownloadStatementEvent)
-    }
-
-    override fun onCardAction() = openCardDetail()
-
-    override fun onStatementAction() = downloadStatement()
-
-    override fun onCategoryAction() = openCategorySelect()
-
-    override fun onAttachmentAction() = openAttachmentPicker()
-
-    override fun onNoteAction() = openNoteInput()
 }

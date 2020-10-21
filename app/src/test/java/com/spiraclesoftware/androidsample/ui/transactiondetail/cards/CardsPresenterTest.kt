@@ -33,7 +33,7 @@ class CardsPresenterTest : PresenterTest() {
 
         assert(cards[0] is ValuePairCard)
         assert(cards[1] is ValuePairCard)
-        assert(cards[2] is ValuePairCard)
+        assert(cards[2] is AttachmentsCard)
         assert(cards[3] is NoteCard)
 
         ((cards[0] as ValuePairCard).valuePairs).let { valuePairs ->
@@ -43,8 +43,6 @@ class CardsPresenterTest : PresenterTest() {
         }
 
         assert((cards[1] as ValuePairCard).valuePairs[0] is ValuePairs.Category)
-
-        assert((cards[2] as ValuePairCard).valuePairs[0] is ValuePairs.Attachments)
     }
 
 }

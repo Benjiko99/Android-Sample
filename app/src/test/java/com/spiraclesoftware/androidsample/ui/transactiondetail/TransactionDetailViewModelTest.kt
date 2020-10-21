@@ -101,7 +101,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
-            vm.onNoteAction()
+            vm.onChangeNote()
 
             val navDirections = toTextInput(
                 TextInputType.NOTE,
@@ -124,7 +124,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
-            vm.onCategoryAction()
+            vm.onSelectCategory()
 
             val navDirections = toCategorySelect(
                 1,
@@ -142,7 +142,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
-            vm.onCardAction()
+            vm.onOpenCardDetail()
 
             eventsObserver.assertObserved(
                 NavigateToCardDetailEvent
@@ -155,7 +155,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
-            vm.onStatementAction()
+            vm.onDownloadStatement()
 
             eventsObserver.assertObserved(
                 DownloadStatementEvent

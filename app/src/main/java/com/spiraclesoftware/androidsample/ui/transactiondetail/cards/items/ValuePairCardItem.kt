@@ -1,29 +1,25 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items
 
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemBinding
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemEntryBinding
-import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardActionsHandler
-import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.ValuePairCard
-import com.spiraclesoftware.core.extensions.colorAttr
-import com.spiraclesoftware.core.extensions.dimen
-import com.spiraclesoftware.core.extensions.tintedDrawable
-import com.spiraclesoftware.core.extensions.topMargin
+import com.spiraclesoftware.core.extensions.*
+import com.spiraclesoftware.core.utils.StringHolder
 
 class ValuePairCardItem(
-    private val card: ValuePairCard,
-    private val transaction: Transaction,
+    private val data: List<Data>,
     private val actionsHandler: CardActionsHandler
 ) : CardItem<ValuePairCardItemBinding>() {
 
     data class Data(
-        val label: String,
-        val value: String? = null,
-        val icon: Drawable? = null,
+        @StringRes val label: Int,
+        val value: StringHolder,
+        @DrawableRes val icon: Int? = null,
         val onClickAction: ((CardActionsHandler) -> Unit)? = null
     )
 
@@ -36,27 +32,24 @@ class ValuePairCardItem(
         val ctx = binding.root.context
         binding.content.removeAllViews()
 
-        val itemData = card.toItemData(ctx, transaction)
-        itemData.forEachIndexed { index, data ->
+        data.forEachIndexed { index, data ->
             val pb = ValuePairCardItemEntryBinding.inflate(LayoutInflater.from(ctx), binding.content, false)
 
-            pb.labelText = data.label
-            pb.valueText = data.value
+            pb.labelText = ctx.string(data.label)
+            pb.valueText = data.value.getString(ctx)
 
             if (data.onClickAction != null) {
-                pb.valueView.setOnClickListener { data.onClickAction.invoke(actionsHandler) }
-                pb.valueView.isClickable = true
+                pb.valueView.onClick { data.onClickAction.invoke(actionsHandler) }
 
                 val tintColor = ctx.colorAttr(R.attr.colorPrimaryDark)
                 pb.valueView.setTextColor(tintColor)
-                pb.iconDrawable = data.icon?.tintedDrawable(tintColor)
+                pb.iconDrawable = ctx.drawable(data.icon)?.tintedDrawable(tintColor)
             } else {
-                pb.valueView.setOnClickListener(null)
-                pb.valueView.isClickable = false
+                pb.valueView.onClick(null)
 
                 val tintColor = ctx.colorAttr(android.R.attr.textColorPrimary)
                 pb.valueView.setTextColor(tintColor)
-                pb.iconDrawable = data.icon
+                pb.iconDrawable = ctx.drawable(data.icon)
             }
 
             // Add a margin between value-pairs
@@ -73,8 +66,7 @@ class ValuePairCardItem(
 
         other as ValuePairCardItem
 
-        if (card != other.card) return false
-        if (transaction != other.transaction) return false
+        if (data != other.data) return false
         if (actionsHandler != other.actionsHandler) return false
 
         return true
@@ -82,8 +74,7 @@ class ValuePairCardItem(
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + card.hashCode()
-        result = 31 * result + transaction.hashCode()
+        result = 31 * result + data.hashCode()
         result = 31 * result + actionsHandler.hashCode()
         return result
     }
