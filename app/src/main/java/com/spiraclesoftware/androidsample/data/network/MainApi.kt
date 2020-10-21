@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.data.network
 
-import com.spiraclesoftware.androidsample.data.network.model.TransactionsResponseWrapper
 import com.spiraclesoftware.androidsample.data.network.model.TransactionUpdateRequest
+import com.spiraclesoftware.androidsample.data.network.model.TransactionsResponseWrapper
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import retrofit2.http.*

@@ -35,7 +35,7 @@ class TransactionDetailViewModel(
     object RemoveAttachmentEvent : OneShotEvent
 
     object NotifyAttachmentsLimitReachedEvent : OneShotEvent
-    
+
     data class NotifyOfFailureEvent(val stringRes: Int) : OneShotEvent
 
     init {
@@ -121,7 +121,7 @@ class TransactionDetailViewModel(
     private fun openAttachmentPicker() {
         postEvent(OpenAttachmentPickerEvent)
     }
-    
+
     private fun openAttachmentViewer(url: String) = execute {
         val transaction = detailPresenter.getTransactionById(transactionId)!!
         val startPosition = transaction.attachments.indexOf(url)

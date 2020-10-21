@@ -63,9 +63,7 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             is NavigateEvent ->
                 findNavController().navigate(event.navDirections)
             ShowLanguageChangeConfirmationEvent ->
-                showLanguageChangeConfirmation(onConfirmed = {
-                    viewModel.toggleLanguage()
-                })
+                showLanguageChangeConfirmation(onConfirmed = { viewModel.toggleLanguage() })
         }
     }
 

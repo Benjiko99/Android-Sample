@@ -46,16 +46,18 @@ fun View.onClick(func: (() -> Unit)?) {
     if (func == null) {
         setOnClickListener(null)
         isClickable = false
+    } else {
+        setOnClickListener { func.invoke() }
     }
-    else setOnClickListener { func.invoke() }
 }
 
 fun View.onLongClick(func: (() -> Boolean)?) {
     if (func == null) {
         setOnLongClickListener(null)
         isLongClickable = false
+    } else {
+        setOnLongClickListener { func.invoke() }
     }
-    else setOnLongClickListener { func.invoke() }
 }
 //endregion
 

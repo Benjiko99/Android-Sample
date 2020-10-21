@@ -1,6 +1,6 @@
 object Dependencies {
 
-    const val kotlinter = "2.4.0"
+    const val kotlinter = "3.2.0"
     const val koin = "2.2.0-rc-1"
     const val rainbowCake = "1.1.0"
     const val threetenabp = "1.2.4"

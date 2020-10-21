@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.ui.textinput.strategy
 
-import com.spiraclesoftware.androidsample.ui.textinput.ValidationError
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputType
+import com.spiraclesoftware.androidsample.ui.textinput.ValidationError
 
 interface TextInputStrategy {
 
