@@ -4,23 +4,13 @@ import co.zsmb.rainbowcake.withIOContext
 import com.spiraclesoftware.androidsample.data.network.model.TransactionUpdateRequest
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
-import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class TransactionDetailPresenter(
     private val transactionsInteractor: TransactionsInteractor
 ) {
-
-    fun isSuccessful(transaction: Transaction): Boolean {
-        return TransactionsPolicy.isSuccessful(transaction)
-    }
-
-    fun contributesToBalance(transaction: Transaction): Boolean {
-        return TransactionsPolicy.contributesToBalance(transaction)
-    }
 
     suspend fun getTransactionById(id: TransactionId) = withIOContext {
         transactionsInteractor.getTransactionById(id)
@@ -41,6 +31,10 @@ class TransactionDetailPresenter(
     suspend fun updateNote(id: TransactionId, note: String) = withIOContext {
         val request = TransactionUpdateRequest(noteToSelf = note)
         transactionsInteractor.updateTransaction(id, request)
+    }
+
+    suspend fun removeAttachment(id: TransactionId, url: String) = withIOContext {
+        // TODO: Deleting attachments
     }
 
 }

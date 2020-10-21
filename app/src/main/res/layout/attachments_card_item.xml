@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
@@ -23,16 +22,16 @@
                 android:layout_marginRight="@dimen/content_spacing"
                 android:ellipsize="end"
                 android:maxLines="1"
-                app:layout_constrainedWidth="true"
                 android:text='@string/transaction__detail__attachments'
                 android:textAppearance="@style/TextAppearance.DetailItem.Label"
-                app:layout_constraintBottom_toBottomOf="@id/valueView"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="@id/actionView"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/valueView"
-                app:layout_constraintTop_toTopOf="@id/valueView" />
+                app:layout_constraintRight_toLeftOf="@id/actionView"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/valueView"
+                android:id="@+id/actionView"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,18 +49,22 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="0dp"
+            <HorizontalScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content__spacing__small"
-                android:orientation="horizontal"
-                app:layout_constrainedWidth="true"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/labelView"
-                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/attachments_card_item__entry" />
+                android:layout_marginTop="@dimen/content_spacing"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/content_spacing_2x"
+                app:layout_constraintTop_toBottomOf="@id/labelView">
+
+                <LinearLayout
+                    android:id="@+id/container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+
+            </HorizontalScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

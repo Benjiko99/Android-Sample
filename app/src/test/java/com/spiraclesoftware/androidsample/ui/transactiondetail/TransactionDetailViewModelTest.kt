@@ -49,13 +49,8 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
     @Test
     fun `Data is loaded correctly from presenter and leads to ready state`() = runBlockingTest {
-        val contributesToBalance = true
-        val isSuccessful = true
-
         whenever(detailPresenter.flowTransactionById(any())) doReturn flowOf(MOCK_TRANSACTION)
         whenever(cardsPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
-        whenever(detailPresenter.contributesToBalance(any())) doReturn contributesToBalance
-        whenever(detailPresenter.isSuccessful(any())) doReturn isSuccessful
 
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
@@ -65,8 +60,8 @@ class TransactionDetailViewModelTest : ViewModelTest() {
                     MOCK_TRANSACTION.name,
                     MOCK_TRANSACTION.processingDate,
                     MoneyFormat(MOCK_TRANSACTION.signedMoney).format(MOCK_TRANSACTION),
-                    contributesToBalance,
-                    isSuccessful,
+                    contributesToBalance = true,
+                    isSuccessful = true,
                     MOCK_TRANSACTION.category,
                     MOCK_CARD_ITEMS
                 )
@@ -77,7 +72,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     @Test
     fun `Presenter error when loading data leads to error state`() = runBlockingTest {
         whenever(detailPresenter.flowTransactionById(any())).thenReturn(flowOf(MOCK_TRANSACTION))
-        whenever(detailPresenter.isSuccessful(any())).thenThrow()
+        whenever(cardsPresenter.getCardItems(any(), any())).thenThrow()
 
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 

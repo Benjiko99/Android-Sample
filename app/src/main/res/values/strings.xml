@@ -40,6 +40,7 @@
     <string name="transaction__detail__category">Category</string>
     <string name="transaction__detail__attachments">Attachments</string>
     <string name="transaction__detail__attachments__add_photo">Add photo</string>
+    <string name="transaction__detail__attachments__error_limit_reached">Can\'t add any more attachments</string>
     <string name="transaction__detail__note">Note</string>
     <string name="transaction__detail__note__edit">Edit</string>
     <string name="transaction__detail__note__add">Add note</string>

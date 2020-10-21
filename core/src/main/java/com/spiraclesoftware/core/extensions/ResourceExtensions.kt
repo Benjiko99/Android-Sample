@@ -30,7 +30,8 @@ fun Resources.dpToPx(@Dimension(unit = Dimension.DP) dp: Float): Float {
 //endregion
 
 //region Context
-fun Context.drawable(@DrawableRes resId: Int): Drawable? {
+fun Context.drawable(@DrawableRes resId: Int?): Drawable? {
+    if (resId == null) return null
     return ContextCompat.getDrawable(this, resId)
 }
 

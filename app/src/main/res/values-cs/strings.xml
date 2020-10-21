@@ -39,6 +39,7 @@
     <string name="transaction__detail__category">Kategorie</string>
     <string name="transaction__detail__attachments">Přílohy</string>
     <string name="transaction__detail__attachments__add_photo">Přidat fotku</string>
+    <string name="transaction__detail__attachments__error_limit_reached">Nelze přidat žádné další přílohy</string>
     <string name="transaction__detail__note">Poznámka</string>
     <string name="transaction__detail__note__edit">Upravit</string>
     <string name="transaction__detail__note__add">Přidat poznámku</string>

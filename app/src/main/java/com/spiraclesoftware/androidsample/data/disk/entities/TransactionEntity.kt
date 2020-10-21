@@ -18,6 +18,7 @@ class TransactionEntity(
     val category: TransactionCategory,
     val status: TransactionStatus,
     val statusCode: TransactionStatusCode,
+    val attachments: List<String>,
     val cardDescription: String? = null,
     val noteToSelf: String? = null
 )
@@ -32,6 +33,7 @@ fun TransactionEntity.toDomain(): Transaction {
         category = category,
         status = status,
         statusCode = statusCode,
+        attachments = attachments,
         cardDescription = cardDescription,
         noteToSelf = noteToSelf
     )
@@ -47,6 +49,7 @@ fun Transaction.toRoomEntity(): TransactionEntity {
         category = category,
         status = status,
         statusCode = statusCode,
+        attachments = attachments,
         cardDescription = cardDescription,
         noteToSelf = noteToSelf
     )

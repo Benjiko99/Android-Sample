@@ -43,11 +43,19 @@ fun TextView.removePaintFlag(flag: Int) {
 
 //region Click Listeners
 fun View.onClick(func: (() -> Unit)?) {
-    setOnClickListener { func?.invoke() }
+    if (func == null) {
+        setOnClickListener(null)
+        isClickable = false
+    }
+    else setOnClickListener { func.invoke() }
 }
 
 fun View.onLongClick(func: (() -> Boolean)?) {
-    setOnLongClickListener { func?.invoke() == true }
+    if (func == null) {
+        setOnLongClickListener(null)
+        isLongClickable = false
+    }
+    else setOnLongClickListener { func.invoke() }
 }
 //endregion
 

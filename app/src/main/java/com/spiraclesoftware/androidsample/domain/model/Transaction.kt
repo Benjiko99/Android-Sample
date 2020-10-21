@@ -12,6 +12,7 @@ data class Transaction(
     val category: TransactionCategory,
     val status: TransactionStatus,
     val statusCode: TransactionStatusCode,
+    val attachments: List<String> = emptyList(),
     val cardDescription: String? = null,
     val noteToSelf: String? = null
 ) : Identifiable<TransactionId> {

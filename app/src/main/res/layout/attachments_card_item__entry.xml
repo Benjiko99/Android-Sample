@@ -14,6 +14,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
             app:cardCornerRadius="6dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -26,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@null"
+                android:scaleType="centerCrop"
                 tools:src="@drawable/ic_launcher_background" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -34,6 +36,7 @@
             android:id="@+id/removeButton"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:background="@drawable/shp_circle"
             android:contentDescription="@null"
             android:src="@drawable/ic_remove_photo"
             app:layout_constraintRight_toRightOf="parent"

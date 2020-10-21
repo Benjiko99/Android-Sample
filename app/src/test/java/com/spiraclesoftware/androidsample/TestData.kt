@@ -29,6 +29,7 @@ object TestData {
             TransactionCategory.ENTERTAINMENT,
             TransactionStatus.COMPLETED,
             TransactionStatusCode.SUCCESSFUL,
+            emptyList(),
             "VISA **9400",
             "Half-Life: Alyx"
         ),

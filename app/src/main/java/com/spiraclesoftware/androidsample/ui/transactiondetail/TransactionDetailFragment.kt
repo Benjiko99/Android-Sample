@@ -12,6 +12,8 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeFragment
+import coil.load
+import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericItemAdapter
@@ -24,6 +26,7 @@ import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputFragment
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.*
 import com.spiraclesoftware.core.extensions.*
+import com.stfalcon.imageviewer.StfalconImageViewer
 import io.cabriole.decorator.LinearMarginDecoration
 import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -76,6 +79,18 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
             }
             is OpenAttachmentPickerEvent -> {
                 showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
+            }
+            is RemoveAttachmentEvent -> {
+                showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
+            }
+            is OpenAttachmentViewerEvent -> {
+                StfalconImageViewer.Builder(context, event.images) { view, url -> view.load(url) }
+                    .withStartPosition(event.startPosition)
+                    .withHiddenStatusBar(false)
+                    .show()
+            }
+            is NotifyAttachmentsLimitReachedEvent -> {
+                showSnackbar(R.string.transaction__detail__attachments__error_limit_reached, Snackbar.LENGTH_LONG)
             }
             is NotifyOfFailureEvent -> {
                 showToast(event.stringRes, Toast.LENGTH_LONG)

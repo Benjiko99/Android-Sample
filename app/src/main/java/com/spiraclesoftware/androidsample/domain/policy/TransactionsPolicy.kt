@@ -14,6 +14,8 @@ class TransactionsPolicy(
     /** Methods that don't need injected dependencies go here */
     companion object {
 
+        private const val MAX_ATTACHMENTS = 3
+
         fun isSuccessful(transaction: Transaction): Boolean {
             val successful = transaction.statusCode == TransactionStatusCode.SUCCESSFUL
             val completed = transaction.status == TransactionStatus.COMPLETED
@@ -23,6 +25,9 @@ class TransactionsPolicy(
         fun contributesToBalance(transaction: Transaction): Boolean {
             return isSuccessful(transaction)
         }
+
+        fun isAttachmentsLimitReached(transaction: Transaction) =
+            transaction.attachments.size >= MAX_ATTACHMENTS
 
     }
 

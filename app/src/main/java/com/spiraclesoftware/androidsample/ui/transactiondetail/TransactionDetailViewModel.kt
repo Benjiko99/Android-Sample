@@ -5,6 +5,7 @@ import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputType
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
@@ -27,6 +28,14 @@ class TransactionDetailViewModel(
 
     object DownloadStatementEvent : OneShotEvent
 
+    object OpenAttachmentPickerEvent : OneShotEvent
+
+    data class OpenAttachmentViewerEvent(val images: List<String>, val startPosition: Int) : OneShotEvent
+
+    object RemoveAttachmentEvent : OneShotEvent
+
+    object NotifyAttachmentsLimitReachedEvent : OneShotEvent
+    
     data class NotifyOfFailureEvent(val stringRes: Int) : OneShotEvent
 
     init {
@@ -39,8 +48,8 @@ class TransactionDetailViewModel(
         detailPresenter.flowTransactionById(transactionId).collect { transaction ->
             viewState = try {
                 val cardItems = cardsPresenter.getCardItems(transaction!!, this)
-                val contributesToBalance = detailPresenter.contributesToBalance(transaction)
-                val isSuccessful = detailPresenter.isSuccessful(transaction)
+                val contributesToBalance = TransactionsPolicy.contributesToBalance(transaction)
+                val isSuccessful = TransactionsPolicy.isSuccessful(transaction)
                 val formattedMoney = MoneyFormat(transaction.signedMoney).format(transaction)
 
                 DetailReady(
@@ -64,6 +73,19 @@ class TransactionDetailViewModel(
 
     override fun onSelectCategory() = openCategorySelect()
 
+    override fun onAddAttachment() = execute {
+        val transaction = detailPresenter.getTransactionById(transactionId)!!
+        if (TransactionsPolicy.isAttachmentsLimitReached(transaction)) {
+            postEvent(NotifyAttachmentsLimitReachedEvent)
+            return@execute
+        }
+        openAttachmentPicker()
+    }
+
+    override fun onRemoveAttachment(url: String) = removeAttachment(url)
+
+    override fun onViewAttachment(url: String) = openAttachmentViewer(url)
+
     override fun onChangeNote() = openNoteInput()
 
     fun onNoteChanged(note: String) = executeNonBlocking {
@@ -73,6 +95,11 @@ class TransactionDetailViewModel(
             Timber.e(e)
             postEvent(NotifyOfFailureEvent(R.string.unknown_error))
         }
+    }
+
+    private fun removeAttachment(url: String) = execute {
+        detailPresenter.removeAttachment(transactionId, url)
+        postEvent(RemoveAttachmentEvent)
     }
 
     private fun downloadStatement() {
@@ -89,6 +116,16 @@ class TransactionDetailViewModel(
             initialCategory = detailPresenter.getCategory(transactionId)!!
         )
         postEvent(NavigateEvent(navDirections))
+    }
+
+    private fun openAttachmentPicker() {
+        postEvent(OpenAttachmentPickerEvent)
+    }
+    
+    private fun openAttachmentViewer(url: String) = execute {
+        val transaction = detailPresenter.getTransactionById(transactionId)!!
+        val startPosition = transaction.attachments.indexOf(url)
+        postEvent(OpenAttachmentViewerEvent(transaction.attachments, startPosition))
     }
 
     private fun openNoteInput() = execute {

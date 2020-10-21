@@ -22,6 +22,7 @@ class CardsPresenterTest : PresenterTest() {
             TransactionCategory.ENTERTAINMENT,
             TransactionStatus.COMPLETED,
             TransactionStatusCode.SUCCESSFUL,
+            emptyList(),
             "VISA **9400",
             "Note to self"
         )
