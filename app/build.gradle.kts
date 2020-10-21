@@ -91,6 +91,8 @@ dependencies {
     implementation("io.cabriole:decorator:${Dependencies.decorator}")
 
     implementation("io.coil-kt:coil:${Dependencies.coil}")
+    implementation("com.github.stfalcon:stfalcon-imageviewer:${Dependencies.imageViewer}")
+
     testImplementation("junit:junit:${Dependencies.junit}")
     testImplementation("androidx.arch.core:core-testing:${Dependencies.lifecycle}")
     testImplementation("androidx.fragment:fragment-testing:${Dependencies.androidxFragment}")
