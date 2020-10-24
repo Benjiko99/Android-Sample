@@ -41,7 +41,7 @@ class ValuePairCardItem(
             if (data.onClickAction != null) {
                 pb.valueView.onClick { data.onClickAction.invoke(actionsHandler) }
 
-                val tintColor = ctx.colorAttr(R.attr.colorPrimaryDark)
+                val tintColor = ctx.colorAttr(R.attr.colorPrimary)
                 pb.valueView.setTextColor(tintColor)
                 pb.iconDrawable = ctx.drawable(data.icon)?.tintedDrawable(tintColor)
             } else {
