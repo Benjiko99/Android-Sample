@@ -22,25 +22,24 @@ class CardsPresenter {
      * These describe details about the [Transaction] that can be shown to the user.
      */
     fun getCardsFor(transaction: Transaction) = cards {
-        if (!TransactionsPolicy.isSuccessful(transaction)) {
+        val isSuccessful = TransactionsPolicy.isSuccessful(transaction)
+        val hasCardDescription = !transaction.cardDescription.isNullOrEmpty()
+
+        if (!isSuccessful)
             statusCard()
-        }
 
         valuePairCard {
-            if (TransactionsPolicy.isSuccessful(transaction)) {
+            if (isSuccessful)
                 status()
-            }
 
-            if (!transaction.cardDescription.isNullOrEmpty()) {
-                paymentCard()
-            }
+            if (hasCardDescription)
+                cardDescription()
 
-            if (TransactionsPolicy.isSuccessful(transaction)) {
-                statement()
-            }
+            if (isSuccessful)
+                downloadStatement()
         }
 
-        if (TransactionsPolicy.isSuccessful(transaction)) {
+        if (isSuccessful) {
             categoryCard()
             attachmentsCard()
         }

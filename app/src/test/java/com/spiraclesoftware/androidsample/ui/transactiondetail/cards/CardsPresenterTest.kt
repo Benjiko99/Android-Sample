@@ -39,8 +39,8 @@ class CardsPresenterTest : PresenterTest() {
 
         ((cards[0] as ValuePairCard).valuePairs).let { valuePairs ->
             assert(valuePairs[0] is ValuePairs.Status)
-            assert(valuePairs[1] is ValuePairs.PaymentCard)
-            assert(valuePairs[2] is ValuePairs.Statement)
+            assert(valuePairs[1] is ValuePairs.CardDescription)
+            assert(valuePairs[2] is ValuePairs.DownloadStatement)
         }
     }
 

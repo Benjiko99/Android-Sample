@@ -12,13 +12,12 @@ class ValuePairCardBuilder {
         valuePairs += ValuePairs.Status()
     }
 
-    fun paymentCard() {
-        valuePairs += ValuePairs.PaymentCard()
+    fun cardDescription() {
+        valuePairs += ValuePairs.CardDescription()
     }
 
-    fun statement() {
-        valuePairs += ValuePairs.Statement()
-
+    fun downloadStatement() {
+        valuePairs += ValuePairs.DownloadStatement()
     }
 
     fun build() = ValuePairCard(valuePairs)

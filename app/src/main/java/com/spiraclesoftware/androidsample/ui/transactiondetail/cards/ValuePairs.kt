@@ -21,7 +21,7 @@ object ValuePairs {
 
     }
 
-    class PaymentCard : ValuePair() {
+    class CardDescription : ValuePair() {
 
         override fun toItemData(transaction: Transaction) =
             ValuePairCardItem.Data(
@@ -33,7 +33,7 @@ object ValuePairs {
 
     }
 
-    class Statement : ValuePair() {
+    class DownloadStatement : ValuePair() {
 
         override fun toItemData(transaction: Transaction) =
             ValuePairCardItem.Data(
