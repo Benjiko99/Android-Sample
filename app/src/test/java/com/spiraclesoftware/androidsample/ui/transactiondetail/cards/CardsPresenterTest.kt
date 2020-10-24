@@ -33,7 +33,7 @@ class CardsPresenterTest : PresenterTest() {
         assertEquals(4, cards.count())
 
         assert(cards[0] is ValuePairCard)
-        assert(cards[1] is ValuePairCard)
+        assert(cards[1] is CategoryCard)
         assert(cards[2] is AttachmentsCard)
         assert(cards[3] is NoteCard)
 
@@ -42,8 +42,6 @@ class CardsPresenterTest : PresenterTest() {
             assert(valuePairs[1] is ValuePairs.PaymentCard)
             assert(valuePairs[2] is ValuePairs.Statement)
         }
-
-        assert((cards[1] as ValuePairCard).valuePairs[0] is ValuePairs.Category)
     }
 
 }

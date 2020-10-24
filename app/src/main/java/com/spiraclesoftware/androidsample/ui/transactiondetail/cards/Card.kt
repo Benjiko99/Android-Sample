@@ -24,6 +24,15 @@ object StatusCard : Card() {
         )
 }
 
+object CategoryCard : Card() {
+
+    override fun toListItem(transaction: Transaction, actionsHandler: CardActionsHandler) =
+        CategoryCardItem(
+            CategoryCardItem.Data(transaction.category),
+            actionsHandler
+        )
+}
+
 object AttachmentsCard : Card() {
 
     override fun toListItem(transaction: Transaction, actionsHandler: CardActionsHandler) =

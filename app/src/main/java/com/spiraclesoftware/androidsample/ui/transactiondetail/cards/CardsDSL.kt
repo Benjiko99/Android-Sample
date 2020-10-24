@@ -18,10 +18,7 @@ class ValuePairCardBuilder {
 
     fun statement() {
         valuePairs += ValuePairs.Statement()
-    }
 
-    fun category() {
-        valuePairs += ValuePairs.Category()
     }
 
     fun build() = ValuePairCard(valuePairs)
@@ -46,6 +43,10 @@ class CardsBuilder {
 
     fun statusCard() {
         cards += StatusCard
+    }
+
+    fun categoryCard() {
+        cards += CategoryCard
     }
 
     fun attachmentsCard() {

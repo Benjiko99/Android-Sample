@@ -40,13 +40,8 @@ class CardsPresenter {
             }
         }
 
-        valuePairCard {
-            if (TransactionsPolicy.isSuccessful(transaction)) {
-                category()
-            }
-        }
-
         if (TransactionsPolicy.isSuccessful(transaction)) {
+            categoryCard()
             attachmentsCard()
         }
 

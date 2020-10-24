@@ -6,6 +6,7 @@
     <item name="transaction__list__header_item" type="id" />
     <item name="value_pair_card_item" type="id" />
     <item name="status_card_item" type="id" />
+    <item name="category_card_item" type="id" />
     <item name="attachments_card_item" type="id" />
     <item name="note_card_item" type="id" />
 

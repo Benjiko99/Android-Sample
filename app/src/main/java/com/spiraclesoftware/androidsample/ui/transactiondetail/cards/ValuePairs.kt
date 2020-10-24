@@ -45,16 +45,4 @@ object ValuePairs {
 
     }
 
-    class Category : ValuePair() {
-
-        override fun toItemData(transaction: Transaction) =
-            ValuePairCardItem.Data(
-                label = R.string.transaction__detail__category,
-                value = StringHolder(transaction.category.stringRes),
-                icon = transaction.category.drawableRes,
-                onClickAction = { it.onSelectCategory() }
-            )
-
-    }
-
 }
