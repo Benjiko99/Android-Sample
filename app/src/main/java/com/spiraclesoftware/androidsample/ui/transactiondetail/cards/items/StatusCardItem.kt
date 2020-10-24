@@ -17,6 +17,8 @@ class StatusCardItem(
         val statusCode: TransactionStatusCode
     )
 
+    override var identifier: Long = R.id.status_card_item.toLong()
+
     override val type = R.id.status_card_item
 
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =

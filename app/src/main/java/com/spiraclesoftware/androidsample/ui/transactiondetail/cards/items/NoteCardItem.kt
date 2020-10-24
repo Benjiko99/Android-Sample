@@ -17,6 +17,8 @@ class NoteCardItem(
         val note: String? = null
     )
 
+    override var identifier: Long = R.id.note_card_item.toLong()
+
     override val type = R.id.note_card_item
 
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =

@@ -18,6 +18,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
@@ -55,7 +56,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
 
         when (viewState) {
             is DetailReady -> {
-                itemAdapter.set(viewState.cardItems)
+                FastAdapterDiffUtil[itemAdapter] = viewState.cardItems
 
                 toolbar.title = viewState.name
                 nameView.text = viewState.name
@@ -148,7 +149,9 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
 
     private fun setupFastItemAdapter() {
         itemAdapter = ItemAdapter.items()
-        fastAdapter = FastAdapter.with(itemAdapter)
+        fastAdapter = FastAdapter.with(itemAdapter).apply {
+            setHasStableIds(true)
+        }
         // prevent the item's view from being clickable
         fastAdapter.attachDefaultListeners = false
     }

@@ -30,6 +30,17 @@ class StringHolder private constructor(
             textView?.text = text
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as StringHolder
+        if (text != other.text) return false
+        if (textRes != other.textRes) return false
+        return true
+    }
+
+    override fun hashCode() = 31 * (text?.hashCode() ?: 0) + textRes
+
 }
 
 fun TextView.setText(holder: StringHolder) {

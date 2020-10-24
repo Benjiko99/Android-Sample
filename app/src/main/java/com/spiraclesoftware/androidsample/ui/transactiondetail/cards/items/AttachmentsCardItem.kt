@@ -20,6 +20,8 @@ class AttachmentsCardItem(
         val attachments: List<String>
     )
 
+    override var identifier: Long = R.id.attachments_card_item.toLong()
+
     override val type = R.id.attachments_card_item
 
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =

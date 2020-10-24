@@ -23,6 +23,8 @@ class ValuePairCardItem(
         val onClickAction: ((CardActionsHandler) -> Unit)? = null
     )
 
+    override var identifier: Long = R.id.value_pair_card_item.toLong()
+
     override val type = R.id.value_pair_card_item
 
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =
