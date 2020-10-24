@@ -32,8 +32,6 @@ class TransactionDetailViewModel(
 
     data class OpenAttachmentViewerEvent(val images: List<String>, val startPosition: Int) : OneShotEvent
 
-    object RemoveAttachmentEvent : OneShotEvent
-
     object NotifyAttachmentsLimitReachedEvent : OneShotEvent
 
     data class NotifyOfFailureEvent(val stringRes: Int) : OneShotEvent
@@ -99,7 +97,6 @@ class TransactionDetailViewModel(
 
     private fun removeAttachment(url: String) = execute {
         detailPresenter.removeAttachment(transactionId, url)
-        postEvent(RemoveAttachmentEvent)
     }
 
     private fun downloadStatement() {

@@ -34,7 +34,7 @@ class TransactionDetailPresenter(
     }
 
     suspend fun removeAttachment(id: TransactionId, url: String) = withIOContext {
-        // TODO: Deleting attachments
+        transactionsInteractor.removeAttachment(id, url)
     }
 
 }

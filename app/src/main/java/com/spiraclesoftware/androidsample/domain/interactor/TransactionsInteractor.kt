@@ -32,4 +32,10 @@ class TransactionsInteractor(
             diskDataSource.updateTransaction(it)
         }
 
+    suspend fun removeAttachment(id: TransactionId, url: String) {
+        networkDataSource.removeAttachment(id, url).also {
+            diskDataSource.updateTransaction(it)
+        }
+    }
+
 }

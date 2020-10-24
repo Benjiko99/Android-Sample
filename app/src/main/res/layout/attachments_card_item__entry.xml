@@ -5,14 +5,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingRight="4dp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/photoCard"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -34,8 +35,8 @@
 
         <ImageView
             android:id="@+id/removeButton"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:background="@drawable/shp_circle"
             android:contentDescription="@null"
             android:src="@drawable/ic_remove_photo"

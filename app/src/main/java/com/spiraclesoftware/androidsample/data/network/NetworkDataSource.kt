@@ -38,4 +38,14 @@ class NetworkDataSource(
         //return mainApi.updateTransaction(id.value, request)
     }
 
+    suspend fun removeAttachment(id: TransactionId, url: String): Transaction {
+        // NOTE: We don't have a backend for this feature yet, pretend we got a successful response
+        val diskDataSource = inject(DiskDataSource::class.java).value
+        val transaction = diskDataSource.getTransactionById(id)
+        return transaction!!.copy(attachments = transaction.attachments.minus(url))
+
+        // TODO: Once we have a backend, use this code
+        //return mainApi.removeAttachment(id.value, url)
+    }
+
 }

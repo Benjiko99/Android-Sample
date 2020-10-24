@@ -80,9 +80,6 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
             is OpenAttachmentPickerEvent -> {
                 showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
             }
-            is RemoveAttachmentEvent -> {
-                showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
-            }
             is OpenAttachmentViewerEvent -> {
                 StfalconImageViewer.Builder(context, event.images) { view, url -> view.load(url) }
                     .withStartPosition(event.startPosition)
