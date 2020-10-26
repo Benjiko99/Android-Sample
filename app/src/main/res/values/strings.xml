@@ -49,6 +49,11 @@
     <string name="category__select__title">Select category</string>
     <string name="category__select__progress_success">Category changed</string>
 
+    <!-- Image Picker -->
+    <string name="image_picker__message">Take or select an image from the gallery.</string>
+    <string name="image_picker__take_picture">Take picture</string>
+    <string name="image_picker__from_gallery">From gallery</string>
+
     <!-- Change language dialog -->
     <string name="change_language">Change language</string>
     <string name="change_language__dialog__message">Change language to czech?</string>

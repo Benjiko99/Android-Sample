@@ -48,6 +48,11 @@
     <string name="category__select__title">Vyberte kategorii</string>
     <string name="category__select__progress_success">Kategorie změněna</string>
 
+    <!-- Image Picker -->
+    <string name="image_picker__message">Vyfoťte nebo vyberte obrázek z galerie.</string>
+    <string name="image_picker__take_picture">Vyfotit</string>
+    <string name="image_picker__from_gallery">Z galerie</string>
+
     <!-- Change language dialog -->
     <string name="change_language">Změnit jazyk</string>
     <string name="change_language__dialog__message">Změnit jazyk na angličtinu?</string>
