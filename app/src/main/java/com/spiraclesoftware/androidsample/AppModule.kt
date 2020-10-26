@@ -33,6 +33,7 @@ val appModule = module {
         Moshi.Builder()
             .add(BigDecimalAdapter())
             .add(CurrencyAdapter())
+            .add(HttpUrlAdapter())
             .add(ZonedDateTimeAdapter())
             .add(UniqueIdentifierAdapter())
             .add(ConversionRateListAdapter())

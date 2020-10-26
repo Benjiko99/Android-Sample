@@ -7,6 +7,7 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.domain.model.TransferDirection
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
+import okhttp3.HttpUrl
 import org.koin.java.KoinJavaComponent.inject
 import java.math.BigDecimal
 import java.util.*
@@ -26,7 +27,21 @@ class Converters {
 
     @TypeConverter
     fun toListOfString(value: String?): List<String>? =
-        if (value != null) moshi.adapter<List<String>?>().fromJson(value) else emptyList()
+        if (value != null)
+            moshi.adapter<List<String>?>().fromJson(value)
+        else
+            emptyList()
+
+    @TypeConverter
+    fun fromListOfHttpUrl(item: List<HttpUrl>?): String? =
+        moshi.adapter<List<HttpUrl>?>().toJson(item)
+
+    @TypeConverter
+    fun toListOfHttpUrl(value: String?): List<HttpUrl>? =
+        if (value != null)
+            moshi.adapter<List<HttpUrl>?>().fromJson(value)
+        else
+            emptyList()
 
     @TypeConverter
     fun toBigDecimal(value: String?) =
