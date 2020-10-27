@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
-@ExperimentalCoroutinesApi
+@OptIn(ExperimentalCoroutinesApi::class)
 class TransactionListViewModel(
     private val listPresenter: TransactionListPresenter
 ) : RainbowCakeViewModel<TransactionListViewState>(Loading) {

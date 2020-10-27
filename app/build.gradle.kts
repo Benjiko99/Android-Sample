@@ -27,6 +27,7 @@ android {
 
     kotlinOptions {
         jvmTarget = Application.targetCompat.toString()
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
 
     buildTypes {
@@ -66,11 +67,14 @@ dependencies {
     implementation("org.koin:koin-android:${Dependencies.koin}")
     implementation("org.koin:koin-androidx-viewmodel:${Dependencies.koin}")
 
+    implementation("com.squareup.moshi:moshi:${Dependencies.moshi}")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:${Dependencies.moshi}")
+
     implementation("com.squareup.okhttp3:okhttp:${Dependencies.okhttp}")
     implementation("com.squareup.okhttp3:logging-interceptor:${Dependencies.okhttp}")
 
     implementation("com.squareup.retrofit2:retrofit:${Dependencies.retrofit}")
-    implementation("com.squareup.retrofit2:converter-gson:${Dependencies.retrofit}")
+    implementation("com.squareup.retrofit2:converter-moshi:${Dependencies.retrofit}")
 
     implementation("androidx.navigation:navigation-fragment-ktx:${Dependencies.navigation}")
     implementation("androidx.navigation:navigation-ui-ktx:${Dependencies.navigation}")

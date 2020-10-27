@@ -15,6 +15,7 @@ import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.math.MathContext
@@ -46,7 +47,7 @@ class SampleApplication : Application() {
         }
 
         startKoin {
-            androidLogger()
+            androidLogger(Level.ERROR)
             androidContext(this@SampleApplication)
             modules(listOf(appModule, uiModule) + dataModules)
         }

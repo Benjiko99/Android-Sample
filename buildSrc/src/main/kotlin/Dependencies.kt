@@ -4,6 +4,7 @@ object Dependencies {
     const val koin = "2.2.0-rc-1"
     const val rainbowCake = "1.1.0"
     const val threetenabp = "1.2.4"
+    const val moshi = "1.11.0"
     const val okhttp = "4.7.2"
     const val retrofit = "2.9.0"
     const val leakCanary = "2.3"

@@ -1,25 +1,20 @@
 package com.spiraclesoftware.androidsample.data.network.adapter
 
-import com.google.gson.*
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.ToJson
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import java.lang.reflect.Type
 
-class ZonedDateTimeAdapter : JsonSerializer<ZonedDateTime>, JsonDeserializer<ZonedDateTime> {
+class ZonedDateTimeAdapter {
 
-    override fun serialize(
-        src: ZonedDateTime,
-        typeOfSrc: Type,
-        context: JsonSerializationContext
-    ): JsonElement {
-        return context.serialize(src.format(DateTimeFormatter.ISO_ZONED_DATE_TIME))
+    @FromJson
+    fun fromJson(json: String?): ZonedDateTime? {
+        return ZonedDateTime.parse(json)
     }
 
-    override fun deserialize(
-        json: JsonElement,
-        typeOfT: Type,
-        context: JsonDeserializationContext
-    ): ZonedDateTime {
-        return ZonedDateTime.parse(json.asString)
+    @ToJson
+    fun toJson(value: ZonedDateTime?): String? {
+        return value?.format(DateTimeFormatter.ISO_ZONED_DATE_TIME)
     }
+
 }

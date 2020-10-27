@@ -1,10 +1,13 @@
 package com.spiraclesoftware.androidsample.domain.model
 
+import com.squareup.moshi.JsonClass
+import org.threeten.bp.ZonedDateTime
 import java.util.*
 
+@JsonClass(generateAdapter = true)
 data class ConversionRates(
     val baseCurrency: Currency,
-    val validityDate: Date,
+    val validityDate: ZonedDateTime,
     val rates: List<ConversionRate>
 ) : Identifiable<CurrencyCode> {
 

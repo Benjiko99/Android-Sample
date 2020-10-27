@@ -1,34 +1,32 @@
 package com.spiraclesoftware.androidsample.data.disk
 
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatus
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.domain.model.TransferDirection
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapter
 import org.koin.java.KoinJavaComponent.inject
 import java.math.BigDecimal
 import java.util.*
 
+@OptIn(ExperimentalStdlibApi::class)
 class Converters {
 
-    private val gson by inject(Gson::class.java)
-
-    private inline fun <reified T> Gson.fromJson(json: String) =
-        fromJson<T>(json, object : TypeToken<T>() {}.type)
+    private val moshi by inject(Moshi::class.java)
 
     @TypeConverter
     fun fromEnum(item: Enum<*>?): String? =
         item?.name
 
     @TypeConverter
-    fun fromList(item: List<Any>?): String? =
-        gson.toJson(item)
+    fun fromListOfString(item: List<String>?): String? =
+        moshi.adapter<List<String>?>().toJson(item)
 
     @TypeConverter
     fun toListOfString(value: String?): List<String>? =
-        if (value != null) gson.fromJson(value) else emptyList()
+        if (value != null) moshi.adapter<List<String>?>().fromJson(value) else emptyList()
 
     @TypeConverter
     fun toBigDecimal(value: String?) =

@@ -1,8 +1,10 @@
 package com.spiraclesoftware.androidsample.domain.model
 
 import com.spiraclesoftware.androidsample.domain.policy.negate
+import com.squareup.moshi.JsonClass
 import org.threeten.bp.ZonedDateTime
 
+@JsonClass(generateAdapter = true)
 data class Transaction(
     val id: TransactionId,
     val name: String,

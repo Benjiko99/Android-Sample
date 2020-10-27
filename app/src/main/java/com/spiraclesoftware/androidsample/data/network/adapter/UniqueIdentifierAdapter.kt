@@ -1,33 +1,30 @@
 package com.spiraclesoftware.androidsample.data.network.adapter
 
-import com.google.gson.*
-import com.spiraclesoftware.androidsample.domain.model.UniqueIdentifier
-import java.lang.reflect.ParameterizedType
-import java.lang.reflect.Type
+import com.spiraclesoftware.androidsample.domain.model.CurrencyCode
+import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.ToJson
 
-/**
- * Serializes only the value of the [UniqueIdentifier].
- *
- * De-serializes a primitive value by wrapping it in a [UniqueIdentifier].
- */
-class UniqueIdentifierAdapter : JsonSerializer<UniqueIdentifier<*>>, JsonDeserializer<UniqueIdentifier<*>> {
+class UniqueIdentifierAdapter {
 
-    override fun serialize(
-        src: UniqueIdentifier<*>,
-        typeOfSrc: Type,
-        context: JsonSerializationContext
-    ): JsonElement {
-        return context.serialize(src.value)
+    @FromJson
+    fun fromJsonString(json: String?): CurrencyCode? {
+        return json?.let { CurrencyCode(json) }
     }
 
-    override fun deserialize(
-        json: JsonElement,
-        typeOfT: Type,
-        context: JsonDeserializationContext
-    ): UniqueIdentifier<*> {
-        val typeOfId = (typeOfT as ParameterizedType).actualTypeArguments[0]
-        val id = context.deserialize<Any>(json, typeOfId)
-
-        return UniqueIdentifier(id)
+    @ToJson
+    fun toJsonString(value: CurrencyCode?): String? {
+        return value?.value
     }
+
+    @FromJson
+    fun fromJsonInt(json: String?): TransactionId? {
+        return json?.let { TransactionId(json.toInt()) }
+    }
+
+    @ToJson
+    fun toJsonInt(value: TransactionId?): String? {
+        return value?.value.toString()
+    }
+
 }

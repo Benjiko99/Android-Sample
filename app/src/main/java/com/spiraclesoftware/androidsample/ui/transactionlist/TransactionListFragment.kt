@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.error_with_retry.view.*
 import kotlinx.android.synthetic.main.transaction__list__fragment.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
+@OptIn(ExperimentalCoroutinesApi::class)
 class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, TransactionListViewModel>() {
 
     override fun provideViewModel() = getViewModelFromFactory()

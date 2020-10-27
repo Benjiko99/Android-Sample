@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="unit tests" type="AndroidJUnit" factoryName="Android JUnit">
-    <module name="app" />
+    <module name="Android-Sample.app" />
     <useClassPathOnly />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="ALTERNATIVE_JRE_PATH" value="Android API 29 Platform" />

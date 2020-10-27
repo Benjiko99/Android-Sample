@@ -6,6 +6,7 @@
       <w>augend</w>
       <w>cabriole</w>
       <w>categoryselect</w>
+      <w>codegen</w>
       <w>constraintlayout</w>
       <w>databinding</w>
       <w>didn</w>
@@ -24,6 +25,7 @@
       <w>mikepenz</w>
       <w>mmmm</w>
       <w>mockitokotlin</w>
+      <w>moshi</w>
       <w>nhaarman</w>
       <w>okhttp</w>
       <w>parceler</w>
@@ -42,6 +44,7 @@
       <w>transactiondetail</w>
       <w>transactionlist</w>
       <w>viewmodel</w>
+      <w>xopt</w>
       <w>zsmb</w>
     </words>
   </dictionary>

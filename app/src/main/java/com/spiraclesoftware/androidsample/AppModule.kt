@@ -1,26 +1,18 @@
 package com.spiraclesoftware.androidsample
 
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.spiraclesoftware.androidsample.data.network.MainApi
-import com.spiraclesoftware.androidsample.data.network.adapter.ConversionRatesAdapter
-import com.spiraclesoftware.androidsample.data.network.adapter.MoneyAdapter
-import com.spiraclesoftware.androidsample.data.network.adapter.UniqueIdentifierAdapter
-import com.spiraclesoftware.androidsample.data.network.adapter.ZonedDateTimeAdapter
-import com.spiraclesoftware.androidsample.domain.model.ConversionRates
-import com.spiraclesoftware.androidsample.domain.model.Money
-import com.spiraclesoftware.androidsample.domain.model.UniqueIdentifier
+import com.spiraclesoftware.androidsample.data.network.adapter.*
 import com.spiraclesoftware.core.utils.LanguageManager
+import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import org.threeten.bp.ZonedDateTime
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
+@OptIn(ExperimentalStdlibApi::class)
 val appModule = module {
 
     single { androidApplication() as SampleApplication }
@@ -33,30 +25,18 @@ val appModule = module {
         Retrofit.Builder()
             .client(get() as OkHttpClient)
             .baseUrl(SampleApplication.API_SERVICE_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(get() as Gson))
+            .addConverterFactory(MoshiConverterFactory.create(get() as Moshi))
             .build()
     }
 
-    single<Gson> {
-        GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-            .registerTypeAdapter(
-                UniqueIdentifier::class.java,
-                UniqueIdentifierAdapter()
-            )
-            .registerTypeAdapter(
-                ZonedDateTime::class.java,
-                ZonedDateTimeAdapter()
-            )
-            .registerTypeAdapter(
-                Money::class.java,
-                MoneyAdapter()
-            )
-            .registerTypeAdapter(
-                ConversionRates::class.java,
-                ConversionRatesAdapter()
-            )
-            .create()
+    single<Moshi> {
+        Moshi.Builder()
+            .add(BigDecimalAdapter())
+            .add(CurrencyAdapter())
+            .add(ZonedDateTimeAdapter())
+            .add(UniqueIdentifierAdapter())
+            .add(ConversionRateListAdapter())
+            .build()
     }
 
     single {
