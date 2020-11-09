@@ -1,5 +1,6 @@
 package com.spiraclesoftware.androidsample.domain.interactor
 
+import android.net.Uri
 import com.spiraclesoftware.androidsample.data.disk.DiskDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
 import com.spiraclesoftware.androidsample.data.network.model.TransactionUpdateRequest
@@ -32,9 +33,19 @@ class TransactionsInteractor(
             diskDataSource.updateTransaction(it)
         }
 
-    suspend fun removeAttachment(id: TransactionId, url: String) {
-        networkDataSource.removeAttachment(id, url).also {
-            diskDataSource.updateTransaction(it)
+    suspend fun uploadAttachment(id: TransactionId, uri: Uri) {
+        networkDataSource.uploadAttachment(id, uri).also { uri ->
+            diskDataSource.updateTransaction(id) {
+                it.copy(attachments = it.attachments.plus(uri))
+            }
+        }
+    }
+
+    suspend fun removeAttachment(id: TransactionId, uri: Uri) {
+        networkDataSource.removeAttachment(id, uri).also {
+            diskDataSource.updateTransaction(id) {
+                it.copy(attachments = it.attachments.minus(uri))
+            }
         }
     }
 

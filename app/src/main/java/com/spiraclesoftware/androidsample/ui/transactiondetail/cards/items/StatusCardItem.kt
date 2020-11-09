@@ -10,7 +10,7 @@ import com.spiraclesoftware.core.extensions.string
 
 class StatusCardItem(
     private val data: Data
-) : CardItem<StatusCardItemBinding>() {
+) : BindingCardItem<StatusCardItemBinding>() {
 
     data class Data(
         val status: TransactionStatus,

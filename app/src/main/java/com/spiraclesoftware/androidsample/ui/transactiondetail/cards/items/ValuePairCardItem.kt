@@ -14,7 +14,7 @@ import com.spiraclesoftware.core.utils.StringHolder
 class ValuePairCardItem(
     private val data: List<Data>,
     private val actionsHandler: CardActionsHandler
-) : CardItem<ValuePairCardItemBinding>() {
+) : BindingCardItem<ValuePairCardItemBinding>() {
 
     data class Data(
         @StringRes val label: Int,

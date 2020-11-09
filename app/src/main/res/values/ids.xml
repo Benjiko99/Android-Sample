@@ -8,6 +8,7 @@
     <item name="status_card_item" type="id" />
     <item name="category_card_item" type="id" />
     <item name="attachments_card_item" type="id" />
+    <item name="attachments_card_item_entry" type="id" />
     <item name="note_card_item" type="id" />
 
 </resources>

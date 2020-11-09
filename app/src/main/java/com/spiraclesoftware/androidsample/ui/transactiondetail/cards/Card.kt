@@ -1,15 +1,17 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 
+import android.net.Uri
 import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
+import com.spiraclesoftware.androidsample.domain.model.TransactionStatus
+import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items.*
 
-sealed class Card {
-    abstract fun toListItem(transaction: Transaction, actionsHandler: CardActionsHandler): CardItem<*>
-}
+sealed class Card
 
 class ValuePairCard(val valuePairs: List<ValuePair>) : Card() {
 
-    override fun toListItem(transaction: Transaction, actionsHandler: CardActionsHandler) =
+    fun toListItem(transaction: Transaction, actionsHandler: CardActionsHandler) =
         ValuePairCardItem(
             valuePairs.map { it.toItemData(transaction) },
             actionsHandler
@@ -18,35 +20,35 @@ class ValuePairCard(val valuePairs: List<ValuePair>) : Card() {
 
 object StatusCard : Card() {
 
-    override fun toListItem(transaction: Transaction, actionsHandler: CardActionsHandler) =
+    fun toListItem(status: TransactionStatus, statusCode: TransactionStatusCode) =
         StatusCardItem(
-            StatusCardItem.Data(transaction.status, transaction.statusCode)
+            StatusCardItem.Data(status, statusCode)
         )
 }
 
 object CategoryCard : Card() {
 
-    override fun toListItem(transaction: Transaction, actionsHandler: CardActionsHandler) =
+    fun toListItem(category: TransactionCategory, actionsHandler: CardActionsHandler) =
         CategoryCardItem(
-            CategoryCardItem.Data(transaction.category),
+            CategoryCardItem.Data(category),
             actionsHandler
         )
 }
 
 object AttachmentsCard : Card() {
 
-    override fun toListItem(transaction: Transaction, actionsHandler: CardActionsHandler) =
+    fun toListItem(attachments: List<Uri>, uploads: List<Uri>, actionsHandler: CardActionsHandler) =
         AttachmentsCardItem(
-            AttachmentsCardItem.Data(transaction.attachments),
+            AttachmentsCardItem.Data(attachments, uploads),
             actionsHandler
         )
 }
 
 object NoteCard : Card() {
 
-    override fun toListItem(transaction: Transaction, actionsHandler: CardActionsHandler) =
+    fun toListItem(noteToSelf: String?, actionsHandler: CardActionsHandler) =
         NoteCardItem(
-            NoteCardItem.Data(transaction.noteToSelf),
+            NoteCardItem.Data(noteToSelf),
             actionsHandler
         )
 }

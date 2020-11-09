@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -50,7 +51,6 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     @Test
     fun `Data is loaded correctly from presenter and leads to ready state`() = runBlockingTest {
         whenever(detailPresenter.flowTransactionById(any())) doReturn flowOf(MOCK_TRANSACTION)
-        whenever(cardsPresenter.getCardItems(any(), any())) doReturn MOCK_CARD_ITEMS
 
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
@@ -70,15 +70,16 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     }
 
     @Test
+    @Ignore("Currently we don't load any data through the presenter so can't test this")
     fun `Presenter error when loading data leads to error state`() = runBlockingTest {
         whenever(detailPresenter.flowTransactionById(any())).thenReturn(flowOf(MOCK_TRANSACTION))
-        whenever(cardsPresenter.getCardItems(any(), any())).thenThrow()
+        //whenever(cardsPresenter.getCardItems(any(), any())).thenThrow()
 
         val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, _ ->
             launch {
-                vm.collectTransaction()
+                vm.collectScreenData()
                 stateObserver.assertObserved(
                     Loading,
                     Error

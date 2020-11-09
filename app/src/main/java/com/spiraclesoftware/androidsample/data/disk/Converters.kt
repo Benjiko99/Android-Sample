@@ -1,5 +1,6 @@
 package com.spiraclesoftware.androidsample.data.disk
 
+import android.net.Uri
 import androidx.room.TypeConverter
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatus
@@ -7,7 +8,6 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.domain.model.TransferDirection
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
-import okhttp3.HttpUrl
 import org.koin.java.KoinJavaComponent.inject
 import java.math.BigDecimal
 import java.util.*
@@ -33,13 +33,13 @@ class Converters {
             emptyList()
 
     @TypeConverter
-    fun fromListOfHttpUrl(item: List<HttpUrl>?): String? =
-        moshi.adapter<List<HttpUrl>?>().toJson(item)
+    fun fromListOfUri(item: List<Uri>?): String? =
+        moshi.adapter<List<Uri>?>().toJson(item)
 
     @TypeConverter
-    fun toListOfHttpUrl(value: String?): List<HttpUrl>? =
+    fun toListOfUri(value: String?): List<Uri>? =
         if (value != null)
-            moshi.adapter<List<HttpUrl>?>().fromJson(value)
+            moshi.adapter<List<Uri>?>().fromJson(value)
         else
             emptyList()
 

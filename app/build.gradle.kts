@@ -105,5 +105,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Dependencies.coroutines}")
     testImplementation("org.mockito:mockito-inline:${Dependencies.mockito}")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${Dependencies.mockitoKotlin}")
+    testImplementation("org.threeten:threetenbp:${Dependencies.threetenabp}"){
+        exclude("com.jakewharton.threetenabp", "threetenabp")
+    }
     androidTestImplementation("org.mockito:mockito-android:${Dependencies.mockito}")
 }

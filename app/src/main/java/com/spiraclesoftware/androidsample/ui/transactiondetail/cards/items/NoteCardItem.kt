@@ -11,7 +11,7 @@ import com.spiraclesoftware.core.extensions.string
 class NoteCardItem(
     private val data: Data,
     private val actionsHandler: CardActionsHandler
-) : CardItem<NoteCardItemBinding>() {
+) : BindingCardItem<NoteCardItemBinding>() {
 
     data class Data(
         val note: String? = null

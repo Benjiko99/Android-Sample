@@ -12,7 +12,7 @@ object TestData {
 
     val conversionRates = ConversionRates(
         baseCurrency = Currency.getInstance("EUR"),
-        validityDate = Date(),
+        validityDate = ZonedDateTime.now(),
         rates = listOf(
             ConversionRate("USD", 1.12f),
             ConversionRate("CZK", 26.70f)

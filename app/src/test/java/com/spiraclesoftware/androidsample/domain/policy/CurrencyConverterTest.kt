@@ -17,6 +17,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.threeten.bp.ZonedDateTime
 import java.math.BigDecimal
 import java.util.*
 
@@ -35,7 +36,7 @@ class CurrencyConverterTest {
     fun `Convert to foreign currency correctly`() = runBlockingTest {
         val conversionRates = ConversionRates(
             baseCurrency = Currency.getInstance("USD"),
-            validityDate = Date(),
+            validityDate = ZonedDateTime.now(),
             rates = listOf(ConversionRate("CZK", 2f))
         )
 
@@ -56,7 +57,7 @@ class CurrencyConverterTest {
     fun `Converting to the same currency returns original money`() = runBlockingTest {
         val conversionRates = ConversionRates(
             baseCurrency = Currency.getInstance("EUR"),
-            validityDate = Date(),
+            validityDate = ZonedDateTime.now(),
             rates = emptyList()
         )
 
@@ -76,7 +77,7 @@ class CurrencyConverterTest {
     fun `Throw exception when missing a conversion rate for given currency`() = runBlockingTest {
         val conversionRates = ConversionRates(
             baseCurrency = Currency.getInstance("USD"),
-            validityDate = Date(),
+            validityDate = ZonedDateTime.now(),
             rates = emptyList()
         )
 

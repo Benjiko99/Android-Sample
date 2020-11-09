@@ -11,7 +11,7 @@ import com.spiraclesoftware.core.extensions.*
 class CategoryCardItem(
     private val data: Data,
     private val actionsHandler: CardActionsHandler
-) : CardItem<CategoryCardItemBinding>() {
+) : BindingCardItem<CategoryCardItemBinding>() {
 
     data class Data(
         val category: TransactionCategory

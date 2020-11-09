@@ -34,6 +34,7 @@ val appModule = module {
             .add(BigDecimalAdapter())
             .add(CurrencyAdapter())
             .add(HttpUrlAdapter())
+            .add(UriAdapter())
             .add(ZonedDateTimeAdapter())
             .add(UniqueIdentifierAdapter())
             .add(ConversionRateListAdapter())

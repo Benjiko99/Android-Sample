@@ -38,4 +38,10 @@ class DiskDataSource(
         transactionsDao.update(item)
     }
 
+    fun updateTransaction(id: TransactionId, update: (Transaction) -> Transaction) {
+        getTransactionById(id)?.let {
+            updateTransaction(update(it))
+        }
+    }
+
 }

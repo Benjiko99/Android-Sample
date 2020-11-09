@@ -28,7 +28,7 @@ class CardsPresenterTest : PresenterTest() {
         )
 
         val presenter = CardsPresenter()
-        val cards = presenter.getCardsFor(transaction)
+        val cards = presenter.getCards(transaction)
 
         assertEquals(4, cards.count())
 

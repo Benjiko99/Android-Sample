@@ -1,16 +1,14 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items
 
-import android.view.LayoutInflater
 import android.net.Uri
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isGone
-import coil.load
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.AttachmentsCardItemBinding
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardActionsHandler
-import com.spiraclesoftware.core.extensions.onClick
 
 class AttachmentsCardItem(
     private val data: Data,
@@ -18,7 +16,8 @@ class AttachmentsCardItem(
 ) : CardItem<AttachmentsCardItem.ViewHolder>() {
 
     data class Data(
-        val attachments: List<Uri>
+        val attachments: List<Uri>,
+        val uploads: List<Uri>
     )
 
     override var identifier: Long = R.id.attachments_card_item.toLong()
@@ -35,33 +34,58 @@ class AttachmentsCardItem(
     ) : FastAdapter.ViewHolder<AttachmentsCardItem>(view) {
 
         val binding = AttachmentsCardItemBinding.bind(view)
+        private val itemAdapter = ItemAdapter.items<AttachmentsCardItemEntry>()
+        private val fastAdapter = FastAdapter.with(itemAdapter)
 
-        override fun bindView(item: AttachmentsCardItem, payloads: List<Any>) = with(binding) {
-            val ctx = view.context
-            scrollView.isGone = data.attachments.isEmpty()
-            scrollView.container.removeAllViews()
+        init {
+            fastAdapter.setHasStableIds(true)
 
-            data.attachments.forEach { url ->
-                val inflater = LayoutInflater.from(ctx)
-                val child = inflater.inflate(R.layout.attachments_card_item__entry, binding.scrollView.container, false)
-
-                child.photoView.load(url)
-
-                child.photoView.onClick {
-                    actionsHandler.onViewAttachment(url)
-                }
-
-                child.removeButton.onClick {
-                    actionsHandler.onRemoveAttachment(url)
-                }
-
-                scrollView.container.addView(child)
+            AttachmentsCardItemEntry.addClickListener(fastAdapter, { it.photoView }) { item ->
+                if (!item.isUploading)
+                    actionsHandler.onViewAttachment(item.imageSource)
             }
 
-            actionView.onClick {
-                actionsHandler.onAddAttachment()
+            AttachmentsCardItemEntry.addClickListener(fastAdapter, { it.actionButton }) { item ->
+                if (item.isUploading)
+                    actionsHandler.onCancelUpload(item.imageSource)
+                else
+                    actionsHandler.onRemoveAttachment(item.imageSource)
             }
         }
+
+        override fun bindView(item: AttachmentsCardItem, payloads: List<Any>) {
+            bindRecyclerView(item)
+        }
+
+        override fun unbindView(item: AttachmentsCardItem) = with(binding) {
+            recyclerView.adapter = null
+        }
+
+        private fun bindRecyclerView(item: AttachmentsCardItem) = with(binding) {
+            if (recyclerView.adapter == null)
+                recyclerView.adapter = fastAdapter
+
+            val oldItemCount = itemAdapter.adapterItemCount
+            val listItems = getListItems(item)
+            FastAdapterDiffUtil[itemAdapter] = listItems
+
+            // When a new item is added, scroll to the end of list
+            if (listItems.size > oldItemCount)
+                recyclerView.scrollToPosition(listItems.size - 1)
+
+            recyclerView.isGone = itemAdapter.adapterItemCount == 0
+        }
+
+        private fun getListItems(item: AttachmentsCardItem): List<AttachmentsCardItemEntry> {
+            val attachments = item.data.attachments.map { uri ->
+                AttachmentsCardItemEntry(uri, false)
+            }
+            val uploads = item.data.uploads.map { uri ->
+                AttachmentsCardItemEntry(uri, true)
+            }
+            return attachments.plus(uploads)
+        }
+
     }
 
     override fun equals(other: Any?): Boolean {

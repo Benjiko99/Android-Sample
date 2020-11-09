@@ -1,6 +1,10 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items
 
-import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.mikepenz.fastadapter.binding.AbstractBindingItem
+import com.mikepenz.fastadapter.items.AbstractItem
 
-abstract class CardItem<T> : AbstractBindingItem<T>() where T : ViewDataBinding
+abstract class CardItem<VH> : AbstractItem<VH>() where VH : RecyclerView.ViewHolder
+
+abstract class BindingCardItem<Binding> : AbstractBindingItem<Binding>() where Binding : ViewBinding

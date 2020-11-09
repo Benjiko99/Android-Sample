@@ -12,6 +12,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*
 import org.junit.Test
+import org.threeten.bp.ZonedDateTime
 import java.math.BigDecimal
 import java.util.*
 
@@ -67,7 +68,7 @@ class TransactionsPolicyTest {
 
         val conversionRates = ConversionRates(
             baseCurrency = accountCurrency,
-            validityDate = Date(),
+            validityDate = ZonedDateTime.now(),
             rates = emptyList()
         )
 
@@ -98,7 +99,7 @@ class TransactionsPolicyTest {
 
         val conversionRates = ConversionRates(
             baseCurrency = accountCurrency,
-            validityDate = Date(),
+            validityDate = ZonedDateTime.now(),
             rates = emptyList()
         )
 
@@ -129,7 +130,7 @@ class TransactionsPolicyTest {
 
         val conversionRates = ConversionRates(
             baseCurrency = Currency.getInstance("USD"),
-            validityDate = Date(),
+            validityDate = ZonedDateTime.now(),
             rates = listOf(
                 ConversionRate(accountCurrency, 0.5f)
             )
