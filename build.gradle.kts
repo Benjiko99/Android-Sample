@@ -1,23 +1,19 @@
 import org.jmailen.gradle.kotlinter.KotlinterExtension
 import org.jmailen.gradle.kotlinter.KotlinterPlugin
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
-    repositories {
-        google()
-        jcenter()
-        maven {
-            url = uri("https://plugins.gradle.org/m2/")
-        }
-    }
-
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.0")
+        classpath("com.android.tools.build:gradle:4.1.1")
         classpath(kotlin("gradle-plugin", version = Dependencies.kotlin))
         classpath("org.jetbrains.kotlin:kotlin-allopen:${Dependencies.kotlin}")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Dependencies.navigation}")
         classpath("org.jmailen.gradle:kotlinter-gradle:${Dependencies.kotlinter}")
+    }
+
+    repositories {
+        google()
+        jcenter()
+        maven(uri("https://plugins.gradle.org/m2/"))
     }
 }
 

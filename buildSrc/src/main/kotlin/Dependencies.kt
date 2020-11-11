@@ -2,7 +2,7 @@ object Dependencies {
 
     const val kotlinter = "3.2.0"
     const val koin = "2.2.0-rc-1"
-    const val rainbowCake = "1.1.0"
+    const val rainbowCake = "1.2.0"
     const val threetenabp = "1.2.4"
     const val moshi = "1.11.0"
     const val okhttp = "4.7.2"
@@ -17,10 +17,10 @@ object Dependencies {
     const val kotlin = "1.4.10"
     const val coroutines = "1.3.9"
     const val androidx = "1.1.0"
-    const val androidxFragment = "1.3.0-alpha06"
+    const val androidxFragment = "1.3.0-beta01"
     const val room = "2.2.5"
     const val swipeRefreshLayout = "1.1.0"
-    const val constraintLayout = "2.0.0-beta6"
+    const val constraintLayout = "2.0.4"
     const val navigation = "2.2.2"
     const val lifecycle = "2.1.0"
 
