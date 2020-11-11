@@ -7,6 +7,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 apply(plugin = "org.jmailen.kotlinter")
+apply(plugin = "app.cash.exhaustive")
 
 android {
     compileSdkVersion(Application.compileSdk)

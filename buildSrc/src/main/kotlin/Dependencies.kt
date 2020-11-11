@@ -23,6 +23,7 @@ object Dependencies {
     const val constraintLayout = "2.0.4"
     const val navigation = "2.2.2"
     const val lifecycle = "2.1.0"
+    const val exhaustive = "0.1.1"
 
     // Tests
     const val junit = "4.13"

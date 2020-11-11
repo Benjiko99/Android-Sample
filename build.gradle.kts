@@ -8,6 +8,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-allopen:${Dependencies.kotlin}")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Dependencies.navigation}")
         classpath("org.jmailen.gradle:kotlinter-gradle:${Dependencies.kotlinter}")
+        classpath("app.cash.exhaustive:exhaustive-gradle:${Dependencies.exhaustive}")
     }
 
     repositories {
