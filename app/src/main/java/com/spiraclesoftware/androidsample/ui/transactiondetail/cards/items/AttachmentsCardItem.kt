@@ -1,56 +1,66 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items
 
 import android.view.LayoutInflater
+import android.net.Uri
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import coil.load
+import com.mikepenz.fastadapter.FastAdapter
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.AttachmentsCardItemBinding
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardActionsHandler
 import com.spiraclesoftware.core.extensions.onClick
-import kotlinx.android.synthetic.main.attachments_card_item.view.*
-import kotlinx.android.synthetic.main.attachments_card_item__entry.view.*
 
 class AttachmentsCardItem(
     private val data: Data,
     private val actionsHandler: CardActionsHandler
-) : CardItem<AttachmentsCardItemBinding>() {
+) : CardItem<AttachmentsCardItem.ViewHolder>() {
 
     data class Data(
-        val attachments: List<String>
+        val attachments: List<Uri>
     )
 
     override var identifier: Long = R.id.attachments_card_item.toLong()
 
     override val type = R.id.attachments_card_item
 
-    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =
-        AttachmentsCardItemBinding.inflate(inflater, parent, false)
+    override val layoutRes = R.layout.attachments_card_item
 
-    override fun bindView(binding: AttachmentsCardItemBinding, payloads: List<Any>) {
-        val ctx = binding.root.context
-        binding.scrollView.isGone = data.attachments.isEmpty()
-        binding.scrollView.container.removeAllViews()
+    override fun getViewHolder(v: View) = ViewHolder(v, actionsHandler)
 
-        data.attachments.forEach { url ->
-            val inflater = LayoutInflater.from(ctx)
-            val child = inflater.inflate(R.layout.attachments_card_item__entry, binding.scrollView.container, false)
+    class ViewHolder(
+        val view: View,
+        private val actionsHandler: CardActionsHandler
+    ) : FastAdapter.ViewHolder<AttachmentsCardItem>(view) {
 
-            child.photoView.load(url)
+        val binding = AttachmentsCardItemBinding.bind(view)
 
-            child.photoView.onClick {
-                actionsHandler.onViewAttachment(url)
+        override fun bindView(item: AttachmentsCardItem, payloads: List<Any>) = with(binding) {
+            val ctx = view.context
+            scrollView.isGone = data.attachments.isEmpty()
+            scrollView.container.removeAllViews()
+
+            data.attachments.forEach { url ->
+                val inflater = LayoutInflater.from(ctx)
+                val child = inflater.inflate(R.layout.attachments_card_item__entry, binding.scrollView.container, false)
+
+                child.photoView.load(url)
+
+                child.photoView.onClick {
+                    actionsHandler.onViewAttachment(url)
+                }
+
+                child.removeButton.onClick {
+                    actionsHandler.onRemoveAttachment(url)
+                }
+
+                scrollView.container.addView(child)
             }
 
-            child.removeButton.onClick {
-                actionsHandler.onRemoveAttachment(url)
+            actionView.onClick {
+                actionsHandler.onAddAttachment()
             }
-
-            binding.scrollView.container.addView(child)
-        }
-
-        binding.actionView.onClick {
-            actionsHandler.onAddAttachment()
         }
     }
 

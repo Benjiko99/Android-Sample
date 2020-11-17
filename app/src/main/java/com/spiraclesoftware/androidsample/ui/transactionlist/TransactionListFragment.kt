@@ -1,15 +1,16 @@
 package com.spiraclesoftware.androidsample.ui.transactionlist
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.zsmb.rainbowcake.base.OneShotEvent
-import co.zsmb.rainbowcake.base.RainbowCakeFragment
 import co.zsmb.rainbowcake.koin.getViewModelFromFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikepenz.fastadapter.FastAdapter
@@ -18,28 +19,31 @@ import com.mikepenz.fastadapter.adapters.GenericItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.StandardFragment
+import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.NavigateEvent
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.ShowLanguageChangeConfirmationEvent
 import com.spiraclesoftware.core.extensions.onItemSelected
 import com.spiraclesoftware.core.extensions.string
-import kotlinx.android.synthetic.main.error_with_retry.view.*
-import kotlinx.android.synthetic.main.transaction__list__fragment.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, TransactionListViewModel>() {
+class TransactionListFragment :
+    StandardFragment<TransactionListFragmentBinding, TransactionListViewState, TransactionListViewModel>() {
+
+    override fun provideViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        TransactionListFragmentBinding.inflate(inflater, container, false)
 
     override fun provideViewModel() = getViewModelFromFactory()
-    override fun getViewResource() = R.layout.transaction__list__fragment
 
     private lateinit var fastAdapter: GenericFastAdapter
     private lateinit var itemAdapter: GenericItemAdapter
 
-    override fun render(viewState: TransactionListViewState) {
+    override fun render(viewState: TransactionListViewState): Unit = with(binding) {
         swipeRefreshLayout.isRefreshing = viewState is Loading
-        errorLayout.isVisible = viewState is Error
+        errorLayout.root.isVisible = viewState is Error
         filterSpinner.isEnabled = viewState is ListReady
 
         when (viewState) {
@@ -105,7 +109,7 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
         setupErrorLayout()
     }
 
-    override fun onDestroyView() {
+    override fun onDestroyView() = with(binding) {
         recyclerView.adapter = null
         super.onDestroyView()
     }
@@ -121,7 +125,7 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
             }.show()
     }
 
-    private fun setupToolbar() {
+    private fun setupToolbar() = with(binding) {
         toolbar.setupWithNavController(findNavController())
         DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
             headerView.height
@@ -142,14 +146,14 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
         }
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView() = with(binding) {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = fastAdapter
         }
     }
 
-    private fun setupFilterSpinner() {
+    private fun setupFilterSpinner() = with(binding) {
         val adapterItems = TransferDirectionFilter.values().map { string(it.stringRes) }
 
         filterSpinner.adapter = ArrayAdapter(
@@ -163,13 +167,13 @@ class TransactionListFragment : RainbowCakeFragment<TransactionListViewState, Tr
         filterSpinner.onItemSelected { _, _, position, _ -> onFilterItemSelected(position) }
     }
 
-    private fun setupSwipeRefreshLayout() {
+    private fun setupSwipeRefreshLayout() = with(binding) {
         swipeRefreshLayout.scrollUpChild = scrollView
         swipeRefreshLayout.setProgressViewOffset(true, 120, 360)
         swipeRefreshLayout.setOnRefreshListener { onSwipeToRefresh() }
     }
 
-    private fun setupErrorLayout() {
+    private fun setupErrorLayout() = with(binding) {
         errorLayout.retryButton.setOnClickListener { onRetryOnError() }
     }
 

@@ -2,7 +2,9 @@ package com.spiraclesoftware.androidsample.ui.transactiondetail
 
 import android.graphics.Paint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
@@ -20,6 +22,8 @@ import com.mikepenz.fastadapter.adapters.GenericItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.StandardFragment
+import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
@@ -29,15 +33,14 @@ import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetail
 import com.spiraclesoftware.core.extensions.*
 import com.stfalcon.imageviewer.StfalconImageViewer
 import io.cabriole.decorator.LinearMarginDecoration
-import kotlinx.android.synthetic.main.transaction__detail__fragment.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
-class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState, TransactionDetailViewModel>() {
+class TransactionDetailFragment :
+    StandardFragment<TransactionDetailFragmentBinding, TransactionDetailViewState, TransactionDetailViewModel>() {
 
-    companion object {
-        const val NOTE_INPUT_REQUEST_KEY = "noteInputRequest"
-    }
+    override fun provideViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        TransactionDetailFragmentBinding.inflate(inflater, container, false)
 
     override fun provideViewModel(): TransactionDetailViewModel {
         TransactionDetailFragmentArgs.fromBundle(requireArguments()).let { args ->
@@ -46,12 +49,14 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         }
     }
 
-    override fun getViewResource() = R.layout.transaction__detail__fragment
+    companion object {
+        const val NOTE_INPUT_REQUEST_KEY = "noteInputRequest"
+    }
 
     private lateinit var fastAdapter: GenericFastAdapter
     private lateinit var itemAdapter: GenericItemAdapter
 
-    override fun render(viewState: TransactionDetailViewState) {
+    override fun render(viewState: TransactionDetailViewState): Unit = with(binding) {
         errorMessageView.isVisible = viewState is Error
 
         when (viewState) {
@@ -96,14 +101,14 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         }
     }
 
-    private fun bindAmountText(formattedMoney: String, contributesToBalance: Boolean) {
+    private fun bindAmountText(formattedMoney: String, contributesToBalance: Boolean) = with(binding) {
         amountView.text = formattedMoney
         if (!contributesToBalance) {
             amountView.addPaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
         }
     }
 
-    private fun bindCategoryIcon(category: TransactionCategory, isSuccessful: Boolean) {
+    private fun bindCategoryIcon(category: TransactionCategory, isSuccessful: Boolean) = with(binding) {
         val tint: Int
 
         if (isSuccessful) {
@@ -135,12 +140,12 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         setupRecyclerView()
     }
 
-    override fun onDestroyView() {
+    override fun onDestroyView() = with(binding) {
         recyclerView.adapter = null
         super.onDestroyView()
     }
 
-    private fun setupToolbar() {
+    private fun setupToolbar() = with(binding) {
         toolbar.setupWithNavController(findNavController())
         DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
             toolbar.height + nameView.height
@@ -156,7 +161,7 @@ class TransactionDetailFragment : RainbowCakeFragment<TransactionDetailViewState
         fastAdapter.attachDefaultListeners = false
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView() = with(binding) {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = fastAdapter

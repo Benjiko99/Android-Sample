@@ -1,12 +1,13 @@
 package com.spiraclesoftware.androidsample.ui.categoryselect
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.zsmb.rainbowcake.base.OneShotEvent
-import co.zsmb.rainbowcake.base.RainbowCakeFragment
 import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
@@ -14,16 +15,21 @@ import com.mikepenz.fastadapter.adapters.GenericItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.StandardFragment
+import com.spiraclesoftware.androidsample.databinding.CategorySelectFragmentBinding
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.categoryselect.CategorySelectViewModel.NotifyOfFailureEvent
 import com.spiraclesoftware.androidsample.ui.categoryselect.CategorySelectViewModel.NotifyOfSuccessEvent
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.core.extensions.showSnackbar
-import kotlinx.android.synthetic.main.category__select__fragment.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
-class CategorySelectFragment : RainbowCakeFragment<CategorySelectViewState, CategorySelectViewModel>() {
+class CategorySelectFragment :
+    StandardFragment<CategorySelectFragmentBinding, CategorySelectViewState, CategorySelectViewModel>() {
+
+    override fun provideViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        CategorySelectFragmentBinding.inflate(inflater, container, false)
 
     override fun provideViewModel(): CategorySelectViewModel {
         CategorySelectFragmentArgs.fromBundle(requireArguments()).let { args ->
@@ -32,12 +38,10 @@ class CategorySelectFragment : RainbowCakeFragment<CategorySelectViewState, Cate
         }
     }
 
-    override fun getViewResource() = R.layout.category__select__fragment
-
     private lateinit var fastAdapter: GenericFastAdapter
     private lateinit var itemAdapter: GenericItemAdapter
 
-    override fun render(viewState: CategorySelectViewState) {
+    override fun render(viewState: CategorySelectViewState) = with(binding) {
         if (viewState is CategorySelect) {
             FastAdapterDiffUtil[itemAdapter] = viewState.listItems
         }
@@ -64,12 +68,12 @@ class CategorySelectFragment : RainbowCakeFragment<CategorySelectViewState, Cate
         setupRecyclerView()
     }
 
-    override fun onDestroyView() {
+    override fun onDestroyView() = with(binding) {
         recyclerView.adapter = null
         super.onDestroyView()
     }
 
-    private fun setupToolbar() {
+    private fun setupToolbar() = with(binding) {
         toolbar.setupWithNavController(findNavController())
         DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView)
     }
@@ -85,7 +89,7 @@ class CategorySelectFragment : RainbowCakeFragment<CategorySelectViewState, Cate
         }
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView() = with(binding) {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = fastAdapter

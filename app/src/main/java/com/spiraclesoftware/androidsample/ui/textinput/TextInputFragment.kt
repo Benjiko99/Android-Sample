@@ -1,22 +1,22 @@
 package com.spiraclesoftware.androidsample.ui.textinput
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import co.zsmb.rainbowcake.base.OneShotEvent
-import co.zsmb.rainbowcake.base.RainbowCakeFragment
-import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.StandardFragment
+import com.spiraclesoftware.androidsample.databinding.TextInputFragmentBinding
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputFragment.Companion.RESULT_KEY
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputViewModel.SendResultToCallerAndExitEvent
 import com.spiraclesoftware.core.extensions.onClick
 import com.spiraclesoftware.core.extensions.onDoneAction
 import com.spiraclesoftware.core.extensions.showSoftKeyboard
 import com.spiraclesoftware.core.extensions.string
-import kotlinx.android.synthetic.main.text_input__fragment.*
-import kotlinx.android.synthetic.main.transaction__detail__fragment.toolbar
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -36,11 +36,11 @@ import org.koin.core.parameter.parametersOf
  * }
  * ```
  */
-class TextInputFragment : RainbowCakeFragment<TextInputViewState, TextInputViewModel>() {
+class TextInputFragment :
+    StandardFragment<TextInputFragmentBinding, TextInputViewState, TextInputViewModel>() {
 
-    companion object {
-        const val RESULT_KEY = "textInputResult"
-    }
+    override fun provideViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        TextInputFragmentBinding.inflate(inflater, container, false)
 
     override fun provideViewModel(): TextInputViewModel =
         TextInputFragmentArgs.fromBundle(requireArguments()).let { args ->
@@ -49,9 +49,11 @@ class TextInputFragment : RainbowCakeFragment<TextInputViewState, TextInputViewM
             }
         }
 
-    override fun getViewResource() = R.layout.text_input__fragment
+    companion object {
+        const val RESULT_KEY = "textInputResult"
+    }
 
-    override fun render(viewState: TextInputViewState) {
+    override fun render(viewState: TextInputViewState) = with(binding) {
         when (viewState) {
             is TextInputEntry -> {
                 inputEditText.setText(viewState.input)
@@ -71,7 +73,7 @@ class TextInputFragment : RainbowCakeFragment<TextInputViewState, TextInputViewM
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
 
         toolbar.setupWithNavController(findNavController())
@@ -85,7 +87,7 @@ class TextInputFragment : RainbowCakeFragment<TextInputViewState, TextInputViewM
         showSoftKeyboard(inputEditText)
     }
 
-    private fun onSaveClicked() {
+    private fun onSaveClicked() = with(binding) {
         val input = inputEditText.text.toString()
         viewModel.validateThenSendInputToCaller(input)
     }

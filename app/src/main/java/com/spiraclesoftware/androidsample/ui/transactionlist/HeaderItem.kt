@@ -1,41 +1,31 @@
 package com.spiraclesoftware.androidsample.ui.transactionlist
 
-import android.view.View
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.items.AbstractItem
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.databinding.TransactionListHeaderItemBinding
 import com.spiraclesoftware.androidsample.domain.model.Money
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
-import kotlinx.android.synthetic.main.transaction__list__header_item.view.*
 import org.threeten.bp.ZonedDateTime
 
 class HeaderItem(
     private val dateTime: ZonedDateTime,
     private val contributionToBalance: Money
-) : AbstractItem<HeaderItem.ViewHolder>() {
+) : AbstractBindingItem<TransactionListHeaderItemBinding>() {
 
     override var identifier: Long = hashCode().toLong()
 
     override val type = R.id.transaction__list__header_item
 
-    override val layoutRes = R.layout.transaction__list__header_item
+    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        TransactionListHeaderItemBinding.inflate(inflater, parent, false)
 
-    override fun getViewHolder(v: View) = ViewHolder(v)
-
-    class ViewHolder(val view: View) : FastAdapter.ViewHolder<HeaderItem>(view) {
-
-        override fun bindView(item: HeaderItem, payloads: List<Any>) {
-            view.dateView.text = item.dateTime.format(DateTimeFormat.PRETTY_DATE)
-            view.contributionsView.text = MoneyFormat(item.contributionToBalance)
-                .formatSigned(showSignWhenPositive = false)
-        }
-
-        override fun unbindView(item: HeaderItem) {
-            view.dateView.text = null
-            view.contributionsView.text = null
-        }
-
+    override fun bindView(binding: TransactionListHeaderItemBinding, payloads: List<Any>) = with(binding) {
+        dateView.text = dateTime.format(DateTimeFormat.PRETTY_DATE)
+        contributionsView.text = MoneyFormat(contributionToBalance)
+            .formatSigned(showSignWhenPositive = false)
     }
 
     override fun equals(other: Any?): Boolean {
