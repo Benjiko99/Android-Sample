@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/edge_margin"
                     android:layout_marginRight="@dimen/edge_margin"
-                    android:text="@string/transaction__list__title"
+                    android:text="@string/transaction_list__title"
                     android:textAppearance="@style/TextAppearance.ScreenHeader"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,7 +71,7 @@
                     app:layout_constraintTop_toBottomOf="@id/filterSpinner"
                     app:layout_constraintVertical_bias="0"
                     tools:itemCount="5"
-                    tools:listitem="@layout/transaction__list__transaction_item" />
+                    tools:listitem="@layout/transaction_item" />
 
                 <include
                     android:id="@+id/errorLayout"

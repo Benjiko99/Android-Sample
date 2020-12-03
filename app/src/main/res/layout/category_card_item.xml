@@ -33,7 +33,7 @@
                 android:layout_marginRight="@dimen/content_spacing"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text='@string/transaction__detail__category'
+                android:text='@string/transaction_detail__category'
                 android:textAppearance="@style/TextAppearance.DetailItem.Label"
                 app:layout_constraintBottom_toBottomOf="@id/actionView"
                 app:layout_constraintLeft_toLeftOf="parent"

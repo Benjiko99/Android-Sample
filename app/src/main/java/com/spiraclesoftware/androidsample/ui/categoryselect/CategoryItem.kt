@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
 import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.databinding.CategorySelectCategoryItemBinding
+import com.spiraclesoftware.androidsample.databinding.CategorySelectItemBinding
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.string
@@ -14,16 +14,16 @@ import com.spiraclesoftware.core.extensions.tintedDrawable
 class CategoryItem(
     val category: TransactionCategory,
     val isChecked: Boolean
-) : AbstractBindingItem<CategorySelectCategoryItemBinding>() {
+) : AbstractBindingItem<CategorySelectItemBinding>() {
 
     override var identifier = category.ordinal.toLong()
 
-    override val type = R.id.transaction__list__transaction_item
+    override val type = R.id.transaction_item
 
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =
-        CategorySelectCategoryItemBinding.inflate(inflater, parent, false)
+        CategorySelectItemBinding.inflate(inflater, parent, false)
 
-    override fun bindView(binding: CategorySelectCategoryItemBinding, payloads: List<Any>) = with(binding) {
+    override fun bindView(binding: CategorySelectItemBinding, payloads: List<Any>) = with(binding) {
         val ctx = root.context
 
         radioView.isChecked = isChecked

@@ -14,40 +14,40 @@
     <!-- Transaction -->
     <string name="transaction_status__completed">Completed</string>
     <string name="transaction_status__declined">Declined</string>
-    <string name="transaction_status__code__spending_limit_exceeded">Monthly spending limit exceeded</string>
+    <string name="transaction_status_code__spending_limit_exceeded">Monthly spending limit exceeded</string>
     <string name="transaction_category__entertainment">Entertainment</string>
     <string name="transaction_category__restaurants">Restaurants</string>
     <string name="transaction_category__groceries">Groceries</string>
     <string name="transaction_category__transfers">Transfers</string>
 
     <!-- Transaction List -->
-    <string name="transaction__list__title">Transactions</string>
-    <string name="transaction__list__filter__transfer_direction__all">Incoming &amp; Outgoing</string>
-    <string name="transaction__list__filter__transfer_direction__incoming">Incoming only</string>
-    <string name="transaction__list__filter__transfer_direction__outgoing">Outgoing only</string>
+    <string name="transaction_list__title">Transactions</string>
+    <string name="transfer_direction_filter__all">Incoming &amp; Outgoing</string>
+    <string name="transfer_direction_filter__incoming">Incoming only</string>
+    <string name="transfer_direction_filter__outgoing">Outgoing only</string>
 
-    <string name="transaction__list__empty_state__no_transactions__caption">You have no transactions</string>
-    <string name="transaction__list__empty_state__no_transactions__message">When you make or receive a payment, it will show up here.</string>
+    <string name="empty_state__no_transactions__caption">You have no transactions</string>
+    <string name="empty_state__no_transactions__message">When you make or receive a payment, it will show up here.</string>
 
-    <string name="transaction__list__empty_state__no_results__caption">No results</string>
-    <string name="transaction__list__empty_state__no_results__message">We didn\'t find any matching transactions.</string>
+    <string name="empty_state__no_results__caption">No results</string>
+    <string name="empty_state__no_results__message">We didn\'t find any matching transactions.</string>
 
     <!-- Transaction Detail -->
-    <string name="transaction__detail__status">Status</string>
-    <string name="transaction__detail__card">Card</string>
-    <string name="transaction__detail__statement">Statement</string>
-    <string name="transaction__detail__download">Download</string>
-    <string name="transaction__detail__category">Category</string>
-    <string name="transaction__detail__attachments">Attachments</string>
-    <string name="transaction__detail__attachments__add_photo">Add photo</string>
-    <string name="transaction__detail__attachments__error_limit_reached">Can\'t add any more attachments</string>
-    <string name="transaction__detail__note">Note</string>
-    <string name="transaction__detail__note__edit">Edit</string>
-    <string name="transaction__detail__note__add">Add note</string>
+    <string name="transaction_detail__status">Status</string>
+    <string name="transaction_detail__card">Card</string>
+    <string name="transaction_detail__statement">Statement</string>
+    <string name="transaction_detail__download">Download</string>
+    <string name="transaction_detail__category">Category</string>
+    <string name="transaction_detail__attachments">Attachments</string>
+    <string name="transaction_detail__attachments__add_photo">Add photo</string>
+    <string name="transaction_detail__attachments__error__limit_reached">Can\'t add any more attachments</string>
+    <string name="transaction_detail__note">Note</string>
+    <string name="transaction_detail__edit_note">Edit</string>
+    <string name="transaction_detail__add_note">Add note</string>
 
     <!-- Category Select -->
-    <string name="category__select__title">Select category</string>
-    <string name="category__select__progress_success">Category changed</string>
+    <string name="category_select__title">Select category</string>
+    <string name="category_select__progress_success">Category changed</string>
 
     <!-- Image Picker -->
     <string name="image_picker__message">Take or select an image from the gallery.</string>
@@ -56,16 +56,16 @@
 
     <!-- Change language dialog -->
     <string name="change_language">Change language</string>
-    <string name="change_language__dialog__message">Change language to czech?</string>
-    <string name="change_language__dialog__confirm">Change</string>
-    <string name="change_language__dialog__cancel">Cancel</string>
+    <string name="change_language_dialog__message">Change language to czech?</string>
+    <string name="change_language_dialog__confirm">Change</string>
+    <string name="change_language_dialog__cancel">Cancel</string>
 
     <!-- Text Input -->
-    <string name="input__save_changes">Save changes</string>
+    <string name="text_input__save_changes">Save changes</string>
 
     <!-- Note Input -->
-    <string name="input__note__title">Edit note</string>
-    <string name="input__note__hint">Note</string>
-    <string name="input__note__error_length_exceeded">Note cannot be longer than %d characters.</string>
+    <string name="note_input__title">Edit note</string>
+    <string name="note_input__hint">Note</string>
+    <string name="note_input__error__length_exceeded">Note cannot be longer than %d characters.</string>
 
 </resources>

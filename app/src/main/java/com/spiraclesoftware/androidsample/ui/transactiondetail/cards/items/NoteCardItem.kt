@@ -29,9 +29,9 @@ class NoteCardItem(
 
         binding.noteText = data.note
         binding.actionText = if (data.note == null)
-            ctx.string(R.string.transaction__detail__note__add)
+            ctx.string(R.string.transaction_detail__add_note)
         else
-            ctx.string(R.string.transaction__detail__note__edit)
+            ctx.string(R.string.transaction_detail__edit_note)
 
         binding.actionView.onClick {
             actionsHandler.onChangeNote()

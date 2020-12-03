@@ -21,7 +21,7 @@
             android:layout_marginRight="@dimen/content_spacing"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text='@string/transaction__detail__attachments'
+            android:text='@string/transaction_detail__attachments'
             android:textAppearance="@style/TextAppearance.DetailItem.Label"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@id/actionView"
@@ -40,7 +40,7 @@
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="2dp"
-            android:text='@string/transaction__detail__attachments__add_photo'
+            android:text='@string/transaction_detail__attachments__add_photo'
             android:textAppearance="@style/TextAppearance.DetailItem.Value"
             app:icon="@drawable/ic_add_photo"
             app:iconSize="18sp"
@@ -58,7 +58,7 @@
             android:paddingHorizontal="@dimen/content_spacing_2x"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/labelView"
-            tools:listitem="@layout/attachments_card_item__entry" />
+            tools:listitem="@layout/attachments_card_item_entry" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

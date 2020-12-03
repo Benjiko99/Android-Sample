@@ -95,7 +95,7 @@ class TransactionDetailFragment :
                 openAttachmentViewer(event.images, event.startPosition)
             }
             is NotifyAttachmentsLimitReachedEvent -> {
-                showSnackbar(R.string.transaction__detail__attachments__error_limit_reached, Snackbar.LENGTH_LONG)
+                showSnackbar(R.string.transaction_detail__attachments__error__limit_reached, Snackbar.LENGTH_LONG)
             }
             is NotifyOfFailureEvent -> {
                 showToast(event.stringRes, Toast.LENGTH_LONG)

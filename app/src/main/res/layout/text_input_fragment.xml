@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/edge_margin"
             app:layout_constraintTop_toTopOf="parent"
-            tools:hint="@string/input__note__hint">
+            tools:hint="@string/note_input__hint">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputEditText"
@@ -43,7 +43,7 @@
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/saveButton"
             style="@style/ExtendedFloatingActionButton"
-            android:text="@string/input__save_changes"
+            android:text="@string/text_input__save_changes"
             app:icon="@drawable/ic_edit_note"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

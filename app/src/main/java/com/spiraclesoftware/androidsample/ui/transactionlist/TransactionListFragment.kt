@@ -116,11 +116,11 @@ class TransactionListFragment :
 
     private fun showLanguageChangeConfirmation(onConfirmed: () -> Unit) {
         MaterialAlertDialogBuilder(requireContext())
-            .setMessage(R.string.change_language__dialog__message)
-            .setNegativeButton(R.string.change_language__dialog__cancel) { dialog, _ ->
+            .setMessage(R.string.change_language_dialog__message)
+            .setNegativeButton(R.string.change_language_dialog__cancel) { dialog, _ ->
                 dialog.dismiss()
             }
-            .setPositiveButton(R.string.change_language__dialog__confirm) { _, _ ->
+            .setPositiveButton(R.string.change_language_dialog__confirm) { _, _ ->
                 onConfirmed()
             }.show()
     }

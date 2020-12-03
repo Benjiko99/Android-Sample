@@ -50,7 +50,7 @@ class CategorySelectFragment :
     override fun onEvent(event: OneShotEvent) {
         when (event) {
             is NotifyOfSuccessEvent ->
-                showSnackbar(R.string.category__select__progress_success, Snackbar.LENGTH_SHORT)
+                showSnackbar(R.string.category_select__progress_success, Snackbar.LENGTH_SHORT)
             is NotifyOfFailureEvent ->
                 showSnackbar(R.string.unknown_error, Snackbar.LENGTH_SHORT)
         }

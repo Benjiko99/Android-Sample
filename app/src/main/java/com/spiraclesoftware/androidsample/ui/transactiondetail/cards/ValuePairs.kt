@@ -15,7 +15,7 @@ object ValuePairs {
 
         override fun toItemData(transaction: Transaction) =
             ValuePairCardItem.Data(
-                label = R.string.transaction__detail__status,
+                label = R.string.transaction_detail__status,
                 value = StringHolder(transaction.status.stringRes)
             )
 
@@ -25,7 +25,7 @@ object ValuePairs {
 
         override fun toItemData(transaction: Transaction) =
             ValuePairCardItem.Data(
-                label = R.string.transaction__detail__card,
+                label = R.string.transaction_detail__card,
                 value = StringHolder(transaction.cardDescription.orEmpty()),
                 icon = R.drawable.ic_credit_card,
                 onClickAction = { it.onOpenCardDetail() }
@@ -37,8 +37,8 @@ object ValuePairs {
 
         override fun toItemData(transaction: Transaction) =
             ValuePairCardItem.Data(
-                label = R.string.transaction__detail__statement,
-                value = StringHolder(R.string.transaction__detail__download),
+                label = R.string.transaction_detail__statement,
+                value = StringHolder(R.string.transaction_detail__download),
                 icon = R.drawable.ic_download_statement,
                 onClickAction = { it.onDownloadStatement() }
             )

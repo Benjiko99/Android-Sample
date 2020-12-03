@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/edge_margin"
                 android:layout_marginRight="@dimen/edge_margin"
-                android:text="@string/category__select__title"
+                android:text="@string/category_select__title"
                 android:textAppearance="@style/TextAppearance.ScreenHeader"
                 app:layout_constraintBottom_toTopOf="@id/recyclerView"
                 app:layout_constraintHorizontal_bias="0"
@@ -53,7 +53,7 @@
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintTop_toBottomOf="@id/headerView"
                 tools:itemCount="3"
-                tools:listitem="@layout/category__select__category_item" />
+                tools:listitem="@layout/category_select_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

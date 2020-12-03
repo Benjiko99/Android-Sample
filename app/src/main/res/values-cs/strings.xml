@@ -13,40 +13,40 @@
     <!-- Transaction -->
     <string name="transaction_status__completed">Dokončený</string>
     <string name="transaction_status__declined">Odmítnutý</string>
-    <string name="transaction_status__code__spending_limit_exceeded">Byl překročen měsíční limit výdajů</string>
+    <string name="transaction_status_code__spending_limit_exceeded">Byl překročen měsíční limit výdajů</string>
     <string name="transaction_category__entertainment">Zábava</string>
     <string name="transaction_category__restaurants">Restaurace</string>
     <string name="transaction_category__groceries">Potraviny</string>
     <string name="transaction_category__transfers">Převody</string>
 
     <!-- Transaction List -->
-    <string name="transaction__list__title">Transakce</string>
-    <string name="transaction__list__filter__transfer_direction__all">Příchozí a Odchozí</string>
-    <string name="transaction__list__filter__transfer_direction__incoming">Pouze příchozí</string>
-    <string name="transaction__list__filter__transfer_direction__outgoing">Pouze odchozí</string>
+    <string name="transaction_list__title">Transakce</string>
+    <string name="transfer_direction_filter__all">Příchozí a Odchozí</string>
+    <string name="transfer_direction_filter__incoming">Pouze příchozí</string>
+    <string name="transfer_direction_filter__outgoing">Pouze odchozí</string>
 
-    <string name="transaction__list__empty_state__no_transactions__caption">Nemáte žádné transakce</string>
-    <string name="transaction__list__empty_state__no_transactions__message">Když provedete nebo obdržíte platbu, zobrazí se zde.</string>
+    <string name="empty_state__no_transactions__caption">Nemáte žádné transakce</string>
+    <string name="empty_state__no_transactions__message">Když provedete nebo obdržíte platbu, zobrazí se zde.</string>
 
-    <string name="transaction__list__empty_state__no_results__caption">Žádné výsledky</string>
-    <string name="transaction__list__empty_state__no_results__message">Nenašli jsme žádné odpovídající transakce.</string>
+    <string name="empty_state__no_results__caption">Žádné výsledky</string>
+    <string name="empty_state__no_results__message">Nenašli jsme žádné odpovídající transakce.</string>
 
     <!-- Transaction Detail -->
-    <string name="transaction__detail__status">Stav</string>
-    <string name="transaction__detail__card">Karta</string>
-    <string name="transaction__detail__statement">Potvrzení</string>
-    <string name="transaction__detail__download">Stáhnout</string>
-    <string name="transaction__detail__category">Kategorie</string>
-    <string name="transaction__detail__attachments">Přílohy</string>
-    <string name="transaction__detail__attachments__add_photo">Přidat fotku</string>
-    <string name="transaction__detail__attachments__error_limit_reached">Nelze přidat žádné další přílohy</string>
-    <string name="transaction__detail__note">Poznámka</string>
-    <string name="transaction__detail__note__edit">Upravit</string>
-    <string name="transaction__detail__note__add">Přidat poznámku</string>
+    <string name="transaction_detail__status">Stav</string>
+    <string name="transaction_detail__card">Karta</string>
+    <string name="transaction_detail__statement">Potvrzení</string>
+    <string name="transaction_detail__download">Stáhnout</string>
+    <string name="transaction_detail__category">Kategorie</string>
+    <string name="transaction_detail__attachments">Přílohy</string>
+    <string name="transaction_detail__attachments__add_photo">Přidat fotku</string>
+    <string name="transaction_detail__attachments__error__limit_reached">Nelze přidat žádné další přílohy</string>
+    <string name="transaction_detail__note">Poznámka</string>
+    <string name="transaction_detail__edit_note">Upravit</string>
+    <string name="transaction_detail__add_note">Přidat poznámku</string>
 
     <!-- Category Select -->
-    <string name="category__select__title">Vyberte kategorii</string>
-    <string name="category__select__progress_success">Kategorie změněna</string>
+    <string name="category_select__title">Vyberte kategorii</string>
+    <string name="category_select__progress_success">Kategorie změněna</string>
 
     <!-- Image Picker -->
     <string name="image_picker__message">Vyfoťte nebo vyberte obrázek z galerie.</string>
@@ -55,16 +55,16 @@
 
     <!-- Change language dialog -->
     <string name="change_language">Změnit jazyk</string>
-    <string name="change_language__dialog__message">Změnit jazyk na angličtinu?</string>
-    <string name="change_language__dialog__confirm">Změnit</string>
-    <string name="change_language__dialog__cancel">Zrušit</string>
+    <string name="change_language_dialog__message">Změnit jazyk na angličtinu?</string>
+    <string name="change_language_dialog__confirm">Změnit</string>
+    <string name="change_language_dialog__cancel">Zrušit</string>
 
     <!-- Text Input -->
-    <string name="input__save_changes">Uložit změny</string>
+    <string name="text_input__save_changes">Uložit změny</string>
 
     <!-- Note Input -->
-    <string name="input__note__title">Upravit poznámku</string>
-    <string name="input__note__hint">Poznámka</string>
-    <string name="input__note__error_length_exceeded">Poznámka nesmí být delší než %d znaků.</string>
+    <string name="note_input__title">Upravit poznámku</string>
+    <string name="note_input__hint">Poznámka</string>
+    <string name="note_input__error__length_exceeded">Poznámka nesmí být delší než %d znaků.</string>
 
 </resources>

@@ -7,7 +7,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.isGone
 import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.databinding.TransactionListTransactionItemBinding
+import com.spiraclesoftware.androidsample.databinding.TransactionItemBinding
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
@@ -17,16 +17,16 @@ import com.spiraclesoftware.core.extensions.*
 
 class TransactionItem(
     val transaction: Transaction
-) : AbstractBindingItem<TransactionListTransactionItemBinding>() {
+) : AbstractBindingItem<TransactionItemBinding>() {
 
     override var identifier: Long = transaction.id.value.toLong()
 
-    override val type = R.id.transaction__list__transaction_item
+    override val type = R.id.transaction_item
 
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =
-        TransactionListTransactionItemBinding.inflate(inflater, parent, false)
+        TransactionItemBinding.inflate(inflater, parent, false)
 
-    override fun bindView(binding: TransactionListTransactionItemBinding, payloads: List<Any>) = with(binding) {
+    override fun bindView(binding: TransactionItemBinding, payloads: List<Any>) = with(binding) {
         val ctx = root.context
         val transaction = transaction
         nameView.text = transaction.name

@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/transactionListFragment"
         android:name="com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragment"
-        android:label="@string/transaction__list__title"
-        tools:layout="@layout/transaction__list__fragment">
+        android:label="@string/transaction_list__title"
+        tools:layout="@layout/transaction_list_fragment">
         <action
             android:id="@+id/to_transaction_detail"
             app:destination="@id/transactionDetailFragment"
@@ -24,7 +24,7 @@
         android:id="@+id/transactionDetailFragment"
         android:name="com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragment"
         android:label="-"
-        tools:layout="@layout/transaction__detail__fragment">
+        tools:layout="@layout/transaction_detail_fragment">
         <argument
             android:name="transactionId"
             app:argType="integer" />
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/inputFragment"
         android:name="com.spiraclesoftware.androidsample.ui.textinput.TextInputFragment"
-        tools:layout="@layout/text_input__fragment">
+        tools:layout="@layout/text_input_fragment">
         <argument
             android:name="strategyType"
             app:argType="com.spiraclesoftware.androidsample.ui.textinput.TextInputType" />
@@ -62,8 +62,8 @@
     <fragment
         android:id="@+id/categorySelectFragment"
         android:name="com.spiraclesoftware.androidsample.ui.categoryselect.CategorySelectFragment"
-        android:label="@string/category__select__title"
-        tools:layout="@layout/category__select__fragment">
+        android:label="@string/category_select__title"
+        tools:layout="@layout/category_select_fragment">
         <argument
             android:name="transactionId"
             app:argType="integer" />
