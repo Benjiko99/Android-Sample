@@ -1,12 +1,15 @@
 package com.spiraclesoftware.androidsample.ui.transactionlist
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +28,7 @@ import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.NavigateEvent
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.ShowLanguageChangeConfirmationEvent
+import com.spiraclesoftware.core.extensions.onActionExpanded
 import com.spiraclesoftware.core.extensions.onItemSelected
 import com.spiraclesoftware.core.extensions.string
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,6 +44,8 @@ class TransactionListFragment :
 
     private lateinit var fastAdapter: GenericFastAdapter
     private lateinit var itemAdapter: GenericItemAdapter
+
+    private lateinit var collapseActionViewCallback: OnBackPressedCallback
 
     override fun render(viewState: TransactionListViewState): Unit = with(binding) {
         swipeRefreshLayout.isRefreshing = viewState is Loading
@@ -98,6 +104,16 @@ class TransactionListFragment :
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.apply {
+            val lifecycle = this@TransactionListFragment as LifecycleOwner
+
+            collapseActionViewCallback = addCallback(lifecycle) { collapseActionView() }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -125,14 +141,43 @@ class TransactionListFragment :
             }.show()
     }
 
+    private fun collapseActionView() = with(binding) {
+        if (toolbar.hasExpandedActionView()) {
+            toolbar.menu.forEach { if (it.isActionViewExpanded) it.collapseActionView() }
+        }
+    }
+
     private fun setupToolbar() = with(binding) {
         toolbar.setupWithNavController(findNavController())
+
         DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
             headerView.height
         }
 
         toolbar.inflateMenu(R.menu.transaction_list_menu)
         toolbar.setOnMenuItemClickListener(::onMenuItemClicked)
+
+        setupSearchView(toolbar.menu)
+    }
+
+    private fun setupSearchView(menu: Menu) {
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.queryHint = string(R.string.action_search_hint)
+
+        searchItem.onActionExpanded { isExpanded ->
+            collapseActionViewCallback.isEnabled = isExpanded
+        }
+
+        searchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextChange(query: String?): Boolean {
+                viewModel.setSearchQuery(query.orEmpty())
+                return true
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+        })
     }
 
     private fun setupFastItemAdapter() {

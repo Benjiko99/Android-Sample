@@ -7,7 +7,6 @@ import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteract
 import com.spiraclesoftware.androidsample.domain.model.Account
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
-import com.spiraclesoftware.androidsample.domain.model.applyFilter
 import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.core.utils.LanguageManager
 import kotlinx.coroutines.flow.Flow
@@ -39,7 +38,7 @@ class TransactionListPresenter(
     ) = transactionsInteractor
         .flowTransactions()
         .combine(listFilter) { list, filter ->
-            list.applyFilter(filter)
+            filter.applyTo(list)
         }
 
     suspend fun getListItems(transactions: List<Transaction>) =

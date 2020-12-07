@@ -11,6 +11,11 @@
     <string name="network_error">Failed to load the data.\nPlease check your connection.</string>
     <string name="not_implemented">Not implemented</string>
 
+    <!-- Menu Actions -->
+    <string name="action_change_language">Change language</string>
+    <string name="action_search">Search</string>
+    <string name="action_search_hint">Name, amount, or date</string>
+
     <!-- Transaction -->
     <string name="transaction_status__completed">Completed</string>
     <string name="transaction_status__declined">Declined</string>
@@ -55,7 +60,6 @@
     <string name="image_picker__from_gallery">From gallery</string>
 
     <!-- Change language dialog -->
-    <string name="change_language">Change language</string>
     <string name="change_language_dialog__message">Change language to czech?</string>
     <string name="change_language_dialog__confirm">Change</string>
     <string name="change_language_dialog__cancel">Cancel</string>

@@ -64,8 +64,8 @@ class TransactionListPresenterTest : PresenterTest() {
     @Test
     fun `All list items are returned from interactor`() = runBlockingTest {
         val mockTransactions = listOf(
-            TestData.transactions[0],
-            TestData.transactions[0]
+            MOCK_TRANSACTIONS[0],
+            MOCK_TRANSACTIONS[0]
         )
 
         val mockContribution = money("100", "EUR")

@@ -10,6 +10,11 @@
     <string name="network_error">Nepodařilo se načíst data.\nZkontrolujte připojení.</string>
     <string name="not_implemented">Není implementováno</string>
 
+    <!-- Menu Actions -->
+    <string name="action_change_language">Změnit jazyk</string>
+    <string name="action_search">Vyhledávání</string>
+    <string name="action_search_hint">Jméno, částka nebo datum</string>
+
     <!-- Transaction -->
     <string name="transaction_status__completed">Dokončený</string>
     <string name="transaction_status__declined">Odmítnutý</string>
@@ -54,7 +59,6 @@
     <string name="image_picker__from_gallery">Z galerie</string>
 
     <!-- Change language dialog -->
-    <string name="change_language">Změnit jazyk</string>
     <string name="change_language_dialog__message">Změnit jazyk na angličtinu?</string>
     <string name="change_language_dialog__confirm">Změnit</string>
     <string name="change_language_dialog__cancel">Zrušit</string>

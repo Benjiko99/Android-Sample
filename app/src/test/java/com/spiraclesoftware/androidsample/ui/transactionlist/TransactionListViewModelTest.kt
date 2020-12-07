@@ -9,7 +9,6 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
-import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.ALL
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -33,11 +32,11 @@ class TransactionListViewModelTest : ViewModelTest() {
 
         val vm = TransactionListViewModel(presenter)
 
-        vm.observeStateAndEvents { stateObserver, eventsObserver ->
+        vm.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
                 ListReady(
                     MOCK_LIST_ITEMS,
-                    TransactionListFilter(ALL)
+                    TransactionListFilter()
                 )
             )
         }
@@ -75,7 +74,7 @@ class TransactionListViewModelTest : ViewModelTest() {
 
         val vm = TransactionListViewModel(presenter)
 
-        vm.observeStateAndEvents { stateObserver, eventsObserver ->
+        vm.observeStateAndEvents { stateObserver, _ ->
             launch {
                 vm.collectTransactions()
                 vm.refreshTransactions()
@@ -84,7 +83,7 @@ class TransactionListViewModelTest : ViewModelTest() {
                     Error,
                     ListReady(
                         MOCK_LIST_ITEMS,
-                        TransactionListFilter(ALL)
+                        TransactionListFilter()
                     ),
                     Loading
                 )

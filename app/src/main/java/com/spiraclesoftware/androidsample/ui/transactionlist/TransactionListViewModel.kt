@@ -6,7 +6,6 @@ import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
-import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter.ALL
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragmentDirections.Companion.toTransactionDetail
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +21,7 @@ class TransactionListViewModel(
 
     object ShowLanguageChangeConfirmationEvent : OneShotEvent
 
-    private var listFilterFlow = MutableStateFlow(TransactionListFilter(ALL))
+    private var listFilterFlow = MutableStateFlow(TransactionListFilter())
 
     init {
         executeNonBlocking {
@@ -68,6 +67,12 @@ class TransactionListViewModel(
 
     fun onListItemClicked(id: TransactionId) {
         postEvent(NavigateEvent(toTransactionDetail(id.value)))
+    }
+
+    fun setSearchQuery(query: String) = execute {
+        if (listFilterFlow.value.searchQuery != query) {
+            listFilterFlow.value = listFilterFlow.value.copy(searchQuery = query)
+        }
     }
 
     fun setTransferDirectionFilter(directionFilter: TransferDirectionFilter) = execute {
