@@ -23,7 +23,7 @@ import java.math.MathContext
 class SampleApplication : Application() {
 
     companion object {
-        const val API_SERVICE_BASE_URL = "https://benjiko99-android-sample.builtwithdark.com/"
+        const val API_BASE_URL = "https://sleepy-hamlet-89904.herokuapp.com/api/"
 
         /** Keep the MathContext consistent across the application */
         val mathContext = MathContext.DECIMAL32!!

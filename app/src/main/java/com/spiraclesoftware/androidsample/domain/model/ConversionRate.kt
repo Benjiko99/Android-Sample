@@ -1,7 +1,9 @@
 package com.spiraclesoftware.androidsample.domain.model
 
+import com.squareup.moshi.JsonClass
 import java.util.*
 
+@JsonClass(generateAdapter = true)
 data class ConversionRate(
     val currency: Currency,
     val rate: Float

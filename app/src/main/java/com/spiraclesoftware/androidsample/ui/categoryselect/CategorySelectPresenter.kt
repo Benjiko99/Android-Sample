@@ -2,7 +2,6 @@ package com.spiraclesoftware.androidsample.ui.categoryselect
 
 import co.zsmb.rainbowcake.withIOContext
 import com.mikepenz.fastadapter.GenericItem
-import com.spiraclesoftware.androidsample.data.network.model.TransactionUpdateRequest
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
@@ -25,8 +24,7 @@ class CategorySelectPresenter(
     }
 
     suspend fun updateCategory(id: TransactionId, category: TransactionCategory) = withIOContext {
-        val request = TransactionUpdateRequest(category = category)
-        transactionsInteractor.updateTransaction(id, request)
+        transactionsInteractor.updateTransactionCategory(id, category)
     }
 
 }

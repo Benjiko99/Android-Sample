@@ -2,7 +2,6 @@ package com.spiraclesoftware.androidsample.ui.transactiondetail
 
 import android.net.Uri
 import co.zsmb.rainbowcake.withIOContext
-import com.spiraclesoftware.androidsample.data.network.model.TransactionUpdateRequest
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
@@ -30,8 +29,7 @@ class TransactionDetailPresenter(
     }
 
     suspend fun updateNote(id: TransactionId, note: String) = withIOContext {
-        val request = TransactionUpdateRequest(noteToSelf = note)
-        transactionsInteractor.updateTransaction(id, request)
+        transactionsInteractor.updateTransactionNote(id, note)
     }
 
     suspend fun removeAttachment(id: TransactionId, uri: Uri) = withIOContext {

@@ -29,7 +29,8 @@ Debugging is facilitated by **LeakCanary** and **Stetho**.
 
 Back-end
 --------
-The app is communicating with a REST API at https://benjiko99-android-sample.builtwithdark.com/ built with the serverless Dark language/platform.
+The app is communicating with a REST API built with Ktor.
+The backend is available on [GitHub](https://github.com/Benjiko99/Backend-Sample).
 
 License
 -------

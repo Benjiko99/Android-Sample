@@ -24,7 +24,7 @@ val appModule = module {
     single {
         Retrofit.Builder()
             .client(get() as OkHttpClient)
-            .baseUrl(SampleApplication.API_SERVICE_BASE_URL)
+            .baseUrl(SampleApplication.API_BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(get() as Moshi))
             .build()
     }
@@ -37,7 +37,6 @@ val appModule = module {
             .add(UriAdapter())
             .add(ZonedDateTimeAdapter())
             .add(UniqueIdentifierAdapter())
-            .add(ConversionRateListAdapter())
             .build()
     }
 

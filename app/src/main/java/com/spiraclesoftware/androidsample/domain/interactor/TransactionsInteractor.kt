@@ -3,8 +3,8 @@ package com.spiraclesoftware.androidsample.domain.interactor
 import android.net.Uri
 import com.spiraclesoftware.androidsample.data.disk.DiskDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
-import com.spiraclesoftware.androidsample.data.network.model.TransactionUpdateRequest
 import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 
 class TransactionsInteractor(
@@ -28,8 +28,13 @@ class TransactionsInteractor(
     fun flowTransactionById(id: TransactionId) =
         diskDataSource.flowTransactionById(id)
 
-    suspend fun updateTransaction(id: TransactionId, request: TransactionUpdateRequest) =
-        networkDataSource.updateTransaction(id, request).also {
+    suspend fun updateTransactionNote(id: TransactionId, note: String) =
+        networkDataSource.updateTransactionNote(id, note).also {
+            diskDataSource.updateTransaction(it)
+        }
+
+    suspend fun updateTransactionCategory(id: TransactionId, category: TransactionCategory) =
+        networkDataSource.updateTransactionCategory(id, category).also {
             diskDataSource.updateTransaction(it)
         }
 
