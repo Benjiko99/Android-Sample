@@ -1,7 +1,6 @@
 package com.spiraclesoftware.androidsample.domain.model
 
 import android.net.Uri
-import com.spiraclesoftware.androidsample.domain.policy.negate
 import com.squareup.moshi.JsonClass
 import org.threeten.bp.ZonedDateTime
 
