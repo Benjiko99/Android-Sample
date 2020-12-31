@@ -7,8 +7,9 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.spiraclesoftware.androidsample.TestData
-import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
+import com.spiraclesoftware.androidsample.domain.model.*
+import com.spiraclesoftware.androidsample.epochDateTime
+import com.spiraclesoftware.androidsample.money
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -20,7 +21,19 @@ import java.io.IOException
 class TransactionListViewModelTest : ViewModelTest() {
 
     companion object {
-        private val MOCK_TRANSACTIONS = TestData.transactions
+        private val MOCK_TRANSACTIONS = listOf(
+            Transaction(
+                TransactionId(1),
+                "Paypal *Steam",
+                epochDateTime,
+                money("49.99", "EUR"),
+                TransferDirection.OUTGOING,
+                TransactionCategory.ENTERTAINMENT,
+                TransactionStatus.COMPLETED,
+                TransactionStatusCode.SUCCESSFUL,
+            ),
+        )
+
         private val MOCK_LIST_ITEMS = MOCK_TRANSACTIONS.map(::TransactionItem)
     }
 

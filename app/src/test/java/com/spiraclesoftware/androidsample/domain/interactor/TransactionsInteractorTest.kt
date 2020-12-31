@@ -4,9 +4,11 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.data.disk.DiskDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
+import com.spiraclesoftware.androidsample.domain.model.*
+import com.spiraclesoftware.androidsample.epochDateTime
+import com.spiraclesoftware.androidsample.money
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -22,9 +24,30 @@ import org.mockito.internal.verification.Times
 class TransactionsInteractorTest {
 
     companion object {
-        private val MOCK_TRANSACTIONS = TestData.transactions
+        private val MOCK_TRANSACTIONS = listOf(
+            Transaction(
+                TransactionId(1),
+                "Paypal *Steam",
+                epochDateTime,
+                money("49.99", "EUR"),
+                TransferDirection.OUTGOING,
+                TransactionCategory.ENTERTAINMENT,
+                TransactionStatus.COMPLETED,
+                TransactionStatusCode.SUCCESSFUL,
+            ),
+            Transaction(
+                TransactionId(2),
+                "Salary",
+                epochDateTime,
+                money("1000", "EUR"),
+                TransferDirection.INCOMING,
+                TransactionCategory.TRANSFERS,
+                TransactionStatus.COMPLETED,
+                TransactionStatusCode.SUCCESSFUL
+            ),
+        )
+
         private val MOCK_TRANSACTION = MOCK_TRANSACTIONS[0]
-        private val MOCK_TRANSACTION_ID = MOCK_TRANSACTION.id
     }
 
     @Mock
@@ -78,10 +101,10 @@ class TransactionsInteractorTest {
 
         val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
-        val transaction = interactor.getTransactionById(MOCK_TRANSACTION_ID)
+        val transaction = interactor.getTransactionById(MOCK_TRANSACTION.id)
         assertEquals(MOCK_TRANSACTION, transaction)
 
-        verify(diskDataSource).getTransactionById(MOCK_TRANSACTION_ID)
+        verify(diskDataSource).getTransactionById(MOCK_TRANSACTION.id)
         verify(networkDataSource, Times(0)).fetchTransactions()
     }
 
@@ -92,7 +115,7 @@ class TransactionsInteractorTest {
 
         val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
-        val transaction = interactor.getTransactionById(MOCK_TRANSACTION_ID)
+        val transaction = interactor.getTransactionById(MOCK_TRANSACTION.id)
         assertEquals(MOCK_TRANSACTION, transaction)
 
         verify(networkDataSource).fetchTransactions()
@@ -104,7 +127,7 @@ class TransactionsInteractorTest {
         whenever(networkDataSource.fetchTransactions()) doReturn MOCK_TRANSACTIONS
 
         val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
-        interactor.getTransactionById(MOCK_TRANSACTION_ID)
+        interactor.getTransactionById(MOCK_TRANSACTION.id)
 
         verify(diskDataSource).saveTransactions(MOCK_TRANSACTIONS)
     }

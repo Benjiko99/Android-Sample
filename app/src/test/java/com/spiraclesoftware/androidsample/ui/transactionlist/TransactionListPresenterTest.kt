@@ -4,11 +4,10 @@ import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
-import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
-import com.spiraclesoftware.androidsample.domain.model.Account
-import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.domain.model.*
+import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.money
 import com.spiraclesoftware.core.utils.LanguageManager
 import junit.framework.Assert.assertEquals
@@ -25,7 +24,29 @@ class TransactionListPresenterTest : PresenterTest() {
 
     companion object {
         private val MOCK_ACCOUNT = Account(Currency.getInstance("EUR"))
-        private val MOCK_TRANSACTIONS = TestData.transactions
+
+        private val MOCK_TRANSACTIONS = listOf(
+            Transaction(
+                TransactionId(1),
+                "Paypal *Steam",
+                epochDateTime,
+                money("49.99", "EUR"),
+                TransferDirection.OUTGOING,
+                TransactionCategory.ENTERTAINMENT,
+                TransactionStatus.COMPLETED,
+                TransactionStatusCode.SUCCESSFUL,
+            ),
+            Transaction(
+                TransactionId(2),
+                "Salary",
+                epochDateTime,
+                money("1000", "EUR"),
+                TransferDirection.INCOMING,
+                TransactionCategory.TRANSFERS,
+                TransactionStatus.COMPLETED,
+                TransactionStatusCode.SUCCESSFUL
+            ),
+        )
     }
 
     @Mock
@@ -68,14 +89,14 @@ class TransactionListPresenterTest : PresenterTest() {
         val mockContribution = money("100", "EUR")
 
         whenever(accountsInteractor.getAccount()) doReturn MOCK_ACCOUNT
-        whenever(accountsInteractor.getContributionToBalance(any<List<Transaction>>())) doReturn mockContribution
+        whenever(accountsInteractor.getContributionToBalance(any())) doReturn mockContribution
 
         val listItems = presenter.getListItems(mockTransactions)
 
         val contribution = accountsInteractor.getContributionToBalance(mockTransactions)
 
         val expectedListItems = listOf(
-            HeaderItem(TestData.epochDateTime, contribution),
+            HeaderItem(epochDateTime, contribution),
             TransactionItem(mockTransactions[0]),
             TransactionItem(mockTransactions[1])
         )

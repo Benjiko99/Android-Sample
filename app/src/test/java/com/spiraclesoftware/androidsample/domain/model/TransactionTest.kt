@@ -1,6 +1,6 @@
 package com.spiraclesoftware.androidsample.domain.model
 
-import com.spiraclesoftware.androidsample.TestData
+import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.money
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -13,7 +13,7 @@ class TransactionTest {
         val transaction = Transaction(
             TransactionId(1),
             "",
-            TestData.epochDateTime,
+            epochDateTime,
             money("100", "EUR"),
             TransferDirection.INCOMING,
             TransactionCategory.TRANSFERS,
@@ -29,7 +29,7 @@ class TransactionTest {
         val transaction = Transaction(
             TransactionId(1),
             "",
-            TestData.epochDateTime,
+            epochDateTime,
             money("100", "EUR"),
             TransferDirection.INCOMING,
             TransactionCategory.TRANSFERS,

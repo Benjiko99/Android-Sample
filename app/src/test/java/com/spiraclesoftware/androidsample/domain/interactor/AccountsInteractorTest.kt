@@ -4,10 +4,10 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.data.memory.MemoryDataSource
 import com.spiraclesoftware.androidsample.domain.model.*
 import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
+import com.spiraclesoftware.androidsample.epochDateTime
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -62,7 +62,7 @@ class AccountsInteractorTest {
             Transaction(
                 TransactionId(1),
                 "",
-                TestData.epochDateTime,
+                epochDateTime,
                 Money(BigDecimal("100"), MOCK_ACCOUNT.currency),
                 TransferDirection.INCOMING,
                 TransactionCategory.TRANSFERS,
@@ -72,7 +72,7 @@ class AccountsInteractorTest {
             Transaction(
                 TransactionId(2),
                 "",
-                TestData.epochDateTime,
+                epochDateTime,
                 Money(BigDecimal("25"), MOCK_ACCOUNT.currency),
                 TransferDirection.OUTGOING,
                 TransactionCategory.TRANSFERS,
@@ -103,7 +103,7 @@ class AccountsInteractorTest {
             Transaction(
                 TransactionId(1),
                 "",
-                TestData.epochDateTime,
+                epochDateTime,
                 Money(BigDecimal("100"), Currency.getInstance("USD")),
                 TransferDirection.INCOMING,
                 TransactionCategory.TRANSFERS,

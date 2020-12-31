@@ -1,8 +1,8 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 
 import co.zsmb.rainbowcake.test.base.PresenterTest
-import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.domain.model.*
+import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.money
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,7 +16,7 @@ class CardsPresenterTest : PresenterTest() {
         val transaction = Transaction(
             TransactionId(1),
             "Paypal *Steam",
-            TestData.epochDateTime,
+            epochDateTime,
             money("49.99", "EUR"),
             TransferDirection.OUTGOING,
             TransactionCategory.ENTERTAINMENT,

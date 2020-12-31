@@ -1,10 +1,8 @@
 package com.spiraclesoftware.androidsample.domain.interactor
 
 import com.nhaarman.mockitokotlin2.*
-import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.data.memory.MemoryDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
-import com.spiraclesoftware.androidsample.domain.model.Account
 import com.spiraclesoftware.androidsample.domain.model.ConversionRate
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import junit.framework.Assert.assertEquals

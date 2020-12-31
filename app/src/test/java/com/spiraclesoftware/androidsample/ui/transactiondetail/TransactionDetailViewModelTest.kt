@@ -6,8 +6,9 @@ import co.zsmb.rainbowcake.test.observeStateAndEvents
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
-import com.spiraclesoftware.androidsample.TestData
-import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
+import com.spiraclesoftware.androidsample.domain.model.*
+import com.spiraclesoftware.androidsample.epochDateTime
+import com.spiraclesoftware.androidsample.money
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputType
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
@@ -30,9 +31,19 @@ import org.mockito.MockitoAnnotations
 class TransactionDetailViewModelTest : ViewModelTest() {
 
     companion object {
-        private val MOCK_TRANSACTION = TestData.transactions[0]
-
-        private val MOCK_TRANSACTION_ID = MOCK_TRANSACTION.id
+        private val MOCK_TRANSACTION = Transaction(
+            TransactionId(1),
+            "Paypal *Steam",
+            epochDateTime,
+            money("49.99", "EUR"),
+            TransferDirection.OUTGOING,
+            TransactionCategory.ENTERTAINMENT,
+            TransactionStatus.COMPLETED,
+            TransactionStatusCode.SUCCESSFUL,
+            emptyList(),
+            "VISA **9400",
+            "Half-Life: Alyx"
+        )
 
         private val MOCK_CARD_ITEMS = emptyList<ValuePairCardItem>()
     }
@@ -52,7 +63,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     fun `Data is loaded correctly from presenter and leads to ready state`() = runBlockingTest {
         whenever(detailPresenter.flowTransactionById(any())) doReturn flowOf(MOCK_TRANSACTION)
 
-        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION.id, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
@@ -75,7 +86,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         whenever(detailPresenter.flowTransactionById(any())).thenReturn(flowOf(MOCK_TRANSACTION))
         //whenever(cardsPresenter.getCardItems(any(), any())).thenThrow()
 
-        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION.id, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { stateObserver, _ ->
             launch {
@@ -94,7 +105,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
         whenever(detailPresenter.getNote(any())).thenReturn(currentNote)
 
-        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION.id, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
             vm.onChangeNote()
@@ -117,7 +128,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
         whenever(detailPresenter.getCategory(any())).thenReturn(currentCategory)
 
-        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION.id, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
             vm.onSelectCategory()
@@ -135,7 +146,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
     @Test
     fun `Clicking card description card action produces navigate to card detail event`() = runBlockingTest {
-        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION.id, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
             vm.onOpenCardDetail()
@@ -148,7 +159,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
     @Test
     fun `Clicking download statement card action produces download statement event`() = runBlockingTest {
-        val vm = TransactionDetailViewModel(MOCK_TRANSACTION_ID, detailPresenter, cardsPresenter)
+        val vm = TransactionDetailViewModel(MOCK_TRANSACTION.id, detailPresenter, cardsPresenter)
 
         vm.observeStateAndEvents { _, eventsObserver ->
             vm.onDownloadStatement()
