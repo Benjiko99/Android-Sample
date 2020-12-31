@@ -11,7 +11,7 @@ class TransactionTest {
     @Test
     fun `Successful transactions contribute to account balance`() {
         val transaction = Transaction(
-            TransactionId(1),
+            TransactionId("1"),
             "",
             epochDateTime,
             money("100", "EUR"),
@@ -27,7 +27,7 @@ class TransactionTest {
     @Test
     fun `Declined transactions do not contribute to account balance`() {
         val transaction = Transaction(
-            TransactionId(1),
+            TransactionId("1"),
             "",
             epochDateTime,
             money("100", "EUR"),

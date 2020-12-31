@@ -36,7 +36,8 @@ val appModule = module {
             .add(HttpUrlAdapter())
             .add(UriAdapter())
             .add(ZonedDateTimeAdapter())
-            .add(UniqueIdentifierAdapter())
+            .add(TransactionIdAdapter())
+            .add(CurrencyCodeAdapter())
             .build()
     }
 

@@ -14,7 +14,7 @@ class CardsPresenterTest : PresenterTest() {
     @Test
     fun `Correct cards are generated for transaction`() {
         val transaction = Transaction(
-            TransactionId(1),
+            TransactionId("1"),
             "Paypal *Steam",
             epochDateTime,
             money("49.99", "EUR"),

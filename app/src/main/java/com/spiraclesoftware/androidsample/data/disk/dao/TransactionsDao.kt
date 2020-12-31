@@ -14,10 +14,10 @@ interface TransactionsDao :
     fun flowAll(): Flow<List<TransactionEntity>>
 
     @Query("SELECT * FROM transactions WHERE id = :id")
-    fun getById(id: Int): TransactionEntity?
+    fun getById(id: String): TransactionEntity?
 
     @Query("SELECT * FROM transactions WHERE id = :id")
-    fun flowById(id: Int): Flow<TransactionEntity?>
+    fun flowById(id: String): Flow<TransactionEntity?>
 
     @Query("DELETE FROM transactions")
     fun deleteAll()

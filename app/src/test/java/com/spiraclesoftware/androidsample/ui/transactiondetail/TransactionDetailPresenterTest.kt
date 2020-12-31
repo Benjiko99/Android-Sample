@@ -20,7 +20,7 @@ class TransactionDetailPresenterTest : PresenterTest() {
 
     companion object {
         private val MOCK_TRANSACTION = Transaction(
-            TransactionId(1),
+            TransactionId("1"),
             "Paypal *Steam",
             epochDateTime,
             money("49.99", "EUR"),

@@ -27,7 +27,7 @@
         tools:layout="@layout/transaction_detail_fragment">
         <argument
             android:name="transactionId"
-            app:argType="integer" />
+            app:argType="string" />
         <action
             android:id="@+id/to_text_input"
             app:destination="@id/inputFragment"
@@ -66,7 +66,7 @@
         tools:layout="@layout/category_select_fragment">
         <argument
             android:name="transactionId"
-            app:argType="integer" />
+            app:argType="string" />
         <argument
             android:name="initialCategory"
             app:argType="com.spiraclesoftware.androidsample.domain.model.TransactionCategory" />

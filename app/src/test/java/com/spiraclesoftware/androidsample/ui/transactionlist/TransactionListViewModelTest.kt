@@ -23,7 +23,7 @@ class TransactionListViewModelTest : ViewModelTest() {
     companion object {
         private val MOCK_TRANSACTIONS = listOf(
             Transaction(
-                TransactionId(1),
+                TransactionId("1"),
                 "Paypal *Steam",
                 epochDateTime,
                 money("49.99", "EUR"),

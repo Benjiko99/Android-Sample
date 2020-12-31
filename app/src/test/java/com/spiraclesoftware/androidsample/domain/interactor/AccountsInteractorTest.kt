@@ -60,7 +60,7 @@ class AccountsInteractorTest {
 
         val transactions = listOf(
             Transaction(
-                TransactionId(1),
+                TransactionId("1"),
                 "",
                 epochDateTime,
                 Money(BigDecimal("100"), MOCK_ACCOUNT.currency),
@@ -70,7 +70,7 @@ class AccountsInteractorTest {
                 TransactionStatusCode.SUCCESSFUL
             ),
             Transaction(
-                TransactionId(2),
+                TransactionId("2"),
                 "",
                 epochDateTime,
                 Money(BigDecimal("25"), MOCK_ACCOUNT.currency),
@@ -101,7 +101,7 @@ class AccountsInteractorTest {
 
         val transactions = listOf(
             Transaction(
-                TransactionId(1),
+                TransactionId("1"),
                 "",
                 epochDateTime,
                 Money(BigDecimal("100"), Currency.getInstance("USD")),

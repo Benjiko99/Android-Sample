@@ -26,7 +26,7 @@ class CategorySelectViewModelTest : ViewModelTest() {
         val presenter: CategorySelectPresenter = mock()
         whenever(presenter.getListItems(any())) doReturn MOCK_LIST_ITEMS
 
-        val vm = CategorySelectViewModel(TransactionId(1), TransactionCategory.ENTERTAINMENT, presenter)
+        val vm = CategorySelectViewModel(TransactionId("1"), TransactionCategory.ENTERTAINMENT, presenter)
 
         vm.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(

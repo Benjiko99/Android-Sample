@@ -32,7 +32,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
     companion object {
         private val MOCK_TRANSACTION = Transaction(
-            TransactionId(1),
+            TransactionId("1"),
             "Paypal *Steam",
             epochDateTime,
             money("49.99", "EUR"),
@@ -134,7 +134,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             vm.onSelectCategory()
 
             val navDirections = toCategorySelect(
-                1,
+                "1",
                 currentCategory
             )
 

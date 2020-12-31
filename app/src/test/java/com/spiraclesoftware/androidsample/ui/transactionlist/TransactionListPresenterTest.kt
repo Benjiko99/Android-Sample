@@ -27,7 +27,7 @@ class TransactionListPresenterTest : PresenterTest() {
 
         private val MOCK_TRANSACTIONS = listOf(
             Transaction(
-                TransactionId(1),
+                TransactionId("1"),
                 "Paypal *Steam",
                 epochDateTime,
                 money("49.99", "EUR"),
@@ -37,7 +37,7 @@ class TransactionListPresenterTest : PresenterTest() {
                 TransactionStatusCode.SUCCESSFUL,
             ),
             Transaction(
-                TransactionId(2),
+                TransactionId("2"),
                 "Salary",
                 epochDateTime,
                 money("1000", "EUR"),

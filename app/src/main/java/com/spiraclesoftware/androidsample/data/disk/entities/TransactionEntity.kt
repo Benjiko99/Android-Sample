@@ -10,7 +10,7 @@ import org.threeten.bp.ZonedDateTime
 @Entity(tableName = "transactions")
 class TransactionEntity(
     @PrimaryKey
-    val id: Int,
+    val id: String,
     val name: String,
     val processingDate: String,
     @Embedded(prefix = "money")

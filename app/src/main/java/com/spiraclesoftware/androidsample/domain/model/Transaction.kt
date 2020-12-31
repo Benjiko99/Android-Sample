@@ -3,8 +3,6 @@ package com.spiraclesoftware.androidsample.domain.model
 import android.net.Uri
 import com.squareup.moshi.JsonClass
 import org.threeten.bp.ZonedDateTime
-import java.math.BigDecimal
-import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class Transaction(
