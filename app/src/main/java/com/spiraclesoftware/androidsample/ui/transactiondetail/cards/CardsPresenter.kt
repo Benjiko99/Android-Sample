@@ -1,7 +1,6 @@
 package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 
 import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 
 class CardsPresenter {
 
@@ -11,7 +10,7 @@ class CardsPresenter {
      * These describe details about the [Transaction] that can be shown to the user.
      */
     fun getCards(transaction: Transaction) = cards {
-        val isSuccessful = TransactionsPolicy.isSuccessful(transaction)
+        val isSuccessful = transaction.isSuccessful()
         val hasCardDescription = !transaction.cardDescription.isNullOrEmpty()
 
         if (!isSuccessful)

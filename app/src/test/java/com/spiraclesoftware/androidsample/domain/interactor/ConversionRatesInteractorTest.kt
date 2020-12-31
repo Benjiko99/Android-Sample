@@ -4,6 +4,9 @@ import com.nhaarman.mockitokotlin2.*
 import com.spiraclesoftware.androidsample.TestData
 import com.spiraclesoftware.androidsample.data.memory.MemoryDataSource
 import com.spiraclesoftware.androidsample.data.network.NetworkDataSource
+import com.spiraclesoftware.androidsample.domain.model.Account
+import com.spiraclesoftware.androidsample.domain.model.ConversionRate
+import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -11,13 +14,22 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.threeten.bp.ZonedDateTime
+import java.util.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ConversionRatesInteractorTest {
 
     companion object {
-        private val MOCK_BASE_CURRENCY = TestData.account.currency
-        private val MOCK_RATES = TestData.conversionRates
+        private val MOCK_BASE_CURRENCY = Currency.getInstance("EUR")
+        private val MOCK_RATES = ConversionRates(
+            baseCurrency = Currency.getInstance("EUR"),
+            validityDate = ZonedDateTime.now(),
+            rates = listOf(
+                ConversionRate("USD", 1.12f),
+                ConversionRate("CZK", 26.70f)
+            )
+        )
     }
 
     @Mock

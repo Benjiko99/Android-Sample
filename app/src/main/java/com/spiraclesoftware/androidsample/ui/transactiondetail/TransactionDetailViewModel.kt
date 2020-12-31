@@ -8,7 +8,6 @@ import com.mikepenz.fastadapter.GenericItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
-import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.androidsample.ui.shared.MoneyFormat
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputType
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
@@ -65,8 +64,8 @@ class TransactionDetailViewModel(
             .collect { (transaction, uploads) ->
                 viewState = try {
                     val cardItems = getCardItems(transaction, uploads)
-                    val contributesToBalance = TransactionsPolicy.contributesToBalance(transaction)
-                    val isSuccessful = TransactionsPolicy.isSuccessful(transaction)
+                    val contributesToBalance = transaction.contributesToAccountBalance()
+                    val isSuccessful = transaction.isSuccessful()
                     val formattedMoney = MoneyFormat(transaction.signedMoney).format(transaction)
 
                     DetailReady(
@@ -131,7 +130,7 @@ class TransactionDetailViewModel(
         val transaction = detailPresenter.getTransactionById(transactionId)!!
         val totalCount = transaction.attachments.size + attachmentUploads.value.size
 
-        if (totalCount >= TransactionsPolicy.MAX_ATTACHMENTS) {
+        if (totalCount >= Transaction.MAX_ATTACHMENTS) {
             postEvent(NotifyAttachmentsLimitReachedEvent)
             return@execute
         }

@@ -17,7 +17,7 @@ import org.koin.dsl.module
 val uiModule = module {
 
     viewModel { TransactionListViewModel(get()) }
-    factory { TransactionListPresenter(get(), get(), get(), get()) }
+    factory { TransactionListPresenter(get(), get(), get()) }
 
     viewModel { (id: TransactionId) -> TransactionDetailViewModel(id, get(), get()) }
     factory { TransactionDetailPresenter(get()) }

@@ -6,18 +6,7 @@ import java.util.*
 
 object TestData {
 
-    val account = Account(Currency.getInstance("EUR"))
-
     val epochDateTime = ZonedDateTime.parse("1970-01-01T00:00:00+00:00")!!
-
-    val conversionRates = ConversionRates(
-        baseCurrency = Currency.getInstance("EUR"),
-        validityDate = ZonedDateTime.now(),
-        rates = listOf(
-            ConversionRate("USD", 1.12f),
-            ConversionRate("CZK", 26.70f)
-        )
-    )
 
     val transactions: List<Transaction> = arrayListOf(
         Transaction(
@@ -55,13 +44,4 @@ object TestData {
         )
     )
 
-    val transactionsIncoming: List<Transaction>
-        get() = transactions.filter {
-            it.transferDirection == TransferDirection.INCOMING
-        }
-
-    val transactionsOutgoing: List<Transaction>
-        get() = transactions.filter {
-            it.transferDirection == TransferDirection.OUTGOING
-        }
 }

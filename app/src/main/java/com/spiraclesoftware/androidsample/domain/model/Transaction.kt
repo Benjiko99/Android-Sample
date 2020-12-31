@@ -3,6 +3,8 @@ package com.spiraclesoftware.androidsample.domain.model
 import android.net.Uri
 import com.squareup.moshi.JsonClass
 import org.threeten.bp.ZonedDateTime
+import java.math.BigDecimal
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class Transaction(
@@ -19,6 +21,10 @@ data class Transaction(
     val noteToSelf: String? = null
 ) : Identifiable<TransactionId> {
 
+    companion object {
+        const val MAX_ATTACHMENTS = 5
+    }
+
     override fun getUniqueId() = id
 
     /**
@@ -30,5 +36,15 @@ data class Transaction(
             TransferDirection.INCOMING -> money
             TransferDirection.OUTGOING -> money.negate()
         }
+
+    fun isSuccessful(): Boolean {
+        val successful = statusCode == TransactionStatusCode.SUCCESSFUL
+        val completed = status == TransactionStatus.COMPLETED
+        return successful && completed
+    }
+
+    fun contributesToAccountBalance(): Boolean {
+        return isSuccessful()
+    }
 
 }

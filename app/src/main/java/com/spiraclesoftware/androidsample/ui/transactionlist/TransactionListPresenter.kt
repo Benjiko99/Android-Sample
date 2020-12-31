@@ -7,7 +7,6 @@ import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteract
 import com.spiraclesoftware.androidsample.domain.model.Account
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
-import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import com.spiraclesoftware.core.utils.LanguageManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -16,7 +15,6 @@ import org.threeten.bp.temporal.ChronoUnit.DAYS
 
 class TransactionListPresenter(
     private val languageManager: LanguageManager,
-    private val transactionsPolicy: TransactionsPolicy,
     private val accountsInteractor: AccountsInteractor,
     private val transactionsInteractor: TransactionsInteractor
 ) {
@@ -54,8 +52,7 @@ class TransactionListPresenter(
         val listItems = arrayListOf<GenericItem>()
 
         this.forEach { (day, transactions) ->
-            val contribution = transactionsPolicy
-                .getContributionToBalance(transactions, getAccount().currency)
+            val contribution = accountsInteractor.getContributionToBalance(transactions)
 
             listItems.add(HeaderItem(day, contribution))
             listItems.addAll(transactions.map(::TransactionItem))

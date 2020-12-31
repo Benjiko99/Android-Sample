@@ -2,7 +2,6 @@ package com.spiraclesoftware.androidsample.ui.shared
 
 import com.spiraclesoftware.androidsample.domain.model.Money
 import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy.Companion.contributesToBalance
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -20,7 +19,7 @@ class MoneyFormat(val money: Money) {
 
     /** Formats using the most common way used across the app. */
     fun format(transaction: Transaction): String {
-        return if (contributesToBalance(transaction)) {
+        return if (transaction.contributesToAccountBalance()) {
             formatSigned()
         } else {
             formatUnsigned()

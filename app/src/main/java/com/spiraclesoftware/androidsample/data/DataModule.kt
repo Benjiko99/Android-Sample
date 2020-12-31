@@ -10,7 +10,6 @@ import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
-import com.spiraclesoftware.androidsample.domain.policy.TransactionsPolicy
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -29,7 +28,7 @@ private val databaseModule = module {
 
 private val interactorModule = module {
 
-    factory { AccountsInteractor(get()) }
+    factory { AccountsInteractor(get(), get()) }
 
     factory { TransactionsInteractor(get(), get()) }
 
@@ -40,8 +39,6 @@ private val interactorModule = module {
 private val serviceModule = module {
 
     factory { CurrencyConverter(get()) }
-
-    factory { TransactionsPolicy(get()) }
 
 }
 
