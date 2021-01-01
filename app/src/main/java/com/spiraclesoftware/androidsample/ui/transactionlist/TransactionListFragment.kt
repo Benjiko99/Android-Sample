@@ -28,9 +28,7 @@ import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.NavigateEvent
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.ShowLanguageChangeConfirmationEvent
-import com.spiraclesoftware.core.extensions.onActionExpanded
-import com.spiraclesoftware.core.extensions.onItemSelected
-import com.spiraclesoftware.core.extensions.string
+import com.spiraclesoftware.core.extensions.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -54,13 +52,19 @@ class TransactionListFragment :
 
         when (viewState) {
             is ListReady -> {
-                recyclerView.isVisible = true
+                recyclerView.isVisible = viewState.emptyState == null
+                emptyState.root.isVisible = viewState.emptyState != null
 
                 FastAdapterDiffUtil[itemAdapter] = viewState.listItems
-                filterSpinner.setSelection(viewState.listFilter.directionFilter.ordinal)
+                filterSpinner.setSelection(viewState.directionFilter.ordinal)
+
+                emptyState.image = drawable(viewState.emptyState?.image)
+                emptyState.caption = stringOrNull(viewState.emptyState?.caption)
+                emptyState.message = stringOrNull(viewState.emptyState?.message)
             }
             Error -> {
                 recyclerView.isVisible = false
+                emptyState.root.isVisible = false
 
                 errorLayout.errorMessageView.text = string(R.string.network_error)
                 itemAdapter.set(emptyList())

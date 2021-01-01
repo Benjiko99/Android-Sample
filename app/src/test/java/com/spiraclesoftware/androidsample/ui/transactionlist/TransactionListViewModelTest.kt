@@ -49,7 +49,7 @@ class TransactionListViewModelTest : ViewModelTest() {
             stateObserver.assertObserved(
                 ListReady(
                     MOCK_LIST_ITEMS,
-                    TransactionListFilter()
+                    TransferDirectionFilter.ALL
                 )
             )
         }
@@ -96,11 +96,27 @@ class TransactionListViewModelTest : ViewModelTest() {
                     Error,
                     ListReady(
                         MOCK_LIST_ITEMS,
-                        TransactionListFilter()
+                        TransferDirectionFilter.ALL
                     ),
                     Loading
                 )
             }
+        }
+    }
+
+    @Test
+    fun `Having no transactions leads to empty state`() = runBlockingTest {
+        val presenter: TransactionListPresenter = mock()
+        whenever(presenter.flowFilteredTransactions(any())) doReturn flowOf(emptyList())
+        whenever(presenter.getListItems(any())) doReturn emptyList()
+
+        val vm = TransactionListViewModel(presenter)
+
+        vm.observeStateAndEvents { stateObserver, _ ->
+            val viewState = stateObserver.observed.first() as ListReady
+
+            assert(viewState.listItems.isEmpty())
+            assert(viewState.emptyState != null)
         }
     }
 

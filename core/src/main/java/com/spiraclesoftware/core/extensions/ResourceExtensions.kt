@@ -99,7 +99,7 @@ fun Context.themeAttr(@AttrRes attrRes: Int): TypedValue {
 //endregion
 
 //region Fragment
-fun Fragment.drawable(@DrawableRes resId: Int): Drawable? {
+fun Fragment.drawable(@DrawableRes resId: Int?): Drawable? {
     return requireContext().drawable(resId)
 }
 
@@ -126,6 +126,10 @@ fun Fragment.string(@StringRes resId: Int, formatArgs: List<Any>?): String {
     } else {
         string(resId)
     }
+}
+
+fun Fragment.stringOrNull(@StringRes resId: Int?): String? {
+    return requireContext().stringOrNull(resId)
 }
 
 @Px

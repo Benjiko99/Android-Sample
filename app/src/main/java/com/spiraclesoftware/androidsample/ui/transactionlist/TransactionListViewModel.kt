@@ -3,6 +3,7 @@ package com.spiraclesoftware.androidsample.ui.transactionlist
 import androidx.navigation.NavDirections
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
+import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
@@ -33,10 +34,26 @@ class TransactionListViewModel(
     suspend fun collectTransactions() =
         listPresenter.flowFilteredTransactions(listFilterFlow).collect { transactions ->
             viewState = try {
-                ListReady(
-                    listItems = listPresenter.getListItems(transactions),
-                    listFilter = listFilterFlow.value
-                )
+                val listItems = listPresenter.getListItems(transactions)
+                val listFilter = listFilterFlow.value
+                var emptyState: EmptyState? = null
+
+                if (listItems.isEmpty()) {
+                    emptyState = if (listFilter.isActive()) {
+                        EmptyState(
+                            image = R.drawable.ic_empty_search_results,
+                            caption = R.string.empty_state__no_results__caption,
+                            message = R.string.empty_state__no_results__message
+                        )
+                    } else {
+                        EmptyState(
+                            caption = R.string.empty_state__no_transactions__caption,
+                            message = R.string.empty_state__no_transactions__message
+                        )
+                    }
+                }
+
+                ListReady(listItems, listFilter.directionFilter, emptyState)
             } catch (e: Exception) {
                 Timber.e(e)
                 Error

@@ -10,6 +10,11 @@ data class TransactionListFilter(
     val directionFilter: TransferDirectionFilter = ALL,
 ) {
 
+    /** @return whether any filter is being applied */
+    fun isActive(): Boolean {
+        return searchQuery.isNotEmpty() || directionFilter != ALL
+    }
+
     fun applyTo(list: List<Transaction>): List<Transaction> {
         var result = list
 
