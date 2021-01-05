@@ -8,12 +8,10 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragmentDirections.Companion.toTransactionDetail
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class TransactionListViewModel(
     private val listPresenter: TransactionListPresenter
 ) : RainbowCakeViewModel<TransactionListViewState>(Loading) {

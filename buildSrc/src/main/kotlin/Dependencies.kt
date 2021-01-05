@@ -15,7 +15,7 @@ object Dependencies {
     const val coil = "1.0.0-rc3"
     const val imageViewer = "1.0.1"
     const val kotlin = "1.4.10"
-    const val coroutines = "1.3.9"
+    const val coroutines = "1.4.2"
     const val androidx = "1.1.0"
     const val androidxFragment = "1.3.0-beta01"
     const val room = "2.2.5"

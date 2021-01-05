@@ -14,14 +14,12 @@ import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetail
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toCategorySelect
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import timber.log.Timber
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class TransactionDetailViewModel(
     private val transactionId: TransactionId,
     private val detailPresenter: TransactionDetailPresenter,
