@@ -13,7 +13,7 @@ import com.spiraclesoftware.androidsample.data.disk.entities.TransactionEntity
         TransactionEntity::class
     ],
     version = 1,
-    exportSchema = false
+    exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class MainDatabase : RoomDatabase() {
@@ -21,6 +21,8 @@ abstract class MainDatabase : RoomDatabase() {
     abstract fun transactionsDao(): TransactionsDao
 
     object Migrations : MigrationHelper() {
+
+        val ALL_MIGRATIONS get() = arrayOf<Migration>()
 
         /** Not a real migration. just an example */
         val MIGRATION_EXAMPLE: Migration = object : Migration(1, 2) {
