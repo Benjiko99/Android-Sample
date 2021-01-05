@@ -47,7 +47,7 @@ class TransactionListViewModelTest : ViewModelTest() {
 
         vm.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
-                ListReady(
+                Content(
                     MOCK_LIST_ITEMS,
                     TransferDirectionFilter.ALL
                 )
@@ -94,7 +94,7 @@ class TransactionListViewModelTest : ViewModelTest() {
 
                 stateObserver.assertObserved(
                     Error,
-                    ListReady(
+                    Content(
                         MOCK_LIST_ITEMS,
                         TransferDirectionFilter.ALL
                     ),
@@ -113,7 +113,7 @@ class TransactionListViewModelTest : ViewModelTest() {
         val vm = TransactionListViewModel(presenter)
 
         vm.observeStateAndEvents { stateObserver, _ ->
-            val viewState = stateObserver.observed.first() as ListReady
+            val viewState = stateObserver.observed.first() as Content
 
             assert(viewState.listItems.isEmpty())
             assert(viewState.emptyState != null)

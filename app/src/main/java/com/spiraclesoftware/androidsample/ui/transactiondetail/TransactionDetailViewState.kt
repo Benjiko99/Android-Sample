@@ -10,7 +10,7 @@ object Loading : TransactionDetailViewState()
 
 object Error : TransactionDetailViewState()
 
-data class DetailReady(
+data class Content(
     val name: String,
     val processingDate: ZonedDateTime,
     val formattedMoney: String,

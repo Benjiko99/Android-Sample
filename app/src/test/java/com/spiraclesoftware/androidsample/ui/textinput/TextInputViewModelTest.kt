@@ -23,11 +23,11 @@ class TextInputViewModelTest : ViewModelTest() {
             vm.validateThenSendInputToCaller("Hello World")
 
             stateObserver.assertObserved(
-                TextInputEntry(
+                Content(
                     "Initial Value",
                     null
                 ),
-                TextInputEntry(
+                Content(
                     "Hello World",
                     null
                 )

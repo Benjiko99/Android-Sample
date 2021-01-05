@@ -68,7 +68,7 @@ class TransactionDetailViewModel(
                     val isSuccessful = transaction.isSuccessful()
                     val formattedMoney = MoneyFormat(transaction.signedMoney).format(transaction)
 
-                    DetailReady(
+                    Content(
                         transaction.name,
                         transaction.processingDate,
                         formattedMoney,

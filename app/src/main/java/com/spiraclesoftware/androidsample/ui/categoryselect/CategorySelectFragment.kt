@@ -42,7 +42,7 @@ class CategorySelectFragment :
     private lateinit var itemAdapter: GenericItemAdapter
 
     override fun render(viewState: CategorySelectViewState) = with(binding) {
-        if (viewState is CategorySelect) {
+        if (viewState is Content) {
             FastAdapterDiffUtil[itemAdapter] = viewState.listItems
         }
     }

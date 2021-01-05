@@ -48,10 +48,10 @@ class TransactionListFragment :
     override fun render(viewState: TransactionListViewState): Unit = with(binding) {
         swipeRefreshLayout.isRefreshing = viewState is Loading
         errorLayout.root.isVisible = viewState is Error
-        filterSpinner.isEnabled = viewState is ListReady
+        filterSpinner.isEnabled = viewState is Content
 
         when (viewState) {
-            is ListReady -> {
+            is Content -> {
                 recyclerView.isVisible = viewState.emptyState == null
                 emptyState.root.isVisible = viewState.emptyState != null
 

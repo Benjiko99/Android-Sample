@@ -7,13 +7,13 @@ sealed class TransactionListViewState
 
 object Loading : TransactionListViewState()
 
-data class ListReady(
+object Error : TransactionListViewState()
+
+data class Content(
     val listItems: List<GenericItem>,
     val directionFilter: TransferDirectionFilter,
     val emptyState: EmptyState? = null,
 ) : TransactionListViewState()
-
-object Error : TransactionListViewState()
 
 data class EmptyState(
     val image: Int? = null,

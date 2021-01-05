@@ -53,7 +53,7 @@ class TransactionListViewModel(
                     }
                 }
 
-                ListReady(listItems, listFilter.directionFilter, emptyState)
+                Content(listItems, listFilter.directionFilter, emptyState)
             } catch (e: Exception) {
                 Timber.e(e)
                 Error

@@ -55,7 +55,7 @@ class TextInputFragment :
 
     override fun render(viewState: TextInputViewState) = with(binding) {
         when (viewState) {
-            is TextInputEntry -> {
+            is Content -> {
                 inputEditText.setText(viewState.input)
                 inputEditText.setSelection(viewState.input.length)
 

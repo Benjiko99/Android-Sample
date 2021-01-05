@@ -11,7 +11,7 @@ class CategorySelectViewModel(
     initialCategory: TransactionCategory,
     private val presenter: CategorySelectPresenter
 ) : RainbowCakeViewModel<CategorySelectViewState>(
-    CategorySelect(listItems = emptyList())
+    Content(listItems = emptyList())
 ) {
 
     object NotifyOfSuccessEvent : QueuedOneShotEvent
@@ -47,7 +47,7 @@ class CategorySelectViewModel(
     }
 
     private fun updateListItems() {
-        viewState = (viewState as CategorySelect).copy(
+        viewState = (viewState as Content).copy(
             listItems = presenter.getListItems(selectedCategory)
         )
     }

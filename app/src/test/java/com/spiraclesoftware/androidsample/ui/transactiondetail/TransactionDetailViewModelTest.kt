@@ -67,7 +67,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
         vm.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
-                DetailReady(
+                Content(
                     MOCK_TRANSACTION.name,
                     MOCK_TRANSACTION.processingDate,
                     MoneyFormat(MOCK_TRANSACTION.signedMoney).format(MOCK_TRANSACTION),

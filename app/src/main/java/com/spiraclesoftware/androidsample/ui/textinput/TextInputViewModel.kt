@@ -10,7 +10,7 @@ class TextInputViewModel(
     initialValue: String,
     private val strategy: TextInputStrategy = TextInputStrategy.getStrategy(inputType)
 ) : RainbowCakeViewModel<TextInputViewState>(
-    TextInputEntry(input = initialValue)
+    Content(input = initialValue)
 ) {
 
     data class SendResultToCallerAndExitEvent(
@@ -39,13 +39,13 @@ class TextInputViewModel(
     }
 
     private fun updateInputState(input: String) {
-        viewState = (viewState as? TextInputEntry)?.copy(
+        viewState = (viewState as? Content)?.copy(
             input = input
         ) ?: viewState
     }
 
     private fun updateErrorState(error: ValidationError?) {
-        viewState = (viewState as? TextInputEntry)?.copy(
+        viewState = (viewState as? Content)?.copy(
             error = error
         ) ?: viewState
     }

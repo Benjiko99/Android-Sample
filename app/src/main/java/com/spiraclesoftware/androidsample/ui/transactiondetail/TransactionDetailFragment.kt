@@ -65,7 +65,7 @@ class TransactionDetailFragment :
         errorMessageView.isVisible = viewState is Error
 
         when (viewState) {
-            is DetailReady -> {
+            is Content -> {
                 FastAdapterDiffUtil[itemAdapter] = viewState.cardItems
 
                 toolbar.title = viewState.name

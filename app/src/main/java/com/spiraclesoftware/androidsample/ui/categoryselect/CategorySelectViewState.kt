@@ -4,6 +4,6 @@ import com.mikepenz.fastadapter.GenericItem
 
 sealed class CategorySelectViewState
 
-data class CategorySelect(
+data class Content(
     val listItems: List<GenericItem>
 ) : CategorySelectViewState()
