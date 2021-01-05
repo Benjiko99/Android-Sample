@@ -27,6 +27,8 @@ object Dependencies {
 
     // Tests
     const val junit = "4.13"
+    const val androidxTestRunner = "1.3.0"
+    const val androidxTestJUnit = "1.1.2"
     const val mockito = "2.28.2"
     const val mockitoKotlin = "2.2.0"
 }

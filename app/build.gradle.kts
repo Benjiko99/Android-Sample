@@ -108,5 +108,7 @@ dependencies {
     testImplementation("org.threeten:threetenbp:${Dependencies.threetenabp}"){
         exclude("com.jakewharton.threetenabp", "threetenabp")
     }
+    androidTestImplementation("androidx.test:runner:${Dependencies.androidxTestRunner}")
+    androidTestImplementation("androidx.test.ext:junit:${Dependencies.androidxTestJUnit}")
     androidTestImplementation("org.mockito:mockito-android:${Dependencies.mockito}")
 }
