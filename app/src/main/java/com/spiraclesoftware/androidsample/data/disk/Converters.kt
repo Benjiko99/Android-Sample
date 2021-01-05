@@ -22,26 +22,20 @@ class Converters {
         item?.name
 
     @TypeConverter
-    fun fromListOfString(item: List<String>?): String? =
-        moshi.adapter<List<String>?>().toJson(item)
+    fun fromListOfString(item: List<String>): String =
+        moshi.adapter<List<String>>().toJson(item)
 
     @TypeConverter
-    fun toListOfString(value: String?): List<String>? =
-        if (value != null)
-            moshi.adapter<List<String>?>().fromJson(value)
-        else
-            emptyList()
+    fun toListOfString(value: String): List<String> =
+        moshi.adapter<List<String>>().fromJson(value) ?: emptyList()
 
     @TypeConverter
-    fun fromListOfUri(item: List<Uri>?): String? =
-        moshi.adapter<List<Uri>?>().toJson(item)
+    fun fromListOfUri(item: List<Uri>): String =
+        moshi.adapter<List<Uri>>().toJson(item)
 
     @TypeConverter
-    fun toListOfUri(value: String?): List<Uri>? =
-        if (value != null)
-            moshi.adapter<List<Uri>?>().fromJson(value)
-        else
-            emptyList()
+    fun toListOfUri(value: String): List<Uri> =
+        moshi.adapter<List<Uri>>().fromJson(value) ?: emptyList()
 
     @TypeConverter
     fun toBigDecimal(value: String?) =

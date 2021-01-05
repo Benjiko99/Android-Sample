@@ -8,7 +8,7 @@ import com.spiraclesoftware.androidsample.domain.model.*
 import org.threeten.bp.ZonedDateTime
 
 @Entity(tableName = "transactions")
-class TransactionEntity(
+data class TransactionEntity(
     @PrimaryKey
     val id: String,
     val name: String,

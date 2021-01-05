@@ -30,7 +30,7 @@ class DiskDataSource(
 
     fun saveTransactions(transactions: List<Transaction>) {
         val roomItems = transactions.map(Transaction::toRoomEntity)
-        transactionsDao.replaceAll(roomItems)
+        transactionsDao.repopulateWith(roomItems)
     }
 
     fun updateTransaction(transaction: Transaction) {

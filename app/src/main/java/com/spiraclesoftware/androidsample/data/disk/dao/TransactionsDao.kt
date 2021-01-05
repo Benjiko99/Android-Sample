@@ -11,6 +11,9 @@ interface TransactionsDao :
     BaseDao<TransactionEntity> {
 
     @Query("SELECT * FROM transactions")
+    fun getAll(): List<TransactionEntity>
+
+    @Query("SELECT * FROM transactions")
     fun flowAll(): Flow<List<TransactionEntity>>
 
     @Query("SELECT * FROM transactions WHERE id = :id")
@@ -23,7 +26,7 @@ interface TransactionsDao :
     fun deleteAll()
 
     @Transaction
-    fun replaceAll(obj: List<TransactionEntity>) {
+    fun repopulateWith(obj: List<TransactionEntity>) {
         deleteAll()
         insertAll(obj)
     }
