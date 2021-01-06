@@ -4,6 +4,8 @@ import co.zsmb.rainbowcake.base.QueuedOneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import timber.log.Timber
 
 class CategorySelectViewModel(
@@ -17,39 +19,40 @@ class CategorySelectViewModel(
     object NotifyOfSuccessEvent : QueuedOneShotEvent
     object NotifyOfFailureEvent : QueuedOneShotEvent
 
-    private var selectedCategory: TransactionCategory = initialCategory
+    private val selectedCategory = MutableStateFlow(initialCategory)
 
     init {
-        updateListItems()
+        executeNonBlocking {
+            collectSelectedCategory()
+        }
+    }
+
+    private suspend fun collectSelectedCategory() {
+        selectedCategory.collectLatest { category ->
+            viewState = (viewState as Content).copy(
+                listItems = presenter.getListItems(selectedCategory = category)
+            )
+        }
     }
 
     fun selectCategory(category: TransactionCategory) {
-        if (category != selectedCategory) {
-            execute {
-                val oldCategory = selectedCategory
+        if (category != selectedCategory.value) {
+            val oldCategory = selectedCategory.value
 
-                try {
-                    setSelectedCategory(category)
-                    presenter.updateCategory(transactionId, category)
-                    postQueuedEvent(NotifyOfSuccessEvent)
-                } catch (e: Exception) {
-                    Timber.e(e)
-                    setSelectedCategory(oldCategory)
-                    postQueuedEvent(NotifyOfFailureEvent)
-                }
+            try {
+                tryUpdateCategory(category)
+            } catch (e: Exception) {
+                selectedCategory.value = oldCategory
+                postQueuedEvent(NotifyOfFailureEvent)
+                Timber.e(e)
             }
         }
     }
 
-    private fun setSelectedCategory(category: TransactionCategory) {
-        selectedCategory = category
-        updateListItems()
-    }
-
-    private fun updateListItems() {
-        viewState = (viewState as Content).copy(
-            listItems = presenter.getListItems(selectedCategory)
-        )
+    private fun tryUpdateCategory(category: TransactionCategory) = execute {
+        selectedCategory.value = category
+        presenter.updateCategory(transactionId, category)
+        postQueuedEvent(NotifyOfSuccessEvent)
     }
 
 }
