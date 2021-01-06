@@ -38,7 +38,7 @@ class CurrencyConverter(
             ?: throw MissingConversionRateException(missingCurrency = to)
     }
 
-    class MissingConversionRateException(missingCurrency: Currency) : RuntimeException(
+    class MissingConversionRateException(missingCurrency: Currency) : Exception(
         "Missing conversion rate for ${missingCurrency.currencyCode} currency."
     )
 

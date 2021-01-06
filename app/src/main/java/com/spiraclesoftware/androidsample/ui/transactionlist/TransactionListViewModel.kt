@@ -4,16 +4,17 @@ import androidx.navigation.NavDirections
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
+import com.spiraclesoftware.androidsample.ui.shared.PresenterException
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragmentDirections.Companion.toTransactionDetail
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
-import timber.log.Timber
 
 class TransactionListViewModel(
-    private val listPresenter: TransactionListPresenter
+    private val presenter: TransactionListPresenter
 ) : RainbowCakeViewModel<TransactionListViewState>(Loading) {
 
     data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
@@ -30,40 +31,42 @@ class TransactionListViewModel(
     }
 
     suspend fun collectTransactions() =
-        listPresenter.flowFilteredTransactions(listFilterFlow).collect { transactions ->
+        presenter.flowFilteredTransactions(listFilterFlow).collect { transactions ->
             viewState = try {
-                val listItems = listPresenter.getListItems(transactions)
-                val listFilter = listFilterFlow.value
-                var emptyState: EmptyState? = null
-
-                if (listItems.isEmpty()) {
-                    emptyState = if (listFilter.isActive()) {
-                        EmptyState(
-                            image = R.drawable.ic_empty_search_results,
-                            caption = R.string.empty_state__no_results__caption,
-                            message = R.string.empty_state__no_results__message
-                        )
-                    } else {
-                        EmptyState(
-                            caption = R.string.empty_state__no_transactions__caption,
-                            message = R.string.empty_state__no_transactions__message
-                        )
-                    }
-                }
-
-                Content(listItems, listFilter.directionFilter, emptyState)
-            } catch (e: Exception) {
-                Timber.e(e)
-                Error
+                tryGetContent(transactions)
+            } catch (e: PresenterException) {
+                Error(e.message)
             }
         }
 
+    private suspend fun tryGetContent(transactions: List<Transaction>): Content {
+        val listItems = presenter.getListItems(transactions)
+        val listFilter = listFilterFlow.value
+        var emptyState: EmptyState? = null
+
+        if (listItems.isEmpty()) {
+            emptyState = if (listFilter.isActive()) {
+                EmptyState(
+                    image = R.drawable.ic_empty_search_results,
+                    caption = R.string.empty_state__no_results__caption,
+                    message = R.string.empty_state__no_results__message
+                )
+            } else {
+                EmptyState(
+                    caption = R.string.empty_state__no_transactions__caption,
+                    message = R.string.empty_state__no_transactions__message
+                )
+            }
+        }
+
+        return Content(listItems, listFilter.directionFilter, emptyState)
+    }
+
     private suspend fun fetchTransactions() {
         try {
-            listPresenter.fetchTransactions()
-        } catch (e: Exception) {
-            Timber.e(e)
-            viewState = Error
+            presenter.fetchTransactions()
+        } catch (e: PresenterException) {
+            viewState = Error(e.message)
         }
     }
 
@@ -73,7 +76,7 @@ class TransactionListViewModel(
     }
 
     fun toggleLanguage() {
-        listPresenter.toggleLanguageAndRestart()
+        presenter.toggleLanguageAndRestart()
     }
 
     fun onLanguageChangeClicked() {

@@ -4,6 +4,7 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.categoryselect.CategorySelectPresenter
 import com.spiraclesoftware.androidsample.ui.categoryselect.CategorySelectViewModel
+import com.spiraclesoftware.androidsample.ui.shared.ExceptionFormatter
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputType
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputViewModel
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailPresenter
@@ -11,13 +12,16 @@ import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetail
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardsPresenter
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListPresenter
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val uiModule = module {
 
+    single { ExceptionFormatter(androidContext()) }
+
     viewModel { TransactionListViewModel(get()) }
-    factory { TransactionListPresenter(get(), get(), get()) }
+    factory { TransactionListPresenter(get(), get(), get(), get()) }
 
     viewModel { (id: TransactionId) -> TransactionDetailViewModel(id, get(), get()) }
     factory { TransactionDetailPresenter(get()) }

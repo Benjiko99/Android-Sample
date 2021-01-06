@@ -9,6 +9,7 @@ import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteract
 import com.spiraclesoftware.androidsample.domain.model.*
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.money
+import com.spiraclesoftware.androidsample.ui.shared.ExceptionFormatter
 import com.spiraclesoftware.core.utils.LanguageManager
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -58,6 +59,9 @@ class TransactionListPresenterTest : PresenterTest() {
     @Mock
     private lateinit var transactionsInteractor: TransactionsInteractor
 
+    @Mock
+    private lateinit var exceptionFormatter: ExceptionFormatter
+
     private lateinit var presenter: TransactionListPresenter
 
     @Before
@@ -66,7 +70,8 @@ class TransactionListPresenterTest : PresenterTest() {
         presenter = TransactionListPresenter(
             languageManager,
             accountsInteractor,
-            transactionsInteractor
+            transactionsInteractor,
+            exceptionFormatter
         )
     }
 

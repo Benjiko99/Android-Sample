@@ -7,7 +7,7 @@ sealed class TransactionListViewState
 
 object Loading : TransactionListViewState()
 
-object Error : TransactionListViewState()
+data class Error(val message: String?) : TransactionListViewState()
 
 data class Content(
     val listItems: List<GenericItem>,

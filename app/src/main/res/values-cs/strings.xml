@@ -8,6 +8,7 @@
     <string name="retry">Opakovat</string>
     <string name="unknown_error">Něco se pokazilo</string>
     <string name="network_error">Nepodařilo se načíst data.\nZkontrolujte připojení.</string>
+    <string name="timeout_error">Připojení vypršelo.\nKdyž se backend nepoužívá, chvíli trvá než se probudí, zkuste to prosím znovu.</string>
     <string name="not_implemented">Není implementováno</string>
 
     <!-- Menu Actions -->

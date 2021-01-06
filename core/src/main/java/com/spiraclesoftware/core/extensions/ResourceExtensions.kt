@@ -12,11 +12,7 @@ import androidx.fragment.app.Fragment
 //region Resources
 @Px
 fun Resources.dpToPx(@Dimension(unit = Dimension.DP) dp: Int): Int {
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        dp.toFloat(),
-        displayMetrics
-    ).toInt()
+    return dpToPx(dp.toFloat()).toInt()
 }
 
 @Px

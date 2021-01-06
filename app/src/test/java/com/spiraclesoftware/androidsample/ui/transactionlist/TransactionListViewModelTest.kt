@@ -10,12 +10,12 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.domain.model.*
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.money
+import com.spiraclesoftware.androidsample.ui.shared.PresenterException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
-import java.io.IOException
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionListViewModelTest : ViewModelTest() {
@@ -59,7 +59,7 @@ class TransactionListViewModelTest : ViewModelTest() {
     fun `Presenter error when loading data leads to error state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
         whenever(presenter.flowFilteredTransactions(any())).thenReturn(flowOf(MOCK_TRANSACTIONS))
-        whenever(presenter.getListItems(any())).thenThrow()
+        whenever(presenter.getListItems(any())).thenThrow(PresenterException("Message"))
 
         val vm = TransactionListViewModel(presenter)
 
@@ -67,7 +67,7 @@ class TransactionListViewModelTest : ViewModelTest() {
             launch {
                 vm.collectTransactions()
                 stateObserver.assertObserved(
-                    Error
+                    Error("Message")
                 )
             }
         }
@@ -80,7 +80,7 @@ class TransactionListViewModelTest : ViewModelTest() {
         var invocations = 0
         whenever(presenter.getListItems(any())).thenAnswer {
             when (invocations++) {
-                0 -> throw IOException()
+                0 -> throw PresenterException("Message")
                 else -> MOCK_LIST_ITEMS
             }
         }
@@ -93,7 +93,7 @@ class TransactionListViewModelTest : ViewModelTest() {
                 vm.refreshTransactions()
 
                 stateObserver.assertObserved(
-                    Error,
+                    Error("Message"),
                     Content(
                         MOCK_LIST_ITEMS,
                         TransferDirectionFilter.ALL

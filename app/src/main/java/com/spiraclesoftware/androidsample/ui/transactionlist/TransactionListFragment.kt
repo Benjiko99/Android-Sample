@@ -62,11 +62,11 @@ class TransactionListFragment :
                 emptyState.caption = stringOrNull(viewState.emptyState?.caption)
                 emptyState.message = stringOrNull(viewState.emptyState?.message)
             }
-            Error -> {
+            is Error -> {
                 recyclerView.isVisible = false
                 emptyState.root.isVisible = false
 
-                errorLayout.errorMessageView.text = string(R.string.network_error)
+                errorLayout.errorMessageView.text = viewState.message
                 itemAdapter.set(emptyList())
             }
         }

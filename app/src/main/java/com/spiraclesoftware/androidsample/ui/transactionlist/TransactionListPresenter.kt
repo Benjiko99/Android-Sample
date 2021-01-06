@@ -7,16 +7,21 @@ import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteract
 import com.spiraclesoftware.androidsample.domain.model.Account
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
+import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
+import com.spiraclesoftware.androidsample.ui.shared.ExceptionFormatter
+import com.spiraclesoftware.androidsample.ui.shared.PresenterException
 import com.spiraclesoftware.core.utils.LanguageManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit.DAYS
+import timber.log.Timber
 
 class TransactionListPresenter(
     private val languageManager: LanguageManager,
     private val accountsInteractor: AccountsInteractor,
-    private val transactionsInteractor: TransactionsInteractor
+    private val transactionsInteractor: TransactionsInteractor,
+    private val exceptionFormatter: ExceptionFormatter,
 ) {
 
     fun toggleLanguageAndRestart() {
@@ -27,8 +32,13 @@ class TransactionListPresenter(
         accountsInteractor.getAccount()
     }
 
+    @Throws(PresenterException::class)
     suspend fun fetchTransactions() = withIOContext {
-        transactionsInteractor.fetchTransactions()
+        try {
+            transactionsInteractor.fetchTransactions()
+        } catch (e: Exception) {
+            Timber.e(e); throw PresenterException(exceptionFormatter.format(e))
+        }
     }
 
     fun flowFilteredTransactions(
@@ -39,6 +49,7 @@ class TransactionListPresenter(
             filter.applyTo(list)
         }
 
+    @Throws(PresenterException::class)
     suspend fun getListItems(transactions: List<Transaction>) =
         transactions
             .sortAndGroupByDay()
@@ -52,13 +63,19 @@ class TransactionListPresenter(
         val listItems = arrayListOf<GenericItem>()
 
         this.forEach { (day, transactions) ->
-            val contribution = accountsInteractor.getContributionToBalance(transactions)
+            val contribution = getContributionToBalance(transactions)
 
-            listItems.add(HeaderItem(day, contribution))
-            listItems.addAll(transactions.map(::TransactionItem))
+            listItems += HeaderItem(day, contribution)
+            listItems += transactions.map(::TransactionItem)
         }
-
         return listItems
     }
+
+    private suspend fun getContributionToBalance(transactions: List<Transaction>) =
+        try {
+            accountsInteractor.getContributionToBalance(transactions)
+        } catch (e: CurrencyConverter.MissingConversionRateException) {
+            Timber.e(e); throw PresenterException(exceptionFormatter.format(e))
+        }
 
 }
