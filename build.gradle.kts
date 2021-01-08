@@ -2,6 +2,7 @@ import org.jmailen.gradle.kotlinter.KotlinterExtension
 import org.jmailen.gradle.kotlinter.KotlinterPlugin
 
 buildscript {
+    val kotlin_version by extra("1.4.21")
     dependencies {
         classpath("com.android.tools.build:gradle:4.1.1")
         classpath(kotlin("gradle-plugin", version = Dependencies.kotlin))

@@ -24,8 +24,8 @@ import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.StandardFragment
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
-import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
+import com.spiraclesoftware.androidsample.ui.shared.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.NavigateEvent
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListViewModel.ShowLanguageChangeConfirmationEvent
 import com.spiraclesoftware.core.extensions.*

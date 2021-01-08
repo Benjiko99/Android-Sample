@@ -6,10 +6,10 @@ import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.model.Account
 import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
 import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
 import com.spiraclesoftware.androidsample.ui.shared.ExceptionFormatter
 import com.spiraclesoftware.androidsample.ui.shared.PresenterException
+import com.spiraclesoftware.androidsample.ui.shared.TransactionListFilter
 import com.spiraclesoftware.core.utils.LanguageManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

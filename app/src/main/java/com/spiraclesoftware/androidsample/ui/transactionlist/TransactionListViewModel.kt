@@ -6,9 +6,9 @@ import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
-import com.spiraclesoftware.androidsample.domain.model.TransactionListFilter
-import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.shared.PresenterException
+import com.spiraclesoftware.androidsample.ui.shared.TransactionListFilter
+import com.spiraclesoftware.androidsample.ui.shared.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragmentDirections.Companion.toTransactionDetail
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect

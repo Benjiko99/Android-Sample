@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.ui.transactionlist
 
 import com.mikepenz.fastadapter.GenericItem
-import com.spiraclesoftware.androidsample.domain.model.TransferDirectionFilter
+import com.spiraclesoftware.androidsample.ui.shared.TransferDirectionFilter
 
 sealed class TransactionListViewState
 

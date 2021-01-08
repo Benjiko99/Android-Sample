@@ -31,6 +31,8 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.ui.imagepicker.ImagePicker
 import com.spiraclesoftware.androidsample.ui.shared.DateTimeFormat
 import com.spiraclesoftware.androidsample.ui.shared.DelightUI
+import com.spiraclesoftware.androidsample.ui.shared.colorRes
+import com.spiraclesoftware.androidsample.ui.shared.drawableRes
 import com.spiraclesoftware.androidsample.ui.textinput.TextInputFragment
 import com.spiraclesoftware.androidsample.ui.transactiondetail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items.AttachmentsCardItem

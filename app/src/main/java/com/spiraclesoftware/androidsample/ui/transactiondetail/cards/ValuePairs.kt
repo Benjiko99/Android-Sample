@@ -2,6 +2,7 @@ package com.spiraclesoftware.androidsample.ui.transactiondetail.cards
 
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.Transaction
+import com.spiraclesoftware.androidsample.ui.shared.stringRes
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.items.ValuePairCardItem
 import com.spiraclesoftware.core.utils.StringHolder
 

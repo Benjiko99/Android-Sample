@@ -7,7 +7,8 @@ import android.content.res.Configuration
 import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.spiraclesoftware.androidsample.data.dataModules
+import com.spiraclesoftware.androidsample.data.dataModule
+import com.spiraclesoftware.androidsample.domain.domainModule
 import com.spiraclesoftware.androidsample.ui.uiModule
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.utils.LanguageManager
@@ -18,16 +19,10 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-import java.math.MathContext
 
 class SampleApplication : Application() {
 
     companion object {
-        const val API_BASE_URL = "https://sleepy-hamlet-89904.herokuapp.com/api/"
-
-        /** Keep the MathContext consistent across the application */
-        val mathContext = MathContext.DECIMAL32!!
-
         fun getSharedPreferences(ctx: Context): SharedPreferences {
             val key = ctx.string(R.string.shared_preferences_key)
             return ctx.getSharedPreferences(key, Context.MODE_PRIVATE)
@@ -49,7 +44,7 @@ class SampleApplication : Application() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@SampleApplication)
-            modules(listOf(appModule, uiModule) + dataModules)
+            modules(appModule + uiModule + domainModule + dataModule)
         }
     }
 

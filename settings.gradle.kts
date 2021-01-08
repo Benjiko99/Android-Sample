@@ -1,1 +1,7 @@
-include(":core", ":app")
+include(":cache")
+include(":local")
+include(":domain")
+include(":remote")
+include(":data")
+include(":core")
+include(":app")

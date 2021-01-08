@@ -6,6 +6,7 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.StatusCardItemBinding
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatus
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
+import com.spiraclesoftware.androidsample.ui.shared.stringRes
 import com.spiraclesoftware.core.extensions.string
 
 class StatusCardItem(

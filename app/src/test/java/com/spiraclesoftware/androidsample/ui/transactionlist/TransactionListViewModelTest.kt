@@ -11,6 +11,7 @@ import com.spiraclesoftware.androidsample.domain.model.*
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.money
 import com.spiraclesoftware.androidsample.ui.shared.PresenterException
+import com.spiraclesoftware.androidsample.ui.shared.TransferDirectionFilter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch

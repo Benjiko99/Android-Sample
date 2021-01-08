@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.CategoryCardItemBinding
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
+import com.spiraclesoftware.androidsample.ui.shared.drawableRes
+import com.spiraclesoftware.androidsample.ui.shared.stringRes
 import com.spiraclesoftware.androidsample.ui.transactiondetail.cards.CardActionsHandler
 import com.spiraclesoftware.core.extensions.*
 

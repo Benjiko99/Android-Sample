@@ -7,6 +7,9 @@ import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.CategorySelectItemBinding
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
+import com.spiraclesoftware.androidsample.ui.shared.colorRes
+import com.spiraclesoftware.androidsample.ui.shared.drawableRes
+import com.spiraclesoftware.androidsample.ui.shared.stringRes
 import com.spiraclesoftware.core.extensions.color
 import com.spiraclesoftware.core.extensions.string
 import com.spiraclesoftware.core.extensions.tintedDrawable
