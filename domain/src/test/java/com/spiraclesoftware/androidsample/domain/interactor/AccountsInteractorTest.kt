@@ -5,9 +5,9 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.domain.MemoryDataSource
+import com.spiraclesoftware.androidsample.domain.epochDateTime
 import com.spiraclesoftware.androidsample.domain.model.*
 import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
-import com.spiraclesoftware.androidsample.domain.epochDateTime
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

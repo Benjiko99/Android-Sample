@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragment">
+    tools:context="com.spiraclesoftware.androidsample.transaction_list.TransactionListFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -18,7 +18,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.spiraclesoftware.androidsample.ui.shared.ScrollChildSwipeRefreshLayout
+    <com.spiraclesoftware.androidsample.shared.ScrollChildSwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -93,5 +93,5 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-    </com.spiraclesoftware.androidsample.ui.shared.ScrollChildSwipeRefreshLayout>
+    </com.spiraclesoftware.androidsample.shared.ScrollChildSwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
