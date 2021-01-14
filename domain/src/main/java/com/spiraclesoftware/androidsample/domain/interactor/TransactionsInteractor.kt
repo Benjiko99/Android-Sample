@@ -3,26 +3,42 @@ package com.spiraclesoftware.androidsample.domain.interactor
 import android.net.Uri
 import com.spiraclesoftware.androidsample.domain.DiskDataSource
 import com.spiraclesoftware.androidsample.domain.NetworkDataSource
+import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 
 class TransactionsInteractor(
     private val networkDataSource: NetworkDataSource,
     private val diskDataSource: DiskDataSource
 ) {
 
-    suspend fun fetchTransactions() =
-        networkDataSource.fetchTransactions().also {
-            diskDataSource.saveTransactions(it)
+    private val networkDataSourceResult = MutableStateFlow<Result<List<Transaction>>>(Result.Loading)
+
+    fun flowTransactions() = diskDataSource.flowTransactions()
+        // includes errors and loading state from networkDataSource
+        .combine(networkDataSourceResult) { diskData, networkResult ->
+            when (networkResult) {
+                is Result.Success -> Result.Success(diskData)
+                is Result.Error -> networkResult
+                is Result.Loading -> networkResult
+            }
         }
 
-    fun flowTransactions() =
-        diskDataSource.flowTransactions()
+    suspend fun refreshTransactions() {
+        networkDataSource.fetchTransactions().collect { result ->
+            if (result is Result.Success) {
+                diskDataSource.saveTransactions(result.data)
+            }
+            networkDataSourceResult.value = result
+        }
+    }
 
-    suspend fun getTransactionById(id: TransactionId): Transaction? {
-        val cached = diskDataSource.getTransactionById(id)
-        return cached ?: fetchTransactions().run { find { it.id == id } }
+    fun getTransactionById(id: TransactionId): Transaction? {
+        return diskDataSource.getTransactionById(id)
     }
 
     fun flowTransactionById(id: TransactionId) =

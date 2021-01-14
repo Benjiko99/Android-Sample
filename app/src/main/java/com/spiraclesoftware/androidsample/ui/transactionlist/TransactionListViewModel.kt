@@ -4,9 +4,9 @@ import androidx.navigation.NavDirections
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
-import com.spiraclesoftware.androidsample.ui.shared.PresenterException
 import com.spiraclesoftware.androidsample.ui.shared.TransactionListFilter
 import com.spiraclesoftware.androidsample.ui.shared.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.ui.transactionlist.TransactionListFragmentDirections.Companion.toTransactionDetail
@@ -24,22 +24,21 @@ class TransactionListViewModel(
     private var listFilterFlow = MutableStateFlow(TransactionListFilter())
 
     init {
-        executeNonBlocking {
-            fetchTransactions()
-            collectTransactions()
+        produceViewStateFromDataFlow()
+        refreshTransactions()
+    }
+
+    fun produceViewStateFromDataFlow() = executeNonBlocking {
+        presenter.flowTransactions(listFilterFlow).collect { result ->
+            viewState = when (result) {
+                is Result.Loading -> Loading
+                is Result.Success -> getContent(result.data)
+                is Result.Error -> Error(result.exception.message)
+            }
         }
     }
 
-    suspend fun collectTransactions() =
-        presenter.flowFilteredTransactions(listFilterFlow).collect { transactions ->
-            viewState = try {
-                tryGetContent(transactions)
-            } catch (e: PresenterException) {
-                Error(e.message)
-            }
-        }
-
-    private suspend fun tryGetContent(transactions: List<Transaction>): Content {
+    private suspend fun getContent(transactions: List<Transaction>): Content {
         val listItems = presenter.getListItems(transactions)
         val listFilter = listFilterFlow.value
         var emptyState: EmptyState? = null
@@ -58,21 +57,11 @@ class TransactionListViewModel(
                 )
             }
         }
-
         return Content(listItems, listFilter.directionFilter, emptyState)
     }
 
-    private suspend fun fetchTransactions() {
-        try {
-            presenter.fetchTransactions()
-        } catch (e: PresenterException) {
-            viewState = Error(e.message)
-        }
-    }
-
     fun refreshTransactions() = executeNonBlocking {
-        viewState = Loading
-        fetchTransactions()
+        presenter.refreshTransactions()
     }
 
     fun toggleLanguage() {

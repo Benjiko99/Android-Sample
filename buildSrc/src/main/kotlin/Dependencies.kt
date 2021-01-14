@@ -22,7 +22,8 @@ object Dependencies {
     const val swipeRefreshLayout = "1.1.0"
     const val constraintLayout = "2.0.4"
     const val navigation = "2.2.2"
-    const val lifecycle = "2.1.0"
+    const val arch = "2.1.0"
+    const val lifecycle = "2.2.0"
     const val exhaustive = "0.1.1"
 
     // Tests

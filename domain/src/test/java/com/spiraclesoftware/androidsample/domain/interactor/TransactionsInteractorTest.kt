@@ -4,11 +4,8 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.spiraclesoftware.androidsample.domain.DiskDataSource
-import com.spiraclesoftware.androidsample.domain.NetworkDataSource
-import com.spiraclesoftware.androidsample.domain.epochDateTime
+import com.spiraclesoftware.androidsample.domain.*
 import com.spiraclesoftware.androidsample.domain.model.*
-import com.spiraclesoftware.androidsample.domain.money
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -18,7 +15,6 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.internal.verification.Times
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionsInteractorTest {
@@ -62,22 +58,24 @@ class TransactionsInteractorTest {
     }
 
     @Test
-    fun `Transactions are loaded correctly from disk`() = runBlockingTest {
+    fun `Transactions flow contains correct data`() = runBlockingTest {
         whenever(diskDataSource.flowTransactions()) doReturn flowOf(MOCK_TRANSACTIONS)
+        whenever(networkDataSource.fetchTransactions()) doReturn flowOf(Result.Success(MOCK_TRANSACTIONS))
 
         val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
+        interactor.refreshTransactions()
         val transactions = interactor.flowTransactions()
         assertEquals(MOCK_TRANSACTIONS, transactions.single())
     }
 
     @Test
     fun `Transactions are correctly fetched from network`() = runBlockingTest {
-        whenever(networkDataSource.fetchTransactions()) doReturn MOCK_TRANSACTIONS
+        whenever(networkDataSource.fetchTransactions()) doReturn flowOf(Result.Success(MOCK_TRANSACTIONS))
 
         val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
-        val transactions = interactor.fetchTransactions()
+        val transactions = interactor.refreshTransactions()
         assertEquals(MOCK_TRANSACTIONS, transactions)
 
         verify(networkDataSource).fetchTransactions()
@@ -85,51 +83,23 @@ class TransactionsInteractorTest {
 
     @Test
     fun `Transactions are saved on disk when fetched from network`() = runBlockingTest {
-        whenever(networkDataSource.fetchTransactions()) doReturn MOCK_TRANSACTIONS
+        whenever(networkDataSource.fetchTransactions()) doReturn flowOf(Result.Success(MOCK_TRANSACTIONS))
 
         val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
-        interactor.fetchTransactions()
+        interactor.refreshTransactions()
 
         verify(diskDataSource).saveTransactions(MOCK_TRANSACTIONS)
     }
 
     @Test
-    fun `Transaction is loaded correctly from disk by ID`() = runBlockingTest {
+    fun `Transaction is retrieved correctly from disk by ID`() = runBlockingTest {
         whenever(diskDataSource.getTransactionById(any())) doReturn MOCK_TRANSACTION
-        whenever(networkDataSource.fetchTransactions()) doReturn emptyList()
 
         val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
 
         val transaction = interactor.getTransactionById(MOCK_TRANSACTION.id)
         assertEquals(MOCK_TRANSACTION, transaction)
-
-        verify(diskDataSource).getTransactionById(MOCK_TRANSACTION.id)
-        verify(networkDataSource, Times(0)).fetchTransactions()
-    }
-
-    @Test
-    fun `Transaction is loaded correctly from network by ID`() = runBlockingTest {
-        whenever(diskDataSource.getTransactionById(any())) doReturn null
-        whenever(networkDataSource.fetchTransactions()) doReturn MOCK_TRANSACTIONS
-
-        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
-
-        val transaction = interactor.getTransactionById(MOCK_TRANSACTION.id)
-        assertEquals(MOCK_TRANSACTION, transaction)
-
-        verify(networkDataSource).fetchTransactions()
-    }
-
-    @Test
-    fun `Transaction is saved on disk when loaded from network by ID`() = runBlockingTest {
-        whenever(diskDataSource.getTransactionById(any())) doReturn null
-        whenever(networkDataSource.fetchTransactions()) doReturn MOCK_TRANSACTIONS
-
-        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
-        interactor.getTransactionById(MOCK_TRANSACTION.id)
-
-        verify(diskDataSource).saveTransactions(MOCK_TRANSACTIONS)
     }
 
 }

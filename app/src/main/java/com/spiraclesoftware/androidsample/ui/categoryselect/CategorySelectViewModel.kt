@@ -5,7 +5,7 @@ import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 class CategorySelectViewModel(
@@ -28,7 +28,7 @@ class CategorySelectViewModel(
     }
 
     private suspend fun collectSelectedCategory() {
-        selectedCategory.collectLatest { category ->
+        selectedCategory.collect { category ->
             viewState = (viewState as Content).copy(
                 listItems = presenter.getListItems(selectedCategory = category)
             )

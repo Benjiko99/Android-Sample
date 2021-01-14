@@ -6,9 +6,11 @@ import com.spiraclesoftware.androidsample.data.mapper.ConversionRatesMapper
 import com.spiraclesoftware.androidsample.data.mapper.MoneyMapper
 import com.spiraclesoftware.androidsample.data.mapper.TransactionMapper
 import com.spiraclesoftware.androidsample.domain.NetworkDataSource
+import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.remote.MainApi
+import kotlinx.coroutines.flow.flow
 import java.util.*
 
 class NetworkDataSourceImpl(
@@ -21,11 +23,19 @@ class NetworkDataSourceImpl(
     private val conversionRateMapper = ConversionRateMapper()
     private val conversionRatesMapper = ConversionRatesMapper(conversionRateMapper)
 
-    override suspend fun fetchTransactions(): List<Transaction> {
-        return mainApi.fetchTransactions().items.map { dto ->
-            transactionMapper.mapToDomain(dto)
+    override suspend fun fetchTransactions() = flow {
+        try {
+            emit(Result.Loading)
+            emit(Result.Success(tryFetchTransactions()))
+        } catch (e: Exception) {
+            emit(Result.Error(e))
         }
     }
+
+    private suspend fun tryFetchTransactions() =
+        mainApi.fetchTransactions().items.map { dto ->
+            transactionMapper.mapToDomain(dto)
+        }
 
     override suspend fun fetchConversionRates(baseCurrency: Currency): ConversionRates {
         return mainApi.fetchConversionRates(baseCurrency).let { dto ->

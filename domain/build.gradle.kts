@@ -35,11 +35,14 @@ dependencies {
     implementation("org.koin:koin-core:${Dependencies.koin}")
     implementation("com.jakewharton.threetenabp:threetenabp:${Dependencies.threetenabp}")
 
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Dependencies.lifecycle}")
+
     testImplementation("junit:junit:${Dependencies.junit}")
     testImplementation("org.koin:koin-test:${Dependencies.koin}")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Dependencies.coroutines}")
     testImplementation("org.mockito:mockito-inline:${Dependencies.mockito}")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${Dependencies.mockitoKotlin}")
+    testImplementation("androidx.arch.core:core-testing:${Dependencies.arch}")
     testImplementation("org.threeten:threetenbp:${Dependencies.threetenabp}") {
         exclude("com.jakewharton.threetenabp", "threetenabp")
     }

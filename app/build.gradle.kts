@@ -60,7 +60,6 @@ allOpen {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":core"))
-    implementation(project(":presentation"))
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":cache"))
@@ -78,6 +77,8 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.coroutines}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Dependencies.coroutines}")
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Dependencies.lifecycle}")
 
     implementation("org.koin:koin-android:${Dependencies.koin}")
     implementation("org.koin:koin-androidx-viewmodel:${Dependencies.koin}")
@@ -99,7 +100,7 @@ dependencies {
     implementation("com.github.stfalcon:stfalcon-imageviewer:${Dependencies.imageViewer}")
 
     testImplementation("junit:junit:${Dependencies.junit}")
-    testImplementation("androidx.arch.core:core-testing:${Dependencies.lifecycle}")
+    testImplementation("androidx.arch.core:core-testing:${Dependencies.arch}")
     testImplementation("androidx.fragment:fragment-testing:${Dependencies.androidxFragment}")
     testImplementation("co.zsmb:rainbow-cake-test:${Dependencies.rainbowCake}")
     testImplementation("org.koin:koin-test:${Dependencies.koin}")

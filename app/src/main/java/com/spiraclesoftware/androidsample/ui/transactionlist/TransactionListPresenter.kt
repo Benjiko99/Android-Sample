@@ -2,17 +2,18 @@ package com.spiraclesoftware.androidsample.ui.transactionlist
 
 import co.zsmb.rainbowcake.withIOContext
 import com.mikepenz.fastadapter.GenericItem
+import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.model.Account
 import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
 import com.spiraclesoftware.androidsample.ui.shared.ExceptionFormatter
 import com.spiraclesoftware.androidsample.ui.shared.PresenterException
 import com.spiraclesoftware.androidsample.ui.shared.TransactionListFilter
 import com.spiraclesoftware.core.utils.LanguageManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit.DAYS
 import timber.log.Timber
@@ -32,28 +33,39 @@ class TransactionListPresenter(
         accountsInteractor.getAccount()
     }
 
-    @Throws(PresenterException::class)
-    suspend fun fetchTransactions() = withIOContext {
-        try {
-            transactionsInteractor.fetchTransactions()
-        } catch (e: Exception) {
-            Timber.e(e); throw PresenterException(exceptionFormatter.format(e))
+    suspend fun refreshTransactions() = withIOContext {
+        transactionsInteractor.refreshTransactions()
+    }
+
+    suspend fun flowTransactions(
+        listFilter: Flow<TransactionListFilter>
+    ) = withIOContext {
+        transactionsInteractor.flowTransactions()
+            .map(::formatErrorResult)
+            .combine(listFilter) { result, filter ->
+                when (result) {
+                    is Result.Success -> Result.Success(filter.applyTo(result.data))
+                    else -> result
+                }
+            }
+    }
+
+    private fun <T> formatErrorResult(result: Result<T>): Result<T> {
+        return when (result) {
+            is Result.Error -> {
+                Timber.e(result.exception)
+                val message = exceptionFormatter.format(result.exception)
+                Result.Error(PresenterException(message))
+            }
+            else -> result
         }
     }
 
-    fun flowFilteredTransactions(
-        listFilter: Flow<TransactionListFilter>
-    ) = transactionsInteractor
-        .flowTransactions()
-        .combine(listFilter) { list, filter ->
-            filter.applyTo(list)
-        }
-
-    @Throws(PresenterException::class)
-    suspend fun getListItems(transactions: List<Transaction>) =
-        transactions
+    suspend fun getListItems(transactions: List<Transaction>): List<GenericItem> {
+        return transactions
             .sortAndGroupByDay()
             .toListItems()
+    }
 
     private fun List<Transaction>.sortAndGroupByDay() =
         this.sortedByDescending { it.processingDate }
@@ -63,19 +75,12 @@ class TransactionListPresenter(
         val listItems = arrayListOf<GenericItem>()
 
         this.forEach { (day, transactions) ->
-            val contribution = getContributionToBalance(transactions)
+            val contribution = accountsInteractor.getContributionToBalance(transactions)
 
             listItems += HeaderItem(day, contribution)
             listItems += transactions.map(::TransactionItem)
         }
         return listItems
     }
-
-    private suspend fun getContributionToBalance(transactions: List<Transaction>) =
-        try {
-            accountsInteractor.getContributionToBalance(transactions)
-        } catch (e: CurrencyConverter.MissingConversionRateException) {
-            Timber.e(e); throw PresenterException(exceptionFormatter.format(e))
-        }
 
 }
