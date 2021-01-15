@@ -73,10 +73,32 @@ class TransactionDetailFragment :
                 toolbar.title = viewState.name
                 nameView.text = viewState.name
                 dateView.text = viewState.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME)
-                bindAmountText(viewState.formattedMoney, viewState.contributesToBalance)
-                bindCategoryIcon(viewState.category, viewState.isSuccessful)
+                renderAmountText(viewState.formattedMoney, viewState.contributesToBalance)
+                renderCategoryIcon(viewState.category, viewState.isSuccessful)
             }
         }
+    }
+
+    private fun renderAmountText(formattedMoney: String, contributesToBalance: Boolean) = with(binding) {
+        amountView.text = formattedMoney
+        if (!contributesToBalance) {
+            amountView.addPaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
+        }
+    }
+
+    private fun renderCategoryIcon(category: TransactionCategory, isSuccessful: Boolean) = with(binding) {
+        val tint: Int
+
+        if (isSuccessful) {
+            tint = color(category.colorRes)
+            iconView.setImageDrawable(tintedDrawable(category.drawableRes, tint))
+        } else {
+            tint = color(R.color.transaction_status__declined)
+            iconView.setImageDrawable(tintedDrawable(R.drawable.ic_status_declined, tint))
+        }
+
+        val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
+        iconView.background = tintedDrawable(R.drawable.shp_circle, fadedTint)
     }
 
     override fun onEvent(event: OneShotEvent) {
@@ -105,6 +127,23 @@ class TransactionDetailFragment :
         }
     }
 
+    private fun openAttachmentPicker(onAttachmentPicked: (Uri) -> Unit) {
+        imagePicker.showDialog(requireContext()) { imageUri ->
+            onAttachmentPicked(imageUri)
+        }
+    }
+
+    private fun openAttachmentViewer(images: List<Uri>, startPosition: Int) {
+        StfalconImageViewer.Builder(context, images) { view, uri ->
+            view.load(uri) {
+                error(tintedDrawable(R.drawable.ic_image_error, Color.WHITE))
+            }
+        }
+            .withStartPosition(startPosition)
+            .withHiddenStatusBar(false)
+            .show()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -129,23 +168,6 @@ class TransactionDetailFragment :
     override fun onDestroyView() = with(binding) {
         recyclerView.adapter = null
         super.onDestroyView()
-    }
-
-    private fun openAttachmentPicker(onAttachmentPicked: (Uri) -> Unit) {
-        imagePicker.showDialog(requireContext()) { imageUri ->
-            onAttachmentPicked(imageUri)
-        }
-    }
-
-    private fun openAttachmentViewer(images: List<Uri>, startPosition: Int) {
-        StfalconImageViewer.Builder(context, images) { view, uri ->
-            view.load(uri) {
-                error(tintedDrawable(R.drawable.ic_image_error, Color.WHITE))
-            }
-        }
-            .withStartPosition(startPosition)
-            .withHiddenStatusBar(false)
-            .show()
     }
 
     private fun setupToolbar() = with(binding) {
@@ -179,28 +201,6 @@ class TransactionDetailFragment :
                 )
             )
         }
-    }
-
-    private fun bindAmountText(formattedMoney: String, contributesToBalance: Boolean) = with(binding) {
-        amountView.text = formattedMoney
-        if (!contributesToBalance) {
-            amountView.addPaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
-        }
-    }
-
-    private fun bindCategoryIcon(category: TransactionCategory, isSuccessful: Boolean) = with(binding) {
-        val tint: Int
-
-        if (isSuccessful) {
-            tint = color(category.colorRes)
-            iconView.setImageDrawable(tintedDrawable(category.drawableRes, tint))
-        } else {
-            tint = color(R.color.transaction_status__declined)
-            iconView.setImageDrawable(tintedDrawable(R.drawable.ic_status_declined, tint))
-        }
-
-        val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
-        iconView.background = tintedDrawable(R.drawable.shp_circle, fadedTint)
     }
 
 }

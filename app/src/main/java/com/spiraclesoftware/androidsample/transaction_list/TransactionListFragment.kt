@@ -29,11 +29,10 @@ import com.spiraclesoftware.androidsample.shared.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.transaction_list.TransactionListViewModel.NavigateEvent
 import com.spiraclesoftware.androidsample.transaction_list.TransactionListViewModel.ShowLanguageChangeConfirmationEvent
 import com.spiraclesoftware.core.extensions.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.spiraclesoftware.androidsample.transaction_list.TransactionListViewState as ViewState
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class TransactionListFragment :
-    StandardFragment<TransactionListFragmentBinding, TransactionListViewState, TransactionListViewModel>() {
+    StandardFragment<TransactionListFragmentBinding, ViewState, TransactionListViewModel>() {
 
     override fun provideViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
         TransactionListFragmentBinding.inflate(inflater, container, false)
@@ -45,30 +44,60 @@ class TransactionListFragment :
 
     private lateinit var collapseActionViewCallback: OnBackPressedCallback
 
-    override fun render(viewState: TransactionListViewState): Unit = with(binding) {
-        swipeRefreshLayout.isRefreshing = viewState is Loading
-        errorLayout.root.isVisible = viewState is Error
-        filterSpinner.isEnabled = viewState !is Error
+    override fun render(viewState: ViewState) {
+        renderRecyclerView(viewState)
+        renderEmptyState(viewState)
+        renderErrorLayout(viewState)
+        renderSwipeRefreshLayout(viewState)
+        renderFilterSpinner(viewState)
+    }
 
+    private fun renderRecyclerView(viewState: ViewState): Unit = with(binding) {
         when (viewState) {
             is Content -> {
                 recyclerView.isVisible = viewState.emptyState == null
-                emptyState.root.isVisible = viewState.emptyState != null
-
                 FastAdapterDiffUtil[itemAdapter] = viewState.listItems
-                filterSpinner.setSelection(viewState.directionFilter.ordinal)
-
-                emptyState.image = drawable(viewState.emptyState?.image)
-                emptyState.caption = stringOrNull(viewState.emptyState?.caption)
-                emptyState.message = stringOrNull(viewState.emptyState?.message)
             }
             is Error -> {
                 recyclerView.isVisible = false
-                emptyState.root.isVisible = false
-
-                errorLayout.errorMessageView.text = viewState.message
                 itemAdapter.set(emptyList())
             }
+        }
+    }
+
+    private fun renderEmptyState(viewState: ViewState): Unit = with(binding) {
+        when (viewState) {
+            is Content -> {
+                emptyStateLayout.apply {
+                    root.isVisible = viewState.emptyState != null
+                    image = drawable(viewState.emptyState?.image)
+                    caption = stringOrNull(viewState.emptyState?.caption)
+                    message = stringOrNull(viewState.emptyState?.message)
+                }
+            }
+            is Error -> {
+                emptyStateLayout.root.isVisible = false
+            }
+        }
+    }
+
+    private fun renderErrorLayout(viewState: ViewState): Unit = with(binding) {
+        errorLayout.root.isVisible = viewState is Error
+
+        if (viewState is Error) {
+            errorLayout.errorMessageView.text = viewState.message
+        }
+    }
+
+    private fun renderSwipeRefreshLayout(viewState: ViewState): Unit = with(binding) {
+        swipeRefreshLayout.isRefreshing = viewState is Loading
+    }
+
+    private fun renderFilterSpinner(viewState: ViewState): Unit = with(binding) {
+        filterSpinner.isEnabled = viewState !is Error
+
+        if (viewState is Content) {
+            filterSpinner.setSelection(viewState.directionFilter.ordinal)
         }
     }
 
@@ -108,6 +137,17 @@ class TransactionListFragment :
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showLanguageChangeConfirmation(onConfirmed: () -> Unit) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(R.string.change_language_dialog__message)
+            .setNegativeButton(R.string.change_language_dialog__cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(R.string.change_language_dialog__confirm) { _, _ ->
+                onConfirmed()
+            }.show()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -132,17 +172,6 @@ class TransactionListFragment :
     override fun onDestroyView() = with(binding) {
         recyclerView.adapter = null
         super.onDestroyView()
-    }
-
-    private fun showLanguageChangeConfirmation(onConfirmed: () -> Unit) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setMessage(R.string.change_language_dialog__message)
-            .setNegativeButton(R.string.change_language_dialog__cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setPositiveButton(R.string.change_language_dialog__confirm) { _, _ ->
-                onConfirmed()
-            }.show()
     }
 
     private fun collapseActionView() = with(binding) {

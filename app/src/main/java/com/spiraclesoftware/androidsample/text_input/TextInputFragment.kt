@@ -73,6 +73,11 @@ class TextInputFragment :
         }
     }
 
+    private fun onSaveClicked() = with(binding) {
+        val input = inputEditText.text.toString()
+        viewModel.validateThenSendInputToCaller(input)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,11 +90,6 @@ class TextInputFragment :
         inputEditText.onDoneAction(::onSaveClicked)
 
         showSoftKeyboard(inputEditText)
-    }
-
-    private fun onSaveClicked() = with(binding) {
-        val input = inputEditText.text.toString()
-        viewModel.validateThenSendInputToCaller(input)
     }
 
 }

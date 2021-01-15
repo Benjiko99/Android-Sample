@@ -74,7 +74,7 @@
                     tools:listitem="@layout/transaction_item" />
 
                 <include
-                    android:id="@+id/emptyState"
+                    android:id="@+id/emptyStateLayout"
                     layout="@layout/empty_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
