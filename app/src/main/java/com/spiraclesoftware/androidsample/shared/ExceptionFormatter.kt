@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.shared
 
 import android.content.Context
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.core.extensions.string
+import com.spiraclesoftware.androidsample.extensions.string
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 

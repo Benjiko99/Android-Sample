@@ -1,11 +1,11 @@
-package com.spiraclesoftware.core.utils
+package com.spiraclesoftware.androidsample.utils
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import com.jakewharton.processphoenix.ProcessPhoenix
-import com.spiraclesoftware.core.utils.LanguageManager.AppLanguage.CZECH
-import com.spiraclesoftware.core.utils.LanguageManager.AppLanguage.ENGLISH
+import com.spiraclesoftware.androidsample.utils.LanguageManager.AppLanguage.CZECH
+import com.spiraclesoftware.androidsample.utils.LanguageManager.AppLanguage.ENGLISH
 import java.util.*
 
 class LanguageManager(

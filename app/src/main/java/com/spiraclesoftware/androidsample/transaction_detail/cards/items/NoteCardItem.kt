@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.NoteCardItemBinding
 import com.spiraclesoftware.androidsample.transaction_detail.cards.CardActionsHandler
-import com.spiraclesoftware.core.extensions.onClick
-import com.spiraclesoftware.core.extensions.string
+import com.spiraclesoftware.androidsample.extensions.onClick
+import com.spiraclesoftware.androidsample.extensions.string
 
 class NoteCardItem(
     private val data: Data,

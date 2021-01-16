@@ -28,7 +28,7 @@ import com.spiraclesoftware.androidsample.shared.DelightUI
 import com.spiraclesoftware.androidsample.shared.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.transaction_list.TransactionListViewModel.NavigateEvent
 import com.spiraclesoftware.androidsample.transaction_list.TransactionListViewModel.ShowLanguageChangeConfirmationEvent
-import com.spiraclesoftware.core.extensions.*
+import com.spiraclesoftware.androidsample.extensions.*
 import com.spiraclesoftware.androidsample.transaction_list.TransactionListViewState as ViewState
 
 class TransactionListFragment :

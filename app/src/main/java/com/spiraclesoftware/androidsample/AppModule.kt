@@ -6,7 +6,7 @@ import com.spiraclesoftware.androidsample.data.NetworkDataSourceImpl
 import com.spiraclesoftware.androidsample.domain.DiskDataSource
 import com.spiraclesoftware.androidsample.domain.MemoryDataSource
 import com.spiraclesoftware.androidsample.domain.NetworkDataSource
-import com.spiraclesoftware.core.utils.LanguageManager
+import com.spiraclesoftware.androidsample.utils.LanguageManager
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module

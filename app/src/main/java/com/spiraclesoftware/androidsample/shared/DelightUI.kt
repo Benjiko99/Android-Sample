@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.shared
 
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.NestedScrollView
-import com.spiraclesoftware.core.extensions.titleView
+import com.spiraclesoftware.androidsample.extensions.titleView
 import kotlin.math.max
 
 object DelightUI {

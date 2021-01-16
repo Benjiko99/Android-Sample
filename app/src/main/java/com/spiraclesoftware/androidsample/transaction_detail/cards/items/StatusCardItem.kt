@@ -7,7 +7,7 @@ import com.spiraclesoftware.androidsample.databinding.StatusCardItemBinding
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatus
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.shared.stringRes
-import com.spiraclesoftware.core.extensions.string
+import com.spiraclesoftware.androidsample.extensions.string
 
 class StatusCardItem(
     private val data: Data

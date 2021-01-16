@@ -11,7 +11,7 @@ import com.spiraclesoftware.androidsample.databinding.TransactionItemBinding
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatusCode
 import com.spiraclesoftware.androidsample.shared.*
-import com.spiraclesoftware.core.extensions.*
+import com.spiraclesoftware.androidsample.extensions.*
 
 class TransactionItem(
     val transaction: Transaction

@@ -8,8 +8,8 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemBinding
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemEntryBinding
 import com.spiraclesoftware.androidsample.transaction_detail.cards.CardActionsHandler
-import com.spiraclesoftware.core.extensions.*
-import com.spiraclesoftware.core.utils.StringHolder
+import com.spiraclesoftware.androidsample.extensions.*
+import com.spiraclesoftware.androidsample.utils.StringHolder
 
 class ValuePairCardItem(
     private val data: List<Data>,

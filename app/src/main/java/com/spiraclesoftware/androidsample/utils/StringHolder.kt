@@ -1,9 +1,9 @@
-package com.spiraclesoftware.core.utils
+package com.spiraclesoftware.androidsample.utils
 
 import android.content.Context
 import android.widget.TextView
 import androidx.annotation.StringRes
-import com.spiraclesoftware.core.extensions.string
+import com.spiraclesoftware.androidsample.extensions.string
 
 /**
  * Supports providing strings either as String or resource ID.

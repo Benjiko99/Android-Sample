@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
-    id("kotlin-allopen")
     kotlin("android")
+    kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
 }
 apply(plugin = "org.jmailen.kotlinter")
@@ -52,27 +52,26 @@ android {
     }
 }
 
-allOpen {
-    // Makes annotated classes `open` in debug builds, used for mocking in unit tests.
-    annotation("com.spiraclesoftware.core.testing.OpenClass")
-}
-
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation(project(":core"))
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":cache"))
     implementation(project(":local"))
     implementation(project(":remote"))
 
+    api(kotlin("stdlib-jdk8", Dependencies.kotlin))
+
     implementation("co.zsmb:rainbow-cake-core:${Dependencies.rainbowCake}")
     implementation("co.zsmb:rainbow-cake-koin:${Dependencies.rainbowCake}")
     implementation("co.zsmb:rainbow-cake-timber:${Dependencies.rainbowCake}")
 
+    implementation("org.koin:koin-android:${Dependencies.koin}")
+    implementation("org.koin:koin-androidx-viewmodel:${Dependencies.koin}")
+
     debugImplementation("com.squareup.leakcanary:leakcanary-android:${Dependencies.leakCanary}")
     implementation("com.facebook.stetho:stetho:${Dependencies.stetho}")
-
+    implementation("com.jakewharton:process-phoenix:${Dependencies.processPhoenix}")
     implementation("com.jakewharton.threetenabp:threetenabp:${Dependencies.threetenabp}")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.coroutines}")
@@ -80,12 +79,11 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Dependencies.lifecycle}")
 
-    implementation("org.koin:koin-android:${Dependencies.koin}")
-    implementation("org.koin:koin-androidx-viewmodel:${Dependencies.koin}")
-
     implementation("androidx.navigation:navigation-fragment-ktx:${Dependencies.navigation}")
     implementation("androidx.navigation:navigation-ui-ktx:${Dependencies.navigation}")
 
+    implementation("com.google.android.material:material:${Dependencies.androidx}")
+    implementation("androidx.appcompat:appcompat:${Dependencies.androidx}")
     implementation("androidx.fragment:fragment-ktx:${Dependencies.androidxFragment}")
     implementation("androidx.recyclerview:recyclerview:${Dependencies.androidx}")
     implementation("androidx.constraintlayout:constraintlayout:${Dependencies.constraintLayout}")

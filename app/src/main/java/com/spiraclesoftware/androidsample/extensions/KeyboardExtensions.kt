@@ -1,4 +1,4 @@
-package com.spiraclesoftware.core.extensions
+package com.spiraclesoftware.androidsample.extensions
 
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE

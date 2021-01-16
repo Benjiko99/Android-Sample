@@ -9,8 +9,8 @@ import com.jakewharton.processphoenix.ProcessPhoenix
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.spiraclesoftware.androidsample.data.dataModule
 import com.spiraclesoftware.androidsample.domain.domainModule
-import com.spiraclesoftware.core.extensions.string
-import com.spiraclesoftware.core.utils.LanguageManager
+import com.spiraclesoftware.androidsample.extensions.string
+import com.spiraclesoftware.androidsample.utils.LanguageManager
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

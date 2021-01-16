@@ -36,7 +36,7 @@ import com.spiraclesoftware.androidsample.shared.drawableRes
 import com.spiraclesoftware.androidsample.text_input.TextInputFragment
 import com.spiraclesoftware.androidsample.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.transaction_detail.cards.items.AttachmentsCardItem
-import com.spiraclesoftware.core.extensions.*
+import com.spiraclesoftware.androidsample.extensions.*
 import com.stfalcon.imageviewer.StfalconImageViewer
 import io.cabriole.decorator.LinearMarginDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel

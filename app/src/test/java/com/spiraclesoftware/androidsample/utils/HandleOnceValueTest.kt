@@ -1,6 +1,5 @@
-package com.spiraclesoftware.androidsample
+package com.spiraclesoftware.androidsample.utils
 
-import com.spiraclesoftware.core.HandleOnceValue
 import org.junit.Assert.*
 import org.junit.Test
 

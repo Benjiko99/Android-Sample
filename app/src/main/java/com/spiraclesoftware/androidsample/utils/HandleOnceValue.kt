@@ -1,4 +1,4 @@
-package com.spiraclesoftware.core
+package com.spiraclesoftware.androidsample.utils
 
 class HandleOnceValue<T>(private val value: T) {
 

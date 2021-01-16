@@ -13,10 +13,10 @@ import com.spiraclesoftware.androidsample.StandardFragment
 import com.spiraclesoftware.androidsample.databinding.TextInputFragmentBinding
 import com.spiraclesoftware.androidsample.text_input.TextInputFragment.Companion.RESULT_KEY
 import com.spiraclesoftware.androidsample.text_input.TextInputViewModel.SendResultToCallerAndExitEvent
-import com.spiraclesoftware.core.extensions.onClick
-import com.spiraclesoftware.core.extensions.onDoneAction
-import com.spiraclesoftware.core.extensions.showSoftKeyboard
-import com.spiraclesoftware.core.extensions.string
+import com.spiraclesoftware.androidsample.extensions.onClick
+import com.spiraclesoftware.androidsample.extensions.onDoneAction
+import com.spiraclesoftware.androidsample.extensions.showSoftKeyboard
+import com.spiraclesoftware.androidsample.extensions.string
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 

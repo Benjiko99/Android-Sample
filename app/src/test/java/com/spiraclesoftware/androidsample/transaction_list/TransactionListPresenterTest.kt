@@ -10,7 +10,7 @@ import com.spiraclesoftware.androidsample.domain.model.*
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.money
 import com.spiraclesoftware.androidsample.shared.ExceptionFormatter
-import com.spiraclesoftware.core.utils.LanguageManager
+import com.spiraclesoftware.androidsample.utils.LanguageManager
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

@@ -21,7 +21,7 @@ import com.spiraclesoftware.androidsample.category_select.CategorySelectViewMode
 import com.spiraclesoftware.androidsample.databinding.CategorySelectFragmentBinding
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
 import com.spiraclesoftware.androidsample.shared.DelightUI
-import com.spiraclesoftware.core.extensions.showSnackbar
+import com.spiraclesoftware.androidsample.extensions.showSnackbar
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 

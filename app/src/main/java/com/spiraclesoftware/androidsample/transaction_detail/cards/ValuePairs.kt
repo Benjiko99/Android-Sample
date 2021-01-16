@@ -4,7 +4,7 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.shared.stringRes
 import com.spiraclesoftware.androidsample.transaction_detail.cards.items.ValuePairCardItem
-import com.spiraclesoftware.core.utils.StringHolder
+import com.spiraclesoftware.androidsample.utils.StringHolder
 
 abstract class ValuePair {
     abstract fun toItemData(transaction: Transaction): ValuePairCardItem.Data

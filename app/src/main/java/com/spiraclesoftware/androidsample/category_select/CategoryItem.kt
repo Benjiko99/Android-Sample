@@ -10,9 +10,9 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.shared.colorRes
 import com.spiraclesoftware.androidsample.shared.drawableRes
 import com.spiraclesoftware.androidsample.shared.stringRes
-import com.spiraclesoftware.core.extensions.color
-import com.spiraclesoftware.core.extensions.string
-import com.spiraclesoftware.core.extensions.tintedDrawable
+import com.spiraclesoftware.androidsample.extensions.color
+import com.spiraclesoftware.androidsample.extensions.string
+import com.spiraclesoftware.androidsample.extensions.tintedDrawable
 
 class CategoryItem(
     val category: TransactionCategory,

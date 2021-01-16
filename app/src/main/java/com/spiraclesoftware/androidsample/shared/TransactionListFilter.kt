@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.shared
 
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.shared.TransferDirectionFilter.ALL
-import com.spiraclesoftware.core.extensions.lenientContains
+import com.spiraclesoftware.androidsample.extensions.lenientContains
 
 data class TransactionListFilter(
     val searchQuery: String = "",

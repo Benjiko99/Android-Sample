@@ -10,7 +10,7 @@ import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.shared.ExceptionFormatter
 import com.spiraclesoftware.androidsample.shared.PresenterException
 import com.spiraclesoftware.androidsample.shared.TransactionListFilter
-import com.spiraclesoftware.core.utils.LanguageManager
+import com.spiraclesoftware.androidsample.utils.LanguageManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map

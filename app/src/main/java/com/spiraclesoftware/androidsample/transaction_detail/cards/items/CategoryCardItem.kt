@@ -8,7 +8,7 @@ import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.shared.drawableRes
 import com.spiraclesoftware.androidsample.shared.stringRes
 import com.spiraclesoftware.androidsample.transaction_detail.cards.CardActionsHandler
-import com.spiraclesoftware.core.extensions.*
+import com.spiraclesoftware.androidsample.extensions.*
 
 class CategoryCardItem(
     private val data: Data,
