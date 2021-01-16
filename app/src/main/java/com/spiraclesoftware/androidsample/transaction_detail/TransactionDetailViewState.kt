@@ -6,7 +6,7 @@ import org.threeten.bp.ZonedDateTime
 
 sealed class TransactionDetailViewState
 
-object Loading : TransactionDetailViewState()
+object Initial : TransactionDetailViewState()
 
 object Error : TransactionDetailViewState()
 

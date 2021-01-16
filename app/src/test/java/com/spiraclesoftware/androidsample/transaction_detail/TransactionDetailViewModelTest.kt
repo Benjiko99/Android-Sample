@@ -92,7 +92,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             launch {
                 vm.collectScreenData()
                 stateObserver.assertObserved(
-                    Loading,
+                    Initial,
                     Error
                 )
             }

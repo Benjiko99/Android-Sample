@@ -24,7 +24,7 @@ class TransactionDetailViewModel(
     private val transactionId: TransactionId,
     private val detailPresenter: TransactionDetailPresenter,
     private val cardsPresenter: CardsPresenter
-) : RainbowCakeViewModel<TransactionDetailViewState>(Loading), CardActionsHandler {
+) : RainbowCakeViewModel<TransactionDetailViewState>(Initial), CardActionsHandler {
 
     data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
 

@@ -22,12 +22,10 @@ class CategorySelectViewModel(
     private val selectedCategory = MutableStateFlow(initialCategory)
 
     init {
-        executeNonBlocking {
-            collectSelectedCategory()
-        }
+        collectSelectedCategory()
     }
 
-    private suspend fun collectSelectedCategory() {
+    private fun collectSelectedCategory() = executeNonBlocking {
         selectedCategory.collect { category ->
             viewState = (viewState as Content).copy(
                 listItems = presenter.getListItems(selectedCategory = category)
