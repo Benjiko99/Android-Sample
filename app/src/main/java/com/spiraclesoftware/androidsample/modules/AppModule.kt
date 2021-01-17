@@ -1,8 +1,8 @@
 package com.spiraclesoftware.androidsample.modules
 
 import com.spiraclesoftware.androidsample.SampleApplication
-import com.spiraclesoftware.androidsample.data.LocalDataSourceImpl
-import com.spiraclesoftware.androidsample.data.RemoteDataSourceImpl
+import com.spiraclesoftware.androidsample.data.RetrofitDataSource
+import com.spiraclesoftware.androidsample.data.RoomDataSource
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
 import com.spiraclesoftware.androidsample.utils.LanguageManager
@@ -16,9 +16,9 @@ val appModule = module {
 
     single { SampleApplication.getSharedPreferences(androidContext()) }
 
-    single<LocalDataSource> { LocalDataSourceImpl(get()) }
+    single<LocalDataSource> { RoomDataSource(get()) }
 
-    single<RemoteDataSource> { RemoteDataSourceImpl(get()) }
+    single<RemoteDataSource> { RetrofitDataSource(get()) }
 
     single { LanguageManager(androidApplication(), get()) }
 

@@ -13,7 +13,7 @@ import com.spiraclesoftware.androidsample.domain.model.Transaction
 import kotlinx.coroutines.flow.flow
 import java.util.*
 
-class RemoteDataSourceImpl(
+class RetrofitDataSource(
     private val mainApi: MainApi,
 ) : RemoteDataSource {
 
