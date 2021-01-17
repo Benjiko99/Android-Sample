@@ -2,7 +2,7 @@
 
 Architecture
 -----------------
-The app is written entirely in **Kotlin** and uses the [RainbowCake](https://rainbowcake.dev/) architecture framework.
+The app is written in **Kotlin** and uses the [RainbowCake](https://rainbowcake.dev/) architecture framework.
 
 The main goals of the architecture are:
 
@@ -15,7 +15,7 @@ The main goals of the architecture are:
 
 Libraries
 ---------
-Local caching is either done in-memory or using **Room**.
+Local persistence is done with **Room**.
 
 Navigation is handled by the **Navigation Architecture Component**.
 
@@ -25,7 +25,7 @@ Dependency Injection is done through **Koin**.
 
 Creating adapters for RecyclerViews is simplified with **FastAdapter**.
 
-Debugging is facilitated by **LeakCanary** and **Stetho**.
+Debugging is helped by **LeakCanary** and **Stetho**.
 
 Back-end
 --------

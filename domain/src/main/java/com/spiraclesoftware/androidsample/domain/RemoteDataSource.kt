@@ -6,7 +6,7 @@ import com.spiraclesoftware.androidsample.domain.model.Transaction
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
-interface NetworkDataSource {
+interface RemoteDataSource {
     suspend fun fetchTransactions(): Flow<Result<List<Transaction>>>
 
     suspend fun fetchConversionRates(baseCurrency: Currency): ConversionRates

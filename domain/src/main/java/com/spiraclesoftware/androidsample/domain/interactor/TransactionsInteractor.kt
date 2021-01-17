@@ -1,8 +1,8 @@
 package com.spiraclesoftware.androidsample.domain.interactor
 
 import android.net.Uri
-import com.spiraclesoftware.androidsample.domain.DiskDataSource
-import com.spiraclesoftware.androidsample.domain.NetworkDataSource
+import com.spiraclesoftware.androidsample.domain.LocalDataSource
+import com.spiraclesoftware.androidsample.domain.RemoteDataSource
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
@@ -12,59 +12,59 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 
 class TransactionsInteractor(
-    private val networkDataSource: NetworkDataSource,
-    private val diskDataSource: DiskDataSource
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
 ) {
 
-    private val networkDataSourceResult = MutableStateFlow<Result<List<Transaction>>>(Result.Loading)
+    private val remoteDataSourceResult = MutableStateFlow<Result<List<Transaction>>>(Result.Loading)
 
-    fun flowTransactions() = diskDataSource.flowTransactions()
-        // includes errors and loading state from networkDataSource
-        .combine(networkDataSourceResult) { diskData, networkResult ->
-            when (networkResult) {
-                is Result.Success -> Result.Success(diskData)
-                is Result.Error -> networkResult
-                is Result.Loading -> networkResult
+    fun flowTransactions() = localDataSource.flowTransactions()
+        // includes errors and loading state from remoteDataSource
+        .combine(remoteDataSourceResult) { localData, remoteResult ->
+            when (remoteResult) {
+                is Result.Success -> Result.Success(localData)
+                is Result.Error -> remoteResult
+                is Result.Loading -> remoteResult
             }
         }
 
     suspend fun refreshTransactions() {
-        networkDataSource.fetchTransactions().collect { result ->
+        remoteDataSource.fetchTransactions().collect { result ->
             if (result is Result.Success) {
-                diskDataSource.saveTransactions(result.data)
+                localDataSource.saveTransactions(result.data)
             }
-            networkDataSourceResult.value = result
+            remoteDataSourceResult.value = result
         }
     }
 
     fun getTransactionById(id: TransactionId): Transaction? {
-        return diskDataSource.getTransactionById(id)
+        return localDataSource.getTransactionById(id)
     }
 
     fun flowTransactionById(id: TransactionId) =
-        diskDataSource.flowTransactionById(id)
+        localDataSource.flowTransactionById(id)
 
     suspend fun updateTransactionNote(id: TransactionId, note: String) =
-        networkDataSource.updateTransactionNote(id.value, note).also {
-            diskDataSource.updateTransaction(it)
+        remoteDataSource.updateTransactionNote(id.value, note).also {
+            localDataSource.updateTransaction(it)
         }
 
     suspend fun updateTransactionCategory(id: TransactionId, category: TransactionCategory) =
-        networkDataSource.updateTransactionCategory(id.value, category.name).also {
-            diskDataSource.updateTransaction(it)
+        remoteDataSource.updateTransactionCategory(id.value, category.name).also {
+            localDataSource.updateTransaction(it)
         }
 
     suspend fun uploadAttachment(id: TransactionId, uri: Uri) {
-        networkDataSource.uploadAttachment(id.value, uri).also { attachment ->
-            diskDataSource.updateTransaction(id) {
+        remoteDataSource.uploadAttachment(id.value, uri).also { attachment ->
+            localDataSource.updateTransaction(id) {
                 it.copy(attachments = it.attachments.plus(attachment))
             }
         }
     }
 
     suspend fun removeAttachment(id: TransactionId, uri: Uri) {
-        networkDataSource.removeAttachment(id.value, uri).also {
-            diskDataSource.updateTransaction(id) {
+        remoteDataSource.removeAttachment(id.value, uri).also {
+            localDataSource.updateTransaction(id) {
                 it.copy(attachments = it.attachments.minus(uri))
             }
         }

@@ -6,16 +6,16 @@ import com.spiraclesoftware.androidsample.data.mapper.ConversionRatesMapper
 import com.spiraclesoftware.androidsample.data.mapper.MoneyMapper
 import com.spiraclesoftware.androidsample.data.mapper.TransactionMapper
 import com.spiraclesoftware.androidsample.data_remote.MainApi
-import com.spiraclesoftware.androidsample.domain.NetworkDataSource
+import com.spiraclesoftware.androidsample.domain.RemoteDataSource
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import kotlinx.coroutines.flow.flow
 import java.util.*
 
-class NetworkDataSourceImpl(
+class RemoteDataSourceImpl(
     private val mainApi: MainApi,
-) : NetworkDataSource {
+) : RemoteDataSource {
 
     private val moneyMapper = MoneyMapper()
     private val transactionMapper = TransactionMapper(moneyMapper)

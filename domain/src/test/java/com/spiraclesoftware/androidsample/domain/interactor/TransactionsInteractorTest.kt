@@ -47,10 +47,10 @@ class TransactionsInteractorTest {
     }
 
     @Mock
-    private lateinit var networkDataSource: NetworkDataSource
+    private lateinit var remoteDataSource: RemoteDataSource
 
     @Mock
-    private lateinit var diskDataSource: DiskDataSource
+    private lateinit var localDataSource: LocalDataSource
 
     @Before
     fun setUp() {
@@ -59,10 +59,10 @@ class TransactionsInteractorTest {
 
     @Test
     fun `Transactions flow contains correct data`() = runBlockingTest {
-        whenever(diskDataSource.flowTransactions()) doReturn flowOf(MOCK_TRANSACTIONS)
-        whenever(networkDataSource.fetchTransactions()) doReturn flowOf(Result.Success(MOCK_TRANSACTIONS))
+        whenever(localDataSource.flowTransactions()) doReturn flowOf(MOCK_TRANSACTIONS)
+        whenever(remoteDataSource.fetchTransactions()) doReturn flowOf(Result.Success(MOCK_TRANSACTIONS))
 
-        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
+        val interactor = TransactionsInteractor(remoteDataSource, localDataSource)
 
         interactor.refreshTransactions()
         val transactions = interactor.flowTransactions()
@@ -70,33 +70,33 @@ class TransactionsInteractorTest {
     }
 
     @Test
-    fun `Transactions are correctly fetched from network`() = runBlockingTest {
-        whenever(networkDataSource.fetchTransactions()) doReturn flowOf(Result.Success(MOCK_TRANSACTIONS))
+    fun `Transactions are correctly fetched from remote`() = runBlockingTest {
+        whenever(remoteDataSource.fetchTransactions()) doReturn flowOf(Result.Success(MOCK_TRANSACTIONS))
 
-        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
+        val interactor = TransactionsInteractor(remoteDataSource, localDataSource)
 
         val transactions = interactor.refreshTransactions()
         assertEquals(MOCK_TRANSACTIONS, transactions)
 
-        verify(networkDataSource).fetchTransactions()
+        verify(remoteDataSource).fetchTransactions()
     }
 
     @Test
-    fun `Transactions are saved on disk when fetched from network`() = runBlockingTest {
-        whenever(networkDataSource.fetchTransactions()) doReturn flowOf(Result.Success(MOCK_TRANSACTIONS))
+    fun `Transactions are saved on local when fetched from remote`() = runBlockingTest {
+        whenever(remoteDataSource.fetchTransactions()) doReturn flowOf(Result.Success(MOCK_TRANSACTIONS))
 
-        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
+        val interactor = TransactionsInteractor(remoteDataSource, localDataSource)
 
         interactor.refreshTransactions()
 
-        verify(diskDataSource).saveTransactions(MOCK_TRANSACTIONS)
+        verify(localDataSource).saveTransactions(MOCK_TRANSACTIONS)
     }
 
     @Test
-    fun `Transaction is retrieved correctly from disk by ID`() = runBlockingTest {
-        whenever(diskDataSource.getTransactionById(any())) doReturn MOCK_TRANSACTION
+    fun `Transaction is retrieved correctly from local by ID`() = runBlockingTest {
+        whenever(localDataSource.getTransactionById(any())) doReturn MOCK_TRANSACTION
 
-        val interactor = TransactionsInteractor(networkDataSource, diskDataSource)
+        val interactor = TransactionsInteractor(remoteDataSource, localDataSource)
 
         val transaction = interactor.getTransactionById(MOCK_TRANSACTION.id)
         assertEquals(MOCK_TRANSACTION, transaction)
