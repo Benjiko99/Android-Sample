@@ -1,6 +1,5 @@
 package com.spiraclesoftware.androidsample.domain
 
-import android.net.Uri
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +14,7 @@ interface RemoteDataSource {
 
     suspend fun updateTransactionCategory(id: String, category: String): Transaction
 
-    suspend fun removeAttachment(id: String, uri: Uri)
+    suspend fun removeAttachment(id: String, uri: String)
 
-    suspend fun uploadAttachment(id: String, uri: Uri): Uri
+    suspend fun uploadAttachment(id: String, uri: String): String
 }

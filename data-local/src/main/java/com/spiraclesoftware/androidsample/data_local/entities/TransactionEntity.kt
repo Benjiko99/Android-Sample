@@ -1,6 +1,5 @@
 package com.spiraclesoftware.androidsample.data_local.entities
 
-import android.net.Uri
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -17,7 +16,7 @@ data class TransactionEntity(
     val category: String,
     val status: String,
     val statusCode: String,
-    val attachments: List<Uri> = emptyList(),
+    val attachments: List<String> = emptyList(),
     val cardDescription: String? = null,
     val noteToSelf: String? = null
 )

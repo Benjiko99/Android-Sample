@@ -1,6 +1,7 @@
 package com.spiraclesoftware.androidsample.features.transaction_detail
 
 import android.net.Uri
+import androidx.core.net.toUri
 import androidx.navigation.NavDirections
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
@@ -120,8 +121,9 @@ class TransactionDetailViewModel(
 
     override fun onViewAttachment(uri: Uri) = execute {
         val transaction = detailPresenter.getTransactionById(transactionId)!!
-        val startPosition = transaction.attachments.indexOf(uri)
-        postEvent(OpenAttachmentViewerEvent(transaction.attachments, startPosition))
+        val images = transaction.attachments.map(String::toUri)
+        val startPosition = images.indexOf(uri)
+        postEvent(OpenAttachmentViewerEvent(images, startPosition))
     }
 
     override fun onAddAttachment() = execute {

@@ -1,6 +1,5 @@
 package com.spiraclesoftware.androidsample.domain.model
 
-import android.net.Uri
 import org.threeten.bp.ZonedDateTime
 
 data class Transaction(
@@ -12,7 +11,7 @@ data class Transaction(
     val category: TransactionCategory,
     val status: TransactionStatus,
     val statusCode: TransactionStatusCode,
-    val attachments: List<Uri> = emptyList(),
+    val attachments: List<String> = emptyList(),
     val cardDescription: String? = null,
     val noteToSelf: String? = null
 ) : Identifiable<TransactionId> {

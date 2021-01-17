@@ -1,5 +1,1 @@
-include(":data-remote")
-include(":data-local")
-include(":data")
-include(":domain")
-include(":app")
+include(":app", ":domain", ":data", ":data-local", ":data-remote")

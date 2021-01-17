@@ -1,6 +1,5 @@
 package com.spiraclesoftware.androidsample.data
 
-import android.net.Uri
 import com.spiraclesoftware.androidsample.data.mapper.ConversionRateMapper
 import com.spiraclesoftware.androidsample.data.mapper.ConversionRatesMapper
 import com.spiraclesoftware.androidsample.data.mapper.MoneyMapper
@@ -54,7 +53,7 @@ class RetrofitDataSource(
         }
     }
 
-    override suspend fun removeAttachment(id: String, uri: Uri) {
+    override suspend fun removeAttachment(id: String, uri: String) {
         // NOTE: We don't have a backend for this feature yet, pretend we got a successful response.
         // Success is indicated by not throwing an exception, so we'll simply do nothing here.
 
@@ -62,7 +61,7 @@ class RetrofitDataSource(
         //return mainApi.removeAttachment(id.value, uri)
     }
 
-    override suspend fun uploadAttachment(id: String, uri: Uri): Uri {
+    override suspend fun uploadAttachment(id: String, uri: String): String {
         // NOTE: We don't have a backend for this feature yet, pretend we got a successful response
         return uri
 

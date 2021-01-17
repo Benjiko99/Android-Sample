@@ -1,6 +1,5 @@
 package com.spiraclesoftware.androidsample.domain.interactor
 
-import android.net.Uri
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
 import com.spiraclesoftware.androidsample.domain.Result
@@ -54,7 +53,7 @@ class TransactionsInteractor(
             localDataSource.updateTransaction(it)
         }
 
-    suspend fun uploadAttachment(id: TransactionId, uri: Uri) {
+    suspend fun uploadAttachment(id: TransactionId, uri: String) {
         remoteDataSource.uploadAttachment(id.value, uri).also { attachment ->
             localDataSource.updateTransaction(id) {
                 it.copy(attachments = it.attachments.plus(attachment))
@@ -62,7 +61,7 @@ class TransactionsInteractor(
         }
     }
 
-    suspend fun removeAttachment(id: TransactionId, uri: Uri) {
+    suspend fun removeAttachment(id: TransactionId, uri: String) {
         remoteDataSource.removeAttachment(id.value, uri).also {
             localDataSource.updateTransaction(id) {
                 it.copy(attachments = it.attachments.minus(uri))

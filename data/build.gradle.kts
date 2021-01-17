@@ -27,8 +27,8 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(project(":data-local"))
-    implementation(project(":data-remote"))
+    api(project(":data-local"))
+    api(project(":data-remote"))
 
     implementation(kotlin("stdlib-jdk8", Dependencies.kotlin))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.coroutines}")

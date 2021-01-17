@@ -33,11 +33,11 @@ class TransactionDetailPresenter(
     }
 
     suspend fun removeAttachment(id: TransactionId, uri: Uri) = withIOContext {
-        transactionsInteractor.removeAttachment(id, uri)
+        transactionsInteractor.removeAttachment(id, uri.toString())
     }
 
     suspend fun uploadAttachment(id: TransactionId, uri: Uri) = withIOContext {
-        transactionsInteractor.uploadAttachment(id, uri)
+        transactionsInteractor.uploadAttachment(id, uri.toString())
     }
 
 }

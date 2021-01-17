@@ -1,6 +1,7 @@
 package com.spiraclesoftware.androidsample.features.transaction_detail.cards
 
 import android.net.Uri
+import androidx.core.net.toUri
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.model.TransactionStatus
@@ -37,9 +38,9 @@ object CategoryCard : Card() {
 
 object AttachmentsCard : Card() {
 
-    fun toListItem(attachments: List<Uri>, uploads: List<Uri>, actionsHandler: CardActionsHandler) =
+    fun toListItem(attachments: List<String>, uploads: List<Uri>, actionsHandler: CardActionsHandler) =
         AttachmentsCardItem(
-            AttachmentsCardItem.Data(attachments, uploads),
+            AttachmentsCardItem.Data(attachments.map(String::toUri), uploads),
             actionsHandler
         )
 }

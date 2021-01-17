@@ -1,6 +1,5 @@
 package com.spiraclesoftware.androidsample.data_local
 
-import android.net.Uri
 import androidx.room.TypeConverter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -11,24 +10,12 @@ import java.util.*
 class Converters {
 
     @TypeConverter
-    fun fromEnum(item: Enum<*>?): String? =
-        item?.name
-
-    @TypeConverter
     fun fromListOfString(item: List<String>): String =
         Json.encodeToString(item)
 
     @TypeConverter
     fun toListOfString(value: String): List<String> =
         Json.decodeFromString(value)
-
-    @TypeConverter
-    fun fromListOfUri(item: List<Uri>): String =
-        Json.encodeToString(item.map { it.toString() })
-
-    @TypeConverter
-    fun toListOfUri(value: String): List<Uri> =
-        Json.decodeFromString<List<String>>(value).map { Uri.parse(it) }
 
     @TypeConverter
     fun toBigDecimal(value: String?) =

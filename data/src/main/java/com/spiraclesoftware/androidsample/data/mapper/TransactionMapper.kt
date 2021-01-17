@@ -1,6 +1,5 @@
 package com.spiraclesoftware.androidsample.data.mapper
 
-import android.net.Uri
 import com.spiraclesoftware.androidsample.data_remote.model.TransactionDto
 import com.spiraclesoftware.androidsample.domain.model.*
 
@@ -18,7 +17,7 @@ class TransactionMapper(
             category = TransactionCategory.valueOf(obj.category),
             status = TransactionStatus.valueOf(obj.status),
             statusCode = TransactionStatusCode.valueOf(obj.statusCode),
-            attachments = obj.attachments.map { Uri.parse(it) },
+            attachments = obj.attachments,
             cardDescription = obj.cardDescription,
             noteToSelf = obj.noteToSelf,
         )
@@ -34,7 +33,7 @@ class TransactionMapper(
             category = obj.category.name,
             status = obj.status.name,
             statusCode = obj.statusCode.name,
-            attachments = obj.attachments.map { it.toString() },
+            attachments = obj.attachments,
             cardDescription = obj.cardDescription,
             noteToSelf = obj.noteToSelf,
         )
