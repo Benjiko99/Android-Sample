@@ -4,7 +4,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.spiraclesoftware.androidsample.domain.MemoryDataSource
+import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.epochDateTime
 import com.spiraclesoftware.androidsample.domain.model.*
 import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
@@ -27,7 +27,7 @@ class AccountsInteractorTest {
     }
 
     @Mock
-    private lateinit var memoryDataSource: MemoryDataSource
+    private lateinit var localDataSource: LocalDataSource
 
     @Mock
     private lateinit var conversionRatesInteractor: ConversionRatesInteractor
@@ -39,12 +39,12 @@ class AccountsInteractorTest {
         MockitoAnnotations.initMocks(this)
         currencyConverter = CurrencyConverter(conversionRatesInteractor)
 
-        whenever(memoryDataSource.getAccount()) doReturn MOCK_ACCOUNT
+        whenever(localDataSource.getAccount()) doReturn MOCK_ACCOUNT
     }
 
     @Test
     fun `Account is retrieved from cache`() = runBlockingTest {
-        val interactor = AccountsInteractor(memoryDataSource, mock())
+        val interactor = AccountsInteractor(localDataSource, mock())
         assertEquals(MOCK_ACCOUNT, interactor.getAccount())
     }
 
@@ -81,7 +81,7 @@ class AccountsInteractorTest {
             )
         )
 
-        val interactor = AccountsInteractor(memoryDataSource, currencyConverter)
+        val interactor = AccountsInteractor(localDataSource, currencyConverter)
         val contribution = interactor.getContributionToBalance(transactions)
 
         assertEquals(Money(BigDecimal("75"), MOCK_ACCOUNT.currency), contribution)
@@ -112,7 +112,7 @@ class AccountsInteractorTest {
             )
         )
 
-        val interactor = AccountsInteractor(memoryDataSource, currencyConverter)
+        val interactor = AccountsInteractor(localDataSource, currencyConverter)
         val contribution = interactor.getContributionToBalance(transactions)
 
         val expected = Money(BigDecimal("50.0"), MOCK_ACCOUNT.currency)

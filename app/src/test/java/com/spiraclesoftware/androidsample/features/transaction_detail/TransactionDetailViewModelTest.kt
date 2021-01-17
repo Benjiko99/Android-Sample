@@ -10,13 +10,13 @@ import com.spiraclesoftware.androidsample.domain.model.*
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.features.text_input.TextInputType
 import com.spiraclesoftware.androidsample.features.transaction_detail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
+import com.spiraclesoftware.androidsample.features.transaction_detail.TransactionDetailFragmentDirections.Companion.toCategorySelect
+import com.spiraclesoftware.androidsample.features.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.features.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.features.transaction_detail.cards.CardsPresenter
 import com.spiraclesoftware.androidsample.features.transaction_detail.cards.items.ValuePairCardItem
 import com.spiraclesoftware.androidsample.formatters.MoneyFormat
 import com.spiraclesoftware.androidsample.money
-import com.spiraclesoftware.androidsample.transaction_detail.TransactionDetailFragmentDirections.Companion.toCategorySelect
-import com.spiraclesoftware.androidsample.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch

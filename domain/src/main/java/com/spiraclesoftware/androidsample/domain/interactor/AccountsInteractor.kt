@@ -1,6 +1,6 @@
 package com.spiraclesoftware.androidsample.domain.interactor
 
-import com.spiraclesoftware.androidsample.domain.MemoryDataSource
+import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.model.Account
 import com.spiraclesoftware.androidsample.domain.model.Money
 import com.spiraclesoftware.androidsample.domain.model.Transaction
@@ -8,12 +8,12 @@ import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
 import java.math.BigDecimal
 
 class AccountsInteractor(
-    private val memoryDataSource: MemoryDataSource,
+    private val localDataSource: LocalDataSource,
     private val currencyConverter: CurrencyConverter
 ) {
 
     fun getAccount(): Account {
-        return memoryDataSource.getAccount()
+        return localDataSource.getAccount()
     }
 
     /**

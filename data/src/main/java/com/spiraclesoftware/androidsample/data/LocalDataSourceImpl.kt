@@ -4,10 +4,10 @@ import com.spiraclesoftware.androidsample.data.mapper.MoneyEntityMapper
 import com.spiraclesoftware.androidsample.data.mapper.TransactionEntityMapper
 import com.spiraclesoftware.androidsample.data_local.dao.TransactionsDao
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
-import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import com.spiraclesoftware.androidsample.domain.model.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.util.*
 
 class LocalDataSourceImpl(
     private val transactionsDao: TransactionsDao
@@ -15,6 +15,12 @@ class LocalDataSourceImpl(
 
     private val moneyEntityMapper = MoneyEntityMapper()
     private val transactionEntityMapper = TransactionEntityMapper(moneyEntityMapper)
+
+    private val dummyAccount = Account(Currency.getInstance("EUR"))
+
+    private val conversionRatesCache = AssociatedItemCache<CurrencyCode, ConversionRates>()
+
+    override fun getAccount() = dummyAccount
 
     override fun flowTransactions(): Flow<List<Transaction>> {
         val roomItems = transactionsDao.flowAll()
@@ -45,6 +51,14 @@ class LocalDataSourceImpl(
         getTransactionById(id)?.let {
             updateTransaction(update(it))
         }
+    }
+
+    override fun saveConversionRates(baseCurrency: Currency, rates: ConversionRates) {
+        return conversionRatesCache.set(baseCurrency.currencyCode(), rates)
+    }
+
+    override fun getConversionRates(baseCurrency: Currency): ConversionRates? {
+        return conversionRatesCache.get(baseCurrency.currencyCode())
     }
 
 }

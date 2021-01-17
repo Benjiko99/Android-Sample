@@ -4,7 +4,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.spiraclesoftware.androidsample.domain.MemoryDataSource
+import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
 import com.spiraclesoftware.androidsample.domain.model.ConversionRate
 import com.spiraclesoftware.androidsample.domain.model.ConversionRates
@@ -37,7 +37,7 @@ class ConversionRatesInteractorTest {
     private lateinit var remoteDataSource: RemoteDataSource
 
     @Mock
-    private lateinit var memoryDataSource: MemoryDataSource
+    private lateinit var localDataSource: LocalDataSource
 
     @Before
     fun setUp() {
@@ -46,9 +46,9 @@ class ConversionRatesInteractorTest {
 
     @Test
     fun `Rates are loaded correctly from cache`() = runBlockingTest {
-        whenever(memoryDataSource.getConversionRates(any())) doReturn MOCK_RATES
+        whenever(localDataSource.getConversionRates(any())) doReturn MOCK_RATES
 
-        val interactor = ConversionRatesInteractor(remoteDataSource, memoryDataSource)
+        val interactor = ConversionRatesInteractor(remoteDataSource, localDataSource)
 
         val conversionRates = interactor.getConversionRates(MOCK_BASE_CURRENCY)
         assertEquals(MOCK_RATES, conversionRates)
@@ -56,10 +56,10 @@ class ConversionRatesInteractorTest {
 
     @Test
     fun `Rates are loaded correctly from remote`() = runBlockingTest {
-        whenever(memoryDataSource.getConversionRates(any())) doReturn null
+        whenever(localDataSource.getConversionRates(any())) doReturn null
         whenever(remoteDataSource.fetchConversionRates(any())) doReturn MOCK_RATES
 
-        val interactor = ConversionRatesInteractor(remoteDataSource, memoryDataSource)
+        val interactor = ConversionRatesInteractor(remoteDataSource, localDataSource)
 
         val conversionRates = interactor.getConversionRates(MOCK_BASE_CURRENCY)
         assertEquals(MOCK_RATES, conversionRates)
@@ -67,10 +67,10 @@ class ConversionRatesInteractorTest {
 
     @Test
     fun `Rates are loaded from remote if cache is empty`() = runBlockingTest {
-        whenever(memoryDataSource.getConversionRates(any())) doReturn null
+        whenever(localDataSource.getConversionRates(any())) doReturn null
         whenever(remoteDataSource.fetchConversionRates(any())) doReturn MOCK_RATES
 
-        val interactor = ConversionRatesInteractor(remoteDataSource, memoryDataSource)
+        val interactor = ConversionRatesInteractor(remoteDataSource, localDataSource)
 
         interactor.getConversionRates(MOCK_BASE_CURRENCY)
 
@@ -81,7 +81,7 @@ class ConversionRatesInteractorTest {
     fun `Rates are correctly fetched from remote`() = runBlockingTest {
         whenever(remoteDataSource.fetchConversionRates(any())) doReturn MOCK_RATES
 
-        val interactor = ConversionRatesInteractor(remoteDataSource, memoryDataSource)
+        val interactor = ConversionRatesInteractor(remoteDataSource, localDataSource)
 
         val rates = interactor.fetchConversionRates(MOCK_BASE_CURRENCY)
         assertEquals(MOCK_RATES, rates)
@@ -91,14 +91,14 @@ class ConversionRatesInteractorTest {
 
     @Test
     fun `Rates are saved on local when fetched from remote`() = runBlockingTest {
-        whenever(memoryDataSource.getConversionRates(any())) doReturn null
+        whenever(localDataSource.getConversionRates(any())) doReturn null
         whenever(remoteDataSource.fetchConversionRates(any())) doReturn MOCK_RATES
 
-        val interactor = ConversionRatesInteractor(remoteDataSource, memoryDataSource)
+        val interactor = ConversionRatesInteractor(remoteDataSource, localDataSource)
 
         interactor.getConversionRates(MOCK_BASE_CURRENCY)
 
-        verify(memoryDataSource).saveConversionRates(MOCK_BASE_CURRENCY, MOCK_RATES)
+        verify(localDataSource).saveConversionRates(MOCK_BASE_CURRENCY, MOCK_RATES)
     }
 
 }
