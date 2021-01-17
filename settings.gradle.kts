@@ -1,6 +1,5 @@
 include(":remote")
 include(":local")
-include(":cache")
 include(":data")
 include(":domain")
 include(":app")

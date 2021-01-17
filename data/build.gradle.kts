@@ -29,7 +29,6 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":local"))
     implementation(project(":remote"))
-    implementation(project(":cache"))
 
     implementation(kotlin("stdlib-jdk8", Dependencies.kotlin))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.coroutines}")
