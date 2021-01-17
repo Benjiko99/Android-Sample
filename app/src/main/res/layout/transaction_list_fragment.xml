@@ -18,7 +18,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.spiraclesoftware.androidsample.shared.ScrollChildSwipeRefreshLayout
+    <com.spiraclesoftware.androidsample.views.ScrollChildSwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -93,5 +93,5 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-    </com.spiraclesoftware.androidsample.shared.ScrollChildSwipeRefreshLayout>
+    </com.spiraclesoftware.androidsample.views.ScrollChildSwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

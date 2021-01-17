@@ -55,9 +55,9 @@ class TransactionsInteractor(
         }
 
     suspend fun uploadAttachment(id: TransactionId, uri: Uri) {
-        networkDataSource.uploadAttachment(id.value, uri).also { uri ->
+        networkDataSource.uploadAttachment(id.value, uri).also { attachment ->
             diskDataSource.updateTransaction(id) {
-                it.copy(attachments = it.attachments.plus(uri))
+                it.copy(attachments = it.attachments.plus(attachment))
             }
         }
     }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.spiraclesoftware.androidsample.text_input.TextInputFragment">
+    tools:context="com.spiraclesoftware.androidsample.features.text_input.TextInputFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"

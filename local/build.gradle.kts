@@ -15,6 +15,12 @@ android {
         versionCode = Application.versionCode
         versionName = Application.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+            }
+        }
     }
 
     compileOptions {

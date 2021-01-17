@@ -8,7 +8,6 @@ import kotlinx.serialization.json.Json
 import java.math.BigDecimal
 import java.util.*
 
-@OptIn(ExperimentalStdlibApi::class)
 class Converters {
 
     @TypeConverter
