@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.data.mapper
 
 import android.net.Uri
 import com.spiraclesoftware.androidsample.domain.model.*
-import com.spiraclesoftware.androidsample.remote.model.TransactionDto
+import com.spiraclesoftware.androidsample.data_remote.model.TransactionDto
 
 class TransactionMapper(
     private val moneyMapper: MoneyMapper

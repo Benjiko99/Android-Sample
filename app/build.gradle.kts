@@ -50,8 +50,8 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":domain"))
     implementation(project(":data"))
-    implementation(project(":local"))
-    implementation(project(":remote"))
+    implementation(project(":data-local"))
+    implementation(project(":data-remote"))
 
     api(kotlin("stdlib-jdk8", Dependencies.kotlin))
 

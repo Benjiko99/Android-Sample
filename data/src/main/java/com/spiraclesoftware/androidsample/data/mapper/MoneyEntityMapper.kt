@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.data.mapper
 
 import com.spiraclesoftware.androidsample.domain.model.Money
-import com.spiraclesoftware.androidsample.local.entities.MoneyEntity
+import com.spiraclesoftware.androidsample.data_local.entities.MoneyEntity
 
 class MoneyEntityMapper : EntityMapper<MoneyEntity, Money> {
 
