@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.data
+package com.spiraclesoftware.androidsample.data.utils
 
 import com.spiraclesoftware.androidsample.domain.model.Identifiable
 import com.spiraclesoftware.androidsample.domain.model.UniqueIdentifier
