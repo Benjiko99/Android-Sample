@@ -7,12 +7,12 @@ import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.CategorySelectItemBinding
 import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
-import com.spiraclesoftware.androidsample.formatters.colorRes
-import com.spiraclesoftware.androidsample.formatters.drawableRes
-import com.spiraclesoftware.androidsample.formatters.stringRes
 import com.spiraclesoftware.androidsample.extensions.color
 import com.spiraclesoftware.androidsample.extensions.string
 import com.spiraclesoftware.androidsample.extensions.tintedDrawable
+import com.spiraclesoftware.androidsample.formatters.colorRes
+import com.spiraclesoftware.androidsample.formatters.drawableRes
+import com.spiraclesoftware.androidsample.formatters.stringRes
 
 class CategoryItem(
     val category: TransactionCategory,

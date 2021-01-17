@@ -1,8 +1,8 @@
 package com.spiraclesoftware.androidsample.features.transaction_list
 
 import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.features.transaction_list.TransferDirectionFilter.ALL
 import com.spiraclesoftware.androidsample.extensions.lenientContains
+import com.spiraclesoftware.androidsample.features.transaction_list.TransferDirectionFilter.ALL
 import com.spiraclesoftware.androidsample.formatters.DateTimeFormat
 import com.spiraclesoftware.androidsample.formatters.MoneyFormat
 

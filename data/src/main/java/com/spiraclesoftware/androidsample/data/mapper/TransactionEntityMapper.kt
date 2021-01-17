@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.data.mapper
 
-import com.spiraclesoftware.androidsample.domain.model.*
 import com.spiraclesoftware.androidsample.data_local.entities.TransactionEntity
+import com.spiraclesoftware.androidsample.domain.model.*
 import org.threeten.bp.ZonedDateTime
 
 class TransactionEntityMapper(

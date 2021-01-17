@@ -2,10 +2,10 @@ package com.spiraclesoftware.androidsample.data
 
 import com.spiraclesoftware.androidsample.data.mapper.MoneyEntityMapper
 import com.spiraclesoftware.androidsample.data.mapper.TransactionEntityMapper
+import com.spiraclesoftware.androidsample.data_local.dao.TransactionsDao
 import com.spiraclesoftware.androidsample.domain.DiskDataSource
 import com.spiraclesoftware.androidsample.domain.model.Transaction
 import com.spiraclesoftware.androidsample.domain.model.TransactionId
-import com.spiraclesoftware.androidsample.data_local.dao.TransactionsDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

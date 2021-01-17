@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.data.mapper
 
-import com.spiraclesoftware.androidsample.domain.model.ConversionRate
 import com.spiraclesoftware.androidsample.data_remote.model.ConversionRateDto
+import com.spiraclesoftware.androidsample.domain.model.ConversionRate
 
 class ConversionRateMapper : Mapper<ConversionRateDto, ConversionRate> {
 

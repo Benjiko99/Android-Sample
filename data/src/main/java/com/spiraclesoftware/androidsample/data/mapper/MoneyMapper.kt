@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.data.mapper
 
-import com.spiraclesoftware.androidsample.domain.model.Money
 import com.spiraclesoftware.androidsample.data_remote.model.MoneyDto
+import com.spiraclesoftware.androidsample.domain.model.Money
 
 class MoneyMapper : Mapper<MoneyDto, Money> {
 
