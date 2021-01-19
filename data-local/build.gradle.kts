@@ -2,19 +2,19 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    kotlin("plugin.serialization") version Dependencies.kotlin
+    kotlin("plugin.serialization") version Version.kotlin
 }
 apply(plugin = "org.jmailen.kotlinter")
 
 android {
-    compileSdkVersion(Application.compileSdk)
+    compileSdkVersion(AppConfig.compileSdkVersion)
 
     defaultConfig {
-        minSdkVersion(Application.minSdk)
-        targetSdkVersion(Application.targetSdk)
-        versionCode = Application.versionCode
-        versionName = Application.versionName
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion(AppConfig.minSdkVersion)
+        targetSdkVersion(AppConfig.targetSdkVersion)
+        versionCode = AppConfig.versionCode
+        versionName = AppConfig.versionName
+        testInstrumentationRunner = AppConfig.testInstrumentationRunner
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -23,37 +23,43 @@ android {
         }
     }
 
+    sourceSets {
+        getByName("androidTest").assets.srcDirs(files("$projectDir/schemas"))
+    }
+
     compileOptions {
-        sourceCompatibility = Application.sourceCompat
-        targetCompatibility = Application.targetCompat
+        sourceCompatibility = AppConfig.jvmTarget
+        targetCompatibility = AppConfig.jvmTarget
     }
 
     kotlinOptions {
-        jvmTarget = Application.targetCompat.toString()
+        jvmTarget = AppConfig.jvmTarget.toString()
     }
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8", Dependencies.kotlin))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.coroutines}")
+    implementation(Dependency.kotlin)
+    implementation(Dependency.coroutines_core)
+    implementation(Dependency.serialization_json)
+    implementation(Dependency.koin_android)
+    implementation(Dependency.threetenabp)
 
-    implementation("org.koin:koin-android:${Dependencies.koin}")
-    implementation("com.jakewharton.threetenabp:threetenabp:${Dependencies.threetenabp}")
+    kapt(Dependency.room_compiler)
+    implementation(Dependency.room_runtime)
+    implementation(Dependency.room_ktx)
+    testImplementation(Dependency.room_testing)
+    androidTestImplementation(Dependency.room_android_testing)
 
-    kapt("androidx.room:room-compiler:${Dependencies.room}")
-    implementation("androidx.room:room-runtime:${Dependencies.room}")
-    implementation("androidx.room:room-ktx:${Dependencies.room}")
-    testImplementation("androidx.room:room-testing:${Dependencies.room}")
-    androidTestImplementation("androidx.room:room-testing:${Dependencies.roomTest}")
+    testImplementation(Dependency.junit)
+    testImplementation(Dependency.koin_test)
+    testImplementation(Dependency.coroutines_test)
+    testImplementation(Dependency.mockito_inline)
+    testImplementation(Dependency.mockito_kotlin)
+    testImplementation("org.threeten:threetenbp:${Version.threetenabp}") {
+        exclude("com.jakewharton.threetenabp", "threetenabp")
+    }
 
-    testImplementation("junit:junit:${Dependencies.junit}")
-    testImplementation("org.koin:koin-test:${Dependencies.koin}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Dependencies.coroutines}")
-    testImplementation("org.mockito:mockito-inline:${Dependencies.mockito}")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${Dependencies.mockitoKotlin}")
-
-    androidTestImplementation("androidx.test:runner:${Dependencies.androidxTestRunner}")
-    androidTestImplementation("androidx.test.ext:junit:${Dependencies.androidxTestJUnit}")
-    androidTestImplementation("org.mockito:mockito-android:${Dependencies.mockito}")
+    androidTestImplementation(Dependency.android_test_runner)
+    androidTestImplementation(Dependency.android_test_junit)
+    androidTestImplementation(Dependency.mockito_android)
 }

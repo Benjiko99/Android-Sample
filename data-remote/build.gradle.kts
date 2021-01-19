@@ -6,53 +6,42 @@ plugins {
 apply(plugin = "org.jmailen.kotlinter")
 
 android {
-    compileSdkVersion(Application.compileSdk)
+    compileSdkVersion(AppConfig.compileSdkVersion)
 
     defaultConfig {
-        minSdkVersion(Application.minSdk)
-        targetSdkVersion(Application.targetSdk)
-        versionCode = Application.versionCode
-        versionName = Application.versionName
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion(AppConfig.minSdkVersion)
+        targetSdkVersion(AppConfig.targetSdkVersion)
+        versionCode = AppConfig.versionCode
+        versionName = AppConfig.versionName
+        testInstrumentationRunner = AppConfig.testInstrumentationRunner
     }
 
     compileOptions {
-        sourceCompatibility = Application.sourceCompat
-        targetCompatibility = Application.targetCompat
+        sourceCompatibility = AppConfig.jvmTarget
+        targetCompatibility = AppConfig.jvmTarget
     }
 
     kotlinOptions {
-        jvmTarget = Application.targetCompat.toString()
-    }
-
-    buildTypes {
-        named("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
+        jvmTarget = AppConfig.jvmTarget.toString()
     }
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8", Dependencies.kotlin))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.coroutines}")
+    implementation(Dependency.kotlin)
+    implementation(Dependency.coroutines_core)
+    implementation(Dependency.koin_core)
+    implementation(Dependency.threetenabp)
 
-    implementation("org.koin:koin-core:${Dependencies.koin}")
+    kapt(Dependency.moshi_codegen)
+    implementation(Dependency.moshi)
+    implementation(Dependency.okhttp)
+    implementation(Dependency.okhttp_logging)
+    implementation(Dependency.retrofit)
+    implementation(Dependency.retrofit_moshi)
 
-    implementation("com.jakewharton.threetenabp:threetenabp:${Dependencies.threetenabp}")
-
-    implementation("com.squareup.moshi:moshi:${Dependencies.moshi}")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:${Dependencies.moshi}")
-
-    implementation("com.squareup.okhttp3:okhttp:${Dependencies.okhttp}")
-    implementation("com.squareup.okhttp3:logging-interceptor:${Dependencies.okhttp}")
-
-    implementation("com.squareup.retrofit2:retrofit:${Dependencies.retrofit}")
-    implementation("com.squareup.retrofit2:converter-moshi:${Dependencies.retrofit}")
-
-    testImplementation("junit:junit:${Dependencies.junit}")
-    testImplementation("org.koin:koin-test:${Dependencies.koin}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Dependencies.coroutines}")
-    testImplementation("org.mockito:mockito-inline:${Dependencies.mockito}")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${Dependencies.mockitoKotlin}")
+    testImplementation(Dependency.junit)
+    testImplementation(Dependency.koin_test)
+    testImplementation(Dependency.coroutines_test)
+    testImplementation(Dependency.mockito_inline)
+    testImplementation(Dependency.mockito_kotlin)
 }

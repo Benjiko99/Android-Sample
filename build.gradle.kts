@@ -3,11 +3,11 @@ import org.jmailen.gradle.kotlinter.KotlinterPlugin
 
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.1")
-        classpath(kotlin("gradle-plugin", version = Dependencies.kotlin))
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Dependencies.navigation}")
-        classpath("org.jmailen.gradle:kotlinter-gradle:${Dependencies.kotlinter}")
-        classpath("app.cash.exhaustive:exhaustive-gradle:${Dependencies.exhaustive}")
+        classpath(Plugin.androidGradle)
+        classpath(Plugin.kotlin)
+        classpath(Plugin.kotlinter)
+        classpath(Plugin.safeArgs)
+        classpath(Plugin.exhaustive)
     }
 
     repositories {
