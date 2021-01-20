@@ -79,6 +79,7 @@ dependencies {
     debugImplementation(Dependency.leak_canary)
 
     testImplementation(Dependency.junit)
+    testImplementation(Dependency.truth)
     testImplementation(Dependency.koin_test)
     testImplementation(Dependency.fragment_test)
     testImplementation(Dependency.coroutines_test)

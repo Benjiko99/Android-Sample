@@ -40,9 +40,9 @@ object Version {
     const val constraint_layout = "2.0.4"
 
     // Testing
-    const val androidx_test_runner = "1.3.0"
-    const val androidx_test_junit = "1.1.2"
+    const val androidx_test = "1.3.0"
     const val junit = "4.13"
+    const val truth = "1.1"
     const val mockito = "2.28.2"
     const val mockito_kotlin = "2.2.0"
 }
@@ -210,13 +210,16 @@ object Dependency {
 
     //region Testing
     const val android_test_runner =
-        "androidx.test:runner:${Version.androidx_test_runner}"
+        "androidx.test:runner:${Version.androidx_test}"
 
     const val android_test_junit =
-        "androidx.test.ext:junit:${Version.androidx_test_junit}"
+        "androidx.test.ext:junit:${Version.androidx_test}"
 
     const val junit =
         "junit:junit:${Version.junit}"
+
+    const val truth =
+        "com.google.truth:truth:${Version.truth}"
 
     const val arch_test =
         "androidx.arch.core:core-testing:${Version.arch}"
