@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.spiraclesoftware.androidsample.data_local.dao.TransactionsDao
-import com.spiraclesoftware.androidsample.data_local.entities.TransactionEntity
+import com.spiraclesoftware.androidsample.data_local.entity.TransactionEntity
 
 @Database(
     entities = [

@@ -3,9 +3,9 @@ package com.spiraclesoftware.androidsample.domain.interactor
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
 import com.spiraclesoftware.androidsample.domain.Result
-import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.domain.model.TransactionCategory
-import com.spiraclesoftware.androidsample.domain.model.TransactionId
+import com.spiraclesoftware.androidsample.domain.entity.Transaction
+import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
+import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine

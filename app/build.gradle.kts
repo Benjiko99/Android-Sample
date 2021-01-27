@@ -8,13 +8,12 @@ apply(plugin = "org.jmailen.kotlinter")
 apply(plugin = "app.cash.exhaustive")
 
 android {
-    compileSdkVersion(AppConfig.compileSdkVersion)
-
     defaultConfig {
-        applicationId = AppConfig.id
         minSdkVersion(AppConfig.minSdkVersion)
         targetSdkVersion(AppConfig.targetSdkVersion)
+        compileSdkVersion(AppConfig.compileSdkVersion)
         buildToolsVersion(AppConfig.buildToolsVersion)
+        applicationId = AppConfig.id
         versionCode = AppConfig.versionCode
         versionName = AppConfig.versionName
         testInstrumentationRunner = AppConfig.testInstrumentationRunner
@@ -23,11 +22,6 @@ android {
     compileOptions {
         sourceCompatibility = AppConfig.jvmTarget
         targetCompatibility = AppConfig.jvmTarget
-    }
-
-    kotlinOptions {
-        jvmTarget = AppConfig.jvmTarget.toString()
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
 
     buildTypes {
@@ -47,7 +41,8 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(project(":domain"))
-    implementation(project(":data"))
+    implementation(project(":data-local"))
+    implementation(project(":data-remote"))
 
     implementation(Dependency.kotlin)
     implementation(Dependency.coroutines_core)

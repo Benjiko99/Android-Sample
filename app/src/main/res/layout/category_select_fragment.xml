@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.spiraclesoftware.androidsample.features.category_select.CategorySelectFragment">
+    tools:context="com.spiraclesoftware.androidsample.feature.category_select.CategorySelectFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"

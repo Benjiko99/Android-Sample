@@ -3,7 +3,7 @@ package com.spiraclesoftware.androidsample.data_local.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.spiraclesoftware.androidsample.data_local.entities.TransactionEntity
+import com.spiraclesoftware.androidsample.data_local.entity.TransactionEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -3,8 +3,8 @@ package com.spiraclesoftware.androidsample.data_local.dao
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.spiraclesoftware.androidsample.data_local.MainDatabase
 import com.spiraclesoftware.androidsample.data_local.TestUtils
-import com.spiraclesoftware.androidsample.data_local.entities.MoneyEntity
-import com.spiraclesoftware.androidsample.data_local.entities.TransactionEntity
+import com.spiraclesoftware.androidsample.data_local.entity.MoneyEntity
+import com.spiraclesoftware.androidsample.data_local.entity.TransactionEntity
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After

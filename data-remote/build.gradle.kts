@@ -6,11 +6,11 @@ plugins {
 apply(plugin = "org.jmailen.kotlinter")
 
 android {
-    compileSdkVersion(AppConfig.compileSdkVersion)
-
     defaultConfig {
         minSdkVersion(AppConfig.minSdkVersion)
         targetSdkVersion(AppConfig.targetSdkVersion)
+        compileSdkVersion(AppConfig.compileSdkVersion)
+        buildToolsVersion(AppConfig.buildToolsVersion)
         versionCode = AppConfig.versionCode
         versionName = AppConfig.versionName
         testInstrumentationRunner = AppConfig.testInstrumentationRunner
@@ -20,13 +20,11 @@ android {
         sourceCompatibility = AppConfig.jvmTarget
         targetCompatibility = AppConfig.jvmTarget
     }
-
-    kotlinOptions {
-        jvmTarget = AppConfig.jvmTarget.toString()
-    }
 }
 
 dependencies {
+    implementation(project(":domain"))
+
     implementation(Dependency.kotlin)
     implementation(Dependency.coroutines_core)
     implementation(Dependency.koin_core)

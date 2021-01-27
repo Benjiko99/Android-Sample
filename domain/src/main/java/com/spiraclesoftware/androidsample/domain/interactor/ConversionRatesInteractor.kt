@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.domain.interactor
 
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
-import com.spiraclesoftware.androidsample.domain.model.ConversionRates
+import com.spiraclesoftware.androidsample.domain.entity.ConversionRates
 import java.util.*
 
 class ConversionRatesInteractor(

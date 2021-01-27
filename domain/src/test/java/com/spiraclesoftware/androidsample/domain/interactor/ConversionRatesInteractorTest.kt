@@ -6,8 +6,8 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
-import com.spiraclesoftware.androidsample.domain.model.ConversionRate
-import com.spiraclesoftware.androidsample.domain.model.ConversionRates
+import com.spiraclesoftware.androidsample.domain.entity.ConversionRate
+import com.spiraclesoftware.androidsample.domain.entity.ConversionRates
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

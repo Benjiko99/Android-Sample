@@ -5,7 +5,7 @@ object Version {
     const val exhaustive = "0.1.1"
 
     // Core
-    const val kotlin = "1.4.10"
+    const val kotlin = "1.4.21"
     const val coroutines = "1.4.2"
     const val rainbow_cake = "1.2.0"
     const val koin = "2.2.0-rc-1"

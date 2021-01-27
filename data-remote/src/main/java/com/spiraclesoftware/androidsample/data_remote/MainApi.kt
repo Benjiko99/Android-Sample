@@ -1,7 +1,9 @@
 package com.spiraclesoftware.androidsample.data_remote
 
 import android.net.Uri
-import com.spiraclesoftware.androidsample.data_remote.model.*
+import com.spiraclesoftware.androidsample.data_remote.dto.ConversionRatesDto
+import com.spiraclesoftware.androidsample.data_remote.dto.TransactionDto
+import com.spiraclesoftware.androidsample.data_remote.dto.TransactionsResponse
 import okhttp3.MultipartBody
 import retrofit2.http.*
 import java.util.*
@@ -9,7 +11,7 @@ import java.util.*
 interface MainApi {
 
     @GET("transactions")
-    suspend fun fetchTransactions(): TransactionsResponseWrapper
+    suspend fun fetchTransactions(): TransactionsResponse
 
     @GET("conversion-rates")
     suspend fun fetchConversionRates(

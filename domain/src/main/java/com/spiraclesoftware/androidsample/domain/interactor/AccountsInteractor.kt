@@ -1,10 +1,10 @@
 package com.spiraclesoftware.androidsample.domain.interactor
 
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
-import com.spiraclesoftware.androidsample.domain.model.Account
-import com.spiraclesoftware.androidsample.domain.model.Money
-import com.spiraclesoftware.androidsample.domain.model.Transaction
-import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
+import com.spiraclesoftware.androidsample.domain.entity.Account
+import com.spiraclesoftware.androidsample.domain.entity.Money
+import com.spiraclesoftware.androidsample.domain.entity.Transaction
+import com.spiraclesoftware.androidsample.domain.service.CurrencyConverter
 import java.math.BigDecimal
 
 class AccountsInteractor(

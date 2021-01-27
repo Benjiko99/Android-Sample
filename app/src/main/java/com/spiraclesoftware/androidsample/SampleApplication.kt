@@ -7,12 +7,13 @@ import android.content.res.Configuration
 import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.spiraclesoftware.androidsample.data.dataModule
+import com.spiraclesoftware.androidsample.data_local.localModule
+import com.spiraclesoftware.androidsample.data_remote.remoteModule
+import com.spiraclesoftware.androidsample.di.appModule
+import com.spiraclesoftware.androidsample.di.featureModule
 import com.spiraclesoftware.androidsample.domain.domainModule
-import com.spiraclesoftware.androidsample.extensions.string
-import com.spiraclesoftware.androidsample.modules.appModule
-import com.spiraclesoftware.androidsample.modules.presentationModule
-import com.spiraclesoftware.androidsample.utils.LanguageManager
+import com.spiraclesoftware.androidsample.extension.string
+import com.spiraclesoftware.androidsample.util.LanguageManager
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -45,7 +46,7 @@ class SampleApplication : Application() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@SampleApplication)
-            modules(appModule + presentationModule + domainModule + dataModule)
+            modules(appModule + featureModule + domainModule + localModule + remoteModule)
         }
     }
 

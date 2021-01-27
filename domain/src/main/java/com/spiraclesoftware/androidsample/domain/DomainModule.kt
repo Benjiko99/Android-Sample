@@ -3,7 +3,7 @@ package com.spiraclesoftware.androidsample.domain
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
-import com.spiraclesoftware.androidsample.domain.policy.CurrencyConverter
+import com.spiraclesoftware.androidsample.domain.service.CurrencyConverter
 import org.koin.dsl.module
 
 private val interactorModule = module {

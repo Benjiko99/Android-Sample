@@ -1,6 +1,6 @@
 package com.spiraclesoftware.androidsample
 
-import com.spiraclesoftware.androidsample.domain.model.Money
+import com.spiraclesoftware.androidsample.domain.entity.Money
 import org.threeten.bp.ZonedDateTime
 import java.math.BigDecimal
 import java.util.*

@@ -3,7 +3,7 @@ package com.spiraclesoftware.androidsample.framework
 import android.content.Context
 import android.widget.TextView
 import androidx.annotation.StringRes
-import com.spiraclesoftware.androidsample.extensions.string
+import com.spiraclesoftware.androidsample.extension.string
 
 /**
  * Supports providing strings either as String or resource ID.
