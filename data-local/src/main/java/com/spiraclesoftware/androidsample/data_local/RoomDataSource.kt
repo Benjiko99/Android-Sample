@@ -43,6 +43,10 @@ class RoomDataSource(
         transactionsDao.repopulateWith(roomItems)
     }
 
+    override fun clearTransactions() {
+        transactionsDao.deleteAll()
+    }
+
     override fun updateTransaction(transaction: Transaction) {
         val item = transaction.let(transactionEntityMapper::mapToEntity)
         transactionsDao.update(item)

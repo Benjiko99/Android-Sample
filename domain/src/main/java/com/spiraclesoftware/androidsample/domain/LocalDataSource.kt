@@ -18,6 +18,8 @@ interface LocalDataSource {
 
     fun saveTransactions(transactions: List<Transaction>)
 
+    fun clearTransactions()
+
     fun updateTransaction(transaction: Transaction)
 
     fun updateTransaction(id: TransactionId, update: (Transaction) -> Transaction)

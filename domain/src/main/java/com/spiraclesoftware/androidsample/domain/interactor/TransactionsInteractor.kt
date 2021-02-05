@@ -9,6 +9,7 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onEach
 
 class TransactionsInteractor(
     private val remoteDataSource: RemoteDataSource,
@@ -28,12 +29,14 @@ class TransactionsInteractor(
         }
 
     suspend fun refreshTransactions() {
-        remoteDataSource.fetchTransactions().collect { result ->
-            if (result is Result.Success) {
-                localDataSource.saveTransactions(result.data)
+        remoteDataSource.fetchTransactions()
+            .onEach { result ->
+                when (result) {
+                    is Result.Success -> localDataSource.saveTransactions(result.data)
+                    is Result.Error -> localDataSource.clearTransactions()
+                }
             }
-            remoteDataSourceResult.value = result
-        }
+            .collect { result -> remoteDataSourceResult.value = result }
     }
 
     fun getTransactionById(id: TransactionId): Transaction? {
