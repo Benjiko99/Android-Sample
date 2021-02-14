@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.feature.text_input.strategy
 
 import com.spiraclesoftware.androidsample.feature.text_input.MaxLengthExceededError
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class NoteInputStrategyTest {

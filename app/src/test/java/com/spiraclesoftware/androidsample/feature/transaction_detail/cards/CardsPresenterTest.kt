@@ -4,8 +4,8 @@ import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.money
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)

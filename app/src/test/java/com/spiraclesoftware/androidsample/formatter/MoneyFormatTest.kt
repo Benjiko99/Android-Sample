@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.formatter
 
 import com.spiraclesoftware.androidsample.money
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class MoneyFormatTest {
