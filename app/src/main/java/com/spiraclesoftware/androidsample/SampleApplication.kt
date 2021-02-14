@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
-import com.jakewharton.threetenabp.AndroidThreeTen
 import com.spiraclesoftware.androidsample.data_local.localModule
 import com.spiraclesoftware.androidsample.data_remote.remoteModule
 import com.spiraclesoftware.androidsample.di.appModule
@@ -37,7 +36,6 @@ class SampleApplication : Application() {
         if (ProcessPhoenix.isPhoenixProcess(this)) return
 
         Stetho.initializeWithDefaults(this)
-        AndroidThreeTen.init(this)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())

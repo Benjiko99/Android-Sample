@@ -8,7 +8,7 @@ import com.spiraclesoftware.androidsample.databinding.TransactionHeaderItemBindi
 import com.spiraclesoftware.androidsample.domain.entity.Money
 import com.spiraclesoftware.androidsample.formatter.DateTimeFormat
 import com.spiraclesoftware.androidsample.formatter.MoneyFormat
-import org.threeten.bp.ZonedDateTime
+import java.time.ZonedDateTime
 
 class HeaderItem(
     private val dateTime: ZonedDateTime,

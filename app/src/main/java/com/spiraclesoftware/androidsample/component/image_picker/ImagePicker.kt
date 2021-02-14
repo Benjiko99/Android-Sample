@@ -8,9 +8,9 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.spiraclesoftware.androidsample.R
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeFormatter
 import java.io.File
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import androidx.activity.result.contract.ActivityResultContracts.GetContent as GetContentContract
 import androidx.activity.result.contract.ActivityResultContracts.TakePicture as TakePictureContract
 

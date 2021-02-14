@@ -8,14 +8,14 @@ import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.domain.epochDateTime
 import com.spiraclesoftware.androidsample.domain.service.CurrencyConverter
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.threeten.bp.ZonedDateTime
+import java.time.ZonedDateTime
 import java.math.BigDecimal
 import java.util.*
 

@@ -17,6 +17,7 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = AppConfig.jvmTarget
         targetCompatibility = AppConfig.jvmTarget
     }
@@ -25,10 +26,10 @@ android {
 dependencies {
     implementation(project(":domain"))
 
+    coreLibraryDesugaring(Dependency.core_library_desugaring)
     implementation(Dependency.kotlin)
     implementation(Dependency.coroutines_core)
     implementation(Dependency.koin_core)
-    implementation(Dependency.threetenabp)
 
     kapt(Dependency.moshi_codegen)
     implementation(Dependency.moshi)

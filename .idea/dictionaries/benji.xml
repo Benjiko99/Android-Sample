@@ -9,11 +9,13 @@
       <w>codegen</w>
       <w>constraintlayout</w>
       <w>databinding</w>
+      <w>desugaring</w>
       <w>didn</w>
       <w>dont</w>
       <w>fastadapter</w>
       <w>flowable</w>
       <w>gson</w>
+      <w>hmmss</w>
       <w>imageviewer</w>
       <w>interactor</w>
       <w>jakewharton</w>

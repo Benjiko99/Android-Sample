@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.data_local.mapper
 
 import com.spiraclesoftware.androidsample.data_local.entity.TransactionEntity
 import com.spiraclesoftware.androidsample.domain.entity.*
-import org.threeten.bp.ZonedDateTime
+import java.time.ZonedDateTime
 
 class TransactionEntityMapper(
     private val moneyEntityMapper: MoneyEntityMapper

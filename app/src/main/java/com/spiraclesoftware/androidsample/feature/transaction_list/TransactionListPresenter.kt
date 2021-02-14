@@ -13,9 +13,9 @@ import com.spiraclesoftware.androidsample.util.LanguageManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import org.threeten.bp.ZonedDateTime
-import org.threeten.bp.temporal.ChronoUnit.DAYS
 import timber.log.Timber
+import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
 
 class TransactionListPresenter(
     private val languageManager: LanguageManager,
@@ -68,7 +68,7 @@ class TransactionListPresenter(
 
     private fun List<Transaction>.sortAndGroupByDay() =
         this.sortedByDescending { it.processingDate }
-            .groupBy { it.processingDate.truncatedTo(DAYS) }
+            .groupBy { it.processingDate.truncatedTo(ChronoUnit.DAYS) }
 
     private suspend fun Map<ZonedDateTime, List<Transaction>>.toListItems(): List<GenericItem> {
         val listItems = arrayListOf<GenericItem>()

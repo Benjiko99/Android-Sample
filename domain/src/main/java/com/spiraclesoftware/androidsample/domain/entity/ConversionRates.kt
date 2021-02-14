@@ -1,6 +1,6 @@
 package com.spiraclesoftware.androidsample.domain.entity
 
-import org.threeten.bp.ZonedDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 data class ConversionRates(

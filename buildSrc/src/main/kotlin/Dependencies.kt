@@ -6,10 +6,10 @@ object Version {
 
     // Core
     const val kotlin = "1.4.21"
+    const val core_library_desugaring = "1.1.1"
     const val coroutines = "1.4.2"
     const val rainbow_cake = "1.2.0"
     const val koin = "2.2.0-rc-1"
-    const val threetenabp = "1.2.4"
 
     // Debugging
     const val leak_canary = "2.3"
@@ -53,6 +53,9 @@ object Dependency {
     const val kotlin =
         "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Version.kotlin}"
 
+    const val core_library_desugaring =
+        "com.android.tools:desugar_jdk_libs:${Version.core_library_desugaring}"
+
     const val coroutines_core =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
 
@@ -61,9 +64,6 @@ object Dependency {
 
     const val coroutines_test =
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutines}"
-
-    const val threetenabp =
-        "com.jakewharton.threetenabp:threetenabp:${Version.threetenabp}"
     //endregion
 
 

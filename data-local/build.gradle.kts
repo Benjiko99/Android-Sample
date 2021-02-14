@@ -28,6 +28,7 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = AppConfig.jvmTarget
         targetCompatibility = AppConfig.jvmTarget
     }
@@ -36,11 +37,11 @@ android {
 dependencies {
     implementation(project(":domain"))
 
+    coreLibraryDesugaring(Dependency.core_library_desugaring)
     implementation(Dependency.kotlin)
     implementation(Dependency.coroutines_core)
     implementation(Dependency.serialization_json)
     implementation(Dependency.koin_android)
-    implementation(Dependency.threetenabp)
 
     kapt(Dependency.room_compiler)
     implementation(Dependency.room_runtime)
@@ -53,9 +54,6 @@ dependencies {
     testImplementation(Dependency.coroutines_test)
     testImplementation(Dependency.mockito_inline)
     testImplementation(Dependency.mockito_kotlin)
-    testImplementation("org.threeten:threetenbp:${Version.threetenabp}") {
-        exclude("com.jakewharton.threetenabp", "threetenabp")
-    }
 
     androidTestImplementation(Dependency.android_test_runner)
     androidTestImplementation(Dependency.android_test_junit)

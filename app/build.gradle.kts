@@ -20,6 +20,7 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = AppConfig.jvmTarget
         targetCompatibility = AppConfig.jvmTarget
     }
@@ -44,6 +45,7 @@ dependencies {
     implementation(project(":data-local"))
     implementation(project(":data-remote"))
 
+    coreLibraryDesugaring(Dependency.core_library_desugaring)
     implementation(Dependency.kotlin)
     implementation(Dependency.coroutines_core)
     implementation(Dependency.coroutines_android)
@@ -52,7 +54,6 @@ dependencies {
     implementation(Dependency.rainbowcake_timber)
     implementation(Dependency.koin_android)
     implementation(Dependency.koin_viewmodel)
-    implementation(Dependency.threetenabp)
     implementation(Dependency.stetho)
     implementation(Dependency.process_phoenix)
     implementation(Dependency.livedata_ktx)
@@ -81,9 +82,6 @@ dependencies {
     testImplementation(Dependency.rainbowcake_test)
     testImplementation(Dependency.mockito_inline)
     testImplementation(Dependency.mockito_kotlin)
-    testImplementation("org.threeten:threetenbp:${Version.threetenabp}") {
-        exclude("com.jakewharton.threetenabp", "threetenabp")
-    }
 
     androidTestImplementation(Dependency.android_test_runner)
     androidTestImplementation(Dependency.android_test_junit)

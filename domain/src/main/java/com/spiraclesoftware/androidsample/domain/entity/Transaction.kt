@@ -1,6 +1,6 @@
 package com.spiraclesoftware.androidsample.domain.entity
 
-import org.threeten.bp.ZonedDateTime
+import java.time.ZonedDateTime
 
 data class Transaction(
     val id: TransactionId,

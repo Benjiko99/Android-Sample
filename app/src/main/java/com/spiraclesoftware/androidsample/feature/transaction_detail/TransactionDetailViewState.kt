@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail
 
 import com.mikepenz.fastadapter.GenericItem
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
-import org.threeten.bp.ZonedDateTime
+import java.time.ZonedDateTime
 
 sealed class TransactionDetailViewState
 
