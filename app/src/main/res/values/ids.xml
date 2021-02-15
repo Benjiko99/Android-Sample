@@ -2,6 +2,7 @@
 <resources>
 
     <!-- List items -->
+    <item name="category_item" type="id" />
     <item name="transaction_item" type="id" />
     <item name="transaction_header_item" type="id" />
     <item name="value_pair_card_item" type="id" />

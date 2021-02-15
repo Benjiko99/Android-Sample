@@ -4,20 +4,20 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
-import androidx.core.view.isGone
-import com.mikepenz.fastadapter.binding.AbstractBindingItem
+import androidx.core.view.isVisible
+import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionItemBinding
-import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import com.spiraclesoftware.androidsample.domain.entity.TransactionStatusCode
-import com.spiraclesoftware.androidsample.extension.*
-import com.spiraclesoftware.androidsample.formatter.*
+import com.spiraclesoftware.androidsample.extension.addPaintFlag
+import com.spiraclesoftware.androidsample.extension.color
+import com.spiraclesoftware.androidsample.extension.removePaintFlag
+import com.spiraclesoftware.androidsample.extension.tintedDrawable
 
 class TransactionItem(
-    val transaction: Transaction
-) : AbstractBindingItem<TransactionItemBinding>() {
+    model: TransactionModel
+) : ModelAbstractBindingItem<TransactionModel, TransactionItemBinding>(model) {
 
-    override var identifier: Long = transaction.id.value.toLong()
+    override var identifier: Long = model.id.value.toLong()
 
     override val type = R.id.transaction_item
 
@@ -26,43 +26,26 @@ class TransactionItem(
 
     override fun bindView(binding: TransactionItemBinding, payloads: List<Any>) = with(binding) {
         val ctx = root.context
-        val transaction = transaction
-        nameView.text = transaction.name
-        dateView.text = transaction.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME)
+        nameView.text = model.name
+        dateView.text = model.processingDate
 
-        statusView.text = ctx.stringOrNull(transaction.statusCode.stringRes).also {
-            statusView.isGone = it == null
+        statusView.text = model.status
+        statusView.isVisible = model.status != null
+
+        amountView.text = model.amount
+
+        if (!model.contributesToAccountBalance) {
+            amountView.addPaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
+        } else {
+            amountView.removePaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
         }
 
-        fun bindAmountText() {
-            val moneyFormat = MoneyFormat(transaction.signedMoney)
+        val iconTint = ctx.color(model.iconTintRes)
+        val icon = ctx.tintedDrawable(model.iconRes, iconTint)
+        iconView.setImageDrawable(icon)
 
-            amountView.text = moneyFormat.format(transaction)
-
-            if (!transaction.contributesToAccountBalance()) {
-                amountView.addPaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
-            } else {
-                amountView.removePaintFlag(Paint.STRIKE_THRU_TEXT_FLAG)
-            }
-        }
-        bindAmountText()
-
-        fun bindCategoryIcon() {
-            val tint: Int
-            val category = transaction.category
-
-            if (transaction.statusCode == TransactionStatusCode.SUCCESSFUL) {
-                tint = ctx.color(category.colorRes)
-                iconView.setImageDrawable(ctx.tintedDrawable(category.drawableRes, tint))
-            } else {
-                tint = ctx.color(R.color.transaction_status__declined)
-                iconView.setImageDrawable(ctx.tintedDrawable(R.drawable.ic_status_declined, tint))
-            }
-
-            val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
-            iconView.background = ctx.tintedDrawable(R.drawable.shp_circle, fadedTint)
-        }
-        bindCategoryIcon()
+        val fadedTint = ColorUtils.setAlphaComponent(iconTint, 255 / 100 * 15)
+        iconView.background = ctx.tintedDrawable(R.drawable.shp_circle, fadedTint)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -71,13 +54,13 @@ class TransactionItem(
         if (!super.equals(other)) return false
 
         other as TransactionItem
-        if (transaction != other.transaction) return false
+        if (model != other.model) return false
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + transaction.hashCode()
+        result = 31 * result + model.hashCode()
         return result
     }
 

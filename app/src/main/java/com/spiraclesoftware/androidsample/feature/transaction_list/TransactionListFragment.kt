@@ -18,14 +18,15 @@ import co.zsmb.rainbowcake.koin.getViewModelFromFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
-import com.mikepenz.fastadapter.adapters.GenericItemAdapter
-import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.adapters.GenericModelAdapter
+import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
+import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.StandardFragment
 import com.spiraclesoftware.androidsample.util.DelightUI
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState as ViewState
@@ -39,7 +40,7 @@ class TransactionListFragment :
     override fun provideViewModel() = getViewModelFromFactory()
 
     private lateinit var fastAdapter: GenericFastAdapter
-    private lateinit var itemAdapter: GenericItemAdapter
+    private lateinit var itemAdapter: GenericModelAdapter<Model>
 
     private lateinit var collapseActionViewCallback: OnBackPressedCallback
 
@@ -55,7 +56,7 @@ class TransactionListFragment :
         when (viewState) {
             is Content -> {
                 recyclerView.isVisible = viewState.emptyState == null
-                FastAdapterDiffUtil[itemAdapter] = viewState.listItems
+                FastAdapterDiffUtil[itemAdapter] = viewState.listModels
             }
             is Error -> {
                 recyclerView.isVisible = false
@@ -110,7 +111,7 @@ class TransactionListFragment :
     }
 
     private fun onTransactionItemClicked(item: TransactionItem) {
-        viewModel.onListItemClicked(item.transaction.id)
+        viewModel.onListItemClicked(item.model.id)
     }
 
     private fun onFilterItemSelected(position: Int) {
@@ -213,7 +214,13 @@ class TransactionListFragment :
     }
 
     private fun setupFastItemAdapter() {
-        itemAdapter = ItemAdapter.items()
+        itemAdapter = ModelAdapter.models { model: Model ->
+            when (model) {
+                is HeaderModel -> HeaderItem(model)
+                is TransactionModel -> TransactionItem(model)
+                else -> throw IllegalStateException()
+            }
+        }
         fastAdapter = FastAdapter.with(itemAdapter).apply {
             setHasStableIds(true)
         }

@@ -11,12 +11,13 @@ import co.zsmb.rainbowcake.base.OneShotEvent
 import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
-import com.mikepenz.fastadapter.adapters.GenericItemAdapter
-import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.adapters.GenericModelAdapter
+import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.CategorySelectFragmentBinding
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
+import com.spiraclesoftware.androidsample.extension.set
 import com.spiraclesoftware.androidsample.extension.showSnackbar
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewModel.NotifyOfFailureEvent
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewModel.NotifyOfSuccessEvent
@@ -40,11 +41,11 @@ class CategorySelectFragment :
     }
 
     private lateinit var fastAdapter: GenericFastAdapter
-    private lateinit var itemAdapter: GenericItemAdapter
+    private lateinit var itemAdapter: GenericModelAdapter<CategoryModel>
 
-    override fun render(viewState: CategorySelectViewState) = with(binding) {
+    override fun render(viewState: CategorySelectViewState) {
         if (viewState is Content) {
-            FastAdapterDiffUtil[itemAdapter] = viewState.listItems
+            FastAdapterDiffUtil[itemAdapter] = viewState.listModels
         }
     }
 
@@ -58,7 +59,7 @@ class CategorySelectFragment :
     }
 
     private fun onCategoryItemClicked(item: CategoryItem) {
-        viewModel.selectCategory(item.category)
+        viewModel.onCategoryClicked(item.model)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,7 +81,9 @@ class CategorySelectFragment :
     }
 
     private fun setupFastItemAdapter() {
-        itemAdapter = ItemAdapter.items()
+        itemAdapter = ModelAdapter.models { model: CategoryModel ->
+            CategoryItem(model)
+        }
         fastAdapter = FastAdapter.with(itemAdapter).apply {
             setHasStableIds(true)
         }

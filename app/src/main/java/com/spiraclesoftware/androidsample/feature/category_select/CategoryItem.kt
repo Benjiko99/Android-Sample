@@ -3,25 +3,19 @@ package com.spiraclesoftware.androidsample.feature.category_select
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
-import com.mikepenz.fastadapter.binding.AbstractBindingItem
+import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.CategorySelectItemBinding
-import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.extension.color
-import com.spiraclesoftware.androidsample.extension.string
 import com.spiraclesoftware.androidsample.extension.tintedDrawable
-import com.spiraclesoftware.androidsample.formatter.colorRes
-import com.spiraclesoftware.androidsample.formatter.drawableRes
-import com.spiraclesoftware.androidsample.formatter.stringRes
 
 class CategoryItem(
-    val category: TransactionCategory,
-    val isChecked: Boolean
-) : AbstractBindingItem<CategorySelectItemBinding>() {
+    model: CategoryModel
+) : ModelAbstractBindingItem<CategoryModel, CategorySelectItemBinding>(model) {
 
-    override var identifier = category.ordinal.toLong()
+    override var identifier = model.ordinal.toLong()
 
-    override val type = R.id.transaction_item
+    override val type = R.id.category_item
 
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?) =
         CategorySelectItemBinding.inflate(inflater, parent, false)
@@ -29,17 +23,15 @@ class CategoryItem(
     override fun bindView(binding: CategorySelectItemBinding, payloads: List<Any>) = with(binding) {
         val ctx = root.context
 
-        radioView.isChecked = isChecked
-        nameView.text = ctx.string(category.stringRes)
+        radioView.isChecked = model.isSelectedCategory
+        nameView.text = model.name
 
-        fun bindCategoryIcon() {
-            val tint = ctx.color(category.colorRes)
-            iconView.setImageDrawable(ctx.tintedDrawable(category.drawableRes, tint))
+        val iconTint = ctx.color(model.iconTintRes)
+        val icon = ctx.tintedDrawable(model.iconRes, iconTint)
+        iconView.setImageDrawable(icon)
 
-            val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
-            iconView.background = ctx.tintedDrawable(R.drawable.shp_circle, fadedTint)
-        }
-        bindCategoryIcon()
+        val fadedTint = ColorUtils.setAlphaComponent(iconTint, 255 / 100 * 15)
+        iconView.background = ctx.tintedDrawable(R.drawable.shp_circle, fadedTint)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -48,16 +40,14 @@ class CategoryItem(
         if (!super.equals(other)) return false
 
         other as CategoryItem
-        if (category != other.category) return false
-        if (isChecked != other.isChecked) return false
+        if (model != other.model) return false
         if (identifier != other.identifier) return false
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + category.hashCode()
-        result = 31 * result + isChecked.hashCode()
+        result = 31 * result + model.hashCode()
         result = 31 * result + identifier.hashCode()
         return result
     }

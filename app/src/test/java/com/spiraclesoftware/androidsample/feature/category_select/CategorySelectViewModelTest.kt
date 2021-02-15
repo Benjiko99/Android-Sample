@@ -17,23 +17,17 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class CategorySelectViewModelTest : ViewModelTest() {
 
-    companion object {
-        private val CATEGORIES = TransactionCategory.values().toList()
-        private val MOCK_LIST_ITEMS = CATEGORIES.map { CategoryItem(it, it == TransactionCategory.ENTERTAINMENT) }
-    }
-
     @Test
     fun `Data is loaded correctly from presenter upon creation and leads to ready state`() = runBlockingTest {
         val presenter: CategorySelectPresenter = mock()
-        whenever(presenter.getListItems(any())) doReturn MOCK_LIST_ITEMS
+        val mockModels = listOf(mock<CategoryModel>())
+        whenever(presenter.getListModels(any())) doReturn mockModels
 
         val vm = CategorySelectViewModel(TransactionId("1"), TransactionCategory.ENTERTAINMENT, presenter)
 
         vm.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
-                Content(
-                    MOCK_LIST_ITEMS
-                )
+                Content(mockModels)
             )
         }
     }

@@ -3,8 +3,11 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.spiraclesoftware.androidsample.domain.entity.*
+import com.spiraclesoftware.androidsample.domain.entity.Account
+import com.spiraclesoftware.androidsample.domain.entity.Transaction
+import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.epochDateTime
@@ -25,29 +28,6 @@ class TransactionListPresenterTest : PresenterTest() {
 
     companion object {
         private val MOCK_ACCOUNT = Account(Currency.getInstance("EUR"))
-
-        private val MOCK_TRANSACTIONS = listOf(
-            Transaction(
-                TransactionId("1"),
-                "Paypal *Steam",
-                epochDateTime,
-                money("49.99", "EUR"),
-                TransferDirection.OUTGOING,
-                TransactionCategory.ENTERTAINMENT,
-                TransactionStatus.COMPLETED,
-                TransactionStatusCode.SUCCESSFUL,
-            ),
-            Transaction(
-                TransactionId("2"),
-                "Salary",
-                epochDateTime,
-                money("1000", "EUR"),
-                TransferDirection.INCOMING,
-                TransactionCategory.TRANSFERS,
-                TransactionStatus.COMPLETED,
-                TransactionStatusCode.SUCCESSFUL
-            ),
-        )
     }
 
     @Mock
@@ -58,6 +38,12 @@ class TransactionListPresenterTest : PresenterTest() {
 
     @Mock
     private lateinit var transactionsInteractor: TransactionsInteractor
+
+    @Mock
+    private lateinit var headerModelFormatter: HeaderModelFormatter
+
+    @Mock
+    private lateinit var transactionModelFormatter: TransactionModelFormatter
 
     @Mock
     private lateinit var exceptionFormatter: ExceptionFormatter
@@ -71,6 +57,8 @@ class TransactionListPresenterTest : PresenterTest() {
             languageManager,
             accountsInteractor,
             transactionsInteractor,
+            headerModelFormatter,
+            transactionModelFormatter,
             exceptionFormatter
         )
     }
@@ -85,28 +73,28 @@ class TransactionListPresenterTest : PresenterTest() {
     }
 
     @Test
-    fun `All list items are returned from interactor`() = runBlockingTest {
-        val mockTransactions = listOf(
-            MOCK_TRANSACTIONS[0],
-            MOCK_TRANSACTIONS[0]
-        )
+    fun `Models are presented correctly`() = runBlockingTest {
+        val transaction = mock<Transaction> {
+            whenever(it.processingDate) doReturn epochDateTime
+        }
+        val transactions = listOf(transaction)
+
+        val headerModel = mock<HeaderModel>()
+        val transactionModel = mock<TransactionModel> {
+            whenever(it.id) doReturn TransactionId("1")
+        }
 
         val mockContribution = money("100", "EUR")
 
         whenever(accountsInteractor.getAccount()) doReturn MOCK_ACCOUNT
         whenever(accountsInteractor.getContributionToBalance(any())) doReturn mockContribution
+        whenever(headerModelFormatter.format(any(), any())) doReturn headerModel
+        whenever(transactionModelFormatter.format(transactions)) doReturn listOf(transactionModel)
 
-        val listItems = presenter.getListItems(mockTransactions)
+        val models = presenter.getListModels(transactions)
+        val expectedModels = listOf(headerModel, transactionModel)
 
-        val contribution = accountsInteractor.getContributionToBalance(mockTransactions)
-
-        val expectedListItems = listOf(
-            HeaderItem(epochDateTime, contribution),
-            TransactionItem(mockTransactions[0]),
-            TransactionItem(mockTransactions[1])
-        )
-
-        assertEquals(expectedListItems, listItems)
+        assertEquals(expectedModels, models)
     }
 
 }

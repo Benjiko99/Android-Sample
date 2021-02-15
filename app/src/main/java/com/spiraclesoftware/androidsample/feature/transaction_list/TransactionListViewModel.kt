@@ -39,11 +39,11 @@ class TransactionListViewModel(
     }
 
     private suspend fun getContent(transactions: List<Transaction>): Content {
-        val listItems = presenter.getListItems(transactions)
+        val listModels = presenter.getListModels(transactions)
         val listFilter = listFilterFlow.value
         var emptyState: EmptyState? = null
 
-        if (listItems.isEmpty()) {
+        if (listModels.isEmpty()) {
             emptyState = if (listFilter.isActive()) {
                 EmptyState(
                     image = R.drawable.ic_empty_search_results,
@@ -57,7 +57,7 @@ class TransactionListViewModel(
                 )
             }
         }
-        return Content(listItems, listFilter.directionFilter, emptyState)
+        return Content(listModels, listFilter.directionFilter, emptyState)
     }
 
     fun refreshTransactions() = executeNonBlocking {

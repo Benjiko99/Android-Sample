@@ -14,7 +14,7 @@ class CategorySelectViewModel(
     initialCategory: TransactionCategory,
     private val presenter: CategorySelectPresenter
 ) : RainbowCakeViewModel<CategorySelectViewState>(
-    Content(listItems = emptyList())
+    Content(listModels = emptyList())
 ) {
 
     object NotifyOfSuccessEvent : QueuedOneShotEvent
@@ -28,13 +28,17 @@ class CategorySelectViewModel(
 
     private fun collectSelectedCategory() = executeNonBlocking {
         selectedCategory.collect { category ->
-            viewState = (viewState as Content).copy(
-                listItems = presenter.getListItems(selectedCategory = category)
-            )
+            val models = presenter.getListModels(selectedCategory = category)
+            viewState = Content(models)
         }
     }
 
-    fun selectCategory(category: TransactionCategory) {
+    fun onCategoryClicked(model: CategoryModel) {
+        val category = TransactionCategory.values()[model.ordinal]
+        selectCategory(category)
+    }
+
+    private fun selectCategory(category: TransactionCategory) {
         if (category != selectedCategory.value) {
             val oldCategory = selectedCategory.value
 

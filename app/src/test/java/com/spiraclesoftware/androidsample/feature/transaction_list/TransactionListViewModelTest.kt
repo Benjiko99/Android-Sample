@@ -11,6 +11,7 @@ import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.Content
+import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.money
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -34,21 +35,21 @@ class TransactionListViewModelTest : ViewModelTest() {
             ),
         )
 
-        private val MOCK_LIST_ITEMS = MOCK_TRANSACTIONS.map(::TransactionItem)
+        private val MOCK_LIST_MODELS = listOf(mock<Model>())
     }
 
     @Test
     fun `Data is loaded correctly from presenter upon creation and leads to ready state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
         whenever(presenter.flowTransactions(any())) doReturn flowOf(Result.Success(MOCK_TRANSACTIONS))
-        whenever(presenter.getListItems(any())) doReturn MOCK_LIST_ITEMS
+        whenever(presenter.getListModels(any())) doReturn MOCK_LIST_MODELS
 
         val vm = TransactionListViewModel(presenter)
 
         vm.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
                 Content(
-                    MOCK_LIST_ITEMS,
+                    MOCK_LIST_MODELS,
                     TransferDirectionFilter.ALL
                 )
             )
@@ -59,14 +60,14 @@ class TransactionListViewModelTest : ViewModelTest() {
     fun `Having no transactions leads to empty state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mock()
         whenever(presenter.flowTransactions(any())) doReturn flowOf(Result.Success(emptyList()))
-        whenever(presenter.getListItems(any())) doReturn emptyList()
+        whenever(presenter.getListModels(any())) doReturn emptyList()
 
         val vm = TransactionListViewModel(presenter)
 
         vm.observeStateAndEvents { stateObserver, _ ->
             val viewState = stateObserver.observed.first() as Content
 
-            assert(viewState.listItems.isEmpty())
+            assert(viewState.listModels.isEmpty())
             assert(viewState.emptyState != null)
         }
     }

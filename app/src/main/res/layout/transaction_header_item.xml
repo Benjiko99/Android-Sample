@@ -20,7 +20,7 @@
         tools:text="12:00, Fri, 15 May" />
 
     <TextView
-        android:id="@+id/contributionsView"
+        android:id="@+id/contributionView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.Transaction.Header"

@@ -1,6 +1,6 @@
 package com.spiraclesoftware.androidsample.feature.transaction_list
 
-import com.mikepenz.fastadapter.GenericItem
+import com.spiraclesoftware.androidsample.framework.Model
 
 sealed class TransactionListViewState {
 
@@ -9,7 +9,7 @@ sealed class TransactionListViewState {
     data class Error(val message: String?) : TransactionListViewState()
 
     data class Content(
-        val listItems: List<GenericItem>,
+        val listModels: List<Model>,
         val directionFilter: TransferDirectionFilter,
         val emptyState: EmptyState? = null,
     ) : TransactionListViewState()
