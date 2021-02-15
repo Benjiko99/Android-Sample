@@ -14,6 +14,7 @@
       <w>dont</w>
       <w>fastadapter</w>
       <w>flowable</w>
+      <w>formatters</w>
       <w>gson</w>
       <w>hmmss</w>
       <w>imageviewer</w>
@@ -30,6 +31,7 @@
       <w>mikepenz</w>
       <w>mmmm</w>
       <w>mockitokotlin</w>
+      <w>mockk</w>
       <w>moshi</w>
       <w>nhaarman</w>
       <w>okhttp</w>

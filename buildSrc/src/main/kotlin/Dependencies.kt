@@ -41,8 +41,10 @@ object Version {
 
     // Testing
     const val androidx_test = "1.3.0"
+    const val androidx_test_junit = "1.1.2"
     const val junit = "4.13"
     const val truth = "1.1"
+    const val mockk = "1.10.5"
     const val mockito = "2.28.2"
     const val mockito_kotlin = "2.2.0"
 }
@@ -213,7 +215,7 @@ object Dependency {
         "androidx.test:runner:${Version.androidx_test}"
 
     const val android_test_junit =
-        "androidx.test.ext:junit:${Version.androidx_test}"
+        "androidx.test.ext:junit:${Version.androidx_test_junit}"
 
     const val junit =
         "junit:junit:${Version.junit}"
@@ -223,6 +225,9 @@ object Dependency {
 
     const val arch_test =
         "androidx.arch.core:core-testing:${Version.arch}"
+
+    const val mockk =
+        "io.mockk:mockk:${Version.mockk}"
 
     const val mockito_inline =
         "org.mockito:mockito-inline:${Version.mockito}"

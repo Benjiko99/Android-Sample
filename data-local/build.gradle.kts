@@ -50,6 +50,7 @@ dependencies {
     androidTestImplementation(Dependency.room_android_testing)
 
     testImplementation(Dependency.junit)
+    testImplementation(Dependency.mockk)
     testImplementation(Dependency.koin_test)
     testImplementation(Dependency.coroutines_test)
     testImplementation(Dependency.mockito_inline)

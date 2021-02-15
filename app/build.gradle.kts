@@ -76,6 +76,7 @@ dependencies {
 
     testImplementation(Dependency.junit)
     testImplementation(Dependency.truth)
+    testImplementation(Dependency.mockk)
     testImplementation(Dependency.koin_test)
     testImplementation(Dependency.fragment_test)
     testImplementation(Dependency.coroutines_test)
@@ -85,5 +86,6 @@ dependencies {
 
     androidTestImplementation(Dependency.android_test_runner)
     androidTestImplementation(Dependency.android_test_junit)
-    androidTestImplementation(Dependency.mockito_android)
+    androidTestImplementation(Dependency.junit)
+    androidTestImplementation(Dependency.truth)
 }
