@@ -31,6 +31,7 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
+import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.items.AttachmentsCardItem
 import com.spiraclesoftware.androidsample.formatter.DateTimeFormat
 import com.spiraclesoftware.androidsample.formatter.colorRes

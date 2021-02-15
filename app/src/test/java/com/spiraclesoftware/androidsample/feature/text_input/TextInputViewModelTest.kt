@@ -4,6 +4,7 @@ import co.zsmb.rainbowcake.test.assertObserved
 import co.zsmb.rainbowcake.test.base.ViewModelTest
 import co.zsmb.rainbowcake.test.observeStateAndEvents
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewModel.SendResultToCallerAndExitEvent
+import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.Content
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test

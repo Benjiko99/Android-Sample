@@ -25,6 +25,7 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
 import com.spiraclesoftware.androidsample.framework.StandardFragment
 import com.spiraclesoftware.androidsample.util.DelightUI
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState as ViewState

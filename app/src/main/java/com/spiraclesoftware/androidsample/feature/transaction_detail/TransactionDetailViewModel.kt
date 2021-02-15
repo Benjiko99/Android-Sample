@@ -13,6 +13,7 @@ import com.spiraclesoftware.androidsample.feature.text_input.TextInputType
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toCategorySelect
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
+import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.*
 import com.spiraclesoftware.androidsample.formatter.MoneyFormat
 import kotlinx.coroutines.delay

@@ -16,6 +16,7 @@ import com.spiraclesoftware.androidsample.extension.showSoftKeyboard
 import com.spiraclesoftware.androidsample.extension.string
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment.Companion.RESULT_KEY
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewModel.SendResultToCallerAndExitEvent
+import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.Content
 import com.spiraclesoftware.androidsample.framework.StandardFragment
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf

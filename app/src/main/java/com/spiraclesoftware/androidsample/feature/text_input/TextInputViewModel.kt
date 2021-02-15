@@ -2,6 +2,7 @@ package com.spiraclesoftware.androidsample.feature.text_input
 
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
+import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.Content
 import com.spiraclesoftware.androidsample.feature.text_input.strategy.TextInputStrategy
 
 class TextInputViewModel(

@@ -13,6 +13,7 @@ import com.spiraclesoftware.androidsample.feature.transaction_detail.Transaction
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toCategorySelect
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
+import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.items.ValuePairCardItem
 import com.spiraclesoftware.androidsample.formatter.MoneyFormat
