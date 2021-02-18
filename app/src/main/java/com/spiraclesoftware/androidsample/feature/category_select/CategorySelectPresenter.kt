@@ -10,12 +10,10 @@ class CategorySelectPresenter(
     private val categoryModelFormatter: CategoryModelFormatter
 ) {
 
-    private val allCategories = TransactionCategory.values().toList()
-
     fun getListModels(
         selectedCategory: TransactionCategory?
     ): List<CategoryModel> {
-        return allCategories.map {
+        return transactionsInteractor.getAllCategories().map {
             categoryModelFormatter.format(
                 category = it,
                 isSelectedCategory = it == selectedCategory

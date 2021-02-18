@@ -72,4 +72,8 @@ class TransactionsInteractor(
         }
     }
 
+    fun getAllCategories(): List<TransactionCategory> {
+        return TransactionCategory.values().toList()
+    }
+
 }
