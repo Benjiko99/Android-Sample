@@ -10,9 +10,8 @@ dependencies {
     implementation(Dependency.koin_core)
 
     testImplementation(Dependency.junit)
+    testImplementation(Dependency.truth)
     testImplementation(Dependency.mockk)
     testImplementation(Dependency.koin_test)
     testImplementation(Dependency.coroutines_test)
-    testImplementation(Dependency.mockito_inline)
-    testImplementation(Dependency.mockito_kotlin)
 }

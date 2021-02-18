@@ -1,6 +1,6 @@
 package com.spiraclesoftware.androidsample.framework
 
-import org.junit.Assert.*
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
 class HandleOnceValueTest {
@@ -8,7 +8,7 @@ class HandleOnceValueTest {
     @Test
     fun `Is unhandled when created`() {
         val handleOnceValue = HandleOnceValue("foo")
-        assertFalse(handleOnceValue.isHandled)
+        assertThat(handleOnceValue.isHandled).isFalse()
     }
 
     @Test
@@ -16,7 +16,7 @@ class HandleOnceValueTest {
         val handleOnceValue = HandleOnceValue("foo")
 
         handleOnceValue.handleOnce { }
-        assertTrue(handleOnceValue.isHandled)
+        assertThat(handleOnceValue.isHandled).isTrue()
     }
 
     @Test
@@ -27,7 +27,7 @@ class HandleOnceValueTest {
         repeat(times = 2) {
             handleOnceValue.handleOnce { interactions++ }
         }
-        assertEquals(interactions, 1)
+        assertThat(interactions).isEqualTo(1)
     }
 
     @Test
@@ -35,14 +35,14 @@ class HandleOnceValueTest {
         val handleOnceValue = HandleOnceValue("foo")
 
         handleOnceValue.handleOnce {
-            assertEquals("foo", it)
+            assertThat(it).isEqualTo("foo")
         }
     }
 
     @Test
     fun `Peaking returns the stored value`() {
         val handleOnceValue = HandleOnceValue("foo")
-        assertEquals("foo", handleOnceValue.peak())
+        assertThat(handleOnceValue.peak()).isEqualTo("foo")
     }
 
 }

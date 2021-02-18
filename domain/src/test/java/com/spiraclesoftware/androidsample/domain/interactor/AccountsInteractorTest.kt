@@ -1,20 +1,20 @@
 package com.spiraclesoftware.androidsample.domain.interactor
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.domain.epochDateTime
 import com.spiraclesoftware.androidsample.domain.service.CurrencyConverter
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.util.*
@@ -26,26 +26,25 @@ class AccountsInteractorTest {
         private val MOCK_ACCOUNT = Account(Currency.getInstance("EUR"))
     }
 
-    @Mock
-    private lateinit var localDataSource: LocalDataSource
+    @MockK
+    lateinit var localDataSource: LocalDataSource
 
-    @Mock
-    private lateinit var conversionRatesInteractor: ConversionRatesInteractor
+    @MockK
+    lateinit var conversionRatesInteractor: ConversionRatesInteractor
 
-    private lateinit var currencyConverter: CurrencyConverter
+    @InjectMockKs
+    lateinit var currencyConverter: CurrencyConverter
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        currencyConverter = CurrencyConverter(conversionRatesInteractor)
-
-        whenever(localDataSource.getAccount()) doReturn MOCK_ACCOUNT
+        MockKAnnotations.init(this)
+        every { localDataSource.getAccount() } returns MOCK_ACCOUNT
     }
 
     @Test
     fun `Account is retrieved from cache`() = runBlockingTest {
-        val interactor = AccountsInteractor(localDataSource, mock())
-        assertEquals(MOCK_ACCOUNT, interactor.getAccount())
+        val interactor = AccountsInteractor(localDataSource, mockk())
+        assertThat(interactor.getAccount()).isEqualTo(MOCK_ACCOUNT)
     }
 
     @Test
@@ -56,7 +55,7 @@ class AccountsInteractorTest {
             rates = emptyList()
         )
 
-        whenever(conversionRatesInteractor.getConversionRates(any())) doReturn conversionRates
+        coEvery { conversionRatesInteractor.getConversionRates(any()) } returns conversionRates
 
         val transactions = listOf(
             Transaction(
@@ -84,7 +83,8 @@ class AccountsInteractorTest {
         val interactor = AccountsInteractor(localDataSource, currencyConverter)
         val contribution = interactor.getContributionToBalance(transactions)
 
-        assertEquals(Money(BigDecimal("75"), MOCK_ACCOUNT.currency), contribution)
+        val expected = Money(BigDecimal("75"), MOCK_ACCOUNT.currency)
+        assertThat(contribution).isEqualTo(expected)
     }
 
     @Test
@@ -97,7 +97,7 @@ class AccountsInteractorTest {
             )
         )
 
-        whenever(conversionRatesInteractor.getConversionRates(any())) doReturn conversionRates
+        coEvery { conversionRatesInteractor.getConversionRates(any()) } returns conversionRates
 
         val transactions = listOf(
             Transaction(
@@ -116,7 +116,7 @@ class AccountsInteractorTest {
         val contribution = interactor.getContributionToBalance(transactions)
 
         val expected = Money(BigDecimal("50.0"), MOCK_ACCOUNT.currency)
-        assertEquals(expected, contribution)
+        assertThat(contribution).isEqualTo(expected)
     }
 
 }

@@ -50,13 +50,12 @@ dependencies {
     androidTestImplementation(Dependency.room_android_testing)
 
     testImplementation(Dependency.junit)
+    testImplementation(Dependency.truth)
     testImplementation(Dependency.mockk)
     testImplementation(Dependency.koin_test)
     testImplementation(Dependency.coroutines_test)
-    testImplementation(Dependency.mockito_inline)
-    testImplementation(Dependency.mockito_kotlin)
 
     androidTestImplementation(Dependency.android_test_runner)
     androidTestImplementation(Dependency.android_test_junit)
-    androidTestImplementation(Dependency.mockito_android)
+    androidTestImplementation(Dependency.truth)
 }

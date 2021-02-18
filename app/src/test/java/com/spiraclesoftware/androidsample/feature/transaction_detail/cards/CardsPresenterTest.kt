@@ -1,11 +1,11 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail.cards
 
 import co.zsmb.rainbowcake.test.base.PresenterTest
+import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.money
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Assert.assertEquals
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -30,17 +30,17 @@ class CardsPresenterTest : PresenterTest() {
         val presenter = CardsPresenter()
         val cards = presenter.getCards(transaction)
 
-        assertEquals(4, cards.count())
+        assertThat(cards.count()).isEqualTo(4)
 
-        assert(cards[0] is ValuePairCard)
-        assert(cards[1] is CategoryCard)
-        assert(cards[2] is AttachmentsCard)
-        assert(cards[3] is NoteCard)
+        assertThat(cards[0]).isInstanceOf(ValuePairCard::class.java)
+        assertThat(cards[1]).isInstanceOf(CategoryCard::class.java)
+        assertThat(cards[2]).isInstanceOf(AttachmentsCard::class.java)
+        assertThat(cards[3]).isInstanceOf(NoteCard::class.java)
 
         ((cards[0] as ValuePairCard).valuePairs).let { valuePairs ->
-            assert(valuePairs[0] is ValuePairs.Status)
-            assert(valuePairs[1] is ValuePairs.CardDescription)
-            assert(valuePairs[2] is ValuePairs.DownloadStatement)
+            assertThat(valuePairs[0]).isInstanceOf(ValuePairs.Status::class.java)
+            assertThat(valuePairs[1]).isInstanceOf(ValuePairs.CardDescription::class.java)
+            assertThat(valuePairs[2]).isInstanceOf(ValuePairs.DownloadStatement::class.java)
         }
     }
 

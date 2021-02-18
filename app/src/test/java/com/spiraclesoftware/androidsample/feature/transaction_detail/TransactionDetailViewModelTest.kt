@@ -3,9 +3,6 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail
 import co.zsmb.rainbowcake.test.assertObserved
 import co.zsmb.rainbowcake.test.base.ViewModelTest
 import co.zsmb.rainbowcake.test.observeStateAndEvents
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputType
@@ -15,16 +12,17 @@ import com.spiraclesoftware.androidsample.feature.transaction_detail.Transaction
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
-import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.items.ValuePairCardItem
 import com.spiraclesoftware.androidsample.formatter.MoneyFormat
 import com.spiraclesoftware.androidsample.money
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionDetailViewModelTest : ViewModelTest() {
@@ -43,19 +41,17 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             "VISA **9400",
             "Half-Life: Alyx"
         )
-
-        private val MOCK_CARD_ITEMS = emptyList<ValuePairCardItem>()
     }
 
-    @Mock
-    private lateinit var detailPresenter: TransactionDetailPresenter
+    @MockK
+    lateinit var detailPresenter: TransactionDetailPresenter
 
-    @Mock
-    private lateinit var cardsPresenter: CardsPresenter
+    @MockK
+    lateinit var cardsPresenter: CardsPresenter
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        MockKAnnotations.init(this)
     }
 
     private fun newTestSubject() =
@@ -63,7 +59,8 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
     @Test
     fun onInit_produceViewState() = runBlockingTest {
-        whenever(detailPresenter.flowTransactionById(any())) doReturn flowOf(MOCK_TRANSACTION)
+        every { detailPresenter.flowTransactionById(any()) } returns flowOf(MOCK_TRANSACTION)
+        every { cardsPresenter.getCards(any()) } returns emptyList()
 
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { stateObserver, _ ->
@@ -75,7 +72,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
                     contributesToBalance = true,
                     isSuccessful = true,
                     MOCK_TRANSACTION.category,
-                    MOCK_CARD_ITEMS
+                    emptyList()
                 )
             )
         }
@@ -85,7 +82,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     fun `Clicking change note card action produces navigate to note input event`() = runBlockingTest {
         val currentNote = "hello world"
 
-        whenever(detailPresenter.getNote(any())).thenReturn(currentNote)
+        coEvery { detailPresenter.getNote(any()) } returns currentNote
 
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { _, eventsObserver ->
@@ -107,7 +104,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     fun `Clicking category select card action produces navigate to category select event`() = runBlockingTest {
         val currentCategory = TransactionCategory.ENTERTAINMENT
 
-        whenever(detailPresenter.getCategory(any())).thenReturn(currentCategory)
+        coEvery { detailPresenter.getCategory(any()) } returns currentCategory
 
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { _, eventsObserver ->

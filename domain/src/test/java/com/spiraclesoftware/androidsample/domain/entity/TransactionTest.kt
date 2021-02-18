@@ -1,9 +1,8 @@
 package com.spiraclesoftware.androidsample.domain.entity
 
+import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.epochDateTime
 import com.spiraclesoftware.androidsample.domain.money
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class TransactionTest {
@@ -21,7 +20,7 @@ class TransactionTest {
             TransactionStatusCode.SUCCESSFUL
         )
 
-        assertTrue(transaction.contributesToAccountBalance())
+        assertThat(transaction.contributesToAccountBalance()).isTrue()
     }
 
     @Test
@@ -37,7 +36,7 @@ class TransactionTest {
             TransactionStatusCode.SPENDING_LIMIT_EXCEEDED
         )
 
-        assertFalse(transaction.contributesToAccountBalance())
+        assertThat(transaction.contributesToAccountBalance()).isFalse()
     }
 
 }

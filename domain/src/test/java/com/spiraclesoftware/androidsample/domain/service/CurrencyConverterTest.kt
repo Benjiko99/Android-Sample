@@ -1,22 +1,20 @@
 package com.spiraclesoftware.androidsample.domain.service
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.whenever
+import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.entity.ConversionRate
 import com.spiraclesoftware.androidsample.domain.entity.ConversionRates
 import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInteractor
 import com.spiraclesoftware.androidsample.domain.money
 import com.spiraclesoftware.androidsample.domain.service.CurrencyConverter.MissingConversionRateException
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.util.*
@@ -24,12 +22,12 @@ import java.util.*
 @OptIn(ExperimentalCoroutinesApi::class)
 class CurrencyConverterTest {
 
-    @Mock
-    private lateinit var conversionRatesInteractor: ConversionRatesInteractor
+    @MockK
+    lateinit var conversionRatesInteractor: ConversionRatesInteractor
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        MockKAnnotations.init(this)
     }
 
     @Test
@@ -40,7 +38,7 @@ class CurrencyConverterTest {
             rates = listOf(ConversionRate("CZK", 2f))
         )
 
-        whenever(conversionRatesInteractor.getConversionRates(any())) doReturn conversionRates
+        coEvery { conversionRatesInteractor.getConversionRates(any()) } returns conversionRates
 
         val currencyConverter = CurrencyConverter(conversionRatesInteractor)
 
@@ -49,8 +47,8 @@ class CurrencyConverterTest {
         val newCurrency = Currency.getInstance("CZK")
         val usdToCzk = currencyConverter.convert(usd, newCurrency)
 
-        assert(usdToCzk.amountEquals(BigDecimal("2")))
-        assertEquals(newCurrency, usdToCzk.currency)
+        assertThat(usdToCzk.amountEquals(BigDecimal("2"))).isTrue()
+        assertThat(usdToCzk.currency).isEqualTo(newCurrency)
     }
 
     @Test
@@ -61,7 +59,7 @@ class CurrencyConverterTest {
             rates = emptyList()
         )
 
-        whenever(conversionRatesInteractor.getConversionRates(any())) doReturn conversionRates
+        coEvery { conversionRatesInteractor.getConversionRates(any()) } returns conversionRates
 
         val currencyConverter = CurrencyConverter(conversionRatesInteractor)
 
@@ -70,7 +68,7 @@ class CurrencyConverterTest {
         val newCurrency = Currency.getInstance("EUR")
         val eurToEur = currencyConverter.convert(eur, newCurrency)
 
-        assertEquals(eur, eurToEur)
+        assertThat(eurToEur).isEqualTo(eur)
     }
 
     @Test
@@ -81,7 +79,7 @@ class CurrencyConverterTest {
             rates = emptyList()
         )
 
-        whenever(conversionRatesInteractor.getConversionRates(any())) doReturn conversionRates
+        coEvery { conversionRatesInteractor.getConversionRates(any()) } returns conversionRates
 
         val currencyConverter = CurrencyConverter(conversionRatesInteractor)
 

@@ -1,12 +1,11 @@
 package com.spiraclesoftware.androidsample.data_local.dao
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.data_local.MainDatabase
 import com.spiraclesoftware.androidsample.data_local.TestUtils
 import com.spiraclesoftware.androidsample.data_local.entity.MoneyEntity
 import com.spiraclesoftware.androidsample.data_local.entity.TransactionEntity
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -50,7 +49,7 @@ class TransactionsDaoTest {
 
         dao.insert(transaction)
         val retrieved = dao.getById("1")
-        assertThat(retrieved, equalTo(transaction))
+        assertThat(retrieved).isEqualTo(transaction)
     }
 
     @Test
@@ -61,7 +60,7 @@ class TransactionsDaoTest {
         dao.deleteAll()
 
         val retrieved = dao.getAll()
-        assertThat(retrieved, equalTo(emptyList()))
+        assertThat(retrieved).isEmpty()
     }
 
     @Test
@@ -74,7 +73,7 @@ class TransactionsDaoTest {
         dao.repopulateWith(listOf(transaction2))
 
         val retrieved = dao.getAll()
-        assertThat(retrieved, equalTo(listOf(transaction2)))
+        assertThat(retrieved).containsExactly(transaction2)
     }
 
 }

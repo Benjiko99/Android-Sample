@@ -3,13 +3,11 @@ package com.spiraclesoftware.androidsample.feature.category_select
 import co.zsmb.rainbowcake.test.assertObserved
 import co.zsmb.rainbowcake.test.base.ViewModelTest
 import co.zsmb.rainbowcake.test.observeStateAndEvents
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewState.Content
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
@@ -19,9 +17,9 @@ class CategorySelectViewModelTest : ViewModelTest() {
 
     @Test
     fun `Data is loaded correctly from presenter upon creation and leads to ready state`() = runBlockingTest {
-        val presenter: CategorySelectPresenter = mock()
-        val mockModels = listOf(mock<CategoryModel>())
-        whenever(presenter.getListModels(any())) doReturn mockModels
+        val presenter: CategorySelectPresenter = mockk()
+        val mockModels = listOf(mockk<CategoryModel>())
+        every { presenter.getListModels(any()) } returns mockModels
 
         val vm = CategorySelectViewModel(TransactionId("1"), TransactionCategory.ENTERTAINMENT, presenter)
 

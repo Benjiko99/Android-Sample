@@ -81,8 +81,6 @@ dependencies {
     testImplementation(Dependency.fragment_test)
     testImplementation(Dependency.coroutines_test)
     testImplementation(Dependency.rainbowcake_test)
-    testImplementation(Dependency.mockito_inline)
-    testImplementation(Dependency.mockito_kotlin)
 
     androidTestImplementation(Dependency.android_test_runner)
     androidTestImplementation(Dependency.android_test_junit)

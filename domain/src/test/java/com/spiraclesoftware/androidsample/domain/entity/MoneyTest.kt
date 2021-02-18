@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.domain.entity
 
+import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.money
-import org.junit.Assert.*
 import org.junit.Test
 import java.math.BigDecimal
 
@@ -14,7 +14,7 @@ class MoneyTest {
         val second = money("99", "EUR")
 
         val sum = first.add(second.amount).amount
-        assertEquals(BigDecimal("100"), sum)
+        assertThat(sum).isEqualTo(BigDecimal("100"))
     }
 
     @Test
@@ -23,7 +23,7 @@ class MoneyTest {
         val second = money("123456", "EUR")
 
         val sum = first.add(second.amount).amount
-        assertEquals(BigDecimal("223456"), sum)
+        assertThat(sum).isEqualTo(BigDecimal("223456"))
     }
 
     @Test
@@ -32,7 +32,7 @@ class MoneyTest {
         val second = money("1.234", "EUR")
 
         val sum = first.add(second.amount).amount
-        assertEquals(BigDecimal("1235.801"), sum)
+        assertThat(sum).isEqualTo(BigDecimal("1235.801"))
     }
     //endregion
 
@@ -43,7 +43,7 @@ class MoneyTest {
         val second = money("99", "EUR")
 
         val sum = first.subtract(second.amount).amount
-        assertEquals(BigDecimal("1"), sum)
+        assertThat(sum).isEqualTo(BigDecimal("1"))
     }
 
     @Test
@@ -52,7 +52,7 @@ class MoneyTest {
         val second = money("100000", "EUR")
 
         val sum = first.subtract(second.amount).amount
-        assertEquals(BigDecimal("23456"), sum)
+        assertThat(sum).isEqualTo(BigDecimal("23456"))
     }
 
     @Test
@@ -61,7 +61,7 @@ class MoneyTest {
         val second = money("1.234", "EUR")
 
         val sum = first.subtract(second.amount).amount
-        assertEquals(BigDecimal("1233.333"), sum)
+        assertThat(sum).isEqualTo(BigDecimal("1233.333"))
     }
     //endregion
 
@@ -72,7 +72,7 @@ class MoneyTest {
         val second = money("42", "EUR")
 
         val sum = first.multiply(second.amount).amount
-        assertEquals(BigDecimal("4200"), sum)
+        assertThat(sum).isEqualTo(BigDecimal("4200"))
     }
 
     @Test
@@ -81,7 +81,7 @@ class MoneyTest {
         val second = money("123.456", "EUR")
 
         val sum = first.multiply(second.amount).amount
-        assertEquals(BigDecimal("12345.60"), sum)
+        assertThat(sum).isEqualTo(BigDecimal("12345.60"))
     }
     //endregion
 
@@ -92,7 +92,7 @@ class MoneyTest {
         val second = money("50", "EUR")
 
         val sum = first.divide(second.amount).amount
-        assertEquals(BigDecimal("2"), sum)
+        assertThat(sum).isEqualTo(BigDecimal("2"))
     }
 
     @Test
@@ -101,7 +101,7 @@ class MoneyTest {
         val second = money("3", "EUR")
 
         val sum = first.divide(second.amount).amount
-        assertEquals(BigDecimal("33.33333"), sum)
+        assertThat(sum).isEqualTo(BigDecimal("33.33333"))
     }
     //endregion
 
@@ -110,14 +110,14 @@ class MoneyTest {
     fun negate_a_positive_amount() {
         val money = money("100", "EUR")
 
-        assertEquals(BigDecimal("-100"), money.negate().amount)
+        assertThat(money.negate().amount).isEqualTo(BigDecimal("-100"))
     }
 
     @Test
     fun negate_a_negative_amount() {
         val money = money("-100", "EUR")
 
-        assertEquals(BigDecimal("100"), money.negate().amount)
+        assertThat(money.negate().amount).isEqualTo(BigDecimal("100"))
     }
     //endregion
 
@@ -127,7 +127,7 @@ class MoneyTest {
         val first = money("100", "EUR")
         val second = money("100.00", "EUR")
 
-        assertTrue(first.amountEquals(second))
+        assertThat(first.amountEquals(second)).isTrue()
     }
 
     @Test
@@ -135,7 +135,7 @@ class MoneyTest {
         val first = money("100", "EUR")
         val second = money("500", "EUR")
 
-        assertFalse(first.amountEquals(second))
+        assertThat(first.amountEquals(second)).isFalse()
     }
     //endregion
 }

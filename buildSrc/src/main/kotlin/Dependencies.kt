@@ -45,8 +45,6 @@ object Version {
     const val junit = "4.13"
     const val truth = "1.1"
     const val mockk = "1.10.5"
-    const val mockito = "2.28.2"
-    const val mockito_kotlin = "2.2.0"
 }
 
 object Dependency {
@@ -228,15 +226,6 @@ object Dependency {
 
     const val mockk =
         "io.mockk:mockk:${Version.mockk}"
-
-    const val mockito_inline =
-        "org.mockito:mockito-inline:${Version.mockito}"
-
-    const val mockito_kotlin =
-        "com.nhaarman.mockitokotlin2:mockito-kotlin:${Version.mockito_kotlin}"
-
-    const val mockito_android =
-        "org.mockito:mockito-android:${Version.mockito}"
     //endregion
 
 }

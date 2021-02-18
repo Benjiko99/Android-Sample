@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.feature.text_input.strategy
 
+import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.feature.text_input.MaxLengthExceededError
-import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class NoteInputStrategyTest {
@@ -11,7 +11,7 @@ class NoteInputStrategyTest {
         val strategy = NoteInputStrategy()
         val input = "  Hello World  "
 
-        assertEquals("Hello World", strategy.sanitizeInput(input))
+        assertThat(strategy.sanitizeInput(input)).isEqualTo("Hello World")
     }
 
     @Test
@@ -19,7 +19,7 @@ class NoteInputStrategyTest {
         val strategy = NoteInputStrategy()
         val input = "Hello World"
 
-        assertEquals(null, strategy.validateInput(input))
+        assertThat(strategy.validateInput(input)).isNull()
     }
 
     @Test
@@ -27,7 +27,7 @@ class NoteInputStrategyTest {
         val strategy = NoteInputStrategy()
         val input = "Hello World, exceeding max length of input"
 
-        assert(strategy.validateInput(input) is MaxLengthExceededError)
+        assertThat(strategy.validateInput(input)).isInstanceOf(MaxLengthExceededError::class.java)
     }
 
 }
