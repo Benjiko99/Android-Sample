@@ -1,6 +1,5 @@
 package com.spiraclesoftware.androidsample.data_local.dao
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.data_local.MainDatabase
 import com.spiraclesoftware.androidsample.data_local.TestUtils
@@ -9,11 +8,9 @@ import com.spiraclesoftware.androidsample.data_local.entity.TransactionEntity
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.math.BigDecimal
 import java.util.*
 
-@RunWith(AndroidJUnit4::class)
 class TransactionsDaoTest {
 
     companion object {

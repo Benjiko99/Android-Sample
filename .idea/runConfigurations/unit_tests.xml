@@ -1,6 +1,5 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="unit tests" type="AndroidJUnit" factoryName="Android JUnit">
-    <module name="Android-Sample.app" />
     <useClassPathOnly />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="ALTERNATIVE_JRE_PATH" value="Android API 29 Platform" />
@@ -11,7 +10,7 @@
     <option name="PARAMETERS" value="" />
     <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
     <option name="TEST_SEARCH_SCOPE">
-      <value defaultName="moduleWithDependencies" />
+      <value defaultName="wholeProject" />
     </option>
     <dir value="$PROJECT_DIR$/app/src/test/java/com/spiraclesoftware/androidsample" />
     <method v="2">

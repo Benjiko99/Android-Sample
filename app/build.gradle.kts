@@ -84,6 +84,7 @@ dependencies {
 
     androidTestImplementation(Dependency.android_test_runner)
     androidTestImplementation(Dependency.android_test_junit)
+    androidTestImplementation(Dependency.arch_test)
     androidTestImplementation(Dependency.junit)
     androidTestImplementation(Dependency.truth)
 }
