@@ -27,7 +27,35 @@ class TransactionListViewModel(
         refreshTransactions()
     }
 
-    fun produceViewStateFromDataFlow() = executeNonBlocking {
+    fun openTransactionDetail(id: TransactionId) {
+        postEvent(NavigateEvent(toTransactionDetail(id.value)))
+    }
+
+    fun filterByTransferDirection(filter: TransferDirectionFilter) {
+        setTransferDirectionFilter(filter)
+    }
+
+    fun filterByQuery(query: String) {
+        setSearchQuery(query)
+    }
+
+    fun changeLanguage() {
+        postEvent(ShowLanguageChangeConfirmationEvent)
+    }
+
+    fun confirmLanguageChange() {
+        toggleLanguage()
+    }
+
+    fun refreshData() {
+        refreshTransactions()
+    }
+
+    fun retryOnError() {
+        refreshTransactions()
+    }
+
+    private fun produceViewStateFromDataFlow() = executeNonBlocking {
         presenter.flowTransactions(listFilterFlow).collect { result ->
             viewState = when (result) {
                 is Result.Loading -> Loading
@@ -60,29 +88,21 @@ class TransactionListViewModel(
         return Content(listModels, listFilter.directionFilter, emptyState)
     }
 
-    fun refreshTransactions() = executeNonBlocking {
+    private fun refreshTransactions() = executeNonBlocking {
         presenter.refreshTransactions()
     }
 
-    fun toggleLanguage() {
+    private fun toggleLanguage() {
         presenter.toggleLanguageAndRestart()
     }
 
-    fun onLanguageChangeClicked() {
-        postEvent(ShowLanguageChangeConfirmationEvent)
-    }
-
-    fun onListItemClicked(id: TransactionId) {
-        postEvent(NavigateEvent(toTransactionDetail(id.value)))
-    }
-
-    fun setSearchQuery(query: String) = execute {
+    private fun setSearchQuery(query: String) = execute {
         if (listFilterFlow.value.searchQuery != query) {
             listFilterFlow.value = listFilterFlow.value.copy(searchQuery = query)
         }
     }
 
-    fun setTransferDirectionFilter(directionFilter: TransferDirectionFilter) = execute {
+    private fun setTransferDirectionFilter(directionFilter: TransferDirectionFilter) = execute {
         if (listFilterFlow.value.directionFilter != directionFilter) {
             listFilterFlow.value = listFilterFlow.value.copy(directionFilter = directionFilter)
         }

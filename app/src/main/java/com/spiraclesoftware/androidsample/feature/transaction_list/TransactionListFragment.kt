@@ -44,6 +44,41 @@ class TransactionListFragment :
 
     private lateinit var collapseActionViewCallback: OnBackPressedCallback
 
+    private fun onTransactionItemClicked(item: TransactionItem) {
+        viewModel.openTransactionDetail(item.model.id)
+    }
+
+    private fun onFilterItemSelected(position: Int) {
+        val filter = TransferDirectionFilter.values()[position]
+        viewModel.filterByTransferDirection(filter)
+    }
+
+    private fun onSearchQueryChanged(query: String) {
+        viewModel.filterByQuery(query)
+    }
+
+    private fun onSwipeToRefresh() {
+        viewModel.refreshData()
+    }
+
+    private fun onRetryClicked() {
+        viewModel.retryOnError()
+    }
+
+    private fun onLanguageChangeConfirmed() {
+        viewModel.confirmLanguageChange()
+    }
+
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_change_language -> {
+                viewModel.changeLanguage()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun render(viewState: ViewState) {
         renderRecyclerView(viewState)
         renderEmptyState(viewState)
@@ -106,35 +141,8 @@ class TransactionListFragment :
             is NavigateEvent ->
                 findNavController().navigate(event.navDirections)
             ShowLanguageChangeConfirmationEvent ->
-                showLanguageChangeConfirmation(onConfirmed = { viewModel.toggleLanguage() })
+                showLanguageChangeConfirmation(onConfirmed = ::onLanguageChangeConfirmed)
         }
-    }
-
-    private fun onTransactionItemClicked(item: TransactionItem) {
-        viewModel.onListItemClicked(item.model.id)
-    }
-
-    private fun onFilterItemSelected(position: Int) {
-        val filter = TransferDirectionFilter.values()[position]
-        viewModel.setTransferDirectionFilter(filter)
-    }
-
-    private fun onSwipeToRefresh() {
-        viewModel.refreshTransactions()
-    }
-
-    private fun onRetryOnError() {
-        viewModel.refreshTransactions()
-    }
-
-    private fun onMenuItemClicked(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_change_language -> {
-                viewModel.onLanguageChangeClicked()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun showLanguageChangeConfirmation(onConfirmed: () -> Unit) {
@@ -205,7 +213,7 @@ class TransactionListFragment :
 
         searchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextChange(query: String?): Boolean {
-                viewModel.setSearchQuery(query.orEmpty())
+                onSearchQueryChanged(query.orEmpty())
                 return true
             }
 
@@ -258,7 +266,7 @@ class TransactionListFragment :
     }
 
     private fun setupErrorLayout() = with(binding) {
-        errorLayout.retryButton.setOnClickListener { onRetryOnError() }
+        errorLayout.retryButton.setOnClickListener { onRetryClicked() }
     }
 
 }
