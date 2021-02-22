@@ -5,10 +5,10 @@ import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.Result
-import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
+import com.spiraclesoftware.androidsample.framework.Model
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 
@@ -56,7 +56,7 @@ class TransactionListViewModel(
     }
 
     private fun produceViewStateFromDataFlow() = executeNonBlocking {
-        presenter.flowTransactions(listFilterFlow).collect { result ->
+        presenter.flowListModels(listFilterFlow).collect { result ->
             viewState = when (result) {
                 is Result.Loading -> Loading
                 is Result.Success -> getContent(result.data)
@@ -66,8 +66,7 @@ class TransactionListViewModel(
         }
     }
 
-    private suspend fun getContent(transactions: List<Transaction>): Content {
-        val listModels = presenter.getListModels(transactions)
+    private fun getContent(listModels: List<Model>): Content {
         val listFilter = listFilterFlow.value
         var emptyState: EmptyState? = null
 

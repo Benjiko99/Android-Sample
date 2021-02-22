@@ -6,14 +6,14 @@ import com.spiraclesoftware.androidsample.domain.entity.Account
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
+import com.spiraclesoftware.androidsample.domain.mapOnError
+import com.spiraclesoftware.androidsample.domain.mapOnSuccess
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.Model
-import com.spiraclesoftware.androidsample.framework.PresenterException
+import com.spiraclesoftware.androidsample.framework.StandardPresenter
 import com.spiraclesoftware.androidsample.util.LanguageManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import timber.log.Timber
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 
@@ -23,8 +23,8 @@ class TransactionListPresenter(
     private val transactionsInteractor: TransactionsInteractor,
     private val headerModelFormatter: HeaderModelFormatter,
     private val transactionModelFormatter: TransactionModelFormatter,
-    private val exceptionFormatter: ExceptionFormatter,
-) {
+    exceptionFormatter: ExceptionFormatter
+) : StandardPresenter(exceptionFormatter) {
 
     fun toggleLanguageAndRestart() {
         languageManager.toggleLanguageAndRestart()
@@ -38,34 +38,24 @@ class TransactionListPresenter(
         transactionsInteractor.refreshTransactions()
     }
 
-    suspend fun flowTransactions(
+    suspend fun flowListModels(
         listFilter: Flow<TransactionListFilter>
-    ) = withIOContext {
+    ): Flow<Result<List<Model>>> = withIOContext {
         transactionsInteractor.flowTransactions()
-            .map(::formatErrorResult)
             .combine(listFilter) { result, filter ->
                 when (result) {
                     is Result.Success -> Result.Success(filter.applyTo(result.data))
                     else -> result
                 }
             }
-    }
-
-    private fun <T> formatErrorResult(result: Result<T>): Result<T> {
-        return when (result) {
-            is Result.Error -> {
-                Timber.e(result.exception)
-                val message = exceptionFormatter.format(result.exception)
-                Result.Error(PresenterException(message))
+            .mapOnError { getPresenterException(it) }
+            .mapOnSuccess { transactions ->
+                tryForResult {
+                    transactions
+                        .sortAndGroupByDay()
+                        .mapToModels()
+                }
             }
-            else -> result
-        }
-    }
-
-    suspend fun getListModels(transactions: List<Transaction>): List<Model> {
-        return transactions
-            .sortAndGroupByDay()
-            .mapToModels()
     }
 
     private fun List<Transaction>.sortAndGroupByDay() =

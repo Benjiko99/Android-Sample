@@ -2,6 +2,8 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
+import com.spiraclesoftware.androidsample.domain.Result
+import com.spiraclesoftware.androidsample.domain.data
 import com.spiraclesoftware.androidsample.domain.entity.Account
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
@@ -9,6 +11,7 @@ import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
+import com.spiraclesoftware.androidsample.framework.PresenterException
 import com.spiraclesoftware.androidsample.money
 import com.spiraclesoftware.androidsample.util.LanguageManager
 import io.mockk.MockKAnnotations
@@ -18,6 +21,8 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
@@ -67,27 +72,42 @@ class TransactionListPresenterTest : PresenterTest() {
 
     @Test
     fun `Models are presented correctly`() = runBlockingTest {
+        val mockContribution = money("100", "EUR")
+        every { accountsInteractor.getAccount() } returns MOCK_ACCOUNT
+        coEvery { accountsInteractor.getContributionToBalance(any()) } returns mockContribution
+
         val transaction = mockk<Transaction> {
             every { processingDate } returns epochDateTime
         }
-        val transactions = listOf(transaction)
-
-        val headerModel = mockk<HeaderModel>()
         val transactionModel = mockk<TransactionModel> {
             every { id } returns TransactionId("1")
         }
-
-        val mockContribution = money("100", "EUR")
-
-        every { accountsInteractor.getAccount() } returns MOCK_ACCOUNT
-        coEvery { accountsInteractor.getContributionToBalance(any()) } returns mockContribution
+        val transactions = listOf(transaction)
+        val transactionModels = listOf(transactionModel)
+        val headerModel = mockk<HeaderModel>()
+        val result = Result.Success(transactions)
+        val listFilter = flowOf(TransactionListFilter())
+        every { transactionsInteractor.flowTransactions() } returns flowOf(result)
         every { headerModelFormatter.format(any(), any()) } returns headerModel
-        every { transactionModelFormatter.format(transactions) } returns listOf(transactionModel)
+        every { transactionModelFormatter.format(transactions) } returns transactionModels
 
-        val models = presenter.getListModels(transactions)
-        val expectedModels = listOf(headerModel, transactionModel)
+        val models = presenter.flowListModels(listFilter).first().data
+        val expectedModels = listOf(headerModel) + transactionModels
 
         assertThat(models).isEqualTo(expectedModels)
+    }
+
+    @Test
+    fun `Error when presenting models`() = runBlockingTest {
+        val result = Result.Error(Exception())
+        val listFilter = flowOf(TransactionListFilter())
+        every { transactionsInteractor.flowTransactions() } returns flowOf(result)
+        every { exceptionFormatter.format(any()) } returns "Error message"
+
+        val error = presenter.flowListModels(listFilter).first() as Result.Error
+
+        assertThat(error.exception).isInstanceOf(PresenterException::class.java)
+        assertThat(error.exception.message).isEqualTo("Error message")
     }
 
 }

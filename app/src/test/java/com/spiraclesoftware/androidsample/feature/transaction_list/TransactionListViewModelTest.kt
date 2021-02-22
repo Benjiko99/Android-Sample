@@ -5,11 +5,8 @@ import co.zsmb.rainbowcake.test.base.ViewModelTest
 import co.zsmb.rainbowcake.test.observeStateAndEvents
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.Result
-import com.spiraclesoftware.androidsample.domain.entity.*
-import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.Content
 import com.spiraclesoftware.androidsample.framework.Model
-import com.spiraclesoftware.androidsample.money
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,28 +17,12 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionListViewModelTest : ViewModelTest() {
 
-    companion object {
-        private val MOCK_TRANSACTIONS = listOf(
-            Transaction(
-                TransactionId("1"),
-                "Paypal *Steam",
-                epochDateTime,
-                money("49.99", "EUR"),
-                TransferDirection.OUTGOING,
-                TransactionCategory.ENTERTAINMENT,
-                TransactionStatus.COMPLETED,
-                TransactionStatusCode.SUCCESSFUL,
-            ),
-        )
-    }
-
     @Test
     fun `Data is loaded correctly from presenter upon creation and leads to ready state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mockk()
         val models = listOf(mockk<Model>())
 
-        coEvery { presenter.flowTransactions(any()) } returns flowOf(Result.Success(MOCK_TRANSACTIONS))
-        coEvery { presenter.getListModels(any()) } returns models
+        coEvery { presenter.flowListModels(any()) } returns flowOf(Result.Success(models))
 
         val vm = TransactionListViewModel(presenter)
 
@@ -58,8 +39,7 @@ class TransactionListViewModelTest : ViewModelTest() {
     @Test
     fun `Having no transactions leads to empty state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mockk()
-        coEvery { presenter.flowTransactions(any()) } returns flowOf(Result.Success(emptyList()))
-        coEvery { presenter.getListModels(any()) } returns emptyList()
+        coEvery { presenter.flowListModels(any()) } returns flowOf(Result.Success(emptyList()))
 
         val vm = TransactionListViewModel(presenter)
 
