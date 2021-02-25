@@ -46,16 +46,10 @@ class TransactionListPresenterTest : PresenterTest() {
     lateinit var transactionsInteractor: TransactionsInteractor
 
     @MockK
-    lateinit var headerModelFormatter: HeaderModelFormatter
-
-    @MockK
-    lateinit var transactionModelFormatter: TransactionModelFormatter
+    lateinit var transactionListFormatter: TransactionListFormatter
 
     @MockK
     lateinit var exceptionFormatter: ExceptionFormatter
-
-    @MockK
-    lateinit var emptyStateFormatter: EmptyStateFormatter
 
     @InjectMockKs
     lateinit var presenter: TransactionListPresenter
@@ -92,10 +86,10 @@ class TransactionListPresenterTest : PresenterTest() {
         val result = Result.Success(transactions)
         val listFilter = flowOf(TransactionListFilter())
         every { transactionsInteractor.flowTransactions() } returns flowOf(result)
-        every { headerModelFormatter.format(any(), any()) } returns headerModel
-        every { transactionModelFormatter.format(transactions) } returns transactionModels
+        every { transactionListFormatter.headerModel(any(), any()) } returns headerModel
+        every { transactionListFormatter.transactionModel(transactions) } returns transactionModels
+        every { transactionListFormatter.emptyState(any(), any()) } returns null
         every { exceptionFormatter.format(any()) } returns "Error message"
-        every { emptyStateFormatter.format(any(), any()) } returns null
 
         val viewData = presenter.flowViewData(listFilter).first().data
         val expectedModels = listOf(headerModel) + transactionModels

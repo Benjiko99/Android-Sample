@@ -22,9 +22,7 @@ class TransactionListPresenter(
     private val languageManager: LanguageManager,
     private val accountsInteractor: AccountsInteractor,
     private val transactionsInteractor: TransactionsInteractor,
-    private val headerModelFormatter: HeaderModelFormatter,
-    private val transactionModelFormatter: TransactionModelFormatter,
-    private val emptyStateFormatter: EmptyStateFormatter,
+    private val formatter: TransactionListFormatter,
     exceptionFormatter: ExceptionFormatter
 ) : StandardPresenter(exceptionFormatter) {
 
@@ -54,7 +52,7 @@ class TransactionListPresenter(
                             .sortAndGroupByDay()
                             .mapToModels()
 
-                        val emptyState = emptyStateFormatter.format(listModels.isEmpty(), filter.isActive())
+                        val emptyState = formatter.emptyState(listModels.isEmpty(), filter.isActive())
 
                         ViewData(listModels, filter, emptyState)
                     }
@@ -62,20 +60,22 @@ class TransactionListPresenter(
             }
     }
 
-    private fun List<Transaction>.sortAndGroupByDay() =
-        this.sortedByDescending { it.processingDate }
+    private fun List<Transaction>.sortAndGroupByDay(): Map<ZonedDateTime, List<Transaction>> {
+        return sortedByDescending { it.processingDate }
             .groupBy { it.processingDate.truncatedTo(ChronoUnit.DAYS) }
+    }
 
+
+    @OptIn(ExperimentalStdlibApi::class)
     private suspend fun Map<ZonedDateTime, List<Transaction>>.mapToModels(): List<Model> {
-        val models = arrayListOf<Model>()
-
-        this.forEach { (day, transactions) ->
+        return flatMap { (day, transactions) ->
             val contribution = accountsInteractor.getContributionToBalance(transactions)
 
-            models += headerModelFormatter.format(day, contribution)
-            models += transactionModelFormatter.format(transactions)
+            buildList {
+                add(formatter.headerModel(day, contribution))
+                addAll(formatter.transactionModel(transactions))
+            }
         }
-        return models
     }
 
 }

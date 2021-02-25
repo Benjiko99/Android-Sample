@@ -66,6 +66,7 @@ class TransactionListViewModel(
                 is Result.Loading -> Loading
                 is Result.Success -> getContent(result.data)
                 is Result.Error -> Error(result.exception.message)
+                else -> throw IllegalStateException()
             }
         }
     }

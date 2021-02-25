@@ -10,7 +10,9 @@ import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewModel
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailPresenter
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
-import com.spiraclesoftware.androidsample.feature.transaction_list.*
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFormatter
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListPresenter
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -19,13 +21,10 @@ import org.koin.dsl.module
 val featureModule = module {
 
     single { ExceptionFormatter(androidContext()) }
-    single { HeaderModelFormatter() }
-    single { TransactionModelFormatter(androidContext()) }
-    single { CategoryModelFormatter(androidContext()) }
-    single { EmptyStateFormatter() }
 
     viewModel { TransactionListViewModel(get()) }
-    factory { TransactionListPresenter(get(), get(), get(), get(), get(), get(), get()) }
+    factory { TransactionListPresenter(get(), get(), get(), get(), get()) }
+    single { TransactionListFormatter(androidContext()) }
 
     viewModel { (id: TransactionId) -> TransactionDetailViewModel(id, get(), get()) }
     factory { TransactionDetailPresenter(get()) }
@@ -39,4 +38,6 @@ val featureModule = module {
         CategorySelectViewModel(id, initialCategory, get())
     }
     factory { CategorySelectPresenter(get(), get()) }
+    single { CategoryModelFormatter(androidContext()) }
+
 }
