@@ -10,6 +10,7 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.epochDateTime
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.ViewData
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.PresenterException
 import com.spiraclesoftware.androidsample.money
@@ -53,6 +54,9 @@ class TransactionListPresenterTest : PresenterTest() {
     @MockK
     lateinit var exceptionFormatter: ExceptionFormatter
 
+    @MockK
+    lateinit var emptyStateFormatter: EmptyStateFormatter
+
     @InjectMockKs
     lateinit var presenter: TransactionListPresenter
 
@@ -71,7 +75,7 @@ class TransactionListPresenterTest : PresenterTest() {
     }
 
     @Test
-    fun `Models are presented correctly`() = runBlockingTest {
+    fun `Data is presented correctly`() = runBlockingTest {
         val mockContribution = money("100", "EUR")
         every { accountsInteractor.getAccount() } returns MOCK_ACCOUNT
         coEvery { accountsInteractor.getContributionToBalance(any()) } returns mockContribution
@@ -90,21 +94,24 @@ class TransactionListPresenterTest : PresenterTest() {
         every { transactionsInteractor.flowTransactions() } returns flowOf(result)
         every { headerModelFormatter.format(any(), any()) } returns headerModel
         every { transactionModelFormatter.format(transactions) } returns transactionModels
+        every { exceptionFormatter.format(any()) } returns "Error message"
+        every { emptyStateFormatter.format(any(), any()) } returns null
 
-        val models = presenter.flowListModels(listFilter).first().data
+        val viewData = presenter.flowViewData(listFilter).first().data
         val expectedModels = listOf(headerModel) + transactionModels
+        val expectedViewData = ViewData(expectedModels, TransactionListFilter(), emptyState = null)
 
-        assertThat(models).isEqualTo(expectedModels)
+        assertThat(viewData).isEqualTo(expectedViewData)
     }
 
     @Test
-    fun `Error when presenting models`() = runBlockingTest {
+    fun `Error when presenting data`() = runBlockingTest {
         val result = Result.Error(Exception())
         val listFilter = flowOf(TransactionListFilter())
         every { transactionsInteractor.flowTransactions() } returns flowOf(result)
         every { exceptionFormatter.format(any()) } returns "Error message"
 
-        val error = presenter.flowListModels(listFilter).first() as Result.Error
+        val error = presenter.flowViewData(listFilter).first() as Result.Error
 
         assertThat(error.exception).isInstanceOf(PresenterException::class.java)
         assertThat(error.exception.message).isEqualTo("Error message")

@@ -29,6 +29,17 @@ val <T> Result<T>.data: T?
 /**
  * Applies [transform] to the data of a [Result.Success], otherwise returns the original [Result].
  */
+suspend inline fun <T, R> Result<T>.mapOnSuccess(crossinline transform: suspend (value: T) -> Result<R>): Result<R> {
+    return when (this) {
+        is Success -> transform(this.data)
+        is Error -> this
+        is Loading -> this
+    }
+}
+
+/**
+ * Applies [transform] to the data of a [Result.Success], otherwise returns the original [Result].
+ */
 inline fun <T, R> Flow<Result<T>>.mapOnSuccess(crossinline transform: suspend (value: T) -> Result<R>): Flow<Result<R>> {
     return map { result ->
         when (result) {

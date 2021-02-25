@@ -3,7 +3,6 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 import androidx.navigation.NavDirections
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
-import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
@@ -15,6 +14,12 @@ import kotlinx.coroutines.flow.collect
 class TransactionListViewModel(
     private val presenter: TransactionListPresenter
 ) : RainbowCakeViewModel<TransactionListViewState>(Loading) {
+
+    data class ViewData(
+        val listModels: List<Model>,
+        val listFilter: TransactionListFilter,
+        val emptyState: EmptyState?,
+    )
 
     data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
 
@@ -56,35 +61,18 @@ class TransactionListViewModel(
     }
 
     private fun produceViewStateFromDataFlow() = executeNonBlocking {
-        presenter.flowListModels(listFilterFlow).collect { result ->
+        presenter.flowViewData(listFilterFlow).collect { result ->
             viewState = when (result) {
                 is Result.Loading -> Loading
                 is Result.Success -> getContent(result.data)
                 is Result.Error -> Error(result.exception.message)
-                else -> throw IllegalStateException()
             }
         }
     }
 
-    private fun getContent(listModels: List<Model>): Content {
-        val listFilter = listFilterFlow.value
-        var emptyState: EmptyState? = null
-
-        if (listModels.isEmpty()) {
-            emptyState = if (listFilter.isActive()) {
-                EmptyState(
-                    image = R.drawable.ic_empty_search_results,
-                    caption = R.string.empty_state__no_results__caption,
-                    message = R.string.empty_state__no_results__message
-                )
-            } else {
-                EmptyState(
-                    caption = R.string.empty_state__no_transactions__caption,
-                    message = R.string.empty_state__no_transactions__message
-                )
-            }
-        }
-        return Content(listModels, listFilter.directionFilter, emptyState)
+    private fun getContent(data: ViewData): Content {
+        val directionFilter = listFilterFlow.value.directionFilter
+        return Content(data.listModels, directionFilter, data.emptyState)
     }
 
     private fun refreshTransactions() = executeNonBlocking {

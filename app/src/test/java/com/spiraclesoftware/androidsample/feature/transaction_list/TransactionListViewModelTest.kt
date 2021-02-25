@@ -52,7 +52,7 @@ class TransactionListViewModelTest : ViewModelTest() {
     fun confirmLanguageChange() {
         val presenter: TransactionListPresenter = mockk {
             justRun { toggleLanguageAndRestart() }
-        } 
+        }
         val testSubject = TransactionListViewModel(presenter)
 
         testSubject.confirmLanguageChange()
@@ -85,8 +85,9 @@ class TransactionListViewModelTest : ViewModelTest() {
     fun `Data is loaded correctly from presenter upon creation and leads to ready state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mockk()
         val models = listOf(mockk<Model>())
+        val viewData = TransactionListViewModel.ViewData(models, TransactionListFilter(), null)
 
-        coEvery { presenter.flowListModels(any()) } returns flowOf(Result.Success(models))
+        coEvery { presenter.flowViewData(any()) } returns flowOf(Result.Success(viewData))
 
         val testSubject = TransactionListViewModel(presenter)
 
@@ -103,7 +104,9 @@ class TransactionListViewModelTest : ViewModelTest() {
     @Test
     fun `Having no transactions leads to empty state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mockk()
-        coEvery { presenter.flowListModels(any()) } returns flowOf(Result.Success(emptyList()))
+        val viewData = TransactionListViewModel.ViewData(emptyList(), TransactionListFilter(), mockk())
+
+        coEvery { presenter.flowViewData(any()) } returns flowOf(Result.Success(viewData))
 
         val testSubject = TransactionListViewModel(presenter)
 

@@ -8,6 +8,7 @@ import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.mapOnError
 import com.spiraclesoftware.androidsample.domain.mapOnSuccess
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.ViewData
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.StandardPresenter
@@ -23,6 +24,7 @@ class TransactionListPresenter(
     private val transactionsInteractor: TransactionsInteractor,
     private val headerModelFormatter: HeaderModelFormatter,
     private val transactionModelFormatter: TransactionModelFormatter,
+    private val emptyStateFormatter: EmptyStateFormatter,
     exceptionFormatter: ExceptionFormatter
 ) : StandardPresenter(exceptionFormatter) {
 
@@ -38,22 +40,24 @@ class TransactionListPresenter(
         transactionsInteractor.refreshTransactions()
     }
 
-    suspend fun flowListModels(
+    suspend fun flowViewData(
         listFilter: Flow<TransactionListFilter>
-    ): Flow<Result<List<Model>>> = withIOContext {
+    ): Flow<Result<ViewData>> = withIOContext {
         transactionsInteractor.flowTransactions()
-            .combine(listFilter) { result, filter ->
-                when (result) {
-                    is Result.Success -> Result.Success(filter.applyTo(result.data))
-                    else -> result
-                }
-            }
             .mapOnError { getPresenterException(it) }
-            .mapOnSuccess { transactions ->
-                tryForResult {
-                    transactions
-                        .sortAndGroupByDay()
-                        .mapToModels()
+            .combine(listFilter) { result, filter ->
+                result.mapOnSuccess { transactions ->
+                    tryForResult {
+                        val filteredTransactions = filter.applyTo(transactions)
+
+                        val listModels = filteredTransactions
+                            .sortAndGroupByDay()
+                            .mapToModels()
+
+                        val emptyState = emptyStateFormatter.format(listModels.isEmpty(), filter.isActive())
+
+                        ViewData(listModels, filter, emptyState)
+                    }
                 }
             }
     }
