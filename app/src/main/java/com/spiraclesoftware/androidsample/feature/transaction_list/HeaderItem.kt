@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionHeaderItemBinding
+import com.spiraclesoftware.androidsample.extension.to64BitHash
 
 class HeaderItem(
     model: HeaderModel
 ) : ModelAbstractBindingItem<HeaderModel, TransactionHeaderItemBinding>(model) {
 
-    override var identifier: Long = hashCode().toLong()
+    override var identifier = model.date.to64BitHash()
 
     override val type = R.id.transaction_header_item
 
@@ -23,8 +24,6 @@ class HeaderItem(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
         if (!super.equals(other)) return false
 
         other as HeaderItem

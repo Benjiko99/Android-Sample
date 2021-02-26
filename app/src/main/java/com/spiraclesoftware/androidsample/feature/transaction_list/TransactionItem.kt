@@ -17,7 +17,7 @@ class TransactionItem(
     model: TransactionModel
 ) : ModelAbstractBindingItem<TransactionModel, TransactionItemBinding>(model) {
 
-    override var identifier: Long = model.id.value.toLong()
+    override var identifier = model.id.hashCode().toLong()
 
     override val type = R.id.transaction_item
 
@@ -49,8 +49,6 @@ class TransactionItem(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
         if (!super.equals(other)) return false
 
         other as TransactionItem
