@@ -1,15 +1,13 @@
 package com.spiraclesoftware.androidsample.feature.transaction_list
 
-import android.content.Context
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.Money
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionStatusCode
-import com.spiraclesoftware.androidsample.extension.stringOrNull
 import com.spiraclesoftware.androidsample.formatter.*
 import java.time.ZonedDateTime
 
-class TransactionListFormatter(private val ctx: Context) {
+class TransactionListFormatter {
 
     fun headerModel(
         dateTime: ZonedDateTime,
@@ -42,7 +40,7 @@ class TransactionListFormatter(private val ctx: Context) {
             iconTintRes = iconTintRes,
             amount = MoneyFormat(signedMoney).format(this),
             processingDate = processingDate.format(DateTimeFormat.PRETTY_DATE_TIME),
-            status = ctx.stringOrNull(statusCode.stringRes),
+            statusRes = statusCode.stringRes,
             contributesToAccountBalance = contributesToAccountBalance()
         )
     }

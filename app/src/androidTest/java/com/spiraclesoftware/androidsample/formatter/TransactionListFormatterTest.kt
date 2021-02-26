@@ -14,7 +14,7 @@ import java.util.*
 
 class TransactionListFormatterTest : FormatterTest() {
 
-    val formatter = TransactionListFormatter(context)
+    private val formatter = TransactionListFormatter()
 
     @Test
     fun formatHeaderModel() {
@@ -48,7 +48,7 @@ class TransactionListFormatterTest : FormatterTest() {
             amount = "+ €100",
             name = "Salary",
             processingDate = "00:00, Thu, 01 January",
-            status = null,
+            statusRes = null,
             contributesToAccountBalance = true,
             iconRes = R.drawable.ic_category_transfers,
             iconTintRes = R.color.transaction_category__transfers
@@ -76,7 +76,7 @@ class TransactionListFormatterTest : FormatterTest() {
             amount = "€100",
             name = "Payment",
             processingDate = "00:00, Thu, 01 January",
-            status = "Monthly spending limit exceeded",
+            statusRes = R.string.transaction_status_code__spending_limit_exceeded,
             contributesToAccountBalance = false,
             iconRes = R.drawable.ic_status_declined,
             iconTintRes = R.color.transaction_status__declined

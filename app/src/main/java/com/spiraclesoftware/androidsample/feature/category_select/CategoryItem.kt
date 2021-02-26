@@ -7,6 +7,7 @@ import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.CategorySelectItemBinding
 import com.spiraclesoftware.androidsample.extension.color
+import com.spiraclesoftware.androidsample.extension.string
 import com.spiraclesoftware.androidsample.extension.tintedDrawable
 
 class CategoryItem(
@@ -24,7 +25,7 @@ class CategoryItem(
         val ctx = root.context
 
         radioView.isChecked = model.isSelectedCategory
-        nameView.text = model.name
+        nameView.text = ctx.string(model.name)
 
         val iconTint = ctx.color(model.iconTintRes)
         val icon = ctx.tintedDrawable(model.iconRes, iconTint)

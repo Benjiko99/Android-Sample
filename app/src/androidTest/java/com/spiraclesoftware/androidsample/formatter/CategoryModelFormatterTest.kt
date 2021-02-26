@@ -16,12 +16,12 @@ class CategoryModelFormatterTest : FormatterTest() {
 
         val expected = CategoryModel(
             ordinal = 0,
-            name = "Entertainment",
+            name = R.string.transaction_category__entertainment,
             iconRes = R.drawable.ic_category_entertainment,
             iconTintRes = R.color.transaction_category__entertainment,
             isSelectedCategory = true
         )
-        val actual = CategoryModelFormatter(context).format(category, isSelected)
+        val actual = CategoryModelFormatter().format(category, isSelected)
 
         assertThat(actual).isEqualTo(expected)
     }

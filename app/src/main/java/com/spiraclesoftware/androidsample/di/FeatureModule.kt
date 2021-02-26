@@ -24,7 +24,7 @@ val featureModule = module {
 
     viewModel { TransactionListViewModel(get()) }
     factory { TransactionListPresenter(get(), get(), get(), get(), get()) }
-    single { TransactionListFormatter(androidContext()) }
+    single { TransactionListFormatter() }
 
     viewModel { (id: TransactionId) -> TransactionDetailViewModel(id, get(), get()) }
     factory { TransactionDetailPresenter(get()) }
@@ -38,6 +38,6 @@ val featureModule = module {
         CategorySelectViewModel(id, initialCategory, get())
     }
     factory { CategorySelectPresenter(get(), get()) }
-    single { CategoryModelFormatter(androidContext()) }
+    single { CategoryModelFormatter() }
 
 }

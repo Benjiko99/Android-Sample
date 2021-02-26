@@ -8,10 +8,7 @@ import androidx.core.view.isVisible
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionItemBinding
-import com.spiraclesoftware.androidsample.extension.addPaintFlag
-import com.spiraclesoftware.androidsample.extension.color
-import com.spiraclesoftware.androidsample.extension.removePaintFlag
-import com.spiraclesoftware.androidsample.extension.tintedDrawable
+import com.spiraclesoftware.androidsample.extension.*
 
 class TransactionItem(
     model: TransactionModel
@@ -29,8 +26,8 @@ class TransactionItem(
         nameView.text = model.name
         dateView.text = model.processingDate
 
-        statusView.text = model.status
-        statusView.isVisible = model.status != null
+        statusView.text = ctx.stringOrNull(model.statusRes)
+        statusView.isVisible = model.statusRes != null
 
         amountView.text = model.amount
 
