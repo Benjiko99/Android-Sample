@@ -1,7 +1,5 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail
 
-import com.mikepenz.fastadapter.GenericItem
-
 sealed class TransactionDetailViewState {
 
     object Initial : TransactionDetailViewState()
@@ -9,8 +7,7 @@ sealed class TransactionDetailViewState {
     object Error : TransactionDetailViewState()
 
     data class Content(
-        val detailModel: DetailModel,
-        val cardItems: List<GenericItem>
+        val detailModel: DetailModel
     ) : TransactionDetailViewState()
 
 }

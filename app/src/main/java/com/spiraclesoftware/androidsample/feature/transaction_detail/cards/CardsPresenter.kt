@@ -1,6 +1,8 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail.cards
 
+import android.net.Uri
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
+import com.spiraclesoftware.androidsample.framework.Model
 
 class CardsPresenter {
 
@@ -33,6 +35,26 @@ class CardsPresenter {
         }
 
         noteCard()
+    }
+
+    fun cardModels(
+        transaction: Transaction,
+        uploads: List<Uri>
+    ): List<Model> {
+        return getCards(transaction).map { card ->
+            when (card) {
+                is ValuePairCard ->
+                    card.toModel(transaction)
+                is StatusCard ->
+                    card.toModel(transaction.status, transaction.statusCode)
+                is CategoryCard ->
+                    card.toModel(transaction.category)
+                is AttachmentsCard ->
+                    card.toModel(transaction.attachments, uploads)
+                is NoteCard ->
+                    card.toModel(transaction.noteToSelf)
+            }
+        }
     }
 
 }

@@ -30,7 +30,7 @@ val featureModule = module {
     viewModel { (id: TransactionId) -> TransactionDetailViewModel(id, get(), get()) }
     factory { TransactionDetailPresenter(get(), get(), get()) }
     single { CardsPresenter() }
-    single { TransactionDetailFormatter() }
+    single { TransactionDetailFormatter(get()) }
 
     viewModel { (inputType: TextInputType, requestKey: String, initialValue: String) ->
         TextInputViewModel(inputType, requestKey, initialValue)

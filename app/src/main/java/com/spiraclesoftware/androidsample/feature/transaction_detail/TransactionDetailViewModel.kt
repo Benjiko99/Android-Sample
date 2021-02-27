@@ -5,7 +5,6 @@ import androidx.core.net.toUri
 import androidx.navigation.NavDirections
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
-import com.mikepenz.fastadapter.GenericItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
@@ -19,7 +18,6 @@ import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
 import timber.log.Timber
 
 class TransactionDetailViewModel(
@@ -47,56 +45,20 @@ class TransactionDetailViewModel(
 
     private val attachmentUploads = MutableStateFlow<List<Uri>>(emptyList())
 
-    data class ViewData(
-        val detailModelResult: Result<DetailModel>,
-        val uploads: List<Uri>
-    )
-
     init {
         produceViewStateFromDataFlow()
     }
 
     private fun produceViewStateFromDataFlow() = executeNonBlocking {
-        detailPresenter.flowDetailModel(transactionId)
-            .combine(attachmentUploads) { detailModelResult, uploads -> ViewData(detailModelResult, uploads) }
-            .collect { (detailModelResult, uploads) ->
+        detailPresenter.flowDetailModel(transactionId, attachmentUploads)
+            .collect { detailModelResult ->
                 viewState = when (detailModelResult) {
                     is Result.Loading -> Initial
-                    is Result.Success -> {
-                        try {
-                            val detailModel = detailModelResult.data
-                            val cardItems = getCardItems(detailModel.transaction, uploads)
-                            Content(detailModel, cardItems)
-                        } catch (e: Exception) {
-                            Timber.e(e)
-                            Error
-                        }
-                    }
+                    is Result.Success -> Content(detailModelResult.data)
                     is Result.Error -> Error
                     else -> throw IllegalStateException()
                 }
             }
-    }
-
-    private fun getCardItems(
-        transaction: Transaction,
-        uploads: List<Uri>
-    ): List<GenericItem> {
-        val handler = this
-        return cardsPresenter.getCards(transaction).map { card ->
-            when (card) {
-                is ValuePairCard ->
-                    card.toListItem(transaction, handler)
-                is StatusCard ->
-                    card.toListItem(transaction.status, transaction.statusCode)
-                is CategoryCard ->
-                    card.toListItem(transaction.category, handler)
-                is AttachmentsCard ->
-                    card.toListItem(transaction.attachments, uploads, handler)
-                is NoteCard ->
-                    card.toListItem(transaction.noteToSelf, handler)
-            }
-        }
     }
 
     override fun onOpenCardDetail() {

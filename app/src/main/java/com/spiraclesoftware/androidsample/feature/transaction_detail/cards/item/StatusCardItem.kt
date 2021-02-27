@@ -1,22 +1,16 @@
-package com.spiraclesoftware.androidsample.feature.transaction_detail.cards.items
+package com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.StatusCardItemBinding
-import com.spiraclesoftware.androidsample.domain.entity.TransactionStatus
-import com.spiraclesoftware.androidsample.domain.entity.TransactionStatusCode
 import com.spiraclesoftware.androidsample.extension.string
+import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.StatusCardModel
 import com.spiraclesoftware.androidsample.formatter.stringRes
 
 class StatusCardItem(
-    private val data: Data
-) : BindingCardItem<StatusCardItemBinding>() {
-
-    data class Data(
-        val status: TransactionStatus,
-        val statusCode: TransactionStatusCode
-    )
+    model: StatusCardModel
+) : ModelBindingCardItem<StatusCardModel, StatusCardItemBinding>(model) {
 
     override var identifier: Long = R.id.status_card_item.toLong()
 
@@ -28,26 +22,22 @@ class StatusCardItem(
     override fun bindView(binding: StatusCardItemBinding, payloads: List<Any>) {
         val ctx = binding.root.context
 
-        val status = ctx.string(data.status.stringRes)
-        val statusCode = ctx.string(data.statusCode.stringRes!!)
+        val status = ctx.string(model.status.stringRes)
+        val statusCode = ctx.string(model.statusCode.stringRes!!)
         binding.bodyText = "$status ∙ $statusCode"
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
         if (!super.equals(other)) return false
 
         other as StatusCardItem
-
-        if (data != other.data) return false
-
+        if (model != other.model) return false
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + data.hashCode()
+        result = 31 * result + model.hashCode()
         return result
     }
 

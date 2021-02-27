@@ -9,8 +9,8 @@ import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteract
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.StandardPresenter
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 
 class TransactionDetailPresenter(
     private val transactionsInteractor: TransactionsInteractor,
@@ -18,14 +18,13 @@ class TransactionDetailPresenter(
     exceptionFormatter: ExceptionFormatter
 ) : StandardPresenter(exceptionFormatter) {
 
-    suspend fun getTransactionById(id: TransactionId) = withIOContext {
-        transactionsInteractor.getTransactionById(id)
-    }
-
-    fun flowDetailModel(id: TransactionId): Flow<Result<DetailModel>> {
-        return flowTransactionById(id).map { transaction ->
+    fun flowDetailModel(
+        id: TransactionId,
+        attachmentUploads: Flow<List<Uri>>
+    ): Flow<Result<DetailModel>> {
+        return flowTransactionById(id).combine(attachmentUploads) { transaction, uploads ->
             if (transaction != null) tryForResult {
-                transactionDetailFormatter.detailModel(transaction)
+                transactionDetailFormatter.detailModel(transaction, uploads)
             }
             else Result.Error(getPresenterException())
         }
@@ -33,6 +32,10 @@ class TransactionDetailPresenter(
 
     fun flowTransactionById(id: TransactionId): Flow<Transaction?> {
         return transactionsInteractor.flowTransactionById(id).distinctUntilChanged()
+    }
+
+    suspend fun getTransactionById(id: TransactionId) = withIOContext {
+        transactionsInteractor.getTransactionById(id)
     }
 
     suspend fun getNote(id: TransactionId) = withIOContext {

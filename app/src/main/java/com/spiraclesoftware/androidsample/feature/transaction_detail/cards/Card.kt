@@ -6,50 +6,47 @@ import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionStatus
 import com.spiraclesoftware.androidsample.domain.entity.TransactionStatusCode
-import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.items.*
+import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
 
 sealed class Card
 
 class ValuePairCard(val valuePairs: List<ValuePair>) : Card() {
 
-    fun toListItem(transaction: Transaction, actionsHandler: CardActionsHandler) =
-        ValuePairCardItem(
-            valuePairs.map { it.toItemData(transaction) },
-            actionsHandler
+    fun toModel(transaction: Transaction) =
+        ValuePairCardModel(
+            valuePairs.map { it.toModel(transaction) }
         )
+
 }
 
 object StatusCard : Card() {
 
-    fun toListItem(status: TransactionStatus, statusCode: TransactionStatusCode) =
-        StatusCardItem(
-            StatusCardItem.Data(status, statusCode)
-        )
+    fun toModel(
+        status: TransactionStatus,
+        statusCode: TransactionStatusCode
+    ) = StatusCardModel(status, statusCode)
+
 }
 
 object CategoryCard : Card() {
 
-    fun toListItem(category: TransactionCategory, actionsHandler: CardActionsHandler) =
-        CategoryCardItem(
-            CategoryCardItem.Data(category),
-            actionsHandler
-        )
+    fun toModel(category: TransactionCategory) =
+        CategoryCardModel(category)
+
 }
 
 object AttachmentsCard : Card() {
 
-    fun toListItem(attachments: List<String>, uploads: List<Uri>, actionsHandler: CardActionsHandler) =
-        AttachmentsCardItem(
-            AttachmentsCardItem.Data(attachments.map(String::toUri), uploads),
-            actionsHandler
-        )
+    fun toModel(
+        attachments: List<String>,
+        uploads: List<Uri>
+    ) = AttachmentsCardModel(attachments.map(String::toUri), uploads)
+
 }
 
 object NoteCard : Card() {
 
-    fun toListItem(noteToSelf: String?, actionsHandler: CardActionsHandler) =
-        NoteCardItem(
-            NoteCardItem.Data(noteToSelf),
-            actionsHandler
-        )
+    fun toModel(noteToSelf: String?) =
+        NoteCardModel(noteToSelf)
+
 }

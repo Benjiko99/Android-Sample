@@ -19,8 +19,8 @@ import coil.load
 import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
-import com.mikepenz.fastadapter.adapters.GenericItemAdapter
-import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.adapters.GenericModelAdapter
+import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.mikepenz.fastadapter.listeners.addClickListener
 import com.spiraclesoftware.androidsample.R
@@ -31,7 +31,9 @@ import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
-import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.items.AttachmentsCardItem
+import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.*
+import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
+import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.StandardFragment
 import com.spiraclesoftware.androidsample.util.DelightUI
 import com.stfalcon.imageviewer.StfalconImageViewer
@@ -58,14 +60,14 @@ class TransactionDetailFragment :
 
     private lateinit var imagePicker: ImagePicker
     private lateinit var fastAdapter: GenericFastAdapter
-    private lateinit var itemAdapter: GenericItemAdapter
+    private lateinit var itemAdapter: GenericModelAdapter<Model>
 
     override fun render(viewState: TransactionDetailViewState): Unit = with(binding) {
         errorMessageView.isVisible = viewState is Error
 
         when (viewState) {
             is Content -> {
-                FastAdapterDiffUtil[itemAdapter] = viewState.cardItems
+                FastAdapterDiffUtil[itemAdapter] = viewState.detailModel.cardModels
 
                 with(viewState.detailModel) {
                     toolbar.title = name
@@ -170,7 +172,16 @@ class TransactionDetailFragment :
     }
 
     private fun setupFastItemAdapter() {
-        itemAdapter = ItemAdapter.items()
+        itemAdapter = ModelAdapter.models { model: Model ->
+            when (model) {
+                is ValuePairCardModel -> ValuePairCardItem(model, viewModel)
+                is StatusCardModel -> StatusCardItem(model)
+                is CategoryCardModel -> CategoryCardItem(model, viewModel)
+                is AttachmentsCardModel -> AttachmentsCardItem(model, viewModel)
+                is NoteCardModel -> NoteCardItem(model, viewModel)
+                else -> throw IllegalStateException()
+            }
+        }
         fastAdapter = FastAdapter.with(itemAdapter).apply {
             // Prevent clicking on the CardView of each item
             attachDefaultListeners = false

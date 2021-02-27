@@ -1,27 +1,18 @@
-package com.spiraclesoftware.androidsample.feature.transaction_detail.cards.items
+package com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemBinding
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemEntryBinding
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardActionsHandler
-import com.spiraclesoftware.androidsample.framework.StringHolder
+import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.ValuePairCardModel
 
 class ValuePairCardItem(
-    private val data: List<Data>,
+    model: ValuePairCardModel,
     private val actionsHandler: CardActionsHandler
-) : BindingCardItem<ValuePairCardItemBinding>() {
-
-    data class Data(
-        @StringRes val label: Int,
-        val value: StringHolder,
-        @DrawableRes val icon: Int? = null,
-        val onClickAction: ((CardActionsHandler) -> Unit)? = null
-    )
+) : ModelBindingCardItem<ValuePairCardModel, ValuePairCardItemBinding>(model) {
 
     override var identifier: Long = R.id.value_pair_card_item.toLong()
 
@@ -34,24 +25,24 @@ class ValuePairCardItem(
         val ctx = binding.root.context
         binding.content.removeAllViews()
 
-        data.forEachIndexed { index, data ->
+        model.valuePairModels.forEachIndexed { index, model ->
             val pb = ValuePairCardItemEntryBinding.inflate(LayoutInflater.from(ctx), binding.content, false)
 
-            pb.labelText = ctx.string(data.label)
-            pb.valueText = data.value.getString(ctx)
+            pb.labelText = ctx.string(model.label)
+            pb.valueText = model.value.getString(ctx)
 
-            if (data.onClickAction != null) {
-                pb.valueView.onClick { data.onClickAction.invoke(actionsHandler) }
+            if (model.onClickAction != null) {
+                pb.valueView.onClick { model.onClickAction.invoke(actionsHandler) }
 
                 val tintColor = ctx.colorAttr(R.attr.colorPrimary)
                 pb.valueView.setTextColor(tintColor)
-                pb.iconDrawable = ctx.drawable(data.icon)?.tintedDrawable(tintColor)
+                pb.iconDrawable = ctx.drawable(model.icon)?.tintedDrawable(tintColor)
             } else {
                 pb.valueView.onClick(null)
 
                 val tintColor = ctx.colorAttr(android.R.attr.textColorPrimary)
                 pb.valueView.setTextColor(tintColor)
-                pb.iconDrawable = ctx.drawable(data.icon)
+                pb.iconDrawable = ctx.drawable(model.icon)
             }
 
             // Add a margin between value-pairs
@@ -62,21 +53,17 @@ class ValuePairCardItem(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
         if (!super.equals(other)) return false
 
         other as ValuePairCardItem
-
-        if (data != other.data) return false
+        if (model != other.model) return false
         if (actionsHandler != other.actionsHandler) return false
-
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + data.hashCode()
+        result = 31 * result + model.hashCode()
         result = 31 * result + actionsHandler.hashCode()
         return result
     }

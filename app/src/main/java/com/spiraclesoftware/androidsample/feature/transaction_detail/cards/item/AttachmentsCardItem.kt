@@ -1,6 +1,5 @@
-package com.spiraclesoftware.androidsample.feature.transaction_detail.cards.items
+package com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item
 
-import android.net.Uri
 import android.view.View
 import androidx.core.view.isGone
 import com.mikepenz.fastadapter.FastAdapter
@@ -9,16 +8,12 @@ import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.AttachmentsCardItemBinding
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardActionsHandler
+import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.AttachmentsCardModel
 
 class AttachmentsCardItem(
-    private val data: Data,
+    model: AttachmentsCardModel,
     private val actionsHandler: CardActionsHandler
-) : CardItem<AttachmentsCardItem.ViewHolder>() {
-
-    data class Data(
-        val attachments: List<Uri>,
-        val uploads: List<Uri>
-    )
+) : ModelCardItem<AttachmentsCardModel, AttachmentsCardItem.ViewHolder>(model) {
 
     override var identifier: Long = R.id.attachments_card_item.toLong()
 
@@ -77,10 +72,10 @@ class AttachmentsCardItem(
         }
 
         private fun getListItems(item: AttachmentsCardItem): List<AttachmentsCardItemEntry> {
-            val attachments = item.data.attachments.map { uri ->
+            val attachments = item.model.attachments.map { uri ->
                 AttachmentsCardItemEntry(uri, false)
             }
-            val uploads = item.data.uploads.map { uri ->
+            val uploads = item.model.uploads.map { uri ->
                 AttachmentsCardItemEntry(uri, true)
             }
             return attachments.plus(uploads)
@@ -89,21 +84,17 @@ class AttachmentsCardItem(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
         if (!super.equals(other)) return false
 
         other as AttachmentsCardItem
-
-        if (data != other.data) return false
+        if (model != other.model) return false
         if (actionsHandler != other.actionsHandler) return false
-
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + data.hashCode()
+        result = 31 * result + model.hashCode()
         result = 31 * result + actionsHandler.hashCode()
         return result
     }
