@@ -28,7 +28,7 @@ val featureModule = module {
     single { TransactionListFormatter() }
 
     viewModel { (id: TransactionId) -> TransactionDetailViewModel(id, get(), get()) }
-    factory { TransactionDetailPresenter(get(), get()) }
+    factory { TransactionDetailPresenter(get(), get(), get()) }
     single { CardsPresenter() }
     single { TransactionDetailFormatter() }
 

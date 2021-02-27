@@ -2,15 +2,22 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail
 
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
+import com.spiraclesoftware.androidsample.domain.Result
+import com.spiraclesoftware.androidsample.domain.data
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.epochDateTime
+import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
+import com.spiraclesoftware.androidsample.framework.PresenterException
 import com.spiraclesoftware.androidsample.money
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
@@ -32,10 +39,13 @@ class TransactionDetailPresenterTest : PresenterTest() {
     }
 
     @MockK
+    lateinit var transactionsInteractor: TransactionsInteractor
+
+    @MockK
     lateinit var transactionDetailFormatter: TransactionDetailFormatter
 
     @MockK
-    lateinit var transactionsInteractor: TransactionsInteractor
+    lateinit var exceptionFormatter: ExceptionFormatter
 
     @InjectMockKs
     lateinit var testSubject: TransactionDetailPresenter
@@ -46,11 +56,34 @@ class TransactionDetailPresenterTest : PresenterTest() {
     }
 
     @Test
-    fun `Transaction is returned from interactor by ID`() = runBlockingTest {
-        every { transactionsInteractor.getTransactionById(MOCK_TRANSACTION.id) } returns MOCK_TRANSACTION
+    fun `Detail model is presented successfully`() = runBlockingTest {
+        val mockDetailModel = mockk<DetailModel>()
+        every { transactionDetailFormatter.detailModel(any()) } returns mockDetailModel
+        every { transactionsInteractor.flowTransactionById(any()) } returns flowOf(MOCK_TRANSACTION)
+        every { transactionsInteractor.getTransactionById(any()) } returns MOCK_TRANSACTION
 
-        val transaction = testSubject.getTransactionById(MOCK_TRANSACTION.id)
-        assertThat(transaction).isEqualTo(MOCK_TRANSACTION)
+        val actual = testSubject.flowDetailModel(MOCK_TRANSACTION.id).first().data
+        assertThat(actual).isEqualTo(mockDetailModel)
+    }
+
+    @Test
+    fun `Detail model presents error when transaction is null`() = runBlockingTest {
+        every { transactionsInteractor.getTransactionById(any()) } returns null
+        every { transactionsInteractor.flowTransactionById(any()) } returns flowOf(null)
+        every { exceptionFormatter.format(any()) } returns "Error message"
+
+        val error = testSubject.flowDetailModel(MOCK_TRANSACTION.id).first() as Result.Error
+
+        assertThat(error.exception).isInstanceOf(PresenterException::class.java)
+        assertThat(error.exception.message).isEqualTo("Error message")
+    }
+
+    @Test
+    fun `Transaction is returned from interactor by ID`() = runBlockingTest {
+        every { transactionsInteractor.getTransactionById(any()) } returns MOCK_TRANSACTION
+
+        val actual = testSubject.getTransactionById(MOCK_TRANSACTION.id)
+        assertThat(actual).isEqualTo(MOCK_TRANSACTION)
     }
 
 }

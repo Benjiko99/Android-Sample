@@ -16,7 +16,7 @@ abstract class StandardPresenter(
         }
     }
 
-    protected fun getPresenterException(it: Exception): PresenterException {
+    protected fun getPresenterException(it: Exception = Exception()): PresenterException {
         Timber.e(it)
         return PresenterException(exceptionFormatter.format(it))
     }

@@ -3,6 +3,7 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail
 import co.zsmb.rainbowcake.test.assertObserved
 import co.zsmb.rainbowcake.test.base.ViewModelTest
 import co.zsmb.rainbowcake.test.observeStateAndEvents
+import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputType
@@ -46,7 +47,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             every { transaction } returns mockk()
         }
 
-        every { detailPresenter.flowDetailModel(any()) } returns flowOf(detailModel)
+        every { detailPresenter.flowDetailModel(any()) } returns flowOf(Result.Success(detailModel))
         every { detailPresenter.flowTransactionById(any()) } returns flowOf(mockk())
         every { cardsPresenter.getCards(any()) } returns emptyList()
 

@@ -7,6 +7,7 @@ import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.mikepenz.fastadapter.GenericItem
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputType
@@ -47,7 +48,7 @@ class TransactionDetailViewModel(
     private val attachmentUploads = MutableStateFlow<List<Uri>>(emptyList())
 
     data class ViewData(
-        val detailModel: DetailModel,
+        val detailModelResult: Result<DetailModel>,
         val uploads: List<Uri>
     )
 
@@ -57,14 +58,22 @@ class TransactionDetailViewModel(
 
     private fun produceViewStateFromDataFlow() = executeNonBlocking {
         detailPresenter.flowDetailModel(transactionId)
-            .combine(attachmentUploads) { detailModel, uploads -> ViewData(detailModel, uploads) }
-            .collect { (detailModel, uploads) ->
-                viewState = try {
-                    val cardItems = getCardItems(detailModel.transaction, uploads)
-                    Content(detailModel, cardItems)
-                } catch (e: Exception) {
-                    Timber.e(e)
-                    Error
+            .combine(attachmentUploads) { detailModelResult, uploads -> ViewData(detailModelResult, uploads) }
+            .collect { (detailModelResult, uploads) ->
+                viewState = when (detailModelResult) {
+                    is Result.Loading -> Initial
+                    is Result.Success -> {
+                        try {
+                            val detailModel = detailModelResult.data
+                            val cardItems = getCardItems(detailModel.transaction, uploads)
+                            Content(detailModel, cardItems)
+                        } catch (e: Exception) {
+                            Timber.e(e)
+                            Error
+                        }
+                    }
+                    is Result.Error -> Error
+                    else -> throw IllegalStateException()
                 }
             }
     }
