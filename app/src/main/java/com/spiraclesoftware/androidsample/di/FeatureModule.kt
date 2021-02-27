@@ -7,6 +7,7 @@ import com.spiraclesoftware.androidsample.feature.category_select.CategorySelect
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewModel
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputType
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewModel
+import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFormatter
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailPresenter
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
@@ -27,8 +28,9 @@ val featureModule = module {
     single { TransactionListFormatter() }
 
     viewModel { (id: TransactionId) -> TransactionDetailViewModel(id, get(), get()) }
-    factory { TransactionDetailPresenter(get()) }
+    factory { TransactionDetailPresenter(get(), get()) }
     single { CardsPresenter() }
+    single { TransactionDetailFormatter() }
 
     viewModel { (inputType: TextInputType, requestKey: String, initialValue: String) ->
         TextInputViewModel(inputType, requestKey, initialValue)

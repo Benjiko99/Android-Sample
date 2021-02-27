@@ -8,6 +8,7 @@ import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.money
 import io.mockk.MockKAnnotations
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -31,7 +32,13 @@ class TransactionDetailPresenterTest : PresenterTest() {
     }
 
     @MockK
+    lateinit var transactionDetailFormatter: TransactionDetailFormatter
+
+    @MockK
     lateinit var transactionsInteractor: TransactionsInteractor
+
+    @InjectMockKs
+    lateinit var testSubject: TransactionDetailPresenter
 
     @Before
     fun setUp() {
@@ -42,9 +49,7 @@ class TransactionDetailPresenterTest : PresenterTest() {
     fun `Transaction is returned from interactor by ID`() = runBlockingTest {
         every { transactionsInteractor.getTransactionById(MOCK_TRANSACTION.id) } returns MOCK_TRANSACTION
 
-        val presenter = TransactionDetailPresenter(transactionsInteractor)
-
-        val transaction = presenter.getTransactionById(MOCK_TRANSACTION.id)
+        val transaction = testSubject.getTransactionById(MOCK_TRANSACTION.id)
         assertThat(transaction).isEqualTo(MOCK_TRANSACTION)
     }
 

@@ -3,7 +3,6 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.Money
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import com.spiraclesoftware.androidsample.domain.entity.TransactionStatusCode
 import com.spiraclesoftware.androidsample.formatter.*
 import java.time.ZonedDateTime
 
@@ -25,7 +24,7 @@ class TransactionListFormatter {
         val iconRes: Int
         val iconTintRes: Int
 
-        if (statusCode == TransactionStatusCode.SUCCESSFUL) {
+        if (isSuccessful()) {
             iconTintRes = category.colorRes
             iconRes = category.drawableRes
         } else {

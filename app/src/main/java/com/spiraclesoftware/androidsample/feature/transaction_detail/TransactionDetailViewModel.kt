@@ -15,7 +15,6 @@ import com.spiraclesoftware.androidsample.feature.transaction_detail.Transaction
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.*
-import com.spiraclesoftware.androidsample.formatter.MoneyFormat
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -47,34 +46,22 @@ class TransactionDetailViewModel(
 
     private val attachmentUploads = MutableStateFlow<List<Uri>>(emptyList())
 
-    data class ScreenData(
-        val transaction: Transaction,
+    data class ViewData(
+        val detailModel: DetailModel,
         val uploads: List<Uri>
     )
 
     init {
-        collectScreenData()
+        produceViewStateFromDataFlow()
     }
 
-    fun collectScreenData() = executeNonBlocking {
-        detailPresenter.flowTransactionById(transactionId)
-            .combine(attachmentUploads) { transaction, uploads -> ScreenData(transaction!!, uploads) }
-            .collect { (transaction, uploads) ->
+    private fun produceViewStateFromDataFlow() = executeNonBlocking {
+        detailPresenter.flowDetailModel(transactionId)
+            .combine(attachmentUploads) { detailModel, uploads -> ViewData(detailModel, uploads) }
+            .collect { (detailModel, uploads) ->
                 viewState = try {
-                    val cardItems = getCardItems(transaction, uploads)
-                    val contributesToBalance = transaction.contributesToAccountBalance()
-                    val isSuccessful = transaction.isSuccessful()
-                    val formattedMoney = MoneyFormat(transaction.signedMoney).format(transaction)
-
-                    Content(
-                        transaction.name,
-                        transaction.processingDate,
-                        formattedMoney,
-                        contributesToBalance,
-                        isSuccessful,
-                        transaction.category,
-                        cardItems
-                    )
+                    val cardItems = getCardItems(detailModel.transaction, uploads)
+                    Content(detailModel, cardItems)
                 } catch (e: Exception) {
                     Timber.e(e)
                     Error

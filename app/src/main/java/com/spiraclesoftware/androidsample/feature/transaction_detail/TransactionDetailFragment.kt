@@ -26,16 +26,12 @@ import com.mikepenz.fastadapter.listeners.addClickListener
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.component.image_picker.ImagePicker
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
-import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.items.AttachmentsCardItem
-import com.spiraclesoftware.androidsample.formatter.DateTimeFormat
-import com.spiraclesoftware.androidsample.formatter.colorRes
-import com.spiraclesoftware.androidsample.formatter.drawableRes
 import com.spiraclesoftware.androidsample.framework.StandardFragment
 import com.spiraclesoftware.androidsample.util.DelightUI
 import com.stfalcon.imageviewer.StfalconImageViewer
@@ -71,11 +67,13 @@ class TransactionDetailFragment :
             is Content -> {
                 FastAdapterDiffUtil[itemAdapter] = viewState.cardItems
 
-                toolbar.title = viewState.name
-                nameView.text = viewState.name
-                dateView.text = viewState.processingDate.format(DateTimeFormat.PRETTY_DATE_TIME)
-                renderAmountText(viewState.formattedMoney, viewState.contributesToBalance)
-                renderCategoryIcon(viewState.category, viewState.isSuccessful)
+                with(viewState.detailModel) {
+                    toolbar.title = name
+                    nameView.text = name
+                    dateView.text = processingDate
+                    renderAmountText(formattedMoney, contributesToBalance)
+                    renderCategoryIcon(iconRes, iconTintRes)
+                }
             }
         }
     }
@@ -87,16 +85,9 @@ class TransactionDetailFragment :
         }
     }
 
-    private fun renderCategoryIcon(category: TransactionCategory, isSuccessful: Boolean) = with(binding) {
-        val tint: Int
-
-        if (isSuccessful) {
-            tint = color(category.colorRes)
-            iconView.setImageDrawable(tintedDrawable(category.drawableRes, tint))
-        } else {
-            tint = color(R.color.transaction_status__declined)
-            iconView.setImageDrawable(tintedDrawable(R.drawable.ic_status_declined, tint))
-        }
+    private fun renderCategoryIcon(iconRes: Int, iconTintRes: Int) = with(binding) {
+        val tint: Int = color(iconTintRes)
+        iconView.setImageDrawable(tintedDrawable(iconRes, tint))
 
         val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
         iconView.background = tintedDrawable(R.drawable.shp_circle, fadedTint)

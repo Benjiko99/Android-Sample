@@ -7,13 +7,22 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 
 class TransactionDetailPresenter(
-    private val transactionsInteractor: TransactionsInteractor
+    private val transactionsInteractor: TransactionsInteractor,
+    private val transactionDetailFormatter: TransactionDetailFormatter
 ) {
 
     suspend fun getTransactionById(id: TransactionId) = withIOContext {
         transactionsInteractor.getTransactionById(id)
+    }
+    
+    fun flowDetailModel(id: TransactionId): Flow<DetailModel> {
+        return flowTransactionById(id)
+            .map { transaction ->
+                transactionDetailFormatter.detailModel(transaction!!)
+            }
     }
 
     fun flowTransactionById(id: TransactionId): Flow<Transaction?> {
