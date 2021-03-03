@@ -10,7 +10,7 @@ data class TransactionModel(
     val amount: String,
     val name: String,
     val processingDate: String,
-    @StringRes val statusRes: Int?,
+    @StringRes val statusCodeRes: Int?,
     val contributesToAccountBalance: Boolean,
     @ColorRes val iconRes: Int,
     @ColorRes val iconTintRes: Int

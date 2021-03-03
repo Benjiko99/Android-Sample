@@ -3,12 +3,18 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail.cards
 import androidx.core.net.toUri
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
-import com.spiraclesoftware.androidsample.formatter.drawableRes
-import com.spiraclesoftware.androidsample.formatter.stringRes
+import com.spiraclesoftware.androidsample.formatter.TransactionCategoryFormatter
+import com.spiraclesoftware.androidsample.formatter.TransactionStatusCodeFormatter
+import com.spiraclesoftware.androidsample.formatter.TransactionStatusFormatter
 import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.StringHolder
+import org.koin.java.KoinJavaComponent.inject
 
 class CardsFormatter {
+
+    private val statusFormatter by inject(TransactionStatusFormatter::class.java)
+    private val statusCodeFormatter by inject(TransactionStatusCodeFormatter::class.java)
+    private val categoryFormatter by inject(TransactionCategoryFormatter::class.java)
 
     fun cardModels(cards: List<Card>): List<Model> {
         return cards.map { card ->
@@ -16,9 +22,15 @@ class CardsFormatter {
                 is ValuePairCard ->
                     ValuePairCardModel(card.valuePairs.toModels())
                 is StatusCard ->
-                    StatusCardModel(card.status.stringRes, card.statusCode.stringRes)
+                    StatusCardModel(
+                        statusFormatter.stringRes(card.status),
+                        statusCodeFormatter.stringRes(card.statusCode)
+                    )
                 is CategoryCard ->
-                    CategoryCardModel(card.category.stringRes, card.category.drawableRes)
+                    CategoryCardModel(
+                        categoryFormatter.stringRes(card.category),
+                        categoryFormatter.drawableRes(card.category)
+                    )
                 is AttachmentsCard ->
                     AttachmentsCardModel(card.attachments.map(String::toUri), card.uploads)
                 is NoteCard ->
@@ -33,7 +45,7 @@ class CardsFormatter {
                 is ValuePair.Status ->
                     ValuePairModel(
                         label = R.string.transaction_detail__status,
-                        value = StringHolder(pair.status.stringRes)
+                        value = StringHolder(statusFormatter.stringRes(pair.status))
                     )
                 is ValuePair.CardDescription ->
                     ValuePairModel(

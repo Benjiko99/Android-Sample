@@ -3,10 +3,17 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.Money
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import com.spiraclesoftware.androidsample.formatter.*
+import com.spiraclesoftware.androidsample.formatter.DateTimeFormat
+import com.spiraclesoftware.androidsample.formatter.MoneyFormat
+import com.spiraclesoftware.androidsample.formatter.TransactionCategoryFormatter
+import com.spiraclesoftware.androidsample.formatter.TransactionStatusCodeFormatter
+import org.koin.java.KoinJavaComponent.inject
 import java.time.ZonedDateTime
 
 class TransactionListFormatter {
+
+    private val statusCodeFormatter by inject(TransactionStatusCodeFormatter::class.java)
+    private val categoryFormatter by inject(TransactionCategoryFormatter::class.java)
 
     fun headerModel(
         dateTime: ZonedDateTime,
@@ -25,8 +32,8 @@ class TransactionListFormatter {
         val iconTintRes: Int
 
         if (isSuccessful()) {
-            iconTintRes = category.colorRes
-            iconRes = category.drawableRes
+            iconTintRes = categoryFormatter.colorRes(category)
+            iconRes = categoryFormatter.drawableRes(category)
         } else {
             iconTintRes = R.color.transaction_status__declined
             iconRes = R.drawable.ic_status_declined
@@ -39,7 +46,7 @@ class TransactionListFormatter {
             iconTintRes = iconTintRes,
             amount = MoneyFormat(signedMoney).format(this),
             processingDate = processingDate.format(DateTimeFormat.PRETTY_DATE_TIME),
-            statusRes = statusCode.stringRes,
+            statusCodeRes = statusCodeFormatter.stringRes(statusCode),
             contributesToAccountBalance = contributesToAccountBalance()
         )
     }

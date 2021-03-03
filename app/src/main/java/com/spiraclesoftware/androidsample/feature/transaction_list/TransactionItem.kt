@@ -26,8 +26,8 @@ class TransactionItem(
         nameView.text = model.name
         dateView.text = model.processingDate
 
-        statusView.text = ctx.stringOrNull(model.statusRes)
-        statusView.isVisible = model.statusRes != null
+        statusView.text = ctx.stringOrNull(model.statusCodeRes)
+        statusView.isVisible = model.statusCodeRes != null
 
         amountView.text = model.amount
 

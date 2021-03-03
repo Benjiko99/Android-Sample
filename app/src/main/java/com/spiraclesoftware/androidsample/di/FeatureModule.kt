@@ -16,6 +16,9 @@ import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionLi
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListPresenter
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
+import com.spiraclesoftware.androidsample.formatter.TransactionCategoryFormatter
+import com.spiraclesoftware.androidsample.formatter.TransactionStatusCodeFormatter
+import com.spiraclesoftware.androidsample.formatter.TransactionStatusFormatter
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.parameter.parametersOf
@@ -24,6 +27,9 @@ import org.koin.dsl.module
 val featureModule = module {
 
     single { ExceptionFormatter(androidContext()) }
+    single { TransactionStatusFormatter() }
+    single { TransactionStatusCodeFormatter() }
+    single { TransactionCategoryFormatter() }
 
     viewModel { TransactionListViewModel(get()) }
     factory { TransactionListPresenter(get(), get(), get(), get(), get()) }
