@@ -42,7 +42,6 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         val detailModel = mockk<DetailModel>()
 
         every { detailPresenter.flowDetailModel(any(), any()) } returns flowOf(Result.Success(detailModel))
-        every { detailPresenter.flowTransactionById(any()) } returns flowOf(mockk())
 
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { stateObserver, _ ->

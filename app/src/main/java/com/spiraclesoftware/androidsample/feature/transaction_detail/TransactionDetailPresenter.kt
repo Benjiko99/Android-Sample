@@ -36,7 +36,7 @@ class TransactionDetailPresenter(
         }
     }
 
-    fun flowTransactionById(id: TransactionId): Flow<Transaction?> {
+    private fun flowTransactionById(id: TransactionId): Flow<Transaction?> {
         return transactionsInteractor.flowTransactionById(id).distinctUntilChanged()
     }
 
