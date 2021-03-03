@@ -65,7 +65,6 @@ class TransactionListPresenter(
             .groupBy { it.processingDate.truncatedTo(ChronoUnit.DAYS) }
     }
 
-
     @OptIn(ExperimentalStdlibApi::class)
     private suspend fun Map<ZonedDateTime, List<Transaction>>.mapToModels(): List<Model> {
         return flatMap { (day, transactions) ->
