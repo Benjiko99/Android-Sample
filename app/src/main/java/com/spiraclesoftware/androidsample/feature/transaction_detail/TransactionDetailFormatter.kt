@@ -1,19 +1,19 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail
 
-import android.net.Uri
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
 import com.spiraclesoftware.androidsample.formatter.DateTimeFormat
 import com.spiraclesoftware.androidsample.formatter.MoneyFormat
 import com.spiraclesoftware.androidsample.formatter.colorRes
 import com.spiraclesoftware.androidsample.formatter.drawableRes
+import com.spiraclesoftware.androidsample.framework.Model
 
-class TransactionDetailFormatter(
-    private val cardsPresenter: CardsPresenter
-) {
+class TransactionDetailFormatter {
 
-    fun detailModel(transaction: Transaction, uploads: List<Uri>): DetailModel = with(transaction) {
+    fun detailModel(
+        transaction: Transaction,
+        cardModels: List<Model>
+    ): DetailModel = with(transaction) {
         val iconRes: Int
         val iconTintRes: Int
 
@@ -34,7 +34,7 @@ class TransactionDetailFormatter(
             iconTintRes = iconTintRes,
             contributesToBalance = contributesToAccountBalance(),
             isSuccessful = isSuccessful(),
-            cardModels = cardsPresenter.cardModels(transaction, uploads)
+            cardModels = cardModels
         )
     }
 

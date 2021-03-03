@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.StatusCardItemBinding
 import com.spiraclesoftware.androidsample.extension.string
+import com.spiraclesoftware.androidsample.extension.stringOrNull
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.StatusCardModel
-import com.spiraclesoftware.androidsample.formatter.stringRes
 
 class StatusCardItem(
     model: StatusCardModel
@@ -22,8 +22,8 @@ class StatusCardItem(
     override fun bindView(binding: StatusCardItemBinding, payloads: List<Any>) {
         val ctx = binding.root.context
 
-        val status = ctx.string(model.status.stringRes)
-        val statusCode = ctx.string(model.statusCode.stringRes!!)
+        val status = ctx.string(model.statusRes)
+        val statusCode = ctx.stringOrNull(model.statusCodeRes)
         binding.bodyText = "$status ∙ $statusCode"
     }
 

@@ -1,5 +1,10 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail.cards
 
+import android.net.Uri
+import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
+import com.spiraclesoftware.androidsample.domain.entity.TransactionStatus
+import com.spiraclesoftware.androidsample.domain.entity.TransactionStatusCode
+
 @DslMarker
 annotation class CardsBuilderDSL
 
@@ -8,16 +13,16 @@ class ValuePairCardBuilder {
 
     private val valuePairs = mutableListOf<ValuePair>()
 
-    fun status() {
-        valuePairs += ValuePairs.Status()
+    fun status(status: TransactionStatus) {
+        valuePairs += ValuePair.Status(status)
     }
 
-    fun cardDescription() {
-        valuePairs += ValuePairs.CardDescription()
+    fun cardDescription(cardDescription: String?) {
+        valuePairs += ValuePair.CardDescription(cardDescription)
     }
 
     fun downloadStatement() {
-        valuePairs += ValuePairs.DownloadStatement()
+        valuePairs += ValuePair.DownloadStatement
     }
 
     fun build() = ValuePairCard(valuePairs)
@@ -40,20 +45,26 @@ class CardsBuilder {
         }
     }
 
-    fun statusCard() {
-        cards += StatusCard
+    fun statusCard(
+        status: TransactionStatus,
+        statusCode: TransactionStatusCode
+    ) {
+        cards += StatusCard(status, statusCode)
     }
 
-    fun categoryCard() {
-        cards += CategoryCard
+    fun categoryCard(category: TransactionCategory) {
+        cards += CategoryCard(category)
     }
 
-    fun attachmentsCard() {
-        cards += AttachmentsCard
+    fun attachmentsCard(
+        attachments: List<String>,
+        uploads: List<Uri>
+    ) {
+        cards += AttachmentsCard(attachments, uploads)
     }
 
-    fun noteCard() {
-        cards += NoteCard
+    fun noteCard(note: String?) {
+        cards += NoteCard(note)
     }
 
     fun build() = cards

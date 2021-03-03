@@ -31,6 +31,7 @@ import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
+import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Error
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
 import com.spiraclesoftware.androidsample.framework.Model
@@ -63,7 +64,7 @@ class TransactionDetailFragment :
     private lateinit var itemAdapter: GenericModelAdapter<Model>
 
     override fun render(viewState: TransactionDetailViewState): Unit = with(binding) {
-        errorMessageView.isVisible = viewState is Error
+        renderErrorLayout(viewState)
 
         when (viewState) {
             is Content -> {
@@ -93,6 +94,14 @@ class TransactionDetailFragment :
 
         val fadedTint = ColorUtils.setAlphaComponent(tint, 255 / 100 * 15)
         iconView.background = tintedDrawable(R.drawable.shp_circle, fadedTint)
+    }
+
+    private fun renderErrorLayout(viewState: TransactionDetailViewState): Unit = with(binding) {
+        errorMessageView.isVisible = viewState is Error
+
+        if (viewState is Error) {
+            errorMessageView.text = viewState.message
+        }
     }
 
     override fun onEvent(event: OneShotEvent) {

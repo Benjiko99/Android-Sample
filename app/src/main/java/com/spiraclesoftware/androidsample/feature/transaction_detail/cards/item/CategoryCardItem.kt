@@ -9,8 +9,6 @@ import com.spiraclesoftware.androidsample.extension.onClick
 import com.spiraclesoftware.androidsample.extension.string
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardActionsHandler
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.CategoryCardModel
-import com.spiraclesoftware.androidsample.formatter.drawableRes
-import com.spiraclesoftware.androidsample.formatter.stringRes
 
 class CategoryCardItem(
     model: CategoryCardModel,
@@ -26,8 +24,8 @@ class CategoryCardItem(
 
     override fun bindView(binding: CategoryCardItemBinding, payloads: List<Any>) {
         val ctx = binding.root.context
-        binding.categoryText = ctx.string(model.category.stringRes)
-        binding.categoryIcon = ctx.drawable(model.category.drawableRes)
+        binding.categoryText = ctx.string(model.nameRes)
+        binding.categoryIcon = ctx.drawable(model.iconRes)
 
         binding.actionView.onClick {
             actionsHandler.onSelectCategory()

@@ -22,8 +22,7 @@ import timber.log.Timber
 
 class TransactionDetailViewModel(
     private val transactionId: TransactionId,
-    private val detailPresenter: TransactionDetailPresenter,
-    private val cardsPresenter: CardsPresenter
+    private val detailPresenter: TransactionDetailPresenter
 ) : RainbowCakeViewModel<TransactionDetailViewState>(Initial), CardActionsHandler {
 
     data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
@@ -51,11 +50,11 @@ class TransactionDetailViewModel(
 
     private fun produceViewStateFromDataFlow() = executeNonBlocking {
         detailPresenter.flowDetailModel(transactionId, attachmentUploads)
-            .collect { detailModelResult ->
-                viewState = when (detailModelResult) {
+            .collect { result ->
+                viewState = when (result) {
                     is Result.Loading -> Initial
-                    is Result.Success -> Content(detailModelResult.data)
-                    is Result.Error -> Error
+                    is Result.Success -> Content(result.data)
+                    is Result.Error -> Error(result.exception.message)
                     else -> throw IllegalStateException()
                 }
             }

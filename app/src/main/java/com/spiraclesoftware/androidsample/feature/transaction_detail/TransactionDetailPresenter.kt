@@ -6,6 +6,8 @@ import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
+import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsFormatter
+import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.StandardPresenter
 import kotlinx.coroutines.flow.Flow
@@ -15,6 +17,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 class TransactionDetailPresenter(
     private val transactionsInteractor: TransactionsInteractor,
     private val transactionDetailFormatter: TransactionDetailFormatter,
+    private val cardsPresenter: CardsPresenter,
+    private val cardsFormatter: CardsFormatter,
     exceptionFormatter: ExceptionFormatter
 ) : StandardPresenter(exceptionFormatter) {
 
@@ -24,7 +28,9 @@ class TransactionDetailPresenter(
     ): Flow<Result<DetailModel>> {
         return flowTransactionById(id).combine(attachmentUploads) { transaction, uploads ->
             if (transaction != null) tryForResult {
-                transactionDetailFormatter.detailModel(transaction, uploads)
+                val cards = cardsPresenter.getCards(transaction, uploads)
+                val cardModels = cardsFormatter.cardModels(cards)
+                transactionDetailFormatter.detailModel(transaction, cardModels)
             }
             else Result.Error(getPresenterException())
         }

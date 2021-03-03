@@ -4,7 +4,7 @@ sealed class TransactionDetailViewState {
 
     object Initial : TransactionDetailViewState()
 
-    object Error : TransactionDetailViewState()
+    data class Error(val message: String?) : TransactionDetailViewState()
 
     data class Content(
         val detailModel: DetailModel

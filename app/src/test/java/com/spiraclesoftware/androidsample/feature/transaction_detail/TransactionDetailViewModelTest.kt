@@ -12,7 +12,6 @@ import com.spiraclesoftware.androidsample.feature.transaction_detail.Transaction
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
-import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -30,31 +29,25 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     @MockK
     lateinit var detailPresenter: TransactionDetailPresenter
 
-    @MockK
-    lateinit var cardsPresenter: CardsPresenter
-
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
     }
 
     private fun newTestSubject() =
-        TransactionDetailViewModel(TransactionId("1"), detailPresenter, cardsPresenter)
+        TransactionDetailViewModel(TransactionId("1"), detailPresenter)
 
     @Test
     fun onInit_produceViewState() = runBlockingTest {
-        val detailModel = mockk<DetailModel> {
-            every { transaction } returns mockk()
-        }
+        val detailModel = mockk<DetailModel>()
 
-        every { detailPresenter.flowDetailModel(any()) } returns flowOf(Result.Success(detailModel))
+        every { detailPresenter.flowDetailModel(any(), any()) } returns flowOf(Result.Success(detailModel))
         every { detailPresenter.flowTransactionById(any()) } returns flowOf(mockk())
-        every { cardsPresenter.getCards(any()) } returns emptyList()
 
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
-                Content(detailModel, emptyList())
+                Content(detailModel)
             )
         }
     }

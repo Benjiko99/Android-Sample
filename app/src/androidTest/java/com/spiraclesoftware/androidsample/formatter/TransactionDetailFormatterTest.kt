@@ -26,7 +26,6 @@ class TransactionDetailFormatterTest : FormatterTest() {
         )
 
         val expected = DetailModel(
-            transaction,
             TransactionId("1"),
             name = "Name",
             formattedMoney = "- €49.99",
@@ -34,9 +33,12 @@ class TransactionDetailFormatterTest : FormatterTest() {
             iconRes = R.drawable.ic_category_entertainment,
             iconTintRes = R.color.transaction_category__entertainment,
             contributesToBalance = true,
-            isSuccessful = true
+            isSuccessful = true,
+            cardModels = emptyList()
         )
-        val actual = TransactionDetailFormatter().detailModel(transaction)
+
+        val formatter = TransactionDetailFormatter()
+        val actual = formatter.detailModel(transaction, emptyList())
 
         assertThat(actual).isEqualTo(expected)
     }

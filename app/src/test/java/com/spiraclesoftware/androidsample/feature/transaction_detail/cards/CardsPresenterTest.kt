@@ -12,7 +12,7 @@ import org.junit.Test
 class CardsPresenterTest : PresenterTest() {
 
     @Test
-    fun `Correct cards are generated for transaction`() {
+    fun presentCardsForTransaction() {
         val transaction = Transaction(
             TransactionId("1"),
             "Paypal *Steam",
@@ -28,7 +28,7 @@ class CardsPresenterTest : PresenterTest() {
         )
 
         val presenter = CardsPresenter()
-        val cards = presenter.getCards(transaction)
+        val cards = presenter.getCards(transaction, emptyList())
 
         assertThat(cards.count()).isEqualTo(4)
 
@@ -38,9 +38,9 @@ class CardsPresenterTest : PresenterTest() {
         assertThat(cards[3]).isInstanceOf(NoteCard::class.java)
 
         ((cards[0] as ValuePairCard).valuePairs).let { valuePairs ->
-            assertThat(valuePairs[0]).isInstanceOf(ValuePairs.Status::class.java)
-            assertThat(valuePairs[1]).isInstanceOf(ValuePairs.CardDescription::class.java)
-            assertThat(valuePairs[2]).isInstanceOf(ValuePairs.DownloadStatement::class.java)
+            assertThat(valuePairs[0]).isInstanceOf(ValuePair.Status::class.java)
+            assertThat(valuePairs[1]).isInstanceOf(ValuePair.CardDescription::class.java)
+            assertThat(valuePairs[2]).isInstanceOf(ValuePair.DownloadStatement::class.java)
         }
     }
 
