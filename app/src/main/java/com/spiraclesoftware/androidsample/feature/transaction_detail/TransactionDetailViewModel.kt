@@ -1,7 +1,6 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail
 
 import android.net.Uri
-import androidx.core.net.toUri
 import androidx.navigation.NavDirections
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
@@ -71,21 +70,20 @@ class TransactionDetailViewModel(
     override fun onSelectCategory() = execute {
         val navDirections = toCategorySelect(
             transactionId.value,
-            initialCategory = detailPresenter.getCategory(transactionId)!!
+            initialCategory = detailPresenter.getCategory()
         )
         postEvent(NavigateEvent(navDirections))
     }
 
     override fun onViewAttachment(uri: Uri) = execute {
-        val transaction = detailPresenter.getTransactionById(transactionId)!!
-        val images = transaction.attachments.map(String::toUri)
+        val images = detailPresenter.getAttachments()
         val startPosition = images.indexOf(uri)
         postEvent(OpenAttachmentViewerEvent(images, startPosition))
     }
 
     override fun onAddAttachment() = execute {
-        val transaction = detailPresenter.getTransactionById(transactionId)!!
-        val totalCount = transaction.attachments.size + attachmentUploads.value.size
+        val attachments = detailPresenter.getAttachments()
+        val totalCount = attachments.size + attachmentUploads.value.size
 
         if (totalCount >= Transaction.MAX_ATTACHMENTS) {
             postEvent(NotifyAttachmentsLimitReachedEvent)
@@ -95,7 +93,7 @@ class TransactionDetailViewModel(
     }
 
     override fun onRemoveAttachment(uri: Uri) = execute {
-        detailPresenter.removeAttachment(transactionId, uri)
+        detailPresenter.removeAttachment(uri)
     }
 
     override fun onCancelUpload(uri: Uri) {
@@ -106,7 +104,7 @@ class TransactionDetailViewModel(
         val navDirections = toTextInput(
             TextInputType.NOTE,
             NOTE_INPUT_REQUEST_KEY,
-            initialValue = detailPresenter.getNote(transactionId)
+            initialValue = detailPresenter.getNote()
         )
 
         postEvent(NavigateEvent(navDirections))
@@ -117,7 +115,7 @@ class TransactionDetailViewModel(
 
         try {
             delay(3000)
-            detailPresenter.uploadAttachment(transactionId, imageUri)
+            detailPresenter.uploadAttachment(imageUri)
             attachmentUploads.value = attachmentUploads.value.minus(imageUri)
         } catch (e: Exception) {
             Timber.e(e)
@@ -127,7 +125,7 @@ class TransactionDetailViewModel(
 
     fun onNoteChanged(note: String) = executeNonBlocking {
         try {
-            detailPresenter.updateNote(transactionId, note)
+            detailPresenter.updateNote(note)
         } catch (e: Exception) {
             Timber.e(e)
             postEvent(NotifyOfFailureEvent(R.string.unknown_error))

@@ -95,12 +95,4 @@ class TransactionDetailPresenterTest : PresenterTest() {
         assertThat(error.exception.message).isEqualTo("Error message")
     }
 
-    @Test
-    fun `Transaction is returned from interactor by ID`() = runBlockingTest {
-        every { transactionsInteractor.getTransactionById(any()) } returns MOCK_TRANSACTION
-
-        val actual = testSubject.getTransactionById(MOCK_TRANSACTION.id)
-        assertThat(actual).isEqualTo(MOCK_TRANSACTION)
-    }
-
 }

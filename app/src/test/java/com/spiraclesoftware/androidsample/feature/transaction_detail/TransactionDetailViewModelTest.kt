@@ -55,7 +55,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     fun `Clicking change note card action produces navigate to note input event`() = runBlockingTest {
         val currentNote = "hello world"
 
-        coEvery { detailPresenter.getNote(any()) } returns currentNote
+        coEvery { detailPresenter.getNote() } returns currentNote
 
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { _, eventsObserver ->
@@ -77,7 +77,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     fun `Clicking category select card action produces navigate to category select event`() = runBlockingTest {
         val currentCategory = TransactionCategory.ENTERTAINMENT
 
-        coEvery { detailPresenter.getCategory(any()) } returns currentCategory
+        coEvery { detailPresenter.getCategory() } returns currentCategory
 
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { _, eventsObserver ->
