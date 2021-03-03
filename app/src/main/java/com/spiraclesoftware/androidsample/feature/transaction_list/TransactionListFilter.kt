@@ -4,7 +4,7 @@ import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.extension.lenientContains
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransferDirectionFilter.ALL
 import com.spiraclesoftware.androidsample.formatter.DateTimeFormat
-import com.spiraclesoftware.androidsample.formatter.MoneyFormat
+import com.spiraclesoftware.androidsample.formatter.MoneyFormatter
 
 data class TransactionListFilter(
     val searchQuery: String = "",
@@ -33,7 +33,7 @@ data class TransactionListFilter(
 
     private fun Transaction.matchesSearchQuery(query: String): Boolean {
         val matchesName = name.lenientContains(query)
-        val matchesMoney = MoneyFormat(money).formatSigned().lenientContains(query)
+        val matchesMoney = MoneyFormatter().formatSigned(money).lenientContains(query)
         val matchesDate = processingDate.format(DateTimeFormat.PRETTY_DATE).lenientContains(query)
 
         return matchesName || matchesMoney || matchesDate

@@ -3,7 +3,7 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.formatter.DateTimeFormat
-import com.spiraclesoftware.androidsample.formatter.MoneyFormat
+import com.spiraclesoftware.androidsample.formatter.MoneyFormatter
 import com.spiraclesoftware.androidsample.formatter.TransactionCategoryFormatter
 import com.spiraclesoftware.androidsample.framework.Model
 import org.koin.java.KoinJavaComponent.inject
@@ -30,7 +30,7 @@ class TransactionDetailFormatter {
         return DetailModel(
             id = id,
             name = name,
-            formattedMoney = MoneyFormat(signedMoney).format(this),
+            formattedMoney = MoneyFormatter().format(this),
             processingDate = processingDate.format(DateTimeFormat.PRETTY_DATE_TIME),
             iconRes = iconRes,
             iconTintRes = iconTintRes,

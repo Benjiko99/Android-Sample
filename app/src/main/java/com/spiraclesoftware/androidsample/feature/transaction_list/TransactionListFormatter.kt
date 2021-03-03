@@ -4,7 +4,7 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.Money
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.formatter.DateTimeFormat
-import com.spiraclesoftware.androidsample.formatter.MoneyFormat
+import com.spiraclesoftware.androidsample.formatter.MoneyFormatter
 import com.spiraclesoftware.androidsample.formatter.TransactionCategoryFormatter
 import com.spiraclesoftware.androidsample.formatter.TransactionStatusCodeFormatter
 import org.koin.java.KoinJavaComponent.inject
@@ -20,8 +20,8 @@ class TransactionListFormatter {
         contributionToBalance: Money
     ) = HeaderModel(
         date = dateTime.format(DateTimeFormat.PRETTY_DATE),
-        contribution = MoneyFormat(contributionToBalance)
-            .formatSigned(showSignWhenPositive = false)
+        contribution = MoneyFormatter()
+            .formatSigned(contributionToBalance, showSignWhenPositive = false)
     )
 
     fun transactionModel(transactions: List<Transaction>): List<TransactionModel> =
@@ -44,7 +44,7 @@ class TransactionListFormatter {
             name = name,
             iconRes = iconRes,
             iconTintRes = iconTintRes,
-            amount = MoneyFormat(signedMoney).format(this),
+            amount = MoneyFormatter().format(this),
             processingDate = processingDate.format(DateTimeFormat.PRETTY_DATE_TIME),
             statusCodeRes = statusCodeFormatter.stringRes(statusCode),
             contributesToAccountBalance = contributesToAccountBalance()
