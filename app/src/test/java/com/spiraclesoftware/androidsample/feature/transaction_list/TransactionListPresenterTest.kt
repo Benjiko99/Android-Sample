@@ -13,12 +13,9 @@ import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionLi
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.PresenterException
 import com.spiraclesoftware.androidsample.util.LanguageManager
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -64,6 +61,24 @@ class TransactionListPresenterTest : PresenterTest() {
     }
 
     @Test
+    fun toggleLanguage() = runBlockingTest {
+        justRun { languageManager.toggleLanguageAndRestart() }
+
+        testSubject.toggleLanguageAndRestart()
+
+        verify { languageManager.toggleLanguageAndRestart() }
+    }
+
+    @Test
+    fun refreshTransactions() = runBlockingTest {
+        coJustRun { transactionsInteractor.refreshTransactions() }
+
+        transactionsInteractor.refreshTransactions()
+
+        coVerify { transactionsInteractor.refreshTransactions() }
+    }
+
+    @Test
     fun presentViewData() = runBlockingTest {
         val transaction = mockk<Transaction> {
             every { processingDate } returns epochDateTime
@@ -77,11 +92,26 @@ class TransactionListPresenterTest : PresenterTest() {
         every { transactionListFormatter.emptyState(any(), any()) } returns null
         coEvery { accountsInteractor.getContributionToBalance(any()) } returns mockk()
 
-        val listFilter = flowOf(TransactionListFilter())
-        val actual = testSubject.flowViewData(listFilter).first().data
+        val filterFlow = flowOf(TransactionListFilter())
+        val actual = testSubject.flowViewData(filterFlow).first().data
 
         val expectedModels = listOf(headerModel) + transactionModels
         val expected = ViewData(expectedModels, TransactionListFilter(), emptyState = null)
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun presentViewData_emptyState() = runBlockingTest {
+        val dataResult = Result.Success(emptyList<Transaction>())
+        val mockEmptyState = mockk<EmptyState>()
+        every { transactionsInteractor.flowTransactions() } returns flowOf(dataResult)
+        every { transactionListFormatter.emptyState(any(), any()) } returns mockEmptyState
+
+        val filterFlow = flowOf(TransactionListFilter())
+        val actual = testSubject.flowViewData(filterFlow).first().data
+
+        val expected = ViewData(emptyList(), TransactionListFilter(), mockEmptyState)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -92,8 +122,8 @@ class TransactionListPresenterTest : PresenterTest() {
         every { transactionsInteractor.flowTransactions() } returns flowOf(dataResult)
         every { exceptionFormatter.format(any()) } returns "Error"
 
-        val listFilter = flowOf(TransactionListFilter())
-        val error = testSubject.flowViewData(listFilter).first() as Result.Error
+        val filterFlow = flowOf(TransactionListFilter())
+        val error = testSubject.flowViewData(filterFlow).first() as Result.Error
 
         assertThat(error.exception).isInstanceOf(PresenterException::class.java)
         assertThat(error.exception.message).isEqualTo("Error")
