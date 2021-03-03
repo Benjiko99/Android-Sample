@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class TransactionDetailPresenter(
+    private val id: TransactionId,
     private val transactionsInteractor: TransactionsInteractor,
     private val transactionDetailFormatter: TransactionDetailFormatter,
     private val cardsPresenter: CardsPresenter,

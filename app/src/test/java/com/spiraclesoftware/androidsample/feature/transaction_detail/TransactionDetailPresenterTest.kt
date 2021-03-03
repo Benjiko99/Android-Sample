@@ -41,6 +41,8 @@ class TransactionDetailPresenterTest : PresenterTest() {
         )
     }
 
+    val transactionId = TransactionId("1")
+
     @MockK
     lateinit var transactionsInteractor: TransactionsInteractor
 
