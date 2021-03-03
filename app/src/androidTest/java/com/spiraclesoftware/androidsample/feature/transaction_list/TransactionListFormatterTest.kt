@@ -1,12 +1,9 @@
-package com.spiraclesoftware.androidsample.formatter
+package com.spiraclesoftware.androidsample.feature.transaction_list
 
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.*
-import com.spiraclesoftware.androidsample.feature.transaction_list.EmptyState
-import com.spiraclesoftware.androidsample.feature.transaction_list.HeaderModel
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFormatter
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionModel
+import com.spiraclesoftware.androidsample.formatter.FormatterTest
 import org.junit.Test
 import java.math.BigDecimal
 import java.time.ZonedDateTime
