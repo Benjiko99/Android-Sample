@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.extension
+package com.spiraclesoftware.androidsample.domain.util
 
 import java.text.Normalizer
 

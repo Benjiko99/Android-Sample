@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionHeaderItemBinding
-import com.spiraclesoftware.androidsample.extension.to64BitHash
+import com.spiraclesoftware.androidsample.domain.util.to64BitHash
 
 class HeaderItem(
     model: HeaderModel
