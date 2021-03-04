@@ -33,7 +33,7 @@ object Version {
     const val lifecycle = "2.2.0"
     const val navigation = "2.2.2"
     const val coil = "1.0.0-rc3"
-    const val fastadapter = "5.2.1"
+    const val fastadapter = "5.3.5"
     const val decorator = "1.2.0"
     const val imageviewer = "1.0.1"
     const val swipe_refresh_layout = "1.1.0"
