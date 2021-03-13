@@ -14,6 +14,7 @@
       <w>didn</w>
       <w>dont</w>
       <w>fastadapter</w>
+      <w>figma</w>
       <w>flowable</w>
       <w>formatters</w>
       <w>gson</w>
@@ -21,6 +22,7 @@
       <w>imageviewer</w>
       <w>interactor</w>
       <w>jakewharton</w>
+      <w>jetpack</w>
       <w>jmailen</w>
       <w>kapt</w>
       <w>koin</w>
@@ -45,6 +47,7 @@
       <w>spiraclesoftware</w>
       <w>sqlite</w>
       <w>squareup</w>
+      <w>stateflow</w>
       <w>stetho</w>
       <w>stfalcon</w>
       <w>subcomponents</w>
