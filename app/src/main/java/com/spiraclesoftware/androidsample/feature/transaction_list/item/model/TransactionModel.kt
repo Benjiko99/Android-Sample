@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.feature.transaction_list
+package com.spiraclesoftware.androidsample.feature.transaction_list.item.model
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes

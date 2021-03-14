@@ -4,6 +4,7 @@ import co.zsmb.rainbowcake.withIOContext
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
+import com.spiraclesoftware.androidsample.feature.category_select.item.model.CategoryModel
 
 class CategorySelectPresenter(
     private val transactionsInteractor: TransactionsInteractor,

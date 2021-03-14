@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.feature.transaction_list
+package com.spiraclesoftware.androidsample.feature.transaction_list.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionHeaderItemBinding
 import com.spiraclesoftware.androidsample.domain.util.to64BitHash
+import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
 
 class HeaderItem(
     model: HeaderModel

@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.feature.category_select
+package com.spiraclesoftware.androidsample.feature.category_select.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +9,7 @@ import com.spiraclesoftware.androidsample.databinding.CategorySelectItemBinding
 import com.spiraclesoftware.androidsample.extension.color
 import com.spiraclesoftware.androidsample.extension.string
 import com.spiraclesoftware.androidsample.extension.tintedDrawable
+import com.spiraclesoftware.androidsample.feature.category_select.item.model.CategoryModel
 
 class CategoryItem(
     model: CategoryModel

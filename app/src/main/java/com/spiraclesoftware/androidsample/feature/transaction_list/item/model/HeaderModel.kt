@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.feature.transaction_list
+package com.spiraclesoftware.androidsample.feature.transaction_list.item.model
 
 import com.spiraclesoftware.androidsample.framework.Model
 

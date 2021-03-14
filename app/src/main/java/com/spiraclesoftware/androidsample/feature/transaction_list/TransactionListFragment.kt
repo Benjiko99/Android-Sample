@@ -27,6 +27,10 @@ import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
+import com.spiraclesoftware.androidsample.feature.transaction_list.item.HeaderItem
+import com.spiraclesoftware.androidsample.feature.transaction_list.item.TransactionItem
+import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
+import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
 import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.StandardFragment
 import com.spiraclesoftware.androidsample.util.DelightUI

@@ -8,8 +8,6 @@ import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.spiraclesoftware.androidsample.data_local.localModule
 import com.spiraclesoftware.androidsample.data_remote.remoteModule
-import com.spiraclesoftware.androidsample.di.appModule
-import com.spiraclesoftware.androidsample.di.featureModule
 import com.spiraclesoftware.androidsample.domain.domainModule
 import com.spiraclesoftware.androidsample.extension.string
 import com.spiraclesoftware.androidsample.util.LanguageManager

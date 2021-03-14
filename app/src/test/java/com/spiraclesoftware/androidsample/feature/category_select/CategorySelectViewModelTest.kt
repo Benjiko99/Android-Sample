@@ -6,6 +6,7 @@ import co.zsmb.rainbowcake.test.observeStateAndEvents
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewState.Content
+import com.spiraclesoftware.androidsample.feature.category_select.item.model.CategoryModel
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

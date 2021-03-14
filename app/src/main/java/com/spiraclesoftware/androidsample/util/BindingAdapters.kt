@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.extension
+package com.spiraclesoftware.androidsample.util
 
 import android.view.View
 import androidx.databinding.BindingAdapter

@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.feature.category_select
+package com.spiraclesoftware.androidsample.feature.category_select.item.model
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes

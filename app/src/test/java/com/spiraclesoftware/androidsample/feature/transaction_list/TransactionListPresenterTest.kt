@@ -10,6 +10,8 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.epochDateTime
+import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
+import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.PresenterException
 import com.spiraclesoftware.androidsample.util.LanguageManager

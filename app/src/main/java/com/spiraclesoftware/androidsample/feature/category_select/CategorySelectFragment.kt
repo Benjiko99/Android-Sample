@@ -22,6 +22,8 @@ import com.spiraclesoftware.androidsample.extension.showSnackbar
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewModel.NotifyOfFailureEvent
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewModel.NotifyOfSuccessEvent
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewState.Content
+import com.spiraclesoftware.androidsample.feature.category_select.item.CategoryItem
+import com.spiraclesoftware.androidsample.feature.category_select.item.model.CategoryModel
 import com.spiraclesoftware.androidsample.framework.StandardFragment
 import com.spiraclesoftware.androidsample.util.DelightUI
 import org.koin.androidx.viewmodel.ext.android.getViewModel

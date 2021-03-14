@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.di
+package com.spiraclesoftware.androidsample
 
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId

@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.feature.transaction_list
+package com.spiraclesoftware.androidsample.feature.transaction_list.item
 
 import android.graphics.Paint
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionItemBinding
 import com.spiraclesoftware.androidsample.extension.*
+import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
 
 class TransactionItem(
     model: TransactionModel

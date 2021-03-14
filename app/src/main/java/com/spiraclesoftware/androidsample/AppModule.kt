@@ -1,6 +1,5 @@
-package com.spiraclesoftware.androidsample.di
+package com.spiraclesoftware.androidsample
 
-import com.spiraclesoftware.androidsample.SampleApplication
 import com.spiraclesoftware.androidsample.data_local.RoomDataSource
 import com.spiraclesoftware.androidsample.data_remote.RetrofitDataSource
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
