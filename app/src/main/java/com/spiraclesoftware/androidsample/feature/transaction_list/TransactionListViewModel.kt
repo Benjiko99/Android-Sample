@@ -9,19 +9,12 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
-import com.spiraclesoftware.androidsample.framework.Model
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 
 class TransactionListViewModel(
     private val presenter: TransactionListPresenter
 ) : RainbowCakeViewModel<TransactionListViewState>(Loading) {
-
-    data class ViewData(
-        val listModels: List<Model>,
-        val filterModel: FilterModel,
-        val emptyState: EmptyState?,
-    )
 
     data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
 
@@ -30,7 +23,7 @@ class TransactionListViewModel(
     private var filterFlow = MutableStateFlow(TransactionsFilter())
 
     init {
-        produceViewStateFromDataFlow()
+        produceViewState()
         refreshTransactions()
     }
 
@@ -66,19 +59,17 @@ class TransactionListViewModel(
         return presenter.getFilterStringIds()
     }
 
-    private fun produceViewStateFromDataFlow() = executeNonBlocking {
-        presenter.flowViewData(filterFlow).collect { result ->
+    private fun produceViewState() = executeNonBlocking {
+        presenter.flowContentModel(filterFlow).collect { result ->
             viewState = when (result) {
                 is Result.Loading -> Loading
-                is Result.Success -> getContent(result.data)
+                is Result.Success -> with(result.data) {
+                    Content(listModels, filterModel, emptyState)
+                }
                 is Result.Error -> Error(result.exception.message)
                 else -> throw IllegalStateException()
             }
         }
-    }
-
-    private fun getContent(data: ViewData): Content {
-        return Content(data.listModels, data.filterModel, data.emptyState)
     }
 
     private fun refreshTransactions() = executeNonBlocking {

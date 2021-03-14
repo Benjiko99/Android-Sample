@@ -7,7 +7,8 @@ import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.NavigateEvent
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.ShowLanguageChangeConfirmationEvent
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.Content
 import com.spiraclesoftware.androidsample.framework.Model
 import io.mockk.*
@@ -86,9 +87,9 @@ class TransactionListViewModelTest : ViewModelTest() {
         val mockListModels = listOf(mockk<Model>())
         val mockFilterModel = mockk<FilterModel>()
         val mockEmptyState = mockk<EmptyState>()
-        val viewData = ViewData(mockListModels, mockFilterModel, mockEmptyState)
+        val contentModel = ContentModel(mockListModels, mockFilterModel, mockEmptyState)
 
-        coEvery { presenter.flowViewData(any()) } returns flowOf(Result.Success(viewData))
+        coEvery { presenter.flowContentModel(any()) } returns flowOf(Result.Success(contentModel))
 
         val testSubject = TransactionListViewModel(presenter)
 
@@ -102,9 +103,9 @@ class TransactionListViewModelTest : ViewModelTest() {
     @Test
     fun `Having no transactions leads to empty state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mockk()
-        val viewData = ViewData(emptyList(), mockk(), mockk())
+        val contentModel = ContentModel(emptyList(), mockk(), mockk())
 
-        coEvery { presenter.flowViewData(any()) } returns flowOf(Result.Success(viewData))
+        coEvery { presenter.flowContentModel(any()) } returns flowOf(Result.Success(contentModel))
 
         val testSubject = TransactionListViewModel(presenter)
 

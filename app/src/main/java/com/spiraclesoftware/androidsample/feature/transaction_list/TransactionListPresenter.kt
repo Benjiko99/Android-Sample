@@ -9,7 +9,6 @@ import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.mapOnError
 import com.spiraclesoftware.androidsample.domain.mapOnSuccess
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.ViewData
 import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.StandardPresenter
@@ -43,9 +42,9 @@ class TransactionListPresenter(
         accountsInteractor.getAccount()
     }
 
-    suspend fun flowViewData(
+    suspend fun flowContentModel(
         filterFlow: Flow<TransactionsFilter>
-    ): Flow<Result<ViewData>> = withIOContext {
+    ): Flow<Result<ContentModel>> = withIOContext {
         transactionsInteractor.flowTransactions(filterFlow)
             .mapOnError { getPresenterException(it) }
             .mapOnSuccess { transactions ->
@@ -59,7 +58,7 @@ class TransactionListPresenter(
 
                     val emptyState = formatter.emptyState(listModels.isEmpty(), filter.isActive())
 
-                    ViewData(listModels, filterModel, emptyState)
+                    ContentModel(listModels, filterModel, emptyState)
                 }
             }
     }
