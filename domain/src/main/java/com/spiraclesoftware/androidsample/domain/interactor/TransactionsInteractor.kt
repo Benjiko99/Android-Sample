@@ -6,10 +6,9 @@ import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.onEach
+import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
+import com.spiraclesoftware.androidsample.domain.mapOnSuccess
+import kotlinx.coroutines.flow.*
 
 class TransactionsInteractor(
     private val remoteDataSource: RemoteDataSource,
@@ -18,15 +17,24 @@ class TransactionsInteractor(
 
     private val remoteDataSourceResult = MutableStateFlow<Result<List<Transaction>>>(Result.Loading)
 
-    fun flowTransactions() = localDataSource.flowTransactions()
-        // includes errors and loading state from remoteDataSource
-        .combine(remoteDataSourceResult) { localData, remoteResult ->
-            when (remoteResult) {
-                is Result.Success -> Result.Success(localData)
-                is Result.Error -> remoteResult
-                is Result.Loading -> remoteResult
+    fun flowTransactions(filterFlow: Flow<TransactionsFilter>) =
+        flowTransactions().combine(filterFlow) { result, filter ->
+            result.mapOnSuccess { transactions ->
+                Result.Success(filter.getFiltered(transactions))
             }
         }
+
+    private fun flowTransactions(): Flow<Result<List<Transaction>>> =
+        localDataSource.flowTransactions()
+            // combine error and loading state from remoteDataSource
+            // with data from localDataSource
+            .combine(remoteDataSourceResult) { localData, remoteResult ->
+                when (remoteResult) {
+                    is Result.Success -> Result.Success(localData)
+                    is Result.Error -> remoteResult
+                    is Result.Loading -> remoteResult
+                }
+            }
 
     suspend fun refreshTransactions() {
         remoteDataSource.fetchTransactions()

@@ -28,6 +28,7 @@ val featureModule = module {
     single { TransactionStatusFormatter() }
     single { TransactionStatusCodeFormatter() }
     single { TransactionCategoryFormatter() }
+    single { TransferDirectionFilterFormatter() }
 
     viewModel { TransactionListViewModel(get()) }
     factory { TransactionListPresenter(get(), get(), get(), get(), get()) }

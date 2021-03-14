@@ -23,6 +23,7 @@ import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
+import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
@@ -132,7 +133,8 @@ class TransactionListFragment :
         filterSpinner.isEnabled = viewState !is Error
 
         if (viewState is Content) {
-            filterSpinner.setSelection(viewState.directionFilter.ordinal)
+            val ordinal = viewState.filterModel.directionFilter.ordinal
+            filterSpinner.setSelection(ordinal)
         }
     }
 
@@ -246,7 +248,7 @@ class TransactionListFragment :
     }
 
     private fun setupFilterSpinner() = with(binding) {
-        val adapterItems = TransferDirectionFilter.values().map { string(it.stringRes) }
+        val adapterItems = viewModel.getFilterStringIds().map { string(it) }
 
         filterSpinner.adapter = ArrayAdapter(
             requireContext(),

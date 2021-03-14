@@ -10,7 +10,7 @@ sealed class TransactionListViewState {
 
     data class Content(
         val listModels: List<Model>,
-        val directionFilter: TransferDirectionFilter,
+        val filterModel: FilterModel,
         val emptyState: EmptyState? = null,
     ) : TransactionListViewState()
 

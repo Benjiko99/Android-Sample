@@ -43,4 +43,7 @@ data class Money(
         return this.amountEquals(other.amount)
     }
 
+    override fun toString(): String {
+        return "${amount.toPlainString()} ${currency.currencyCode}"
+    }
 }

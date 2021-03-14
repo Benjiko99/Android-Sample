@@ -5,6 +5,8 @@ import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
+import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
+import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
 import com.spiraclesoftware.androidsample.framework.Model
@@ -17,7 +19,7 @@ class TransactionListViewModel(
 
     data class ViewData(
         val listModels: List<Model>,
-        val listFilter: TransactionListFilter,
+        val filterModel: FilterModel,
         val emptyState: EmptyState?,
     )
 
@@ -25,7 +27,7 @@ class TransactionListViewModel(
 
     object ShowLanguageChangeConfirmationEvent : OneShotEvent
 
-    private var listFilterFlow = MutableStateFlow(TransactionListFilter())
+    private var filterFlow = MutableStateFlow(TransactionsFilter())
 
     init {
         produceViewStateFromDataFlow()
@@ -60,8 +62,12 @@ class TransactionListViewModel(
         refreshTransactions()
     }
 
+    fun getFilterStringIds(): List<Int> {
+        return presenter.getFilterStringIds()
+    }
+
     private fun produceViewStateFromDataFlow() = executeNonBlocking {
-        presenter.flowViewData(listFilterFlow).collect { result ->
+        presenter.flowViewData(filterFlow).collect { result ->
             viewState = when (result) {
                 is Result.Loading -> Loading
                 is Result.Success -> getContent(result.data)
@@ -72,8 +78,7 @@ class TransactionListViewModel(
     }
 
     private fun getContent(data: ViewData): Content {
-        val directionFilter = listFilterFlow.value.directionFilter
-        return Content(data.listModels, directionFilter, data.emptyState)
+        return Content(data.listModels, data.filterModel, data.emptyState)
     }
 
     private fun refreshTransactions() = executeNonBlocking {
@@ -85,14 +90,14 @@ class TransactionListViewModel(
     }
 
     private fun setSearchQuery(query: String) = execute {
-        if (listFilterFlow.value.searchQuery != query) {
-            listFilterFlow.value = listFilterFlow.value.copy(searchQuery = query)
+        if (filterFlow.value.searchQuery != query) {
+            filterFlow.value = filterFlow.value.copy(searchQuery = query)
         }
     }
 
     private fun setTransferDirectionFilter(directionFilter: TransferDirectionFilter) = execute {
-        if (listFilterFlow.value.directionFilter != directionFilter) {
-            listFilterFlow.value = listFilterFlow.value.copy(directionFilter = directionFilter)
+        if (filterFlow.value.directionFilter != directionFilter) {
+            filterFlow.value = filterFlow.value.copy(directionFilter = directionFilter)
         }
     }
 

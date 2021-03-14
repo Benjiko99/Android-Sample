@@ -4,6 +4,7 @@ import co.zsmb.rainbowcake.withIOContext
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.Account
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
+import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.mapOnError
@@ -14,7 +15,7 @@ import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.StandardPresenter
 import com.spiraclesoftware.androidsample.util.LanguageManager
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 
@@ -26,36 +27,39 @@ class TransactionListPresenter(
     exceptionFormatter: ExceptionFormatter
 ) : StandardPresenter(exceptionFormatter) {
 
+    suspend fun refreshTransactions() = withIOContext {
+        transactionsInteractor.refreshTransactions()
+    }
+
     fun toggleLanguageAndRestart() {
         languageManager.toggleLanguageAndRestart()
+    }
+
+    fun getFilterStringIds(): List<Int> {
+        return formatter.filterStringIds()
     }
 
     suspend fun getAccount(): Account = withIOContext {
         accountsInteractor.getAccount()
     }
 
-    suspend fun refreshTransactions() = withIOContext {
-        transactionsInteractor.refreshTransactions()
-    }
-
     suspend fun flowViewData(
-        listFilter: Flow<TransactionListFilter>
+        filterFlow: Flow<TransactionsFilter>
     ): Flow<Result<ViewData>> = withIOContext {
-        transactionsInteractor.flowTransactions()
+        transactionsInteractor.flowTransactions(filterFlow)
             .mapOnError { getPresenterException(it) }
-            .combine(listFilter) { result, filter ->
-                result.mapOnSuccess { transactions ->
-                    tryForResult {
-                        val filteredTransactions = filter.applyTo(transactions)
+            .mapOnSuccess { transactions ->
+                tryForResult {
+                    val listModels = transactions
+                        .sortAndGroupByDay()
+                        .mapToModels()
 
-                        val listModels = filteredTransactions
-                            .sortAndGroupByDay()
-                            .mapToModels()
+                    val filter = filterFlow.first()
+                    val filterModel = formatter.filterModel(filter)
 
-                        val emptyState = formatter.emptyState(listModels.isEmpty(), filter.isActive())
+                    val emptyState = formatter.emptyState(listModels.isEmpty(), filter.isActive())
 
-                        ViewData(listModels, filter, emptyState)
-                    }
+                    ViewData(listModels, filterModel, emptyState)
                 }
             }
     }

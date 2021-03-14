@@ -2,8 +2,12 @@ package com.spiraclesoftware.androidsample.domain.interactor
 
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.*
-import com.spiraclesoftware.androidsample.domain.entity.*
+import com.spiraclesoftware.androidsample.domain.entity.Transaction
+import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
+import com.spiraclesoftware.androidsample.domain.entity.TransferDirection
+import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
 import io.mockk.*
+import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -15,38 +19,14 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionsInteractorTest {
 
-    companion object {
-        private val MOCK_TRANSACTIONS = listOf(
-            Transaction(
-                TransactionId("1"),
-                "Paypal *Steam",
-                epochDateTime,
-                money("49.99", "EUR"),
-                TransferDirection.OUTGOING,
-                TransactionCategory.ENTERTAINMENT,
-                TransactionStatus.COMPLETED,
-                TransactionStatusCode.SUCCESSFUL,
-            ),
-            Transaction(
-                TransactionId("2"),
-                "Salary",
-                epochDateTime,
-                money("1000", "EUR"),
-                TransferDirection.INCOMING,
-                TransactionCategory.TRANSFERS,
-                TransactionStatus.COMPLETED,
-                TransactionStatusCode.SUCCESSFUL
-            ),
-        )
-
-        private val MOCK_TRANSACTION = MOCK_TRANSACTIONS[0]
-    }
-
     @MockK
     lateinit var remoteDataSource: RemoteDataSource
 
     @MockK
     lateinit var localDataSource: LocalDataSource
+
+    @InjectMockKs
+    lateinit var testSubject: TransactionsInteractor
 
     @Before
     fun setUp() {
@@ -54,39 +34,57 @@ class TransactionsInteractorTest {
     }
 
     @Test
-    fun `Transactions flow contains correct data`() = runBlockingTest {
-        every { localDataSource.flowTransactions() } returns flowOf(MOCK_TRANSACTIONS)
-        coEvery { remoteDataSource.fetchTransactions() } returns flowOf(Result.Success(MOCK_TRANSACTIONS))
+    fun flowTransactions_all() = runBlockingTest {
+        val transactions = listOf<Transaction>(mockk())
+
+        every { localDataSource.flowTransactions() } returns flowOf(transactions)
+        coEvery { remoteDataSource.fetchTransactions() } returns flowOf(Result.Success(transactions))
         coJustRun { localDataSource.saveTransactions(any()) }
 
-        val interactor = TransactionsInteractor(remoteDataSource, localDataSource)
+        testSubject.refreshTransactions()
+        val actual = testSubject.flowTransactions(flowOf(TransactionsFilter()))
 
-        interactor.refreshTransactions()
-        val transactions = interactor.flowTransactions()
-
-        assertThat(transactions.first().data).isEqualTo(MOCK_TRANSACTIONS)
+        assertThat(actual.first().data).isEqualTo(transactions)
     }
 
     @Test
-    fun `Transactions are saved on local when fetched from remote`() = runBlockingTest {
-        coEvery { remoteDataSource.fetchTransactions() } returns flowOf(Result.Success(MOCK_TRANSACTIONS))
+    fun flowTransactions_filtered() = runBlockingTest {
+        val transactions = listOf(
+            transaction(transferDirection = TransferDirection.INCOMING),
+            transaction(transferDirection = TransferDirection.OUTGOING),
+        )
+
+        every { localDataSource.flowTransactions() } returns flowOf(transactions)
+        coEvery { remoteDataSource.fetchTransactions() } returns flowOf(Result.Success(transactions))
         coJustRun { localDataSource.saveTransactions(any()) }
 
-        val interactor = TransactionsInteractor(remoteDataSource, localDataSource)
+        val filter = TransactionsFilter(directionFilter = TransferDirectionFilter.INCOMING_ONLY)
 
-        interactor.refreshTransactions()
+        testSubject.refreshTransactions()
+        val actual = testSubject.flowTransactions(flowOf(filter))
 
-        verify { localDataSource.saveTransactions(MOCK_TRANSACTIONS) }
+        assertThat(actual.first().data).isEqualTo(transactions.take(1))
     }
 
     @Test
-    fun `Transaction is retrieved correctly from local by ID`() = runBlockingTest {
-        every { localDataSource.getTransactionById(any()) } returns MOCK_TRANSACTION
+    fun whenRefreshTransactions_thenSaveTransactionsLocally() = runBlockingTest {
+        val transactions = listOf<Transaction>(mockk())
 
-        val interactor = TransactionsInteractor(remoteDataSource, localDataSource)
+        coEvery { remoteDataSource.fetchTransactions() } returns flowOf(Result.Success(transactions))
+        coJustRun { localDataSource.saveTransactions(any()) }
 
-        val transaction = interactor.getTransactionById(MOCK_TRANSACTION.id)
-        assertThat(transaction).isEqualTo(MOCK_TRANSACTION)
+        testSubject.refreshTransactions()
+
+        verify { localDataSource.saveTransactions(transactions) }
+    }
+
+    @Test
+    fun retrieveTransactionById() = runBlockingTest {
+        val transaction = transaction()
+        every { localDataSource.getTransactionById(any()) } returns transaction
+
+        val actual = testSubject.getTransactionById(transaction.id)
+        assertThat(actual).isEqualTo(transaction)
     }
 
 }

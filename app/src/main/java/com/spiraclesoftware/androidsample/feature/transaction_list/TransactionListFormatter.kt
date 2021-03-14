@@ -3,10 +3,8 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.Money
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import com.spiraclesoftware.androidsample.formatter.DateTimeFormat
-import com.spiraclesoftware.androidsample.formatter.MoneyFormatter
-import com.spiraclesoftware.androidsample.formatter.TransactionCategoryFormatter
-import com.spiraclesoftware.androidsample.formatter.TransactionStatusCodeFormatter
+import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
+import com.spiraclesoftware.androidsample.formatter.*
 import org.koin.java.KoinJavaComponent.inject
 import java.time.ZonedDateTime
 
@@ -14,6 +12,7 @@ class TransactionListFormatter {
 
     private val statusCodeFormatter by inject(TransactionStatusCodeFormatter::class.java)
     private val categoryFormatter by inject(TransactionCategoryFormatter::class.java)
+    private val directionFilterFormatter by inject(TransferDirectionFilterFormatter::class.java)
 
     fun headerModel(
         dateTime: ZonedDateTime,
@@ -53,11 +52,11 @@ class TransactionListFormatter {
 
     fun emptyState(
         listIsEmpty: Boolean,
-        filterIsActive: Boolean
+        isFilterActive: Boolean
     ): EmptyState? {
         if (!listIsEmpty) return null
 
-        return if (filterIsActive) {
+        return if (isFilterActive) {
             EmptyState(
                 image = R.drawable.ic_empty_search_results,
                 caption = R.string.empty_state__no_results__caption,
@@ -69,6 +68,13 @@ class TransactionListFormatter {
                 message = R.string.empty_state__no_transactions__message
             )
         }
+    }
+
+    fun filterModel(filter: TransactionsFilter) =
+        FilterModel(directionFilter = filter.directionFilter)
+
+    fun filterStringIds(): List<Int> {
+        return directionFilterFormatter.listStringRes()
     }
 
 }

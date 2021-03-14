@@ -7,8 +7,7 @@ import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.NavigateEvent
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.ShowLanguageChangeConfirmationEvent
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.Content
 import com.spiraclesoftware.androidsample.framework.Model
 import io.mockk.*
@@ -84,8 +83,10 @@ class TransactionListViewModelTest : ViewModelTest() {
     @Test
     fun `Data is loaded correctly from presenter upon creation and leads to ready state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mockk()
-        val models = listOf(mockk<Model>())
-        val viewData = TransactionListViewModel.ViewData(models, TransactionListFilter(), null)
+        val mockListModels = listOf(mockk<Model>())
+        val mockFilterModel = mockk<FilterModel>()
+        val mockEmptyState = mockk<EmptyState>()
+        val viewData = ViewData(mockListModels, mockFilterModel, mockEmptyState)
 
         coEvery { presenter.flowViewData(any()) } returns flowOf(Result.Success(viewData))
 
@@ -93,10 +94,7 @@ class TransactionListViewModelTest : ViewModelTest() {
 
         testSubject.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
-                Content(
-                    models,
-                    TransferDirectionFilter.ALL
-                )
+                Content(mockListModels, mockFilterModel, mockEmptyState)
             )
         }
     }
@@ -104,7 +102,7 @@ class TransactionListViewModelTest : ViewModelTest() {
     @Test
     fun `Having no transactions leads to empty state`() = runBlockingTest {
         val presenter: TransactionListPresenter = mockk()
-        val viewData = TransactionListViewModel.ViewData(emptyList(), TransactionListFilter(), mockk())
+        val viewData = ViewData(emptyList(), mockk(), mockk())
 
         coEvery { presenter.flowViewData(any()) } returns flowOf(Result.Success(viewData))
 
