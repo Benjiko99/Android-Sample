@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.formatter
+package com.spiraclesoftware.androidsample.format
 
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.TransactionStatusCode

@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.framework
 
 import com.spiraclesoftware.androidsample.domain.Result
-import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
+import com.spiraclesoftware.androidsample.format.ExceptionFormatter
 import timber.log.Timber
 
 abstract class StandardPresenter(

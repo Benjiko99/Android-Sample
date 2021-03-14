@@ -2,9 +2,9 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail
 
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import com.spiraclesoftware.androidsample.formatter.DateTimeFormat
-import com.spiraclesoftware.androidsample.formatter.MoneyFormatter
-import com.spiraclesoftware.androidsample.formatter.TransactionCategoryFormatter
+import com.spiraclesoftware.androidsample.format.DateTimeFormat
+import com.spiraclesoftware.androidsample.format.MoneyFormatter
+import com.spiraclesoftware.androidsample.format.TransactionCategoryFormatter
 import com.spiraclesoftware.androidsample.framework.Model
 import org.koin.java.KoinJavaComponent.inject
 

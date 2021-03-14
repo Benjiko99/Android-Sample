@@ -15,7 +15,7 @@ import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.Cards
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFormatter
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListPresenter
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel
-import com.spiraclesoftware.androidsample.formatter.*
+import com.spiraclesoftware.androidsample.format.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.parameter.parametersOf

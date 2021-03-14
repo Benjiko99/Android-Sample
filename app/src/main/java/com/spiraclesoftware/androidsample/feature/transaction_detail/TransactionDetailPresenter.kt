@@ -9,7 +9,7 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsFormatter
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
-import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
+import com.spiraclesoftware.androidsample.format.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.StandardPresenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

@@ -6,7 +6,7 @@ import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
-import com.spiraclesoftware.androidsample.formatter.*
+import com.spiraclesoftware.androidsample.format.*
 import org.koin.java.KoinJavaComponent.inject
 import java.time.ZonedDateTime
 

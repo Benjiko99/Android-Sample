@@ -3,9 +3,9 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail.cards
 import androidx.core.net.toUri
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
-import com.spiraclesoftware.androidsample.formatter.TransactionCategoryFormatter
-import com.spiraclesoftware.androidsample.formatter.TransactionStatusCodeFormatter
-import com.spiraclesoftware.androidsample.formatter.TransactionStatusFormatter
+import com.spiraclesoftware.androidsample.format.TransactionCategoryFormatter
+import com.spiraclesoftware.androidsample.format.TransactionStatusCodeFormatter
+import com.spiraclesoftware.androidsample.format.TransactionStatusFormatter
 import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.StringHolder
 import org.koin.java.KoinJavaComponent.inject

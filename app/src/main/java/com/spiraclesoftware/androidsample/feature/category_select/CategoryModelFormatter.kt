@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.feature.category_select
 
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.feature.category_select.item.model.CategoryModel
-import com.spiraclesoftware.androidsample.formatter.TransactionCategoryFormatter
+import com.spiraclesoftware.androidsample.format.TransactionCategoryFormatter
 import org.koin.java.KoinJavaComponent.inject
 
 class CategoryModelFormatter {

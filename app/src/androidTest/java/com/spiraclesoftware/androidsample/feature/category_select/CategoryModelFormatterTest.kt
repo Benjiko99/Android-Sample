@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.feature.category_select.item.model.CategoryModel
-import com.spiraclesoftware.androidsample.formatter.FormatterTest
+import com.spiraclesoftware.androidsample.format.FormatterTest
 import org.junit.Test
 
 class CategoryModelFormatterTest : FormatterTest() {

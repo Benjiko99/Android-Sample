@@ -9,7 +9,7 @@ import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.mapOnError
 import com.spiraclesoftware.androidsample.domain.mapOnSuccess
-import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
+import com.spiraclesoftware.androidsample.format.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.StandardPresenter
 import com.spiraclesoftware.androidsample.util.LanguageManager

@@ -10,7 +10,7 @@ import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteract
 import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsFormatter
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
-import com.spiraclesoftware.androidsample.formatter.ExceptionFormatter
+import com.spiraclesoftware.androidsample.format.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.PresenterException
 import com.spiraclesoftware.androidsample.money
 import io.mockk.MockKAnnotations

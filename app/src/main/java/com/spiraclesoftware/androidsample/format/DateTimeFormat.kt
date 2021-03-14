@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.formatter
+package com.spiraclesoftware.androidsample.format
 
 import java.time.format.DateTimeFormatter
 

@@ -1,4 +1,4 @@
-package com.spiraclesoftware.androidsample.formatter
+package com.spiraclesoftware.androidsample.format
 
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
