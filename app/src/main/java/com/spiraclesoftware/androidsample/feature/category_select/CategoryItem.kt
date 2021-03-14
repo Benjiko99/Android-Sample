@@ -25,7 +25,7 @@ class CategoryItem(
         val ctx = root.context
 
         radioView.isChecked = model.isSelectedCategory
-        nameView.text = ctx.string(model.name)
+        nameView.text = ctx.string(model.nameRes)
 
         val iconTint = ctx.color(model.iconTintRes)
         val icon = ctx.tintedDrawable(model.iconRes, iconTint)

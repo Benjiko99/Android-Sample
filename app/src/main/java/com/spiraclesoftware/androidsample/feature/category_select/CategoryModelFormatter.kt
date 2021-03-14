@@ -14,7 +14,7 @@ class CategoryModelFormatter {
     ): CategoryModel {
         return CategoryModel(
             ordinal = category.ordinal,
-            name = categoryFormatter.stringRes(category),
+            nameRes = categoryFormatter.stringRes(category),
             iconRes = categoryFormatter.drawableRes(category),
             iconTintRes = categoryFormatter.colorRes(category),
             isSelectedCategory = isSelectedCategory
