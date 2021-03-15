@@ -2,7 +2,6 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 
 import co.zsmb.rainbowcake.withIOContext
 import com.spiraclesoftware.androidsample.domain.Result
-import com.spiraclesoftware.androidsample.domain.entity.Account
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
@@ -34,9 +33,8 @@ class TransactionListPresenter(
         languageManager.toggleLanguageAndRestart()
     }
 
-    fun getFilterStringIds(): List<Int> {
-        return formatter.filterStringIds()
-    }
+    fun getFilterStringIds() =
+        formatter.filterStringIds()
 
     suspend fun flowContentModel(
         filterFlow: Flow<TransactionsFilter>
@@ -59,10 +57,9 @@ class TransactionListPresenter(
             }
     }
 
-    private fun List<Transaction>.sortAndGroupByDay(): Map<ZonedDateTime, List<Transaction>> {
-        return sortedByDescending { it.processingDate }
+    private fun List<Transaction>.sortAndGroupByDay() =
+        sortedByDescending { it.processingDate }
             .groupBy { it.processingDate.truncatedTo(ChronoUnit.DAYS) }
-    }
 
     @OptIn(ExperimentalStdlibApi::class)
     private suspend fun Map<ZonedDateTime, List<Transaction>>.mapToModels(): List<Model> {

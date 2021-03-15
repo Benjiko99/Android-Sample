@@ -75,8 +75,7 @@ class TransactionListFormatter {
     fun filterModel(filter: TransactionsFilter) =
         FilterModel(directionFilter = filter.directionFilter)
 
-    fun filterStringIds(): List<Int> {
-        return directionFilterFormatter.listStringRes()
-    }
+    fun filterStringIds() =
+        directionFilterFormatter.listStringRes()
 
 }

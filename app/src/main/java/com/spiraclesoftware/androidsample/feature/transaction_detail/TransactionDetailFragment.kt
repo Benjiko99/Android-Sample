@@ -63,6 +63,14 @@ class TransactionDetailFragment :
     private lateinit var fastAdapter: GenericFastAdapter
     private lateinit var itemAdapter: GenericModelAdapter<Model>
 
+    private fun onAddAttachmentClicked() {
+        viewModel.onAddAttachment()
+    }
+
+    private fun onNoteChanged(note: String?) {
+        viewModel.onNoteChanged(note.orEmpty())
+    }
+    
     override fun render(viewState: TransactionDetailViewState): Unit = with(binding) {
         renderErrorLayout(viewState)
 
@@ -152,7 +160,7 @@ class TransactionDetailFragment :
 
         setFragmentResultListener(NOTE_INPUT_REQUEST_KEY) { _, bundle ->
             val note = bundle.getString(TextInputFragment.RESULT_KEY)
-            viewModel.onNoteChanged(note.orEmpty())
+            onNoteChanged(note)
         }
 
         imagePicker = ImagePicker().also {
@@ -197,7 +205,7 @@ class TransactionDetailFragment :
             setHasStableIds(true)
 
             addClickListener({ vh: AttachmentsCardItem.ViewHolder -> vh.binding.actionView }) { _, _, _, _ ->
-                viewModel.onAddAttachment()
+                onAddAttachmentClicked()
             }
         }
     }
