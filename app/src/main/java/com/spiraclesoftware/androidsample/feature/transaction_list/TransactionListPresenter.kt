@@ -38,10 +38,6 @@ class TransactionListPresenter(
         return formatter.filterStringIds()
     }
 
-    suspend fun getAccount(): Account = withIOContext {
-        accountsInteractor.getAccount()
-    }
-
     suspend fun flowContentModel(
         filterFlow: Flow<TransactionsFilter>
     ): Flow<Result<ContentModel>> = withIOContext {

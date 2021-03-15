@@ -4,7 +4,6 @@ import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.data
-import com.spiraclesoftware.androidsample.domain.entity.Account
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
@@ -24,7 +23,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
-import java.util.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionListPresenterTest : PresenterTest() {
@@ -50,16 +48,6 @@ class TransactionListPresenterTest : PresenterTest() {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-    }
-
-    @Test
-    fun retrieveAccount() = runBlockingTest {
-        val account = Account(Currency.getInstance("EUR"))
-        every { accountsInteractor.getAccount() } returns account
-
-        val actual = testSubject.getAccount()
-
-        assertThat(actual).isEqualTo(account)
     }
 
     @Test
