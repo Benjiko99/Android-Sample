@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
-import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionItemBinding
 import com.spiraclesoftware.androidsample.domain.util.to64BitHash
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
+import com.spiraclesoftware.androidsample.framework.ModelAbstractBindingItem
 
 class TransactionItem(
     model: TransactionModel
@@ -45,20 +45,6 @@ class TransactionItem(
 
         val fadedTint = ColorUtils.setAlphaComponent(iconTint, 255 / 100 * 15)
         iconView.background = ctx.tintedDrawable(R.drawable.shp_circle, fadedTint)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (!super.equals(other)) return false
-
-        other as TransactionItem
-        if (model != other.model) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + model.hashCode()
-        return result
     }
 
 }

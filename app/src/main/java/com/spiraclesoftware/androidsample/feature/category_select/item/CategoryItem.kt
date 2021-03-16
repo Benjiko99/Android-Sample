@@ -3,13 +3,13 @@ package com.spiraclesoftware.androidsample.feature.category_select.item
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
-import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.CategorySelectItemBinding
 import com.spiraclesoftware.androidsample.extension.color
 import com.spiraclesoftware.androidsample.extension.string
 import com.spiraclesoftware.androidsample.extension.tintedDrawable
 import com.spiraclesoftware.androidsample.feature.category_select.item.model.CategoryModel
+import com.spiraclesoftware.androidsample.framework.ModelAbstractBindingItem
 
 class CategoryItem(
     model: CategoryModel
@@ -34,24 +34,6 @@ class CategoryItem(
 
         val fadedTint = ColorUtils.setAlphaComponent(iconTint, 255 / 100 * 15)
         iconView.background = ctx.tintedDrawable(R.drawable.shp_circle, fadedTint)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        if (!super.equals(other)) return false
-
-        other as CategoryItem
-        if (model != other.model) return false
-        if (identifier != other.identifier) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + model.hashCode()
-        result = 31 * result + identifier.hashCode()
-        return result
     }
 
 }

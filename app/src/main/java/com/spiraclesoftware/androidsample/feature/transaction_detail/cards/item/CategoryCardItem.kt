@@ -29,18 +29,4 @@ class CategoryCardItem(
         binding.actionView.onClick(::onSelectCategory.get())
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (!super.equals(other)) return false
-
-        other as CategoryCardItem
-        if (model != other.model) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + model.hashCode()
-        return result
-    }
-
 }

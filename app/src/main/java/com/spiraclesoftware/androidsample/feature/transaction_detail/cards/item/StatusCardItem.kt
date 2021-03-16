@@ -27,18 +27,4 @@ class StatusCardItem(
         binding.bodyText = "$status ∙ $statusCode"
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (!super.equals(other)) return false
-
-        other as StatusCardItem
-        if (model != other.model) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + model.hashCode()
-        return result
-    }
-
 }
