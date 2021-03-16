@@ -22,7 +22,7 @@ import timber.log.Timber
 class TransactionDetailViewModel(
     private val transactionId: TransactionId,
     private val detailPresenter: TransactionDetailPresenter
-) : RainbowCakeViewModel<TransactionDetailViewState>(Initial), CardActionsHandler {
+) : RainbowCakeViewModel<TransactionDetailViewState>(Initial) {
 
     data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
 
@@ -59,15 +59,15 @@ class TransactionDetailViewModel(
             }
     }
 
-    override fun onOpenCardDetail() {
+    fun openCardDetail() {
         postEvent(NavigateToCardDetailEvent)
     }
 
-    override fun onDownloadStatement() {
+    fun downloadStatement() {
         postEvent(DownloadStatementEvent)
     }
 
-    override fun onSelectCategory() = execute {
+    fun selectCategory() = execute {
         val navDirections = toCategorySelect(
             transactionId.value,
             initialCategory = detailPresenter.getCategory()
@@ -75,13 +75,13 @@ class TransactionDetailViewModel(
         postEvent(NavigateEvent(navDirections))
     }
 
-    override fun onViewAttachment(uri: Uri) = execute {
+    fun viewAttachment(uri: Uri) = execute {
         val images = detailPresenter.getAttachments()
         val startPosition = images.indexOf(uri)
         postEvent(OpenAttachmentViewerEvent(images, startPosition))
     }
 
-    override fun onAddAttachment() = execute {
+    fun addAttachment() = execute {
         val attachments = detailPresenter.getAttachments()
         val totalCount = attachments.size + attachmentUploads.value.size
 
@@ -92,15 +92,15 @@ class TransactionDetailViewModel(
         postEvent(OpenAttachmentPickerEvent)
     }
 
-    override fun onRemoveAttachment(uri: Uri) = execute {
+    fun removeAttachment(uri: Uri) = execute {
         detailPresenter.removeAttachment(uri)
     }
 
-    override fun onCancelUpload(uri: Uri) {
+    fun cancelUpload(uri: Uri) {
         // Not yet implemented
     }
 
-    override fun onChangeNote() = execute {
+    fun openNoteInput() = execute {
         val navDirections = toTextInput(
             TextInputType.NOTE,
             NOTE_INPUT_REQUEST_KEY,

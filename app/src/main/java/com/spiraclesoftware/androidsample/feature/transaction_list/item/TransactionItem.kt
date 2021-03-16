@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionItemBinding
+import com.spiraclesoftware.androidsample.domain.util.to64BitHash
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
 
@@ -15,7 +16,7 @@ class TransactionItem(
     model: TransactionModel
 ) : ModelAbstractBindingItem<TransactionModel, TransactionItemBinding>(model) {
 
-    override var identifier = model.id.hashCode().toLong()
+    override var identifier = model.id.value.to64BitHash()
 
     override val type = R.id.transaction_item
 

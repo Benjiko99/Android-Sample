@@ -6,12 +6,11 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemBinding
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemEntryBinding
 import com.spiraclesoftware.androidsample.extension.*
-import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardActionsHandler
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.ValuePairCardModel
 
 class ValuePairCardItem(
     model: ValuePairCardModel,
-    private val actionsHandler: CardActionsHandler
+    private val onValuePairAction: (Int) -> Unit
 ) : ModelBindingCardItem<ValuePairCardModel, ValuePairCardItemBinding>(model) {
 
     override var identifier: Long = R.id.value_pair_card_item.toLong()
@@ -31,8 +30,8 @@ class ValuePairCardItem(
             pb.labelText = ctx.string(model.label)
             pb.valueText = model.value.getString(ctx)
 
-            if (model.onClickAction != null) {
-                pb.valueView.onClick { model.onClickAction.invoke(actionsHandler) }
+            if (model.actionId != null) {
+                pb.valueView.onClick { onValuePairAction(model.actionId) }
 
                 val tintColor = ctx.colorAttr(R.attr.colorPrimary)
                 pb.valueView.setTextColor(tintColor)
@@ -57,14 +56,12 @@ class ValuePairCardItem(
 
         other as ValuePairCardItem
         if (model != other.model) return false
-        if (actionsHandler != other.actionsHandler) return false
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
         result = 31 * result + model.hashCode()
-        result = 31 * result + actionsHandler.hashCode()
         return result
     }
 

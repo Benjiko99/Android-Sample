@@ -7,12 +7,11 @@ import com.spiraclesoftware.androidsample.databinding.CategoryCardItemBinding
 import com.spiraclesoftware.androidsample.extension.drawable
 import com.spiraclesoftware.androidsample.extension.onClick
 import com.spiraclesoftware.androidsample.extension.string
-import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardActionsHandler
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.CategoryCardModel
 
 class CategoryCardItem(
     model: CategoryCardModel,
-    private val actionsHandler: CardActionsHandler
+    private val onSelectCategory: () -> Unit
 ) : ModelBindingCardItem<CategoryCardModel, CategoryCardItemBinding>(model) {
 
     override var identifier: Long = R.id.category_card_item.toLong()
@@ -27,9 +26,7 @@ class CategoryCardItem(
         binding.categoryText = ctx.string(model.nameRes)
         binding.categoryIcon = ctx.drawable(model.iconRes)
 
-        binding.actionView.onClick {
-            actionsHandler.onSelectCategory()
-        }
+        binding.actionView.onClick(::onSelectCategory.get())
     }
 
     override fun equals(other: Any?): Boolean {
@@ -37,14 +34,12 @@ class CategoryCardItem(
 
         other as CategoryCardItem
         if (model != other.model) return false
-        if (actionsHandler != other.actionsHandler) return false
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
         result = 31 * result + model.hashCode()
-        result = 31 * result + actionsHandler.hashCode()
         return result
     }
 

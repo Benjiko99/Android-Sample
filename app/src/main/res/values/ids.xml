@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Actions -->
+    <item name="action_open_card_detail" type="id" />
+    <item name="action_download_statement" type="id" />
+
     <!-- List items -->
     <item name="category_item" type="id" />
     <item name="transaction_item" type="id" />

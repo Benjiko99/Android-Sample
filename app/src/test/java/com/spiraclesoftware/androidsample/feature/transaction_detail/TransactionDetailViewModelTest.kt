@@ -59,7 +59,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { _, eventsObserver ->
-            viewModel.onChangeNote()
+            viewModel.openNoteInput()
 
             val navDirections = toTextInput(
                 TextInputType.NOTE,
@@ -81,7 +81,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { _, eventsObserver ->
-            viewModel.onSelectCategory()
+            viewModel.selectCategory()
 
             val navDirections = toCategorySelect(
                 "1",
@@ -98,7 +98,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     fun onOpenCardDetail_postEvent_NavigateToCardDetailEvent() = runBlockingTest {
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { _, eventsObserver ->
-            viewModel.onOpenCardDetail()
+            viewModel.openCardDetail()
 
             eventsObserver.assertObserved(NavigateToCardDetailEvent)
         }
@@ -108,7 +108,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     fun onDownloadStatement_postEvent_DownloadStatementEvent() = runBlockingTest {
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { _, eventsObserver ->
-            viewModel.onDownloadStatement()
+            viewModel.downloadStatement()
 
             eventsObserver.assertObserved(DownloadStatementEvent)
         }

@@ -22,7 +22,6 @@ import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericModelAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
-import com.mikepenz.fastadapter.listeners.addClickListener
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.component.image_picker.ImagePicker
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
@@ -43,7 +42,8 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
 class TransactionDetailFragment :
-    StandardFragment<TransactionDetailFragmentBinding, TransactionDetailViewState, TransactionDetailViewModel>() {
+    StandardFragment<TransactionDetailFragmentBinding, TransactionDetailViewState, TransactionDetailViewModel>(),
+    AttachmentsCardItem.ActionListener {
 
     override fun provideViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
         TransactionDetailFragmentBinding.inflate(inflater, container, false)
@@ -63,14 +63,41 @@ class TransactionDetailFragment :
     private lateinit var fastAdapter: GenericFastAdapter
     private lateinit var itemAdapter: GenericModelAdapter<Model>
 
-    private fun onAddAttachmentClicked() {
-        viewModel.onAddAttachment()
+    private fun onSelectCategory() {
+        viewModel.selectCategory()
+    }
+
+    override fun onAddAttachment() {
+        viewModel.addAttachment()
+    }
+
+    override fun onRemoveAttachment(uri: Uri) {
+        viewModel.removeAttachment(uri)
+    }
+
+    override fun onViewAttachment(uri: Uri) {
+        viewModel.viewAttachment(uri)
+    }
+
+    override fun onCancelUpload(uri: Uri) {
+        viewModel.cancelUpload(uri)
+    }
+
+    private fun onChangeNote() {
+        viewModel.openNoteInput()
+    }
+
+    private fun onValuePairAction(actionId: Int) {
+        when (actionId) {
+            R.id.action_open_card_detail -> viewModel.openCardDetail()
+            R.id.action_download_statement -> viewModel.downloadStatement()
+        }
     }
 
     private fun onNoteChanged(note: String?) {
         viewModel.onNoteChanged(note.orEmpty())
     }
-    
+
     override fun render(viewState: TransactionDetailViewState): Unit = with(binding) {
         renderErrorLayout(viewState)
 
@@ -191,11 +218,16 @@ class TransactionDetailFragment :
     private fun setupFastItemAdapter() {
         itemAdapter = ModelAdapter.models { model: Model ->
             when (model) {
-                is ValuePairCardModel -> ValuePairCardItem(model, viewModel)
-                is StatusCardModel -> StatusCardItem(model)
-                is CategoryCardModel -> CategoryCardItem(model, viewModel)
-                is AttachmentsCardModel -> AttachmentsCardItem(model, viewModel)
-                is NoteCardModel -> NoteCardItem(model, viewModel)
+                is ValuePairCardModel ->
+                    ValuePairCardItem(model, ::onValuePairAction)
+                is StatusCardModel ->
+                    StatusCardItem(model)
+                is CategoryCardModel ->
+                    CategoryCardItem(model, ::onSelectCategory)
+                is AttachmentsCardModel ->
+                    AttachmentsCardItem(model, this)
+                is NoteCardModel ->
+                    NoteCardItem(model, ::onChangeNote)
                 else -> throw IllegalStateException()
             }
         }
@@ -203,10 +235,6 @@ class TransactionDetailFragment :
             // Prevent clicking on the CardView of each item
             attachDefaultListeners = false
             setHasStableIds(true)
-
-            addClickListener({ vh: AttachmentsCardItem.ViewHolder -> vh.binding.actionView }) { _, _, _, _ ->
-                onAddAttachmentClicked()
-            }
         }
     }
 

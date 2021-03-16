@@ -1,5 +1,6 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item
 
+import android.net.Uri
 import android.view.View
 import androidx.core.view.isGone
 import com.mikepenz.fastadapter.FastAdapter
@@ -7,13 +8,20 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.AttachmentsCardItemBinding
-import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardActionsHandler
+import com.spiraclesoftware.androidsample.extension.onClick
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.AttachmentsCardModel
 
 class AttachmentsCardItem(
     model: AttachmentsCardModel,
-    private val actionsHandler: CardActionsHandler
+    private val actionListener: ActionListener
 ) : ModelCardItem<AttachmentsCardModel, AttachmentsCardItem.ViewHolder>(model) {
+
+    interface ActionListener {
+        fun onAddAttachment()
+        fun onViewAttachment(uri: Uri)
+        fun onRemoveAttachment(uri: Uri)
+        fun onCancelUpload(uri: Uri)
+    }
 
     override var identifier: Long = R.id.attachments_card_item.toLong()
 
@@ -21,12 +29,9 @@ class AttachmentsCardItem(
 
     override val layoutRes = R.layout.attachments_card_item
 
-    override fun getViewHolder(v: View) = ViewHolder(v, actionsHandler)
+    override fun getViewHolder(v: View) = ViewHolder(v)
 
-    class ViewHolder(
-        val view: View,
-        private val actionsHandler: CardActionsHandler
-    ) : FastAdapter.ViewHolder<AttachmentsCardItem>(view) {
+    class ViewHolder(val view: View) : FastAdapter.ViewHolder<AttachmentsCardItem>(view) {
 
         val binding = AttachmentsCardItemBinding.bind(view)
         private val itemAdapter = ItemAdapter.items<AttachmentsCardItemEntry>()
@@ -34,22 +39,11 @@ class AttachmentsCardItem(
 
         init {
             fastAdapter.setHasStableIds(true)
-
-            AttachmentsCardItemEntry.addClickListener(fastAdapter, { it.photoView }) { item ->
-                if (!item.isUploading)
-                    actionsHandler.onViewAttachment(item.imageSource)
-            }
-
-            AttachmentsCardItemEntry.addClickListener(fastAdapter, { it.actionButton }) { item ->
-                if (item.isUploading)
-                    actionsHandler.onCancelUpload(item.imageSource)
-                else
-                    actionsHandler.onRemoveAttachment(item.imageSource)
-            }
         }
 
         override fun bindView(item: AttachmentsCardItem, payloads: List<Any>) {
             bindRecyclerView(item)
+            binding.actionView.onClick(item.actionListener::onAddAttachment)
         }
 
         override fun unbindView(item: AttachmentsCardItem) = with(binding) {
@@ -73,10 +67,10 @@ class AttachmentsCardItem(
 
         private fun getListItems(item: AttachmentsCardItem): List<AttachmentsCardItemEntry> {
             val attachments = item.model.attachments.map { uri ->
-                AttachmentsCardItemEntry(uri, false)
+                AttachmentsCardItemEntry(uri, false, item.actionListener)
             }
             val uploads = item.model.uploads.map { uri ->
-                AttachmentsCardItemEntry(uri, true)
+                AttachmentsCardItemEntry(uri, true, item.actionListener)
             }
             return attachments.plus(uploads)
         }
@@ -88,14 +82,12 @@ class AttachmentsCardItem(
 
         other as AttachmentsCardItem
         if (model != other.model) return false
-        if (actionsHandler != other.actionsHandler) return false
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
         result = 31 * result + model.hashCode()
-        result = 31 * result + actionsHandler.hashCode()
         return result
     }
 

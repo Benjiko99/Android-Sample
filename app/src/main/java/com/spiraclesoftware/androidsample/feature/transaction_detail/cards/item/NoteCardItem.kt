@@ -6,12 +6,11 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.NoteCardItemBinding
 import com.spiraclesoftware.androidsample.extension.onClick
 import com.spiraclesoftware.androidsample.extension.string
-import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardActionsHandler
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.NoteCardModel
 
 class NoteCardItem(
     model: NoteCardModel,
-    private val actionsHandler: CardActionsHandler
+    private val onChangeNote: () -> Unit
 ) : ModelBindingCardItem<NoteCardModel, NoteCardItemBinding>(model) {
 
     override var identifier: Long = R.id.note_card_item.toLong()
@@ -30,9 +29,7 @@ class NoteCardItem(
         else
             ctx.string(R.string.transaction_detail__edit_note)
 
-        binding.actionView.onClick {
-            actionsHandler.onChangeNote()
-        }
+        binding.actionView.onClick(::onChangeNote.get())
     }
 
     override fun equals(other: Any?): Boolean {
@@ -40,14 +37,12 @@ class NoteCardItem(
 
         other as NoteCardItem
         if (model != other.model) return false
-        if (actionsHandler != other.actionsHandler) return false
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
         result = 31 * result + model.hashCode()
-        result = 31 * result + actionsHandler.hashCode()
         return result
     }
 

@@ -52,14 +52,14 @@ class CardsFormatter {
                         label = R.string.transaction_detail__card,
                         value = StringHolder(pair.cardDescription.orEmpty()),
                         icon = R.drawable.ic_credit_card,
-                        onClickAction = { it.onOpenCardDetail() }
+                        actionId = R.id.action_open_card_detail
                     )
                 is ValuePair.DownloadStatement ->
                     ValuePairModel(
                         label = R.string.transaction_detail__statement,
                         value = StringHolder(R.string.transaction_detail__download),
                         icon = R.drawable.ic_download_statement,
-                        onClickAction = { it.onDownloadStatement() }
+                        actionId = R.id.action_download_statement
                     )
             }
         }
