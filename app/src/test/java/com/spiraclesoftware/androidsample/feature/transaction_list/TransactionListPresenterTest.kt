@@ -69,7 +69,7 @@ class TransactionListPresenterTest : PresenterTest() {
     }
 
     @Test
-    fun presentContentModel() = runBlockingTest {
+    fun flowContentModel() = runBlockingTest {
         val transaction = mockk<Transaction> {
             every { processingDate } returns epochDateTime
         }
@@ -94,7 +94,7 @@ class TransactionListPresenterTest : PresenterTest() {
     }
 
     @Test
-    fun presentContentModel_emptyState() = runBlockingTest {
+    fun flowContentModel_emptyState() = runBlockingTest {
         val dataResult = Result.Success(emptyList<Transaction>())
         val mockFilterModel = mockk<FilterModel>()
         val mockEmptyState = mockk<EmptyState>()
@@ -106,7 +106,6 @@ class TransactionListPresenterTest : PresenterTest() {
         val actual = testSubject.flowContentModel(filterFlow).first().data
 
         val expected = ContentModel(emptyList(), mockFilterModel, mockEmptyState)
-
         assertThat(actual).isEqualTo(expected)
     }
 

@@ -20,11 +20,14 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionListViewModelTest : ViewModelTest() {
 
+    private val presenter: TransactionListPresenter = mockk()
+
+    private val testSubject by lazy {
+        TransactionListViewModel(presenter)
+    }
+
     @Test
     fun openTransactionDetail() {
-        val presenter: TransactionListPresenter = mockk()
-        val testSubject = TransactionListViewModel(presenter)
-
         testSubject.observeStateAndEvents { _, eventsObserver ->
             testSubject.openTransactionDetail(TransactionId("1"))
 
@@ -36,9 +39,6 @@ class TransactionListViewModelTest : ViewModelTest() {
 
     @Test
     fun changeLanguage() {
-        val presenter: TransactionListPresenter = mockk()
-        val testSubject = TransactionListViewModel(presenter)
-
         testSubject.observeStateAndEvents { _, eventsObserver ->
             testSubject.changeLanguage()
 
@@ -50,48 +50,39 @@ class TransactionListViewModelTest : ViewModelTest() {
 
     @Test
     fun confirmLanguageChange() {
-        val presenter: TransactionListPresenter = mockk {
-            justRun { toggleLanguageAndRestart() }
-        }
-        val testSubject = TransactionListViewModel(presenter)
+        justRun { presenter.toggleLanguageAndRestart() }
 
         testSubject.confirmLanguageChange()
+
         verify { presenter.toggleLanguageAndRestart() }
     }
 
     @Test
     fun refreshData() = runBlockingTest {
-        val presenter: TransactionListPresenter = mockk {
-            coJustRun { refreshTransactions() }
-        }
-        val testSubject = TransactionListViewModel(presenter)
+        coJustRun { presenter.refreshTransactions() }
 
         testSubject.refreshData()
+
         coVerify { presenter.refreshTransactions() }
     }
 
     @Test
     fun retryOnError() = runBlockingTest {
-        val presenter: TransactionListPresenter = mockk {
-            coJustRun { refreshTransactions() }
-        }
-        val testSubject = TransactionListViewModel(presenter)
+        coJustRun { presenter.refreshTransactions() }
 
         testSubject.retryOnError()
+
         coVerify { presenter.refreshTransactions() }
     }
 
     @Test
-    fun `Data is loaded correctly from presenter upon creation and leads to ready state`() = runBlockingTest {
-        val presenter: TransactionListPresenter = mockk()
+    fun produceContentState() = runBlockingTest {
         val mockListModels = listOf(mockk<Model>())
         val mockFilterModel = mockk<FilterModel>()
         val mockEmptyState = mockk<EmptyState>()
         val contentModel = ContentModel(mockListModels, mockFilterModel, mockEmptyState)
 
         coEvery { presenter.flowContentModel(any()) } returns flowOf(Result.Success(contentModel))
-
-        val testSubject = TransactionListViewModel(presenter)
 
         testSubject.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
@@ -101,13 +92,10 @@ class TransactionListViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun `Having no transactions leads to empty state`() = runBlockingTest {
-        val presenter: TransactionListPresenter = mockk()
+    fun produceEmptyState_whenContentModelIsEmpty() = runBlockingTest {
         val contentModel = ContentModel(emptyList(), mockk(), mockk())
 
         coEvery { presenter.flowContentModel(any()) } returns flowOf(Result.Success(contentModel))
-
-        val testSubject = TransactionListViewModel(presenter)
 
         testSubject.observeStateAndEvents { stateObserver, _ ->
             val viewState = stateObserver.observed.first() as Content
