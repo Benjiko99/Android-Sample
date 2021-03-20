@@ -6,6 +6,12 @@
     app:startDestination="@id/transactionListFragment">
 
     <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.spiraclesoftware.androidsample.feature.profile.ProfileFragment"
+        android:label="@string/edit_profile__title"
+        tools:layout="@layout/profile_fragment" />
+
+    <fragment
         android:id="@+id/transactionListFragment"
         android:name="com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragment"
         android:label="@string/transaction_list__title"
@@ -18,6 +24,13 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
 
+        <action
+            android:id="@+id/to_profile"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
     </fragment>
 
     <fragment

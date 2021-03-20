@@ -7,6 +7,7 @@ import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toProfile
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +26,10 @@ class TransactionListViewModel(
     init {
         produceViewState()
         refreshTransactions()
+    }
+
+    fun openProfile() {
+        postEvent(NavigateEvent(toProfile()))
     }
 
     fun openTransactionDetail(id: TransactionId) {

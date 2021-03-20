@@ -21,6 +21,7 @@ import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericModelAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
+import com.spiraclesoftware.androidsample.FeatureFlags
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
@@ -76,6 +77,10 @@ class TransactionListFragment :
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_profile -> {
+                viewModel.openProfile()
+                return true
+            }
             R.id.action_change_language -> {
                 viewModel.changeLanguage()
                 return true
@@ -215,6 +220,17 @@ class TransactionListFragment :
 
         searchItem.onActionExpanded { isExpanded ->
             collapseActionViewCallback.isEnabled = isExpanded
+
+            binding.toolbar.post {
+                // hide other menu items when search is expanded
+                menu.forEach { it.isVisible = !isExpanded }
+
+                // hide profile item according to feature flag
+                menu.findItem(R.id.action_profile).apply {
+                    val isEnabled = FeatureFlags.PROFILE_FEATURE.isEnabled
+                    isVisible = isEnabled && !isExpanded
+                }
+            }
         }
 
         searchView.setOnQueryTextListener(object : OnQueryTextListener {
