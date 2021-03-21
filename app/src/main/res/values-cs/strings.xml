@@ -19,6 +19,11 @@
 
     <!-- Profile -->
     <string name="edit_profile__title">Upravit profil</string>
+    <string name="edit_profile__personal_information">Osobní informace</string>
+    <string name="edit_profile__full_name">Celé jméno</string>
+    <string name="edit_profile__date_of_birth">Datum narození</string>
+    <string name="edit_profile__phone_number">Telefonní číslo</string>
+    <string name="edit_profile__email">Email</string>
 
     <!-- Transaction -->
     <string name="transaction_status__completed">Dokončený</string>

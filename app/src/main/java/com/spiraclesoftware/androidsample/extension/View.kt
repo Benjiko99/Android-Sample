@@ -1,9 +1,12 @@
 package com.spiraclesoftware.androidsample.extension
 
+import android.text.Editable
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.StringRes
+import com.google.android.material.textfield.TextInputLayout
 
 //region Margins
 var View.topMargin: Int?
@@ -20,6 +23,20 @@ fun TextView.addPaintFlag(flag: Int) {
 
 fun TextView.removePaintFlag(flag: Int) {
     paintFlags = paintFlags and flag.inv()
+}
+//endregion
+
+//region TextInputLayout
+fun TextInputLayout.getText(): Editable {
+    return editText!!.text!!
+}
+
+fun TextInputLayout.setText(text: CharSequence) {
+    editText!!.setText(text)
+}
+
+fun TextInputLayout.setText(@StringRes resId: Int) {
+    editText!!.setText(resId)
 }
 //endregion
 

@@ -20,6 +20,11 @@
 
     <!-- Profile -->
     <string name="edit_profile__title">Edit profile</string>
+    <string name="edit_profile__personal_information">Personal information</string>
+    <string name="edit_profile__full_name">Full name</string>
+    <string name="edit_profile__date_of_birth">Date of birth</string>
+    <string name="edit_profile__phone_number">Phone number</string>
+    <string name="edit_profile__email">Email</string>
 
     <!-- Transaction -->
     <string name="transaction_status__completed">Completed</string>

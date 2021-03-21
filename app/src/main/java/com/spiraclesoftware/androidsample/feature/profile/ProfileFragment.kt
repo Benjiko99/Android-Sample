@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import co.zsmb.rainbowcake.koin.getViewModelFromFactory
 import com.spiraclesoftware.androidsample.databinding.ProfileFragmentBinding
+import com.spiraclesoftware.androidsample.extension.setText
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Content
 import com.spiraclesoftware.androidsample.framework.StandardFragment
 import com.spiraclesoftware.androidsample.util.DelightUI
@@ -26,10 +27,10 @@ class ProfileFragment :
             is Content -> {
                 with(binding) {
                     with(viewState.profileModel) {
-                        fullNameView.text = fullName
-                        dateOfBirthView.text = dateOfBirth
-                        phoneNumberView.text = phoneNumber
-                        emailView.text = email
+                        fullNameView.setText(fullName)
+                        dateOfBirthView.setText(dateOfBirth)
+                        phoneNumberView.setText(phoneNumber)
+                        emailView.setText(email)
                     }
                 }
             }

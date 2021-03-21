@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/edge_margin"
-            android:paddingRight="@dimen/edge_margin">
+            android:paddingRight="@dimen/edge_margin"
+            android:paddingBottom="@dimen/edge_margin">
 
             <TextView
                 android:id="@+id/headerView"
@@ -39,36 +39,85 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/subHeaderView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_spacing_2x"
+                android:text="@string/edit_profile__personal_information"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                app:layout_constraintTop_toBottomOf="@id/headerView" />
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fullNameView"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                app:layout_constraintTop_toBottomOf="@id/headerView"
-                tools:text="John Doe" />
+                android:layout_marginTop="@dimen/content_spacing_2x"
+                android:enabled="false"
+                android:hint="@string/edit_profile__full_name"
+                android:maxLines="1"
+                app:layout_constraintTop_toBottomOf="@id/subHeaderView">
 
-            <TextView
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/dateOfBirthView"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                app:layout_constraintTop_toBottomOf="@id/fullNameView"
-                tools:text="01.01.1970" />
+                android:layout_marginTop="@dimen/content_spacing_2x"
+                android:enabled="false"
+                android:hint="@string/edit_profile__date_of_birth"
+                android:maxLines="1"
+                app:layout_constraintTop_toBottomOf="@id/fullNameView">
 
-            <TextView
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phoneNumberView"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                app:layout_constraintTop_toBottomOf="@id/dateOfBirthView"
-                tools:text="+420 123 456 789" />
+                android:layout_marginTop="@dimen/content_spacing_2x"
+                android:enabled="false"
+                android:hint="@string/edit_profile__phone_number"
+                android:maxLines="1"
+                app:layout_constraintTop_toBottomOf="@id/dateOfBirthView">
 
-            <TextView
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailView"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                app:layout_constraintTop_toBottomOf="@id/phoneNumberView"
-                tools:text="john.doe@example.com" />
+                android:layout_marginTop="@dimen/content_spacing_2x"
+                android:enabled="false"
+                android:hint="@string/edit_profile__email"
+                android:maxLines="1"
+                app:layout_constraintTop_toBottomOf="@id/phoneNumberView">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
