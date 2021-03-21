@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -25,24 +26,49 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/edge_margin"
+            android:paddingRight="@dimen/edge_margin">
 
             <TextView
                 android:id="@+id/headerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/edge_margin"
-                android:layout_marginRight="@dimen/edge_margin"
                 android:text="@string/edit_profile__title"
                 android:textAppearance="@style/TextAppearance.ScreenHeader"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/fullNameView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Profile Fragment"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                app:layout_constraintTop_toBottomOf="@id/headerView"
+                tools:text="John Doe" />
+
+            <TextView
+                android:id="@+id/dateOfBirthView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                app:layout_constraintTop_toBottomOf="@id/fullNameView"
+                tools:text="01.01.1970" />
+
+            <TextView
+                android:id="@+id/phoneNumberView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                app:layout_constraintTop_toBottomOf="@id/dateOfBirthView"
+                tools:text="+420 123 456 789" />
+
+            <TextView
+                android:id="@+id/emailView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                app:layout_constraintTop_toBottomOf="@id/phoneNumberView"
+                tools:text="john.doe@example.com" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

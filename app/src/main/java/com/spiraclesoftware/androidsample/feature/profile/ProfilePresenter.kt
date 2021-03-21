@@ -6,7 +6,12 @@ import com.spiraclesoftware.androidsample.framework.StandardPresenter
 
 class ProfilePresenter(
     private val profileInteractor: ProfileInteractor,
+    private val profileFormatter: ProfileFormatter,
     exceptionFormatter: ExceptionFormatter
 ) : StandardPresenter(exceptionFormatter) {
+
+    fun getProfileModel(): ProfileModel {
+        return profileInteractor.getProfile().let(profileFormatter::profileModel)
+    }
 
 }

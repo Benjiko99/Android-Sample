@@ -5,6 +5,7 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.category_select.CategoryModelFormatter
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectPresenter
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewModel
+import com.spiraclesoftware.androidsample.feature.profile.ProfileFormatter
 import com.spiraclesoftware.androidsample.feature.profile.ProfilePresenter
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputType
@@ -33,7 +34,8 @@ val featureModule = module {
     single { TransferDirectionFilterFormatter() }
 
     viewModel { ProfileViewModel(get()) }
-    factory { ProfilePresenter(get(), get()) }
+    factory { ProfilePresenter(get(), get(), get()) }
+    single { ProfileFormatter() }
 
     viewModel { TransactionListViewModel(get()) }
     factory { TransactionListPresenter(get(), get(), get(), get(), get()) }
