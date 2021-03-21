@@ -8,6 +8,7 @@ import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.entity.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.ZonedDateTime
 import java.util.*
 
 class RoomDataSource(
@@ -19,9 +20,18 @@ class RoomDataSource(
 
     private val dummyAccount = Account(Currency.getInstance("EUR"))
 
+    private val dummyProfile = Profile(
+        fullName = "John Doe",
+        dateOfBirth = ZonedDateTime.now(),
+        phoneNumber = "+420 123 456 789",
+        email = "john.doe@example.com"
+    )
+
     private val conversionRatesCache = AssociatedItemCache<CurrencyCode, ConversionRates>()
 
     override fun getAccount() = dummyAccount
+
+    override fun getProfile() = dummyProfile
 
     override fun flowTransactions(): Flow<List<Transaction>> {
         val roomItems = transactionsDao.flowAll()

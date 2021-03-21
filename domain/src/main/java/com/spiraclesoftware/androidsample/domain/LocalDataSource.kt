@@ -1,14 +1,13 @@
 package com.spiraclesoftware.androidsample.domain
 
-import com.spiraclesoftware.androidsample.domain.entity.Account
-import com.spiraclesoftware.androidsample.domain.entity.ConversionRates
-import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import com.spiraclesoftware.androidsample.domain.entity.TransactionId
+import com.spiraclesoftware.androidsample.domain.entity.*
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 interface LocalDataSource {
     fun getAccount(): Account
+
+    fun getProfile(): Profile
 
     fun flowTransactions(): Flow<List<Transaction>>
 
