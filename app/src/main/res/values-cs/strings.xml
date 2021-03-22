@@ -12,6 +12,8 @@
     <string name="not_implemented">Není implementováno</string>
 
     <!-- Menu Actions -->
+    <string name="action_edit">Upravit</string>
+    <string name="action_save">Uložit</string>
     <string name="action_profile">Profil</string>
     <string name="action_change_language">Změnit jazyk</string>
     <string name="action_search">Vyhledávání</string>

@@ -13,6 +13,8 @@
     <string name="not_implemented">Not implemented</string>
 
     <!-- Menu Actions -->
+    <string name="action_edit">Edit</string>
+    <string name="action_save">Save</string>
     <string name="action_profile">Profile</string>
     <string name="action_change_language">Change language</string>
     <string name="action_search">Search</string>

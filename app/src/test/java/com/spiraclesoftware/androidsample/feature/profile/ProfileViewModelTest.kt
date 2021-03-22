@@ -3,7 +3,7 @@ package com.spiraclesoftware.androidsample.feature.profile
 import co.zsmb.rainbowcake.test.assertObserved
 import co.zsmb.rainbowcake.test.base.ViewModelTest
 import co.zsmb.rainbowcake.test.observeStateAndEvents
-import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Content
+import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -36,7 +36,7 @@ class ProfileViewModelTest : ViewModelTest() {
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
-                Content(profileModel)
+                Viewing(profileModel)
             )
         }
     }
