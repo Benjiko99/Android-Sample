@@ -56,13 +56,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:hint="@string/profile__full_name"
-                android:maxLines="1"
                 app:layout_constraintTop_toBottomOf="@id/subHeaderView">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="none" />
+                    android:inputType="textPersonName" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,13 +72,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:hint="@string/profile__date_of_birth"
-                android:maxLines="1"
                 app:layout_constraintTop_toBottomOf="@id/fullNameView">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="none" />
+                    android:inputType="date" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,13 +88,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:hint="@string/profile__phone_number"
-                android:maxLines="1"
                 app:layout_constraintTop_toBottomOf="@id/dateOfBirthView">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="none" />
+                    android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,13 +104,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:hint="@string/profile__email"
-                android:maxLines="1"
                 app:layout_constraintTop_toBottomOf="@id/phoneNumberView">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="none" />
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
