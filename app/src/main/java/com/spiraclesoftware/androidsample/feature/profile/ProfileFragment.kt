@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import co.zsmb.rainbowcake.koin.getViewModelFromFactory
+import com.google.android.material.textfield.TextInputLayout
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ProfileFragmentBinding
 import com.spiraclesoftware.androidsample.extension.getText
+import com.spiraclesoftware.androidsample.extension.onDoneAction
 import com.spiraclesoftware.androidsample.extension.setText
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
@@ -26,6 +29,12 @@ class ProfileFragment :
 
     override fun provideViewModel() = getViewModelFromFactory()
 
+    private fun onSaveChanges() {
+        viewModel.saveChanges(
+            fullName = binding.fullNameView.getText().toString()
+        )
+    }
+
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_edit -> {
@@ -33,9 +42,7 @@ class ProfileFragment :
                 return true
             }
             R.id.action_save -> {
-                viewModel.saveChanges(
-                    fullName = binding.fullNameView.getText().toString()
-                )
+                onSaveChanges()
                 return true
             }
         }
@@ -73,6 +80,7 @@ class ProfileFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
+        setupEditorActions()
     }
 
     private fun setupToolbar() = with(binding) {
@@ -84,6 +92,13 @@ class ProfileFragment :
 
         toolbar.inflateMenu(R.menu.profile_menu)
         toolbar.setOnMenuItemClickListener(::onMenuItemClicked)
+    }
+
+    private fun setupEditorActions() {
+        binding.contentView.children
+            .filterIsInstance<TextInputLayout>()
+            .map { it.editText!! }
+            .forEach { it.onDoneAction(::onSaveChanges) }
     }
 
 }
