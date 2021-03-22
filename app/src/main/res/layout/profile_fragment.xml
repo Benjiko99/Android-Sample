@@ -34,7 +34,7 @@
                 android:id="@+id/headerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/edit_profile__title"
+                android:text="@string/profile__title"
                 android:textAppearance="@style/TextAppearance.ScreenHeader"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
-                android:text="@string/edit_profile__personal_information"
+                android:text="@string/profile__personal_information"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 app:layout_constraintTop_toBottomOf="@id/headerView" />
 
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:enabled="false"
-                android:hint="@string/edit_profile__full_name"
+                android:hint="@string/profile__full_name"
                 android:maxLines="1"
                 app:layout_constraintTop_toBottomOf="@id/subHeaderView">
 
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:enabled="false"
-                android:hint="@string/edit_profile__date_of_birth"
+                android:hint="@string/profile__date_of_birth"
                 android:maxLines="1"
                 app:layout_constraintTop_toBottomOf="@id/fullNameView">
 
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:enabled="false"
-                android:hint="@string/edit_profile__phone_number"
+                android:hint="@string/profile__phone_number"
                 android:maxLines="1"
                 app:layout_constraintTop_toBottomOf="@id/dateOfBirthView">
 
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:enabled="false"
-                android:hint="@string/edit_profile__email"
+                android:hint="@string/profile__email"
                 android:maxLines="1"
                 app:layout_constraintTop_toBottomOf="@id/phoneNumberView">
 

@@ -18,12 +18,12 @@
     <string name="action_search_hint">Jméno, částka nebo datum</string>
 
     <!-- Profile -->
-    <string name="edit_profile__title">Upravit profil</string>
-    <string name="edit_profile__personal_information">Osobní informace</string>
-    <string name="edit_profile__full_name">Celé jméno</string>
-    <string name="edit_profile__date_of_birth">Datum narození</string>
-    <string name="edit_profile__phone_number">Telefonní číslo</string>
-    <string name="edit_profile__email">Email</string>
+    <string name="profile__title">Profil</string>
+    <string name="profile__personal_information">Osobní informace</string>
+    <string name="profile__full_name">Celé jméno</string>
+    <string name="profile__date_of_birth">Datum narození</string>
+    <string name="profile__phone_number">Telefonní číslo</string>
+    <string name="profile__email">Email</string>
 
     <!-- Transaction -->
     <string name="transaction_status__completed">Dokončený</string>

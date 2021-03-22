@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.spiraclesoftware.androidsample.feature.profile.ProfileFragment"
-        android:label="@string/edit_profile__title"
+        android:label="@string/profile__title"
         tools:layout="@layout/profile_fragment" />
 
     <fragment
