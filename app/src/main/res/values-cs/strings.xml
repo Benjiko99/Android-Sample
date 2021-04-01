@@ -70,6 +70,11 @@
     <string name="image_picker__take_picture">Vyfotit</string>
     <string name="image_picker__from_gallery">Z galerie</string>
 
+    <!-- Discard changes dialog -->
+    <string name="discard_changes_dialog__message">Neuložili jste změny.</string>
+    <string name="discard_changes_dialog__discard">Zahodit změny</string>
+    <string name="discard_changes_dialog__cancel">Pokračovat v úpravách</string>
+
     <!-- Change language dialog -->
     <string name="change_language_dialog__message">Změnit jazyk na angličtinu?</string>
     <string name="change_language_dialog__confirm">Změnit</string>

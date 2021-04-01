@@ -5,16 +5,21 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.view.children
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.koin.getViewModelFromFactory
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ProfileFragmentBinding
 import com.spiraclesoftware.androidsample.extension.getText
 import com.spiraclesoftware.androidsample.extension.onDoneAction
 import com.spiraclesoftware.androidsample.extension.setText
+import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.ConfirmDiscardChangesEvent
+import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.ExitEvent
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
 import com.spiraclesoftware.androidsample.framework.StandardFragment
@@ -29,20 +34,28 @@ class ProfileFragment :
 
     override fun provideViewModel() = getViewModelFromFactory()
 
-    private fun onSaveChanges() {
+    private fun onEditClicked() {
+        viewModel.startEditing()
+    }
+
+    private fun onSaveClicked() = with (binding) {
         viewModel.saveChanges(
-            fullName = binding.fullNameView.getText().toString()
+            fullName = fullNameView.getText().toString()
         )
+    }
+
+    private fun onDiscardChangesConfirmed() {
+        viewModel.confirmDiscardChanges()
     }
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_edit -> {
-                viewModel.enterEditing()
+                onEditClicked()
                 return true
             }
             R.id.action_save -> {
-                onSaveChanges()
+                onSaveClicked()
                 return true
             }
         }
@@ -77,6 +90,34 @@ class ProfileFragment :
         }
     }
 
+    override fun onEvent(event: OneShotEvent) {
+        when (event) {
+            is ConfirmDiscardChangesEvent ->
+                showDiscardChangesDialog()
+            is ExitEvent ->
+                findNavController().navigateUp()
+        }
+    }
+
+    private fun showDiscardChangesDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(R.string.discard_changes_dialog__message)
+            .setNegativeButton(R.string.discard_changes_dialog__cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(R.string.discard_changes_dialog__discard) { _, _ ->
+                onDiscardChangesConfirmed()
+            }.show()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.exitScreen()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
@@ -85,6 +126,10 @@ class ProfileFragment :
 
     private fun setupToolbar() = with(binding) {
         toolbar.setupWithNavController(findNavController())
+
+        toolbar.setNavigationOnClickListener {
+            viewModel.exitScreen()
+        }
 
         DelightUI.setupToolbarTitleAppearingOnScroll(toolbar, scrollView) {
             headerView.height
@@ -98,7 +143,7 @@ class ProfileFragment :
         binding.contentView.children
             .filterIsInstance<TextInputLayout>()
             .map { it.editText!! }
-            .forEach { it.onDoneAction(::onSaveChanges) }
+            .forEach { it.onDoneAction(::onSaveClicked) }
     }
 
 }

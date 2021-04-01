@@ -71,6 +71,11 @@
     <string name="image_picker__take_picture">Take picture</string>
     <string name="image_picker__from_gallery">From gallery</string>
 
+    <!-- Discard changes dialog -->
+    <string name="discard_changes_dialog__message">You haven\'t saved your changes.</string>
+    <string name="discard_changes_dialog__discard">Discard changes</string>
+    <string name="discard_changes_dialog__cancel">Keep editing</string>
+
     <!-- Change language dialog -->
     <string name="change_language_dialog__message">Change language to czech?</string>
     <string name="change_language_dialog__confirm">Change</string>
