@@ -25,16 +25,18 @@ class ProfileViewModel(
         if (viewState !is Editing) return
 
         // update profileModel with user's changes
-        viewState = (viewState as Editing).copy(
-            profileModel = presenter.getProfileModel().copy(
-                fullName = fullName
-            )
-        )
+//        viewState = (viewState as Editing).copy(
+//            profileModel = presenter.getProfileModel().copy(
+//                fullName = fullName
+//            )
+//        )
 
         viewState = Viewing(presenter.getProfileModel())
     }
 
     fun confirmDiscardChanges() {
+        if (viewState !is Editing) return
+
         viewState = Viewing(presenter.getProfileModel())
         postEvent(ExitEvent)
     }
