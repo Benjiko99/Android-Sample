@@ -1,6 +1,7 @@
 package com.spiraclesoftware.androidsample.feature.profile
 
 import co.zsmb.rainbowcake.base.OneShotEvent
+import co.zsmb.rainbowcake.base.QueuedOneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
@@ -11,9 +12,11 @@ class ProfileViewModel(
     Viewing(presenter.getProfileModel())
 ) {
 
-    object ConfirmDiscardChangesEvent: OneShotEvent
+    object ProfileUpdatedEvent : QueuedOneShotEvent
 
-    object ExitEvent: OneShotEvent
+    object ConfirmDiscardChangesEvent : OneShotEvent
+
+    object ExitEvent : OneShotEvent
 
     fun startEditing() {
         if (viewState !is Viewing) return
@@ -21,17 +24,23 @@ class ProfileViewModel(
         viewState = Editing(presenter.getProfileModel().copy())
     }
 
-    fun saveChanges(fullName: String) {
-        if (viewState !is Editing) return
+    fun saveChanges(
+        fullName: String,
+        dateOfBirth: String,
+        phoneNumber: String,
+        email: String
+    ) = execute {
+        if (viewState !is Editing) return@execute
 
-        // update profileModel with user's changes
-//        viewState = (viewState as Editing).copy(
-//            profileModel = presenter.getProfileModel().copy(
-//                fullName = fullName
-//            )
-//        )
+        presenter.updateProfile(
+            fullName = fullName,
+            dateOfBirth = dateOfBirth,
+            phoneNumber = phoneNumber,
+            email = email
+        )
 
         viewState = Viewing(presenter.getProfileModel())
+        postQueuedEvent(ProfileUpdatedEvent)
     }
 
     fun confirmDiscardChanges() {

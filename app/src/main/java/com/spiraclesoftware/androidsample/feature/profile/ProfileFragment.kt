@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast.LENGTH_SHORT
 import androidx.activity.addCallback
 import androidx.core.view.children
 import androidx.navigation.fragment.findNavController
@@ -15,11 +16,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ProfileFragmentBinding
-import com.spiraclesoftware.androidsample.extension.getText
-import com.spiraclesoftware.androidsample.extension.onDoneAction
-import com.spiraclesoftware.androidsample.extension.setText
-import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.ConfirmDiscardChangesEvent
-import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.ExitEvent
+import com.spiraclesoftware.androidsample.extension.*
+import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.*
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
 import com.spiraclesoftware.androidsample.framework.StandardFragment
@@ -40,7 +38,10 @@ class ProfileFragment :
 
     private fun onSaveClicked() = with (binding) {
         viewModel.saveChanges(
-            fullName = fullNameView.getText().toString()
+            fullName = fullNameView.getText(),
+            dateOfBirth = dateOfBirthView.getText(),
+            phoneNumber = phoneNumberView.getText(),
+            email = emailView.getText()
         )
     }
 
@@ -92,6 +93,10 @@ class ProfileFragment :
 
     override fun onEvent(event: OneShotEvent) {
         when (event) {
+            is ProfileUpdatedEvent -> {
+                hideSoftKeyboard()
+                showSnackbar(R.string.profile__changes_saved, LENGTH_SHORT)
+            }
             is ConfirmDiscardChangesEvent ->
                 showDiscardChangesDialog()
             is ExitEvent ->

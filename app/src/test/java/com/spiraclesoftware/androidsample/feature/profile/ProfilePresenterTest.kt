@@ -4,13 +4,10 @@ import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor
 import com.spiraclesoftware.androidsample.format.ExceptionFormatter
-import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 
@@ -35,7 +32,7 @@ class ProfilePresenterTest : PresenterTest() {
     }
 
     @Test
-    fun getProfileModel() = runBlockingTest {
+    fun getProfileModel() {
         val mockProfileModel = mockk<ProfileModel>()
 
         every { profileFormatter.profileModel(any()) } returns mockProfileModel
@@ -43,6 +40,25 @@ class ProfilePresenterTest : PresenterTest() {
 
         val actual = testSubject.getProfileModel()
         assertThat(actual).isEqualTo(mockProfileModel)
+    }
+
+    @Test
+    fun updateProfile() {
+        justRun { profileInteractor.updateProfile(any(), any(), any(), any()) }
+
+        val fullName = "John Smith"
+        val dateOfBirth = "1.31.2000"
+        val phoneNumber = "+420 123 456 789"
+        val email = "john.smith@example.com"
+
+        testSubject.updateProfile(
+            fullName = fullName,
+            dateOfBirth = dateOfBirth,
+            phoneNumber = phoneNumber,
+            email = email
+        )
+
+        verify { profileInteractor.updateProfile(fullName, dateOfBirth, phoneNumber, email) }
     }
 
 }

@@ -26,6 +26,7 @@
     <string name="profile__date_of_birth">Datum narození</string>
     <string name="profile__phone_number">Telefonní číslo</string>
     <string name="profile__email">Email</string>
+    <string name="profile__changes_saved">Změny uloženy</string>
 
     <!-- Transaction -->
     <string name="transaction_status__completed">Dokončený</string>

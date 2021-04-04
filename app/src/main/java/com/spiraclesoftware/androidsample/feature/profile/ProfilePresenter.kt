@@ -14,4 +14,13 @@ class ProfilePresenter(
         return profileInteractor.getProfile().let(profileFormatter::profileModel)
     }
 
+    fun updateProfile(
+        fullName: String,
+        dateOfBirth: String,
+        phoneNumber: String,
+        email: String
+    ) {
+        profileInteractor.updateProfile(fullName, dateOfBirth, phoneNumber, email)
+    }
+
 }

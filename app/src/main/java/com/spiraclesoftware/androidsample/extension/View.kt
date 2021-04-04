@@ -27,7 +27,11 @@ fun TextView.removePaintFlag(flag: Int) {
 //endregion
 
 //region TextInputLayout
-fun TextInputLayout.getText(): Editable {
+fun TextInputLayout.getText(): String {
+    return getEditableText().toString()
+}
+
+fun TextInputLayout.getEditableText(): Editable {
     return editText!!.text!!
 }
 

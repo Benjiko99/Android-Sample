@@ -27,6 +27,7 @@
     <string name="profile__date_of_birth">Date of birth</string>
     <string name="profile__phone_number">Phone number</string>
     <string name="profile__email">Email</string>
+    <string name="profile__changes_saved">Changes saved</string>
 
     <!-- Transaction -->
     <string name="transaction_status__completed">Completed</string>

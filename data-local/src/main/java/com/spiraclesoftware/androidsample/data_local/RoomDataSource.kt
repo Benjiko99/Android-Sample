@@ -20,9 +20,9 @@ class RoomDataSource(
 
     private val dummyAccount = Account(Currency.getInstance("EUR"))
 
-    private val dummyProfile = Profile(
+    private var profile = Profile(
         fullName = "John Doe",
-        dateOfBirth = ZonedDateTime.now(),
+        dateOfBirth = ZonedDateTime.parse("2000-01-31T00:00:00+00:00")!!,
         phoneNumber = "+420 123 456 789",
         email = "john.doe@example.com"
     )
@@ -31,7 +31,11 @@ class RoomDataSource(
 
     override fun getAccount() = dummyAccount
 
-    override fun getProfile() = dummyProfile
+    override fun getProfile() = profile
+
+    override fun saveProfile(profile: Profile) {
+        this.profile = profile
+    }
 
     override fun flowTransactions(): Flow<List<Transaction>> {
         val roomItems = transactionsDao.flowAll()

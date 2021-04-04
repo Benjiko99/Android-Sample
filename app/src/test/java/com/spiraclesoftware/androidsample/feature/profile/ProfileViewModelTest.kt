@@ -7,10 +7,8 @@ import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.Confi
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.ExitEvent
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
-import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -67,25 +65,39 @@ class ProfileViewModelTest : ViewModelTest() {
 
     @Test
     fun saveChanges() = runBlockingTest {
+        val fullName = "John Smith"
+        val dateOfBirth = "1.31.2000"
+        val phoneNumber = "+420 123 456 789"
+        val email = "john.smith@example.com"
+
         val profileModel = mockk<ProfileModel> {
             every { copy() } returns this
         }
 
         every { profilePresenter.getProfileModel() } returns profileModel
+        justRun { profilePresenter.updateProfile(any(), any(), any(), any()) }
 
         val testSubject = newTestSubject()
         testSubject.observeStateAndEvents { stateObserver, _ ->
             testSubject.startEditing()
             testSubject.saveChanges(
-                fullName = "John Doe"
+                fullName = fullName,
+                dateOfBirth = dateOfBirth,
+                phoneNumber = phoneNumber,
+                email = email
             )
 
             stateObserver.assertObserved(
                 Viewing(profileModel),
                 Editing(profileModel),
+                // TODO: Can't test that the profileModel has actually changed
+                //  because the presenter is mocked and updateProfile() doesn't return
+                //  any value (the new profile)
                 Viewing(profileModel)
             )
         }
+
+        verify { profilePresenter.updateProfile(fullName, dateOfBirth, phoneNumber, email) }
     }
 
     @Test
