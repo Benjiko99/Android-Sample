@@ -1,11 +1,11 @@
 object Version {
     // Plugins
-    const val android_gradle = "4.1.2"
+    const val android_gradle = "4.1.3"
     const val kotlinter = "3.2.0"
     const val exhaustive = "0.1.1"
 
     // Core
-    const val kotlin = "1.4.21"
+    const val kotlin = "1.4.32"
     const val core_library_desugaring = "1.1.1"
     const val coroutines = "1.4.2"
     const val rainbow_cake = "1.2.0"
