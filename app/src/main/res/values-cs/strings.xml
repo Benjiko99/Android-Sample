@@ -27,6 +27,10 @@
     <string name="profile__phone_number">Telefonní číslo</string>
     <string name="profile__email">Email</string>
     <string name="profile__changes_saved">Změny uloženy</string>
+    <string name="profile__error__name_is_blank">Jméno nesmí být prázdné</string>
+    <string name="profile__error__date_of_birth_is_blank">Datum narození nemůže být prázdné</string>
+    <string name="profile__error__phone_number_is_blank">Telefonní číslo nesmí být prázdné</string>
+    <string name="profile__error__email_is_blank">E-mail nesmí být prázdný</string>
 
     <!-- Transaction -->
     <string name="transaction_status__completed">Dokončený</string>

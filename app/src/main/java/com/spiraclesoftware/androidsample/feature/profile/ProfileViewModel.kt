@@ -3,6 +3,7 @@ package com.spiraclesoftware.androidsample.feature.profile
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.QueuedOneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
+import com.spiraclesoftware.androidsample.feature.profile.ProfilePresenter.UpdateProfileResult
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
 
@@ -12,7 +13,9 @@ class ProfileViewModel(
     Viewing(presenter.getProfileModel())
 ) {
 
-    object ProfileUpdatedEvent : QueuedOneShotEvent
+    object NotifyChangesSavedEvent : QueuedOneShotEvent
+
+    data class NotifySavingChangesFailedEvent(val message: String) : QueuedOneShotEvent
 
     object ConfirmDiscardChangesEvent : OneShotEvent
 
@@ -21,7 +24,7 @@ class ProfileViewModel(
     fun startEditing() {
         if (viewState !is Viewing) return
 
-        viewState = Editing(presenter.getProfileModel().copy())
+        viewState = Editing()
     }
 
     fun saveChanges(
@@ -32,15 +35,21 @@ class ProfileViewModel(
     ) = execute {
         if (viewState !is Editing) return@execute
 
-        presenter.updateProfile(
-            fullName = fullName,
-            dateOfBirth = dateOfBirth,
-            phoneNumber = phoneNumber,
-            email = email
-        )
+        val result = presenter.updateProfile(fullName, dateOfBirth, phoneNumber, email)
 
-        viewState = Viewing(presenter.getProfileModel())
-        postQueuedEvent(ProfileUpdatedEvent)
+        when (result) {
+            is UpdateProfileResult.Success -> {
+                viewState = Viewing(result.updatedProfileModel)
+                postQueuedEvent(NotifyChangesSavedEvent)
+            }
+            is UpdateProfileResult.ValidationError -> {
+                viewState = Editing(result.validationErrors)
+            }
+            is UpdateProfileResult.Error -> {
+                viewState = Editing(validationErrors = null)
+                postQueuedEvent(NotifySavingChangesFailedEvent(result.errorMessage))
+            }
+        }
     }
 
     fun confirmDiscardChanges() {

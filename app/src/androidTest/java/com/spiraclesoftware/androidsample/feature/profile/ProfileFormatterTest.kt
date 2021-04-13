@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.entity.Profile
 import com.spiraclesoftware.androidsample.format.FormatterTest
 import org.junit.Test
-import java.time.ZonedDateTime
+import java.time.LocalDate
 
 class ProfileFormatterTest : FormatterTest() {
 
@@ -12,7 +12,7 @@ class ProfileFormatterTest : FormatterTest() {
     fun formatProfileModel() {
         val profile = Profile(
             fullName = "John Doe",
-            dateOfBirth = ZonedDateTime.parse("1970-01-01T00:00:00+00:00")!!,
+            dateOfBirth = LocalDate.parse("1970-01-01"),
             phoneNumber = "+420 123 456 789",
             email = "john.doe@example.com"
         )

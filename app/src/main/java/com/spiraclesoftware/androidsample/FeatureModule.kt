@@ -35,7 +35,7 @@ val featureModule = module {
 
     viewModel { ProfileViewModel(get()) }
     factory { ProfilePresenter(get(), get(), get()) }
-    single { ProfileFormatter() }
+    single { ProfileFormatter(get()) }
 
     viewModel { TransactionListViewModel(get()) }
     factory { TransactionListPresenter(get(), get(), get(), get(), get()) }

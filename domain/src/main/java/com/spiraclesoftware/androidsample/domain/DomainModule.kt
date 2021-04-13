@@ -5,11 +5,12 @@ import com.spiraclesoftware.androidsample.domain.interactor.ConversionRatesInter
 import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.domain.service.CurrencyConverter
+import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator
 import org.koin.dsl.module
 
 private val interactorModule = module {
 
-    factory { ProfileInteractor(get(), get()) }
+    factory { ProfileInteractor(get(), get(), get()) }
 
     factory { AccountsInteractor(get(), get()) }
 
@@ -21,7 +22,9 @@ private val interactorModule = module {
 
 private val serviceModule = module {
 
-    factory { CurrencyConverter(get()) }
+    single { CurrencyConverter(get()) }
+
+    single { ProfileUpdateValidator() }
 
 }
 

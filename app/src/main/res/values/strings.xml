@@ -28,6 +28,10 @@
     <string name="profile__phone_number">Phone number</string>
     <string name="profile__email">Email</string>
     <string name="profile__changes_saved">Changes saved</string>
+    <string name="profile__error__name_is_blank">Name cannot be blank</string>
+    <string name="profile__error__date_of_birth_is_blank">Date of birth cannot be blank</string>
+    <string name="profile__error__phone_number_is_blank">Phone number cannot be blank</string>
+    <string name="profile__error__email_is_blank">Email cannot be blank</string>
 
     <!-- Transaction -->
     <string name="transaction_status__completed">Completed</string>

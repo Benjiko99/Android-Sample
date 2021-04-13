@@ -3,12 +3,12 @@ package com.spiraclesoftware.androidsample.feature.profile
 import co.zsmb.rainbowcake.test.assertObserved
 import co.zsmb.rainbowcake.test.base.ViewModelTest
 import co.zsmb.rainbowcake.test.observeStateAndEvents
-import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.ConfirmDiscardChangesEvent
-import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.ExitEvent
-import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
-import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
-import io.mockk.*
+import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.*
+import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.*
+import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -36,11 +36,12 @@ class ProfileViewModelTest : ViewModelTest() {
 
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        val testSubject = newTestSubject()
-        testSubject.observeStateAndEvents { stateObserver, _ ->
-            stateObserver.assertObserved(
-                Viewing(profileModel)
-            )
+        with(newTestSubject()) {
+            observeStateAndEvents { stateObserver, _ ->
+                stateObserver.assertObserved(
+                    Viewing(profileModel)
+                )
+            }
         }
     }
 
@@ -52,81 +53,165 @@ class ProfileViewModelTest : ViewModelTest() {
 
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        val testSubject = newTestSubject()
-        testSubject.observeStateAndEvents { stateObserver, _ ->
-            testSubject.startEditing()
+        with(newTestSubject()) {
+            observeStateAndEvents { stateObserver, _ ->
+                startEditing()
 
-            stateObserver.assertObserved(
-                Viewing(profileModel),
-                Editing(profileModel)
-            )
+                stateObserver.assertObserved(
+                    Viewing(profileModel),
+                    Editing()
+                )
+            }
         }
     }
 
     @Test
-    fun saveChanges() = runBlockingTest {
+    fun saveChanges_success() = runBlockingTest {
         val fullName = "John Smith"
         val dateOfBirth = "1.31.2000"
         val phoneNumber = "+420 123 456 789"
         val email = "john.smith@example.com"
 
-        val profileModel = mockk<ProfileModel> {
-            every { copy() } returns this
-        }
+        val profileModel = mockk<ProfileModel>()
+        val updatedProfileModel = mockk<ProfileModel>()
 
         every { profilePresenter.getProfileModel() } returns profileModel
-        justRun { profilePresenter.updateProfile(any(), any(), any(), any()) }
 
-        val testSubject = newTestSubject()
-        testSubject.observeStateAndEvents { stateObserver, _ ->
-            testSubject.startEditing()
-            testSubject.saveChanges(
-                fullName = fullName,
-                dateOfBirth = dateOfBirth,
-                phoneNumber = phoneNumber,
-                email = email
-            )
+        every { profilePresenter.updateProfile(any(), any(), any(), any()) } returns
+                ProfilePresenter.UpdateProfileResult.Success(updatedProfileModel)
 
-            stateObserver.assertObserved(
-                Viewing(profileModel),
-                Editing(profileModel),
-                // TODO: Can't test that the profileModel has actually changed
-                //  because the presenter is mocked and updateProfile() doesn't return
-                //  any value (the new profile)
-                Viewing(profileModel)
-            )
+        with(newTestSubject()) {
+            observeStateAndEvents { stateObserver, _, queuedEventsObserver ->
+                startEditing()
+                saveChanges(fullName, dateOfBirth, phoneNumber, email)
+
+                stateObserver.assertObserved(
+                    Viewing(profileModel),
+                    Editing(),
+                    Viewing(updatedProfileModel)
+                )
+
+                queuedEventsObserver.assertObserved(
+                    NotifyChangesSavedEvent
+                )
+            }
         }
+    }
 
-        verify { profilePresenter.updateProfile(fullName, dateOfBirth, phoneNumber, email) }
+    @Test
+    fun `Event notifying of failure is posted when saving changes fails`() = runBlockingTest {
+        val errorMessage = "ERROR MESSAGE"
+
+        every { profilePresenter.getProfileModel() } returns mockk()
+
+        every { profilePresenter.updateProfile(any(), any(), any(), any()) } returns
+                ProfilePresenter.UpdateProfileResult.Error(errorMessage)
+
+        with(newTestSubject()) {
+            observeStateAndEvents { _, _, queuedEventsObserver ->
+                startEditing()
+                saveChanges("", "", "", "")
+
+                queuedEventsObserver.assertObserved(
+                    NotifySavingChangesFailedEvent(errorMessage)
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `Remain in editing state when saving changes fails`() = runBlockingTest {
+        val profileModel = mockk<ProfileModel>()
+
+        every { profilePresenter.getProfileModel() } returns profileModel
+
+        every { profilePresenter.updateProfile(any(), any(), any(), any()) } returns
+                ProfilePresenter.UpdateProfileResult.Error("")
+
+        with(newTestSubject()) {
+            observeStateAndEvents { stateObserver, _ ->
+                startEditing()
+                saveChanges("", "", "", "")
+
+                stateObserver.assertObserved(
+                    Viewing(profileModel),
+                    Editing()
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `Form errors are reset when saving changes fails`() = runBlockingTest {
+        val profileModel = mockk<ProfileModel>()
+        val validationErrors = ValidationErrors()
+
+        every { profilePresenter.getProfileModel() } returns profileModel
+
+        every { profilePresenter.updateProfile(any(), any(), any(), any()) } returnsMany listOf(
+            ProfilePresenter.UpdateProfileResult.ValidationError(validationErrors),
+            ProfilePresenter.UpdateProfileResult.Error("")
+        )
+
+        with(newTestSubject()) {
+            observeStateAndEvents { stateObserver, _ ->
+                startEditing()
+                saveChanges("", "", "", "")
+                saveChanges("", "", "", "")
+
+                stateObserver.assertObserved(
+                    Viewing(profileModel),
+                    Editing(validationErrors = null),
+                    Editing(validationErrors = validationErrors),
+                    Editing(validationErrors = null),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `Saving changes produces form errors when validations fail`() = runBlockingTest {
+        val profileModel = mockk<ProfileModel>()
+        val formErrors = mockk<ValidationErrors>()
+
+        every { profilePresenter.getProfileModel() } returns profileModel
+
+        every { profilePresenter.updateProfile(any(), any(), any(), any()) } returns
+                ProfilePresenter.UpdateProfileResult.ValidationError(formErrors)
+
+        with(newTestSubject()) {
+            observeStateAndEvents { stateObserver, _ ->
+                startEditing()
+                saveChanges("", "", "", "")
+
+                stateObserver.assertObserved(
+                    Viewing(profileModel),
+                    Editing(),
+                    Editing(formErrors)
+                )
+            }
+        }
     }
 
     @Test
     fun confirmDiscardChanges() = runBlockingTest {
-        val cleanProfileModel = mockk<ProfileModel> {
-            every { copy() } returns this
-        }
-        val changedProfileModel = mockk<ProfileModel> {
-            every { copy() } returns this
-        }
+        val profileModel = mockk<ProfileModel>()
 
-        every { profilePresenter.getProfileModel() } returnsMany listOf(
-            cleanProfileModel,
-            changedProfileModel,
-            cleanProfileModel
-        )
+        every { profilePresenter.getProfileModel() } returns profileModel
 
-        val testSubject = newTestSubject()
-        testSubject.observeStateAndEvents { stateObserver, eventObserver ->
-            testSubject.startEditing()
-            testSubject.confirmDiscardChanges()
+        with(newTestSubject()) {
+            observeStateAndEvents { stateObserver, eventsObserver ->
+                startEditing()
+                confirmDiscardChanges()
 
-            stateObserver.assertObserved(
-                Viewing(cleanProfileModel),
-                Editing(changedProfileModel),
-                Viewing(cleanProfileModel)
-            )
+                stateObserver.assertObserved(
+                    Viewing(profileModel),
+                    Editing(),
+                    Viewing(profileModel)
+                )
 
-            eventObserver.assertObserved(ExitEvent)
+                eventsObserver.assertObserved(ExitEvent)
+            }
         }
     }
 
@@ -136,15 +221,16 @@ class ProfileViewModelTest : ViewModelTest() {
 
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        val testSubject = newTestSubject()
-        testSubject.observeStateAndEvents { stateObserver, eventObserver ->
-            testSubject.exitScreen()
+        with(newTestSubject()) {
+            observeStateAndEvents { stateObserver, eventsObserver ->
+                exitScreen()
 
-            stateObserver.assertObserved(
-                Viewing(profileModel)
-            )
+                stateObserver.assertObserved(
+                    Viewing(profileModel)
+                )
 
-            eventObserver.assertObserved(ExitEvent)
+                eventsObserver.assertObserved(ExitEvent)
+            }
         }
     }
 
@@ -156,17 +242,18 @@ class ProfileViewModelTest : ViewModelTest() {
 
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        val testSubject = newTestSubject()
-        testSubject.observeStateAndEvents { stateObserver, eventObserver ->
-            testSubject.startEditing()
-            testSubject.exitScreen()
+        with(newTestSubject()) {
+            observeStateAndEvents { stateObserver, eventsObserver ->
+                startEditing()
+                exitScreen()
 
-            stateObserver.assertObserved(
-                Viewing(profileModel),
-                Editing(profileModel)
-            )
+                stateObserver.assertObserved(
+                    Viewing(profileModel),
+                    Editing()
+                )
 
-            eventObserver.assertObserved(ConfirmDiscardChangesEvent)
+                eventsObserver.assertObserved(ConfirmDiscardChangesEvent)
+            }
         }
     }
 

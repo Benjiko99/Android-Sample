@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample
 
 object FeatureFlags {
 
-    val PROFILE_FEATURE = object : FeatureFlag(isEnabled = false) {}
+    val PROFILE_FEATURE = object : FeatureFlag(isEnabled = true) {}
 
 }
 

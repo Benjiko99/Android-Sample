@@ -8,7 +8,7 @@ import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.entity.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import java.time.ZonedDateTime
+import java.time.LocalDate
 import java.util.*
 
 class RoomDataSource(
@@ -22,7 +22,7 @@ class RoomDataSource(
 
     private var profile = Profile(
         fullName = "John Doe",
-        dateOfBirth = ZonedDateTime.parse("2000-01-31T00:00:00+00:00")!!,
+        dateOfBirth = LocalDate.of(2000, 1, 31),
         phoneNumber = "+420 123 456 789",
         email = "john.doe@example.com"
     )

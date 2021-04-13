@@ -51,7 +51,7 @@
                 app:layout_constraintTop_toBottomOf="@id/headerView" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fullNameView"
+                android:id="@+id/fullNameField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,6 +60,7 @@
                 app:layout_constraintTop_toBottomOf="@id/subHeaderView">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fullNameView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPersonName" />
@@ -67,15 +68,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/dateOfBirthView"
+                android:id="@+id/dateOfBirthField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:hint="@string/profile__date_of_birth"
-                app:layout_constraintTop_toBottomOf="@id/fullNameView">
+                app:layout_constraintTop_toBottomOf="@id/fullNameField">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dateOfBirthView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="date" />
@@ -83,15 +85,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneNumberView"
+                android:id="@+id/phoneNumberField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:hint="@string/profile__phone_number"
-                app:layout_constraintTop_toBottomOf="@id/dateOfBirthView">
+                app:layout_constraintTop_toBottomOf="@id/dateOfBirthField">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneNumberView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="phone" />
@@ -99,15 +102,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailView"
+                android:id="@+id/emailField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_spacing_2x"
                 android:hint="@string/profile__email"
-                app:layout_constraintTop_toBottomOf="@id/phoneNumberView">
+                app:layout_constraintTop_toBottomOf="@id/phoneNumberField">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textEmailAddress" />

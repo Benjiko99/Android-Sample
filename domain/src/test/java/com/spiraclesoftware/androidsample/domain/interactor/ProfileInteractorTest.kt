@@ -4,6 +4,9 @@ import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
 import com.spiraclesoftware.androidsample.domain.entity.Profile
+import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.ProfileUpdateResult
+import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator
+import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator.ValidationResult
 import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -20,6 +23,9 @@ class ProfileInteractorTest {
 
     @MockK
     lateinit var remoteDataSource: RemoteDataSource
+
+    @MockK
+    lateinit var profileUpdateValidator: ProfileUpdateValidator
 
     @InjectMockKs
     lateinit var testSubject: ProfileInteractor
@@ -39,17 +45,43 @@ class ProfileInteractorTest {
     }
 
     @Test
-    fun updateProfile() = runBlockingTest {
+    fun `Profile is updated successfully`() = runBlockingTest {
         justRun { localDataSource.saveProfile(any()) }
 
-        testSubject.updateProfile(
-            fullName = "John Smith",
-            dateOfBirth = "1.31.2000",
-            phoneNumber = "+420 123 456 789",
-            email = "john.smith@example.com"
-        )
+        val mockProfile = mockk<Profile>()
+        every { profileUpdateValidator.sanitizeAndValidate(any()) } returns
+                ValidationResult.Valid(mockProfile)
 
-        verify { localDataSource.saveProfile(any()) }
+        val actual = testSubject.updateProfile(mockk())
+        val expected = ProfileUpdateResult.Success(mockProfile)
+
+        assertThat(actual).isEqualTo(expected)
+        verify { localDataSource.saveProfile(mockProfile) }
+    }
+
+    @Test
+    fun `Updating profile catches exceptions and returns error result`() = runBlockingTest {
+        val exception = Exception()
+        every { profileUpdateValidator.sanitizeAndValidate(any()) } throws exception
+
+        val actual = testSubject.updateProfile(mockk())
+        val expected = ProfileUpdateResult.Error(exception)
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `Updating profile fails if validations don't pass`() = runBlockingTest {
+        justRun { localDataSource.saveProfile(any()) }
+
+        val mockErrors = mockk<List<ProfileUpdateValidator.Error>>()
+        every { profileUpdateValidator.sanitizeAndValidate(any()) } returns
+                ValidationResult.Invalid(mockErrors)
+
+        val actual = testSubject.updateProfile(mockk())
+        val expected = ProfileUpdateResult.ValidationsFailed(mockErrors)
+
+        assertThat(actual).isEqualTo(expected)
     }
 
 }

@@ -3,11 +3,15 @@ package com.spiraclesoftware.androidsample.domain.interactor
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
 import com.spiraclesoftware.androidsample.domain.entity.Profile
-import java.time.ZonedDateTime
+import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator
+import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator.ValidationResult.Invalid
+import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator.ValidationResult.Valid
+import java.time.LocalDate
 
 class ProfileInteractor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource
+    private val remoteDataSource: RemoteDataSource,
+    private val profileUpdateValidator: ProfileUpdateValidator
 ) {
 
     fun getProfile(): Profile {
@@ -15,21 +19,47 @@ class ProfileInteractor(
     }
 
     fun updateProfile(
-        fullName: String,
-        dateOfBirth: String,
-        phoneNumber: String,
-        email: String
-    ) {
-        val profile = Profile(
-            fullName = fullName,
-            dateOfBirth = ZonedDateTime.now(),
-            // TODO: parse input
-            //dateOfBirth = ZonedDateTime.parse(dateOfBirth),
-            phoneNumber = phoneNumber,
-            email = email
-        )
+        profileUpdateData: ProfileUpdateData
+    ): ProfileUpdateResult {
+        try {
+            val validationResult = profileUpdateValidator.sanitizeAndValidate(profileUpdateData)
 
-        localDataSource.saveProfile(profile)
+            return when (validationResult) {
+                is Valid -> {
+                    val profile = validationResult.sanitizedProfile
+
+                    localDataSource.saveProfile(profile)
+                    ProfileUpdateResult.Success(profile)
+                }
+                is Invalid -> {
+                    ProfileUpdateResult.ValidationsFailed(validationResult.errors)
+                }
+            }
+        } catch (e: Exception) {
+            return ProfileUpdateResult.Error(e)
+        }
+    }
+
+    data class ProfileUpdateData(
+        val fullName: String,
+        val dateOfBirth: String,
+        val phoneNumber: String,
+        val email: String
+    ) {
+
+        fun toProfile() =
+            Profile(fullName, LocalDate.parse(dateOfBirth), phoneNumber, email)
+
+    }
+
+    sealed class ProfileUpdateResult {
+        data class Success(val updatedProfile: Profile) : ProfileUpdateResult()
+
+        data class ValidationsFailed(
+            val errors: List<ProfileUpdateValidator.Error>
+        ) : ProfileUpdateResult()
+
+        data class Error(val exception: Exception) : ProfileUpdateResult()
     }
 
 }

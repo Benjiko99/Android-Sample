@@ -16,7 +16,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ProfileFragmentBinding
-import com.spiraclesoftware.androidsample.extension.*
+import com.spiraclesoftware.androidsample.extension.applyToMany
+import com.spiraclesoftware.androidsample.extension.hideSoftKeyboard
+import com.spiraclesoftware.androidsample.extension.onDoneAction
+import com.spiraclesoftware.androidsample.extension.showSnackbar
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.*
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
@@ -36,12 +39,12 @@ class ProfileFragment :
         viewModel.startEditing()
     }
 
-    private fun onSaveClicked() = with (binding) {
+    private fun onSaveClicked() = with(binding) {
         viewModel.saveChanges(
-            fullName = fullNameView.getText(),
-            dateOfBirth = dateOfBirthView.getText(),
-            phoneNumber = phoneNumberView.getText(),
-            email = emailView.getText()
+            fullName = fullNameView.text.toString(),
+            dateOfBirth = dateOfBirthView.text.toString(),
+            phoneNumber = phoneNumberView.text.toString(),
+            email = emailView.text.toString()
         )
     }
 
@@ -67,35 +70,39 @@ class ProfileFragment :
         toolbar.menu.findItem(R.id.action_edit).isVisible = viewState is Viewing
         toolbar.menu.findItem(R.id.action_save).isVisible = viewState is Editing
 
-        binding.fullNameView.isEnabled = viewState is Editing
-        binding.dateOfBirthView.isEnabled = viewState is Editing
-        binding.phoneNumberView.isEnabled = viewState is Editing
-        binding.emailView.isEnabled = viewState is Editing
+        applyToMany(fullNameField, dateOfBirthField, phoneNumberField, emailField) {
+            isEnabled = viewState is Editing
+        }
 
-        when (viewState) {
-            is Viewing -> {
-                headerView.requestFocus()
+        if (viewState is Viewing) {
+            with(viewState.profileModel) {
+                fullNameView.setText(fullName)
+                dateOfBirthView.setText(dateOfBirth)
+                phoneNumberView.setText(phoneNumber)
+                emailView.setText(email)
             }
         }
 
-        val profileModel = when (viewState) {
-            is Viewing -> viewState.profileModel
-            is Editing -> viewState.profileModel
+        with((viewState as? Editing)?.validationErrors) {
+            fullNameField.error = this?.fullNameError
+            dateOfBirthField.error = this?.dateOfBirthError
+            phoneNumberField.error = this?.phoneNumberError
+            emailField.error = this?.emailError
         }
 
-        with(profileModel) {
-            fullNameView.setText(fullName)
-            dateOfBirthView.setText(dateOfBirth)
-            phoneNumberView.setText(phoneNumber)
-            emailView.setText(email)
+        if (viewState is Viewing) {
+            headerView.requestFocus()
         }
     }
 
     override fun onEvent(event: OneShotEvent) {
         when (event) {
-            is ProfileUpdatedEvent -> {
+            is NotifyChangesSavedEvent -> {
                 hideSoftKeyboard()
                 showSnackbar(R.string.profile__changes_saved, LENGTH_SHORT)
+            }
+            is NotifySavingChangesFailedEvent -> {
+                showSnackbar(event.message, LENGTH_SHORT)
             }
             is ConfirmDiscardChangesEvent ->
                 showDiscardChangesDialog()
