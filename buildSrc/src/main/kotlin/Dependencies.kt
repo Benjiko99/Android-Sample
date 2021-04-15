@@ -8,7 +8,7 @@ object Version {
     const val kotlin = "1.4.32"
     const val core_library_desugaring = "1.1.1"
     const val coroutines = "1.4.2"
-    const val rainbow_cake = "1.2.0"
+    const val rainbow_cake = "1.3.0"
     const val koin = "2.2.0-rc-1"
 
     // Debugging
@@ -68,16 +68,17 @@ object Dependency {
 
 
     //region Rainbow Cake
-    const val rainbowcake_core =
+
+    const val rainbow_cake_core =
         "co.zsmb:rainbow-cake-core:${Version.rainbow_cake}"
 
-    const val rainbowcake_koin =
+    const val rainbow_cake_koin =
         "co.zsmb:rainbow-cake-koin:${Version.rainbow_cake}"
 
-    const val rainbowcake_timber =
+    const val rainbow_cake_timber =
         "co.zsmb:rainbow-cake-timber:${Version.rainbow_cake}"
 
-    const val rainbowcake_test =
+    const val rainbow_cake_test =
         "co.zsmb:rainbow-cake-test:${Version.rainbow_cake}"
     //endregion
 
