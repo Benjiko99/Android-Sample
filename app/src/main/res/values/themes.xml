@@ -8,19 +8,11 @@
         <item name="colorOnSecondary">@color/white</item>
         <item name="colorAccent">@color/pink_600</item>
         <item name="android:colorBackground">@color/colorBackground</item>
-
-        <item name="toolbarTextColor">@color/material_on_surface_emphasis_high_type</item>
-
-        <item name="toolbarNavigationButtonStyle">@style/AppTheme.Toolbar.Button.Navigation</item>
     </style>
 
     <style name="AppTheme.ThemeOverlay.Toolbar" parent="">
-        <item name="colorControlNormal">?toolbarTextColor</item>
-        <item name="actionMenuTextColor">?toolbarTextColor</item>
-    </style>
-
-    <style name="AppTheme.Toolbar.Button.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="tint">?toolbarTextColor</item>
+        <item name="colorControlNormal">@color/toolbarControls</item>
+        <item name="colorOnSurface">@color/toolbarControls</item>
     </style>
 
     <style name="AppTheme.CardView.Outlined" parent="Widget.MaterialComponents.CardView">
