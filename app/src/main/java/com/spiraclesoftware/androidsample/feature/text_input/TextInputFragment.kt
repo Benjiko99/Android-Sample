@@ -10,10 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import co.zsmb.rainbowcake.base.OneShotEvent
 import com.spiraclesoftware.androidsample.databinding.TextInputFragmentBinding
-import com.spiraclesoftware.androidsample.extension.onClick
-import com.spiraclesoftware.androidsample.extension.onDoneAction
-import com.spiraclesoftware.androidsample.extension.showSoftKeyboard
-import com.spiraclesoftware.androidsample.extension.string
+import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment.Companion.RESULT_KEY
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewModel.SendResultToCallerAndExitEvent
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.Content
@@ -70,6 +67,7 @@ class TextInputFragment :
             is SendResultToCallerAndExitEvent -> {
                 setFragmentResult(event.requestKey, bundleOf(RESULT_KEY to event.result))
                 findNavController().navigateUp()
+                hideSoftKeyboard()
             }
         }
     }
