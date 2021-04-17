@@ -16,10 +16,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ProfileFragmentBinding
-import com.spiraclesoftware.androidsample.extension.applyToMany
-import com.spiraclesoftware.androidsample.extension.hideSoftKeyboard
-import com.spiraclesoftware.androidsample.extension.onDoneAction
-import com.spiraclesoftware.androidsample.extension.showSnackbar
+import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.*
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
@@ -70,6 +67,11 @@ class ProfileFragment :
         toolbar.menu.findItem(R.id.action_edit).isVisible = viewState is Viewing
         toolbar.menu.findItem(R.id.action_save).isVisible = viewState is Editing
 
+        if (viewState is Viewing) {
+            // clears focus from fields
+            headerView.requestFocus()
+        }
+
         applyToMany(fullNameField, dateOfBirthField, phoneNumberField, emailField) {
             isEnabled = viewState is Editing
         }
@@ -83,16 +85,11 @@ class ProfileFragment :
             }
         }
 
-        with((viewState as? Editing)?.validationErrors) {
-            fullNameField.error = this?.fullNameError
-            dateOfBirthField.error = this?.dateOfBirthError
-            phoneNumberField.error = this?.phoneNumberError
-            emailField.error = this?.emailError
-        }
-
-        if (viewState is Viewing) {
-            headerView.requestFocus()
-        }
+        val errors = (viewState as? Editing)?.validationErrors
+        fullNameField.showOrHideError(errors?.fullNameError)
+        dateOfBirthField.showOrHideError(errors?.dateOfBirthError)
+        phoneNumberField.showOrHideError(errors?.phoneNumberError)
+        emailField.showOrHideError(errors?.emailError)
     }
 
     override fun onEvent(event: OneShotEvent) {
@@ -106,7 +103,7 @@ class ProfileFragment :
             }
             is ConfirmDiscardChangesEvent ->
                 showDiscardChangesDialog()
-            is ExitEvent ->
+            is ExitScreenEvent ->
                 findNavController().navigateUp()
         }
     }

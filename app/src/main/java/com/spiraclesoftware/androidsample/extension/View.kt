@@ -4,6 +4,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.google.android.material.textfield.TextInputLayout
 
 //region Margins
 var View.topMargin: Int?
@@ -20,6 +21,13 @@ fun TextView.addPaintFlag(flag: Int) {
 
 fun TextView.removePaintFlag(flag: Int) {
     paintFlags = paintFlags and flag.inv()
+}
+//endregion
+
+//region TextInputLayout
+fun TextInputLayout.showOrHideError(text: String?) {
+    error = text
+    isErrorEnabled = text != null
 }
 //endregion
 

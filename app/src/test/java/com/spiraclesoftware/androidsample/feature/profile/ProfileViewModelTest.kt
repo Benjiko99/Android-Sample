@@ -77,8 +77,8 @@ class ProfileViewModelTest : ViewModelTest() {
 
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        every { profilePresenter.updateProfile(any(), any(), any(), any()) } returns
-                ProfilePresenter.UpdateProfileResult.Success(updatedProfileModel)
+        every { profilePresenter.updateProfile(any()) } returns
+                ProfilePresenter.ProfileUpdate.Success(updatedProfileModel)
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, _, queuedEventsObserver ->
@@ -104,8 +104,8 @@ class ProfileViewModelTest : ViewModelTest() {
 
         every { profilePresenter.getProfileModel() } returns mockk()
 
-        every { profilePresenter.updateProfile(any(), any(), any(), any()) } returns
-                ProfilePresenter.UpdateProfileResult.Error(errorMessage)
+        every { profilePresenter.updateProfile(any()) } returns
+                ProfilePresenter.ProfileUpdate.Error(errorMessage)
 
         with(newTestSubject()) {
             observeStateAndEvents { _, _, queuedEventsObserver ->
@@ -125,8 +125,8 @@ class ProfileViewModelTest : ViewModelTest() {
 
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        every { profilePresenter.updateProfile(any(), any(), any(), any()) } returns
-                ProfilePresenter.UpdateProfileResult.Error("")
+        every { profilePresenter.updateProfile(any()) } returns
+                ProfilePresenter.ProfileUpdate.Error("")
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, _ ->
@@ -148,9 +148,9 @@ class ProfileViewModelTest : ViewModelTest() {
 
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        every { profilePresenter.updateProfile(any(), any(), any(), any()) } returnsMany listOf(
-            ProfilePresenter.UpdateProfileResult.ValidationError(validationErrors),
-            ProfilePresenter.UpdateProfileResult.Error("")
+        every { profilePresenter.updateProfile(any()) } returnsMany listOf(
+            ProfilePresenter.ProfileUpdate.ValidationError(validationErrors),
+            ProfilePresenter.ProfileUpdate.Error("")
         )
 
         with(newTestSubject()) {
@@ -176,8 +176,8 @@ class ProfileViewModelTest : ViewModelTest() {
 
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        every { profilePresenter.updateProfile(any(), any(), any(), any()) } returns
-                ProfilePresenter.UpdateProfileResult.ValidationError(formErrors)
+        every { profilePresenter.updateProfile(any()) } returns
+                ProfilePresenter.ProfileUpdate.ValidationError(formErrors)
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, _ ->
@@ -210,7 +210,7 @@ class ProfileViewModelTest : ViewModelTest() {
                     Viewing(profileModel)
                 )
 
-                eventsObserver.assertObserved(ExitEvent)
+                eventsObserver.assertObserved(ExitScreenEvent)
             }
         }
     }
@@ -229,7 +229,7 @@ class ProfileViewModelTest : ViewModelTest() {
                     Viewing(profileModel)
                 )
 
-                eventsObserver.assertObserved(ExitEvent)
+                eventsObserver.assertObserved(ExitScreenEvent)
             }
         }
     }

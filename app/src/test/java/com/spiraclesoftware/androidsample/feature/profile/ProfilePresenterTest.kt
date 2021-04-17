@@ -2,10 +2,9 @@ package com.spiraclesoftware.androidsample.feature.profile
 
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
-import com.spiraclesoftware.androidsample.domain.entity.Profile
 import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor
-import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator
-import com.spiraclesoftware.androidsample.feature.profile.ProfilePresenter.UpdateProfileResult
+import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.ProfileUpdateResult
+import com.spiraclesoftware.androidsample.feature.profile.ProfilePresenter.ProfileUpdate
 import com.spiraclesoftware.androidsample.format.ExceptionFormatter
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -49,49 +48,44 @@ class ProfilePresenterTest : PresenterTest() {
 
     @Test
     fun updateProfile_success() {
-        val updatedProfile = mockk<Profile>()
         val updatedProfileModel = mockk<ProfileModel>()
 
-        val result = ProfileInteractor.ProfileUpdateResult.Success(updatedProfile)
-
-        every { profileInteractor.updateProfile(any()) } returns result
         every { profileFormatter.profileModel(any()) } returns updatedProfileModel
 
-        val actual = testSubject.updateProfile("", "", "", "")
+        every { profileInteractor.updateProfile(any()) } returns
+                ProfileUpdateResult.Success(mockk())
 
-        assertThat(actual).isInstanceOf(UpdateProfileResult.Success::class.java)
-        assertThat((actual as UpdateProfileResult.Success).updatedProfileModel)
-            .isEqualTo(updatedProfileModel)
+        val actual = testSubject.updateProfile(mockk())
+        val expected = ProfileUpdate.Success(updatedProfileModel)
+
+        assertThat(actual).isEqualTo(expected)
     }
 
-    // TODO
-    /*@Test
-    fun updateProfile_validationError() {
-        val validationErrors = listOf<ProfileUpdateValidator.Error>()
-
+    @Test
+    fun updateProfile_validationsFailed() {
         every { profileInteractor.updateProfile(any()) } returns
-                ProfileInteractor.ProfileUpdateResult.ValidationsFailed(validationErrors)
+                ProfileUpdateResult.ValidationsFailed(listOf())
 
-        every { profileFormatter.validationError(any()) } returns "error message"
+        val mockErrors = mockk<ProfileViewState.ValidationErrors>()
+        every { profileFormatter.validationErrors(any()) } returns mockErrors
 
-        val actual = testSubject.updateProfile("", "", "", "")
+        val actual = testSubject.updateProfile(mockk())
+        val expected = ProfileUpdate.ValidationError(mockErrors)
 
-        assertThat(actual).isInstanceOf(UpdateProfileResult.ValidationError::class.java)
-        assertThat((actual as UpdateProfileResult.ValidationError).validationErrors).isEqualTo(validationErrors)
-    }*/
+        assertThat(actual).isEqualTo(expected)
+    }
 
     @Test
     fun updateProfile_error() {
-        val result = ProfileInteractor.ProfileUpdateResult.Error(Exception())
+        every { profileInteractor.updateProfile(any()) } returns
+                ProfileUpdateResult.Error(Exception())
 
-        every { profileInteractor.updateProfile(any()) } returns result
-        every { exceptionFormatter.format(any()) } returns "ERROR MESSAGE"
+        every { exceptionFormatter.format(any()) } returns "abc"
 
-        val actual = testSubject.updateProfile("", "", "", "")
+        val actual = testSubject.updateProfile(mockk())
+        val expected = ProfileUpdate.Error("abc")
 
-        assertThat(actual).isInstanceOf(UpdateProfileResult.Error::class.java)
-        assertThat((actual as UpdateProfileResult.Error).errorMessage)
-            .isEqualTo("ERROR MESSAGE")
+        assertThat(actual).isEqualTo(expected)
     }
 
 }

@@ -6,6 +6,14 @@ inline fun consume(f: () -> Unit): Boolean {
     return true
 }
 
+/**
+ * Perform setup on multiple objects at once.
+ * ```
+ * applyToMany(viewA, viewB) {
+ *     isEnabled = condition
+ * }
+ ```
+ */
 inline fun <T> applyToMany(vararg items: T, block: T.() -> Unit) {
     items.forEach { it.block() }
 }

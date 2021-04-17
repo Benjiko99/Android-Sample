@@ -22,17 +22,17 @@ class ProfileInteractor(
         profileUpdateData: ProfileUpdateData
     ): ProfileUpdateResult {
         try {
-            val validationResult = profileUpdateValidator.sanitizeAndValidate(profileUpdateData)
+            val result = profileUpdateValidator.sanitizeAndValidate(profileUpdateData)
 
-            return when (validationResult) {
+            return when (result) {
                 is Valid -> {
-                    val profile = validationResult.sanitizedProfile
+                    val profile = result.sanitizedProfile
 
                     localDataSource.saveProfile(profile)
                     ProfileUpdateResult.Success(profile)
                 }
                 is Invalid -> {
-                    ProfileUpdateResult.ValidationsFailed(validationResult.errors)
+                    ProfileUpdateResult.ValidationsFailed(result.errors)
                 }
             }
         } catch (e: Exception) {

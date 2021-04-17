@@ -24,7 +24,7 @@ class ProfileFormatterTest : FormatterTest() {
             email = "john.doe@example.com"
         )
 
-        val formatter = ProfileFormatter()
+        val formatter = ProfileFormatter(context)
         val actual = formatter.profileModel(profile)
 
         assertThat(actual).isEqualTo(expected)
