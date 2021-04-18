@@ -2,7 +2,6 @@ package com.spiraclesoftware.androidsample.domain.service.profile_update_validat
 
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.entity.Profile
-import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.ProfileUpdateData
 import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator.ValidationResult
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -15,13 +14,13 @@ class ProfileUpdateValidatorTest {
 
     @Test
     fun `Validation passes when inputs satisfy all rules`() = runBlockingTest {
-        val data = ProfileUpdateData(
+        val profile = Profile(
             fullName = "John Smith",
-            dateOfBirth = "2000-01-31",
+            dateOfBirth = LocalDate.parse("2000-01-31"),
             phoneNumber = "+420 123 456 789",
             email = "john.smith@example.com"
         )
-        val actual = ProfileUpdateValidator().sanitizeAndValidate(data)
+        val actual = ProfileUpdateValidator().sanitizeAndValidate(profile)
 
         val expectedProfile = Profile(
             fullName = "John Smith",
@@ -36,17 +35,17 @@ class ProfileUpdateValidatorTest {
 
     @Test
     fun `Inputs are sanitized (trimmed, etc)`() = runBlockingTest {
-        val data = ProfileUpdateData(
+        val profile = Profile(
             fullName = "  John Smith  ",
-            dateOfBirth = "  2000-01-31  ",
+            dateOfBirth = LocalDate.MIN,
             phoneNumber = "  +420 123 456 789  ",
             email = "  john.smith@example.com  "
         )
-        val actual = ProfileUpdateValidator().sanitizeAndValidate(data)
+        val actual = ProfileUpdateValidator().sanitizeAndValidate(profile)
 
         val expectedProfile = Profile(
             fullName = "John Smith",
-            dateOfBirth = LocalDate.of(2000, JANUARY, 31),
+            dateOfBirth = LocalDate.MIN,
             phoneNumber = "+420 123 456 789",
             email = "john.smith@example.com"
         )
@@ -57,9 +56,9 @@ class ProfileUpdateValidatorTest {
 
     @Test
     fun `Blank inputs don't pass validations`() = runBlockingTest {
-        val data = ProfileUpdateData(
+        val data = Profile(
             fullName = "  ",
-            dateOfBirth = "  ",
+            dateOfBirth = LocalDate.now(),
             phoneNumber = "  ",
             email = "  "
         )
@@ -67,7 +66,6 @@ class ProfileUpdateValidatorTest {
 
         val expectedErrors = listOf(
             NameIsBlank,
-            DateOfBirthIsBlank,
             PhoneNumberIsBlank,
             EmailIsBlank,
         )

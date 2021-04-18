@@ -51,7 +51,7 @@
                     android:layout_marginLeft="@dimen/edge_margin"
                     android:layout_marginRight="@dimen/edge_margin"
                     android:minHeight="32dp"
-                    android:spinnerMode="dialog"
+                    android:spinnerMode="dropdown"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintLeft_toLeftOf="parent"

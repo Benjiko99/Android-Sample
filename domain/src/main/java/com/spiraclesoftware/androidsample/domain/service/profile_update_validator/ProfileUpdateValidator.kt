@@ -1,7 +1,6 @@
 package com.spiraclesoftware.androidsample.domain.service.profile_update_validator
 
 import com.spiraclesoftware.androidsample.domain.entity.Profile
-import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.ProfileUpdateData
 import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator.Error
 import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator.ValidationResult
 import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator.ValidationResult.Invalid
@@ -10,7 +9,7 @@ import com.spiraclesoftware.androidsample.domain.service.profile_update_validato
 /**
  * Validates login credentials.
  *
- * To use it, call [sanitizeAndValidate] with your [ProfileUpdateData] and check the returned [ValidationResult].
+ * To use it, call [sanitizeAndValidate] with your [Profile] and check the returned [ValidationResult].
  *
  * To add new validations, define the rules which need to be satisfied
  * and the errors that can be thrown in response to dissatisfied rules.
@@ -33,10 +32,6 @@ class ProfileUpdateValidator {
         FieldIsNotBlankRule to NameIsBlank
     )
 
-    private val dateOfBirthFieldRules = mapOf<Rule, Error>(
-        FieldIsNotBlankRule to DateOfBirthIsBlank
-    )
-
     private val phoneNumberFieldRules = mapOf<Rule, Error>(
         FieldIsNotBlankRule to PhoneNumberIsBlank
     )
@@ -45,11 +40,10 @@ class ProfileUpdateValidator {
         FieldIsNotBlankRule to EmailIsBlank
     )
 
-    fun sanitizeAndValidate(profileUpdateData: ProfileUpdateData): ValidationResult {
-        val sanitizedProfileUpdate = with(profileUpdateData) {
-            profileUpdateData.copy(
+    fun sanitizeAndValidate(profile: Profile): ValidationResult {
+        val sanitizedProfileUpdate = with(profile) {
+            profile.copy(
                 fullName = fullName.trim(),
-                dateOfBirth = dateOfBirth.trim(),
                 phoneNumber = phoneNumber.trim(),
                 email = email.trim(),
             )
@@ -58,17 +52,16 @@ class ProfileUpdateValidator {
         return validate(sanitizedProfileUpdate)
     }
 
-    private fun validate(profileUpdateData: ProfileUpdateData): ValidationResult {
+    private fun validate(profile: Profile): ValidationResult {
         val errors = mutableListOf<Error>()
 
-        with(profileUpdateData) {
+        with(profile) {
             validateInputAgainstRules(fullName, nameFieldRules).also(errors::addAll)
-            validateInputAgainstRules(dateOfBirth, dateOfBirthFieldRules).also(errors::addAll)
             validateInputAgainstRules(phoneNumber, phoneNumberFieldRules).also(errors::addAll)
             validateInputAgainstRules(email, emailFieldRules).also(errors::addAll)
         }
 
-        return if (errors.isEmpty()) Valid(profileUpdateData.toProfile()) else Invalid(
+        return if (errors.isEmpty()) Valid(profile) else Invalid(
             errors
         )
     }

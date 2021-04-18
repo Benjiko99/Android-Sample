@@ -1,8 +1,8 @@
 package com.spiraclesoftware.androidsample.feature.profile
 
+import com.spiraclesoftware.androidsample.domain.entity.Profile
 import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor
-import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.ProfileUpdateData
-import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.ProfileUpdateResult
+import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.UpdateProfileResult
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.ValidationErrors
 import com.spiraclesoftware.androidsample.format.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.StandardPresenter
@@ -13,35 +13,41 @@ class ProfilePresenter(
     exceptionFormatter: ExceptionFormatter
 ) : StandardPresenter(exceptionFormatter) {
 
+    fun getProfile(): Profile {
+        return profileInteractor.getProfile()
+    }
+
     fun getProfileModel(): ProfileModel {
-        return profileInteractor.getProfile().let(formatter::profileModel)
+        return getProfile().let(formatter::profileModel)
     }
 
     fun updateProfile(
-        data: ProfileUpdateData
-    ): ProfileUpdate {
-        return when (val result = profileInteractor.updateProfile(data)) {
-            is ProfileUpdateResult.Success -> {
+        profile: Profile
+    ): UpdateProfileModel {
+        val result = profileInteractor.updateProfile(profile)
+
+        return when (result) {
+            is UpdateProfileResult.Success -> {
                 val updatedProfileModel = formatter.profileModel(result.updatedProfile)
-                ProfileUpdate.Success(updatedProfileModel)
+                UpdateProfileModel.Success(updatedProfileModel)
             }
-            is ProfileUpdateResult.ValidationsFailed -> {
+            is UpdateProfileResult.ValidationsFailed -> {
                 val validationErrors = formatter.validationErrors(result.errors)
-                ProfileUpdate.ValidationError(validationErrors)
+                UpdateProfileModel.ValidationError(validationErrors)
             }
-            is ProfileUpdateResult.Error -> {
+            is UpdateProfileResult.Error -> {
                 val errorMessage = exceptionFormatter.format(result.exception)
-                ProfileUpdate.Error(errorMessage)
+                UpdateProfileModel.Error(errorMessage)
             }
         }
     }
 
-    sealed class ProfileUpdate {
-        data class Success(val updatedProfileModel: ProfileModel) : ProfileUpdate()
+    sealed class UpdateProfileModel {
+        data class Success(val updatedProfileModel: ProfileModel) : UpdateProfileModel()
 
-        data class ValidationError(val validationErrors: ValidationErrors) : ProfileUpdate()
+        data class ValidationError(val validationErrors: ValidationErrors) : UpdateProfileModel()
 
-        data class Error(val errorMessage: String) : ProfileUpdate()
+        data class Error(val errorMessage: String) : UpdateProfileModel()
     }
 
 }

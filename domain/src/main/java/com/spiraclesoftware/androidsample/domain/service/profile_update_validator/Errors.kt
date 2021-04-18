@@ -4,8 +4,6 @@ import com.spiraclesoftware.androidsample.domain.service.profile_update_validato
 
 object NameIsBlank : NameField, Error()
 
-object DateOfBirthIsBlank : DateOfBirthField, Error()
-
 object PhoneNumberIsBlank : PhoneNumberField, Error()
 
 object EmailIsBlank : EmailField, Error()

@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
 import com.spiraclesoftware.androidsample.domain.entity.Profile
-import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.ProfileUpdateResult
+import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.UpdateProfileResult
 import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator
 import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator.ValidationResult
 import io.mockk.*
@@ -53,7 +53,7 @@ class ProfileInteractorTest {
                 ValidationResult.Valid(mockProfile)
 
         val actual = testSubject.updateProfile(mockk())
-        val expected = ProfileUpdateResult.Success(mockProfile)
+        val expected = UpdateProfileResult.Success(mockProfile)
 
         assertThat(actual).isEqualTo(expected)
         verify { localDataSource.saveProfile(mockProfile) }
@@ -65,7 +65,7 @@ class ProfileInteractorTest {
         every { profileUpdateValidator.sanitizeAndValidate(any()) } throws exception
 
         val actual = testSubject.updateProfile(mockk())
-        val expected = ProfileUpdateResult.Error(exception)
+        val expected = UpdateProfileResult.Error(exception)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -79,7 +79,7 @@ class ProfileInteractorTest {
                 ValidationResult.Invalid(mockErrors)
 
         val actual = testSubject.updateProfile(mockk())
-        val expected = ProfileUpdateResult.ValidationsFailed(mockErrors)
+        val expected = UpdateProfileResult.ValidationsFailed(mockErrors)
 
         assertThat(actual).isEqualTo(expected)
     }

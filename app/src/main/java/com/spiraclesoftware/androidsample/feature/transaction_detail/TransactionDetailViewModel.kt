@@ -114,7 +114,7 @@ class TransactionDetailViewModel(
         attachmentUploads.value = attachmentUploads.value.plus(imageUri)
 
         try {
-            delay(3000)
+            delay(3000) // Simulate network delay
             detailPresenter.uploadAttachment(imageUri)
             attachmentUploads.value = attachmentUploads.value.minus(imageUri)
         } catch (e: Exception) {

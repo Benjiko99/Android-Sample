@@ -3,8 +3,8 @@ package com.spiraclesoftware.androidsample.feature.profile
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor
-import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.ProfileUpdateResult
-import com.spiraclesoftware.androidsample.feature.profile.ProfilePresenter.ProfileUpdate
+import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.UpdateProfileResult
+import com.spiraclesoftware.androidsample.feature.profile.ProfilePresenter.UpdateProfileModel
 import com.spiraclesoftware.androidsample.format.ExceptionFormatter
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -53,10 +53,10 @@ class ProfilePresenterTest : PresenterTest() {
         every { profileFormatter.profileModel(any()) } returns updatedProfileModel
 
         every { profileInteractor.updateProfile(any()) } returns
-                ProfileUpdateResult.Success(mockk())
+                UpdateProfileResult.Success(mockk())
 
         val actual = testSubject.updateProfile(mockk())
-        val expected = ProfileUpdate.Success(updatedProfileModel)
+        val expected = UpdateProfileModel.Success(updatedProfileModel)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -64,13 +64,13 @@ class ProfilePresenterTest : PresenterTest() {
     @Test
     fun updateProfile_validationsFailed() {
         every { profileInteractor.updateProfile(any()) } returns
-                ProfileUpdateResult.ValidationsFailed(listOf())
+                UpdateProfileResult.ValidationsFailed(listOf())
 
         val mockErrors = mockk<ProfileViewState.ValidationErrors>()
         every { profileFormatter.validationErrors(any()) } returns mockErrors
 
         val actual = testSubject.updateProfile(mockk())
-        val expected = ProfileUpdate.ValidationError(mockErrors)
+        val expected = UpdateProfileModel.ValidationError(mockErrors)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -78,12 +78,12 @@ class ProfilePresenterTest : PresenterTest() {
     @Test
     fun updateProfile_error() {
         every { profileInteractor.updateProfile(any()) } returns
-                ProfileUpdateResult.Error(Exception())
+                UpdateProfileResult.Error(Exception())
 
         every { exceptionFormatter.format(any()) } returns "abc"
 
         val actual = testSubject.updateProfile(mockk())
-        val expected = ProfileUpdate.Error("abc")
+        val expected = UpdateProfileModel.Error("abc")
 
         assertThat(actual).isEqualTo(expected)
     }

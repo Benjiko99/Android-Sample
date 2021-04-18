@@ -3,10 +3,9 @@ package com.spiraclesoftware.androidsample.feature.profile
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.QueuedOneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
-import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.ProfileUpdateData
-import com.spiraclesoftware.androidsample.feature.profile.ProfilePresenter.ProfileUpdate
-import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
-import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
+import com.spiraclesoftware.androidsample.feature.profile.ProfilePresenter.UpdateProfileModel
+import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.*
+import java.time.LocalDate
 
 class ProfileViewModel(
     private val presenter: ProfilePresenter
@@ -18,37 +17,40 @@ class ProfileViewModel(
 
     data class NotifySavingChangesFailedEvent(val message: String) : QueuedOneShotEvent
 
+    object NotifyNoChangesPerformedEvent : QueuedOneShotEvent
+
     object ConfirmDiscardChangesEvent : OneShotEvent
+
+    data class ShowDateOfBirthPickerEvent(val openAt: LocalDate) : OneShotEvent
 
     object ExitScreenEvent : OneShotEvent
 
     fun startEditing() {
         if (viewState !is Viewing) return
 
-        viewState = Editing()
+        viewState = Editing(presenter.getProfile())
     }
 
-    fun saveChanges(
-        fullName: String,
-        dateOfBirth: String,
-        phoneNumber: String,
-        email: String
-    ) = execute {
+    fun saveChanges() = execute {
         if (viewState !is Editing) return@execute
+        val editingState = (viewState as Editing)
 
-        val data = ProfileUpdateData(fullName, dateOfBirth, phoneNumber, email)
-        val result = presenter.updateProfile(data)
+        if (editingState.initialProfile == editingState.modifiedProfile) {
+            viewState = Viewing(presenter.getProfileModel())
+            postEvent(NotifyNoChangesPerformedEvent)
+            return@execute
+        }
 
-        when (result) {
-            is ProfileUpdate.Success -> {
+        when (val result = presenter.updateProfile(editingState.modifiedProfile)) {
+            is UpdateProfileModel.Success -> {
                 viewState = Viewing(result.updatedProfileModel)
                 postQueuedEvent(NotifyChangesSavedEvent)
             }
-            is ProfileUpdate.ValidationError -> {
-                viewState = Editing(result.validationErrors)
+            is UpdateProfileModel.ValidationError -> {
+                viewState = editingState.copy(validationErrors = result.validationErrors)
             }
-            is ProfileUpdate.Error -> {
-                viewState = Editing(validationErrors = null)
+            is UpdateProfileModel.Error -> {
+                viewState = editingState.copy(validationErrors = null)
                 postQueuedEvent(NotifySavingChangesFailedEvent(result.errorMessage))
             }
         }
@@ -58,13 +60,61 @@ class ProfileViewModel(
         if (viewState !is Editing) return
 
         viewState = Viewing(presenter.getProfileModel())
-        postEvent(ExitScreenEvent)
+        postEvent(NotifyNoChangesPerformedEvent)
     }
 
-    fun exitScreen() {
+    fun showDateOfBirthPicker() {
+        if (viewState !is Editing) return
+
+        val openAt = (viewState as Editing).modifiedProfile.dateOfBirth
+        postEvent(ShowDateOfBirthPickerEvent(openAt))
+    }
+
+    fun navigateBack() {
         when (viewState) {
             is Viewing -> postEvent(ExitScreenEvent)
-            is Editing -> postEvent(ConfirmDiscardChangesEvent)
+            is Editing -> {
+                val editingState = (viewState as Editing)
+
+                if (editingState.initialProfile == editingState.modifiedProfile) {
+                    viewState = Viewing(presenter.getProfileModel())
+                    postEvent(NotifyNoChangesPerformedEvent)
+                } else {
+                    postEvent(ConfirmDiscardChangesEvent)
+                }
+            }
+        }
+    }
+
+    fun setFullName(fullName: String) {
+        (viewState as? Editing)?.apply {
+            viewState = copy(
+                modifiedProfile = modifiedProfile.copy(fullName = fullName)
+            )
+        }
+    }
+
+    fun setDateOfBirth(dateOfBirth: LocalDate) {
+        (viewState as? Editing)?.apply {
+            viewState = copy(
+                modifiedProfile = modifiedProfile.copy(dateOfBirth = dateOfBirth)
+            )
+        }
+    }
+
+    fun setPhoneNumber(phoneNumber: String) {
+        (viewState as? Editing)?.apply {
+            viewState = copy(
+                modifiedProfile = modifiedProfile.copy(phoneNumber = phoneNumber)
+            )
+        }
+    }
+
+    fun setEmail(email: String) {
+        (viewState as? Editing)?.apply {
+            viewState = copy(
+                modifiedProfile = modifiedProfile.copy(email = email)
+            )
         }
     }
 

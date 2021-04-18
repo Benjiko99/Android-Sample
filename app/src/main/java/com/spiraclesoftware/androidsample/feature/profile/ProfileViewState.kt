@@ -1,5 +1,7 @@
 package com.spiraclesoftware.androidsample.feature.profile
 
+import com.spiraclesoftware.androidsample.domain.entity.Profile
+
 sealed class ProfileViewState {
 
     data class Viewing(
@@ -7,6 +9,8 @@ sealed class ProfileViewState {
     ) : ProfileViewState()
 
     data class Editing(
+        val initialProfile: Profile,
+        val modifiedProfile: Profile = initialProfile,
         val validationErrors: ValidationErrors? = null
     ) : ProfileViewState()
 

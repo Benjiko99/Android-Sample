@@ -1,5 +1,6 @@
 package com.spiraclesoftware.androidsample.extension
 
+import android.text.InputType
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 
 val Toolbar.titleView: TextView?
     get() {
@@ -35,6 +37,21 @@ fun AdapterView<*>.onItemSelected(
         }
 
     }
+}
+
+/**
+ * Prevents the view from gaining focus when clicked, letting you do things
+ * like open a date picker instead of editing the text.
+ */
+fun TextInputLayout.setupNonEditable(onClick: () -> Unit) {
+    editText!!.apply {
+        isFocusable = false
+        isFocusableInTouchMode = false
+        inputType = InputType.TYPE_NULL
+        onClick { onClick() }
+    }
+    onClick { onClick() }
+    setStartIconOnClickListener { onClick() }
 }
 
 fun Fragment.showToast(resId: Int, duration: Int) {

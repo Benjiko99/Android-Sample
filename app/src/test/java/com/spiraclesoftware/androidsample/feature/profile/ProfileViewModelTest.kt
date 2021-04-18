@@ -3,6 +3,8 @@ package com.spiraclesoftware.androidsample.feature.profile
 import co.zsmb.rainbowcake.test.assertObserved
 import co.zsmb.rainbowcake.test.base.ViewModelTest
 import co.zsmb.rainbowcake.test.observeStateAndEvents
+import com.spiraclesoftware.androidsample.domain.entity.Profile
+import com.spiraclesoftware.androidsample.feature.profile.ProfilePresenter.UpdateProfileModel
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.*
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.*
 import io.mockk.MockKAnnotations
@@ -13,9 +15,19 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProfileViewModelTest : ViewModelTest() {
+
+    companion object {
+        val PROFILE = Profile(
+            fullName = "John Doe",
+            dateOfBirth = LocalDate.parse("1970-01-01"),
+            phoneNumber = "+420 123 456 789",
+            email = "john.doe@example.com"
+        )
+    }
 
     @MockK
     lateinit var profilePresenter: ProfilePresenter
@@ -47,10 +59,12 @@ class ProfileViewModelTest : ViewModelTest() {
 
     @Test
     fun startEditing() = runBlockingTest {
+        val profile = mockk<Profile>()
         val profileModel = mockk<ProfileModel> {
             every { copy() } returns this
         }
 
+        every { profilePresenter.getProfile() } returns profile
         every { profilePresenter.getProfileModel() } returns profileModel
 
         with(newTestSubject()) {
@@ -59,7 +73,7 @@ class ProfileViewModelTest : ViewModelTest() {
 
                 stateObserver.assertObserved(
                     Viewing(profileModel),
-                    Editing()
+                    Editing(profile)
                 )
             }
         }
@@ -67,27 +81,26 @@ class ProfileViewModelTest : ViewModelTest() {
 
     @Test
     fun saveChanges_success() = runBlockingTest {
-        val fullName = "John Smith"
-        val dateOfBirth = "1.31.2000"
-        val phoneNumber = "+420 123 456 789"
-        val email = "john.smith@example.com"
-
+        val profile = PROFILE
         val profileModel = mockk<ProfileModel>()
         val updatedProfileModel = mockk<ProfileModel>()
 
+        every { profilePresenter.getProfile() } returns profile
         every { profilePresenter.getProfileModel() } returns profileModel
 
         every { profilePresenter.updateProfile(any()) } returns
-                ProfilePresenter.ProfileUpdate.Success(updatedProfileModel)
+                UpdateProfileModel.Success(updatedProfileModel)
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, _, queuedEventsObserver ->
                 startEditing()
-                saveChanges(fullName, dateOfBirth, phoneNumber, email)
+                setFullName("John Smith")
+                saveChanges()
 
                 stateObserver.assertObserved(
                     Viewing(profileModel),
-                    Editing(),
+                    Editing(profile),
+                    Editing(profile, profile.copy(fullName = "John Smith")),
                     Viewing(updatedProfileModel)
                 )
 
@@ -100,17 +113,19 @@ class ProfileViewModelTest : ViewModelTest() {
 
     @Test
     fun `Event notifying of failure is posted when saving changes fails`() = runBlockingTest {
-        val errorMessage = "ERROR MESSAGE"
+        val errorMessage = "abc"
 
+        every { profilePresenter.getProfile() } returns PROFILE
         every { profilePresenter.getProfileModel() } returns mockk()
 
         every { profilePresenter.updateProfile(any()) } returns
-                ProfilePresenter.ProfileUpdate.Error(errorMessage)
+                UpdateProfileModel.Error(errorMessage)
 
         with(newTestSubject()) {
             observeStateAndEvents { _, _, queuedEventsObserver ->
                 startEditing()
-                saveChanges("", "", "", "")
+                setFullName("John Smith")
+                saveChanges()
 
                 queuedEventsObserver.assertObserved(
                     NotifySavingChangesFailedEvent(errorMessage)
@@ -121,73 +136,88 @@ class ProfileViewModelTest : ViewModelTest() {
 
     @Test
     fun `Remain in editing state when saving changes fails`() = runBlockingTest {
+        val profile = PROFILE
         val profileModel = mockk<ProfileModel>()
 
+        every { profilePresenter.getProfile() } returns profile
         every { profilePresenter.getProfileModel() } returns profileModel
 
         every { profilePresenter.updateProfile(any()) } returns
-                ProfilePresenter.ProfileUpdate.Error("")
+                UpdateProfileModel.Error("")
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, _ ->
                 startEditing()
-                saveChanges("", "", "", "")
+                setFullName("John Smith")
+                saveChanges()
 
                 stateObserver.assertObserved(
                     Viewing(profileModel),
-                    Editing()
+                    Editing(profile),
+                    Editing(profile, profile.copy(fullName = "John Smith")),
                 )
             }
         }
     }
 
     @Test
-    fun `Form errors are reset when saving changes fails`() = runBlockingTest {
+    fun `Saving is possible after correcting validation errors`() = runBlockingTest {
+        val profile = PROFILE
         val profileModel = mockk<ProfileModel>()
-        val validationErrors = ValidationErrors()
+        val updatedProfileModel = mockk<ProfileModel>()
+        val errors = mockk<ValidationErrors>()
 
+        every { profilePresenter.getProfile() } returns profile
         every { profilePresenter.getProfileModel() } returns profileModel
 
         every { profilePresenter.updateProfile(any()) } returnsMany listOf(
-            ProfilePresenter.ProfileUpdate.ValidationError(validationErrors),
-            ProfilePresenter.ProfileUpdate.Error("")
+            UpdateProfileModel.ValidationError(errors),
+            UpdateProfileModel.Success(updatedProfileModel)
         )
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, _ ->
                 startEditing()
-                saveChanges("", "", "", "")
-                saveChanges("", "", "", "")
+                setFullName("   ")
+                saveChanges()
+                setFullName("John Smith")
+                saveChanges()
 
                 stateObserver.assertObserved(
                     Viewing(profileModel),
-                    Editing(validationErrors = null),
-                    Editing(validationErrors = validationErrors),
-                    Editing(validationErrors = null),
+                    Editing(profile),
+                    Editing(profile, profile.copy(fullName = "   ")),
+                    Editing(profile, profile.copy(fullName = "   "), errors),
+                    Editing(profile, profile.copy(fullName = "John Smith"), errors),
+                    Viewing(updatedProfileModel),
                 )
             }
         }
     }
 
     @Test
-    fun `Saving changes produces form errors when validations fail`() = runBlockingTest {
+    fun `Saving changes produces errors when validations fail`() = runBlockingTest {
+        val profile = PROFILE
         val profileModel = mockk<ProfileModel>()
-        val formErrors = mockk<ValidationErrors>()
+        val errors = mockk<ValidationErrors>()
 
+        every { profilePresenter.getProfile() } returns profile
         every { profilePresenter.getProfileModel() } returns profileModel
 
         every { profilePresenter.updateProfile(any()) } returns
-                ProfilePresenter.ProfileUpdate.ValidationError(formErrors)
+                UpdateProfileModel.ValidationError(errors)
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, _ ->
                 startEditing()
-                saveChanges("", "", "", "")
+                setFullName("   ")
+                saveChanges()
 
                 stateObserver.assertObserved(
                     Viewing(profileModel),
-                    Editing(),
-                    Editing(formErrors)
+                    Editing(profile),
+                    Editing(profile, profile.copy(fullName = "   ")),
+                    Editing(profile, profile.copy(fullName = "   "), errors),
                 )
             }
         }
@@ -195,8 +225,10 @@ class ProfileViewModelTest : ViewModelTest() {
 
     @Test
     fun confirmDiscardChanges() = runBlockingTest {
+        val profile = mockk<Profile>()
         val profileModel = mockk<ProfileModel>()
 
+        every { profilePresenter.getProfile() } returns profile
         every { profilePresenter.getProfileModel() } returns profileModel
 
         with(newTestSubject()) {
@@ -206,24 +238,24 @@ class ProfileViewModelTest : ViewModelTest() {
 
                 stateObserver.assertObserved(
                     Viewing(profileModel),
-                    Editing(),
+                    Editing(profile),
                     Viewing(profileModel)
                 )
 
-                eventsObserver.assertObserved(ExitScreenEvent)
+                eventsObserver.assertObserved(NotifyNoChangesPerformedEvent)
             }
         }
     }
 
     @Test
-    fun exitScreen_whileViewing() = runBlockingTest {
+    fun `Navigating back while viewing exits screen`() = runBlockingTest {
         val profileModel = mockk<ProfileModel>()
 
         every { profilePresenter.getProfileModel() } returns profileModel
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, eventsObserver ->
-                exitScreen()
+                navigateBack()
 
                 stateObserver.assertObserved(
                     Viewing(profileModel)
@@ -235,22 +267,55 @@ class ProfileViewModelTest : ViewModelTest() {
     }
 
     @Test
-    fun exitScreen_whileEditing() = runBlockingTest {
-        val profileModel = mockk<ProfileModel> {
-            every { copy() } returns this
-        }
+    fun `Navigating back without making changes returns to viewing`() = runBlockingTest {
+        val profile = PROFILE
+        val profileModel = mockk<ProfileModel>()
 
+        every { profilePresenter.getProfile() } returns profile
         every { profilePresenter.getProfileModel() } returns profileModel
 
         with(newTestSubject()) {
-            observeStateAndEvents { stateObserver, eventsObserver ->
+            observeStateAndEvents { stateObserver, _ ->
                 startEditing()
-                exitScreen()
+                navigateBack()
 
                 stateObserver.assertObserved(
                     Viewing(profileModel),
-                    Editing()
+                    Editing(profile),
+                    Viewing(profileModel),
                 )
+            }
+        }
+    }
+
+    @Test
+    fun `Navigating back without making changes notifies no changes performed`() = runBlockingTest {
+        val profile = PROFILE
+        val profileModel = mockk<ProfileModel>()
+
+        every { profilePresenter.getProfile() } returns profile
+        every { profilePresenter.getProfileModel() } returns profileModel
+
+        with(newTestSubject()) {
+            observeStateAndEvents { _, eventsObserver ->
+                startEditing()
+                navigateBack()
+
+                eventsObserver.assertObserved(NotifyNoChangesPerformedEvent)
+            }
+        }
+    }
+
+    @Test
+    fun `Navigating back with changes asks for confirmation to discard them`() = runBlockingTest {
+        every { profilePresenter.getProfile() } returns PROFILE
+        every { profilePresenter.getProfileModel() } returns mockk()
+
+        with(newTestSubject()) {
+            observeStateAndEvents { _, eventsObserver ->
+                startEditing()
+                setFullName("John Smith")
+                navigateBack()
 
                 eventsObserver.assertObserved(ConfirmDiscardChangesEvent)
             }
