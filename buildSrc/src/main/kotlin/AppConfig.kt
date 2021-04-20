@@ -15,20 +15,9 @@ object AppConfig {
     val jvmTarget = JavaVersion.VERSION_1_8
 }
 
-interface BuildType {
-
+sealed class BuildType {
     companion object {
-        const val release = "release"
         const val debug = "debug"
+        const val release = "release"
     }
-
-    val isMinifyEnabled: Boolean
-}
-
-object BuildTypeDebug : BuildType {
-    override val isMinifyEnabled = false
-}
-
-object BuildTypeRelease : BuildType {
-    override val isMinifyEnabled = false
 }
