@@ -28,6 +28,8 @@ import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentB
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment
+import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toCategorySelect
+import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Error
@@ -141,8 +143,13 @@ class TransactionDetailFragment :
 
     override fun onEvent(event: OneShotEvent) {
         when (event) {
-            is NavigateEvent -> {
-                findNavController().navigate(event.navDirections)
+            is NavigateToCategorySelectEvent -> {
+                val directions = toCategorySelect(event.transactionId, event.initialCategory)
+                findNavController().navigate(directions)
+            }
+            is NavigateToTextInputEvent -> {
+                val directions = toTextInput(event.inputType, event.requestKey, event.initialInput)
+                findNavController().navigate(directions)
             }
             is NavigateToCardDetailEvent -> {
                 showToast(R.string.not_implemented, Toast.LENGTH_SHORT)

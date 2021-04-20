@@ -26,6 +26,8 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.extension.*
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toProfile
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.HeaderItem
@@ -149,8 +151,10 @@ class TransactionListFragment :
 
     override fun onEvent(event: OneShotEvent) {
         when (event) {
-            is NavigateEvent ->
-                findNavController().navigate(event.navDirections)
+            is NavigateToProfileEvent ->
+                findNavController().navigate(toProfile())
+            is NavigateToTransactionDetailEvent ->
+                findNavController().navigate(toTransactionDetail(event.id))
             ShowLanguageChangeConfirmationEvent ->
                 showLanguageChangeConfirmation(onConfirmed = ::onLanguageChangeConfirmed)
         }

@@ -8,8 +8,6 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputType
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
-import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toCategorySelect
-import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
 import io.mockk.MockKAnnotations
@@ -53,7 +51,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
 
     @Test
     fun `Clicking change note card action produces navigate to note input event`() = runBlockingTest {
-        val currentNote = "hello world"
+        val currentNote = "abc"
 
         coEvery { detailPresenter.getNote() } returns currentNote
 
@@ -61,14 +59,12 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         viewModel.observeStateAndEvents { _, eventsObserver ->
             viewModel.openNoteInput()
 
-            val navDirections = toTextInput(
-                TextInputType.NOTE,
-                NOTE_INPUT_REQUEST_KEY,
-                initialInput = currentNote
-            )
-
             eventsObserver.assertObserved(
-                NavigateEvent(navDirections)
+                NavigateToTextInputEvent(
+                    TextInputType.NOTE,
+                    NOTE_INPUT_REQUEST_KEY,
+                    initialInput = currentNote
+                )
             )
         }
     }
@@ -83,13 +79,8 @@ class TransactionDetailViewModelTest : ViewModelTest() {
         viewModel.observeStateAndEvents { _, eventsObserver ->
             viewModel.selectCategory()
 
-            val navDirections = toCategorySelect(
-                "1",
-                currentCategory
-            )
-
             eventsObserver.assertObserved(
-                NavigateEvent(navDirections)
+                NavigateToCategorySelectEvent("1", currentCategory)
             )
         }
     }

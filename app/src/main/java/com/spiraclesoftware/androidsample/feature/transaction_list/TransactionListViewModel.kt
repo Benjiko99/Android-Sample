@@ -1,14 +1,11 @@
 package com.spiraclesoftware.androidsample.feature.transaction_list
 
-import androidx.navigation.NavDirections
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toProfile
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -17,7 +14,9 @@ class TransactionListViewModel(
     private val presenter: TransactionListPresenter
 ) : RainbowCakeViewModel<TransactionListViewState>(Loading) {
 
-    data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
+    object NavigateToProfileEvent : OneShotEvent
+
+    data class NavigateToTransactionDetailEvent(val id: String) : OneShotEvent
 
     object ShowLanguageChangeConfirmationEvent : OneShotEvent
 
@@ -29,11 +28,11 @@ class TransactionListViewModel(
     }
 
     fun openProfile() {
-        postEvent(NavigateEvent(toProfile()))
+        postEvent(NavigateToProfileEvent)
     }
 
     fun openTransactionDetail(id: TransactionId) {
-        postEvent(NavigateEvent(toTransactionDetail(id.value)))
+        postEvent(NavigateToTransactionDetailEvent(id.value))
     }
 
     fun filterByTransferDirection(filter: TransferDirectionFilter) {

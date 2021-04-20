@@ -1,17 +1,15 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail
 
 import android.net.Uri
-import androidx.navigation.NavDirections
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
+import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputType
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
-import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toCategorySelect
-import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.*
 import kotlinx.coroutines.delay
@@ -24,7 +22,16 @@ class TransactionDetailViewModel(
     private val detailPresenter: TransactionDetailPresenter
 ) : RainbowCakeViewModel<TransactionDetailViewState>(Initial) {
 
-    data class NavigateEvent(val navDirections: NavDirections) : OneShotEvent
+    data class NavigateToCategorySelectEvent(
+        val transactionId: String,
+        val initialCategory: TransactionCategory
+    ) : OneShotEvent
+
+    data class NavigateToTextInputEvent(
+        val inputType: TextInputType,
+        val requestKey: String,
+        val initialInput: String
+    ) : OneShotEvent
 
     object NavigateToCardDetailEvent : OneShotEvent
 
@@ -68,11 +75,11 @@ class TransactionDetailViewModel(
     }
 
     fun selectCategory() = execute {
-        val navDirections = toCategorySelect(
+        val navigateEvent = NavigateToCategorySelectEvent(
             transactionId.value,
-            initialCategory = detailPresenter.getCategory()
+            detailPresenter.getCategory()
         )
-        postEvent(NavigateEvent(navDirections))
+        postEvent(navigateEvent)
     }
 
     fun viewAttachment(uri: Uri) = execute {
@@ -101,13 +108,12 @@ class TransactionDetailViewModel(
     }
 
     fun openNoteInput() = execute {
-        val navDirections = toTextInput(
+        val navigateEvent = NavigateToTextInputEvent(
             TextInputType.NOTE,
             NOTE_INPUT_REQUEST_KEY,
             initialInput = detailPresenter.getNote()
         )
-
-        postEvent(NavigateEvent(navDirections))
+        postEvent(navigateEvent)
     }
 
     fun onAttachmentPicked(imageUri: Uri) = executeNonBlocking {

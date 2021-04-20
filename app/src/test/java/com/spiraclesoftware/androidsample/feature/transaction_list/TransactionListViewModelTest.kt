@@ -6,9 +6,7 @@ import co.zsmb.rainbowcake.test.observeStateAndEvents
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.NavigateEvent
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.ShowLanguageChangeConfirmationEvent
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.Content
 import com.spiraclesoftware.androidsample.framework.Model
 import io.mockk.*
@@ -27,12 +25,21 @@ class TransactionListViewModelTest : ViewModelTest() {
     }
 
     @Test
+    fun openProfile() {
+        testSubject.observeStateAndEvents { _, eventsObserver ->
+            testSubject.openProfile()
+
+            eventsObserver.assertObserved(NavigateToProfileEvent)
+        }
+    }
+
+    @Test
     fun openTransactionDetail() {
         testSubject.observeStateAndEvents { _, eventsObserver ->
             testSubject.openTransactionDetail(TransactionId("1"))
 
             eventsObserver.assertObserved(
-                NavigateEvent(toTransactionDetail("1"))
+                NavigateToTransactionDetailEvent("1")
             )
         }
     }
@@ -42,9 +49,7 @@ class TransactionListViewModelTest : ViewModelTest() {
         testSubject.observeStateAndEvents { _, eventsObserver ->
             testSubject.changeLanguage()
 
-            eventsObserver.assertObserved(
-                ShowLanguageChangeConfirmationEvent
-            )
+            eventsObserver.assertObserved(ShowLanguageChangeConfirmationEvent)
         }
     }
 
