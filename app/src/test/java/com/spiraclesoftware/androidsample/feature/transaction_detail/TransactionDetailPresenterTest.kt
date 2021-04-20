@@ -12,7 +12,6 @@ import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.Cards
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
 import com.spiraclesoftware.androidsample.format.ExceptionFormatter
 import com.spiraclesoftware.androidsample.framework.PresenterException
-import com.spiraclesoftware.androidsample.money
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -33,7 +32,7 @@ class TransactionDetailPresenterTest : PresenterTest() {
             TransactionId("1"),
             "Paypal *Steam",
             epochDateTime,
-            money("49.99", "EUR"),
+            Money("49.99", "EUR"),
             TransferDirection.OUTGOING,
             TransactionCategory.ENTERTAINMENT,
             TransactionStatus.COMPLETED,

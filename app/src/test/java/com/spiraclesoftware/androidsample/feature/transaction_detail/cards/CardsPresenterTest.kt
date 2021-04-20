@@ -4,7 +4,6 @@ import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.epochDateTime
-import com.spiraclesoftware.androidsample.money
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test
 
@@ -17,7 +16,7 @@ class CardsPresenterTest : PresenterTest() {
             TransactionId("1"),
             "Paypal *Steam",
             epochDateTime,
-            money("49.99", "EUR"),
+            Money("49.99", "EUR"),
             TransferDirection.OUTGOING,
             TransactionCategory.ENTERTAINMENT,
             TransactionStatus.COMPLETED,
