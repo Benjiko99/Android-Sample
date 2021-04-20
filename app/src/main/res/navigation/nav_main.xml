@@ -68,7 +68,7 @@
             android:name="requestKey"
             app:argType="string" />
         <argument
-            android:name="initialValue"
+            android:name="initialInput"
             app:argType="string" />
     </fragment>
 

@@ -4,7 +4,7 @@ import co.zsmb.rainbowcake.test.assertObserved
 import co.zsmb.rainbowcake.test.base.ViewModelTest
 import co.zsmb.rainbowcake.test.observeStateAndEvents
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewModel.SendResultToCallerAndExitEvent
-import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.Content
+import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.InputEntry
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
@@ -21,17 +21,12 @@ class TextInputViewModelTest : ViewModelTest() {
         val vm = TextInputViewModel(TextInputType.NOTE, REQUEST_KEY, "Initial Value")
 
         vm.observeStateAndEvents { stateObserver, eventsObserver ->
-            vm.validateThenSendInputToCaller("Hello World")
+            vm.setInput("Hello World")
+            vm.saveInput()
 
             stateObserver.assertObserved(
-                Content(
-                    "Initial Value",
-                    null
-                ),
-                Content(
-                    "Hello World",
-                    null
-                )
+                InputEntry("Initial Value"),
+                InputEntry("Hello World")
             )
 
             eventsObserver.assertObserved(

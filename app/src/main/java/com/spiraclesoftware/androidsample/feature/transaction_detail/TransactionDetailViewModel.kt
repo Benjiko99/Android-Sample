@@ -104,7 +104,7 @@ class TransactionDetailViewModel(
         val navDirections = toTextInput(
             TextInputType.NOTE,
             NOTE_INPUT_REQUEST_KEY,
-            initialValue = detailPresenter.getNote()
+            initialInput = detailPresenter.getNote()
         )
 
         postEvent(NavigateEvent(navDirections))

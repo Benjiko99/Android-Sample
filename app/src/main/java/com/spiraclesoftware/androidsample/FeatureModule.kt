@@ -51,8 +51,8 @@ val featureModule = module {
     single { CardsPresenter() }
     single { CardsFormatter() }
 
-    viewModel { (inputType: TextInputType, requestKey: String, initialValue: String) ->
-        TextInputViewModel(inputType, requestKey, initialValue)
+    viewModel { (inputType: TextInputType, requestKey: String, initialInput: String) ->
+        TextInputViewModel(inputType, requestKey, initialInput)
     }
 
     viewModel { (id: TransactionId, initialCategory: TransactionCategory) ->

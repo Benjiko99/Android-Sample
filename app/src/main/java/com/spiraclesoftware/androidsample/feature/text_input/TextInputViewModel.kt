@@ -2,16 +2,17 @@ package com.spiraclesoftware.androidsample.feature.text_input
 
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
-import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.Content
+import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.Initial
+import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.InputEntry
 import com.spiraclesoftware.androidsample.feature.text_input.strategy.TextInputStrategy
 
 class TextInputViewModel(
     inputType: TextInputType,
     private val requestKey: String,
-    initialValue: String,
+    initialInput: String,
     private val strategy: TextInputStrategy = TextInputStrategy.getStrategy(inputType)
 ) : RainbowCakeViewModel<TextInputViewState>(
-    Content(input = initialValue)
+    Initial(initialInput = initialInput)
 ) {
 
     data class SendResultToCallerAndExitEvent(
@@ -22,9 +23,16 @@ class TextInputViewModel(
     val toolbarTitleRes: Int = strategy.toolbarTitleRes
     val inputHintRes: Int = strategy.inputHintRes
 
-    fun validateThenSendInputToCaller(input: String) {
-        updateInputState(input)
+    init {
+        viewState = InputEntry(initialInput)
+    }
 
+    fun setInput(input: String) {
+        viewState = (viewState as InputEntry).copy(input = input)
+    }
+
+    fun saveInput() {
+        val input = (viewState as InputEntry).input
         val sanitizedInput = strategy.sanitizeInput(input)
 
         if (validateInput(sanitizedInput)) {
@@ -39,16 +47,8 @@ class TextInputViewModel(
         return error == null
     }
 
-    private fun updateInputState(input: String) {
-        viewState = (viewState as? Content)?.copy(
-            input = input
-        ) ?: viewState
-    }
-
     private fun updateErrorState(error: ValidationError?) {
-        viewState = (viewState as? Content)?.copy(
-            error = error
-        ) ?: viewState
+        viewState = (viewState as InputEntry).copy(error = error)
     }
 
     private fun sendResultToCaller(input: String) {

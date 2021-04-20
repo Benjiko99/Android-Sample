@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -13,7 +14,8 @@ import com.spiraclesoftware.androidsample.databinding.TextInputFragmentBinding
 import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment.Companion.RESULT_KEY
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewModel.SendResultToCallerAndExitEvent
-import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.Content
+import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.Initial
+import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.InputEntry
 import com.spiraclesoftware.androidsample.framework.StandardFragment
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -43,7 +45,7 @@ class TextInputFragment :
     override fun provideViewModel(): TextInputViewModel =
         TextInputFragmentArgs.fromBundle(requireArguments()).let { args ->
             getViewModel {
-                parametersOf(args.strategyType, args.requestKey, args.initialValue)
+                parametersOf(args.strategyType, args.requestKey, args.initialInput)
             }
         }
 
@@ -53,11 +55,11 @@ class TextInputFragment :
 
     override fun render(viewState: TextInputViewState) = with(binding) {
         when (viewState) {
-            is Content -> {
-                inputEditText.setText(viewState.input)
-                inputEditText.setSelection(viewState.input.length)
-
-                inputLayout.error = viewState.error?.formattedMessage(requireContext())
+            is Initial -> {
+               inputView.setText(viewState.initialInput)
+            }
+            is InputEntry -> {
+                inputField.error = viewState.error?.formattedMessage(requireContext())
             }
         }
     }
@@ -72,9 +74,8 @@ class TextInputFragment :
         }
     }
 
-    private fun onSaveClicked() = with(binding) {
-        val input = inputEditText.text.toString()
-        viewModel.validateThenSendInputToCaller(input)
+    private fun onSaveClicked() {
+        viewModel.saveInput()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
@@ -83,12 +84,16 @@ class TextInputFragment :
         toolbar.setupWithNavController(findNavController())
 
         toolbar.title = string(viewModel.toolbarTitleRes)
-        inputLayout.hint = string(viewModel.inputHintRes)
+        inputField.hint = string(viewModel.inputHintRes)
 
         saveButton.onClick(::onSaveClicked)
-        inputEditText.onDoneAction(::onSaveClicked)
+        inputView.onDoneAction(::onSaveClicked)
 
-        showSoftKeyboard(inputEditText)
+        inputView.doAfterTextChanged {
+            viewModel.setInput(it!!.toString())
+        }
+
+        showSoftKeyboard(inputView)
     }
 
 }

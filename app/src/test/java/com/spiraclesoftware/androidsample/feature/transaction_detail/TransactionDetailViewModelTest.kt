@@ -64,7 +64,7 @@ class TransactionDetailViewModelTest : ViewModelTest() {
             val navDirections = toTextInput(
                 TextInputType.NOTE,
                 NOTE_INPUT_REQUEST_KEY,
-                initialValue = currentNote
+                initialInput = currentNote
             )
 
             eventsObserver.assertObserved(

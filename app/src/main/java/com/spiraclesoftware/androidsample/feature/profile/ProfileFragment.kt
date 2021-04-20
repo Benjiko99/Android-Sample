@@ -99,7 +99,6 @@ class ProfileFragment :
 
         if (viewState is Editing) {
             with(viewState.modifiedProfile) {
-                // TODO: Formatting should be done by the Presenter
                 dateOfBirthView.setText(dateOfBirth.format(DateTimeFormatter.ISO_LOCAL_DATE))
             }
         }
