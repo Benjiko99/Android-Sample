@@ -7,7 +7,6 @@ import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.data
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
-import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsFormatter
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
 import com.spiraclesoftware.androidsample.format.ExceptionFormatter
@@ -23,6 +22,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
+import java.time.ZonedDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionDetailPresenterTest : PresenterTest() {
@@ -31,7 +31,7 @@ class TransactionDetailPresenterTest : PresenterTest() {
         private val MOCK_TRANSACTION = Transaction(
             TransactionId("1"),
             "Paypal *Steam",
-            epochDateTime,
+            ZonedDateTime.now(),
             Money("49.99", "EUR"),
             TransferDirection.OUTGOING,
             TransactionCategory.ENTERTAINMENT,

@@ -8,7 +8,6 @@ import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
-import com.spiraclesoftware.androidsample.epochDateTime
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
 import com.spiraclesoftware.androidsample.format.ExceptionFormatter
@@ -23,6 +22,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
+import java.time.ZonedDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionListPresenterTest : PresenterTest() {
@@ -71,7 +71,7 @@ class TransactionListPresenterTest : PresenterTest() {
     @Test
     fun flowContentModel() = runBlockingTest {
         val transaction = mockk<Transaction> {
-            every { processingDate } returns epochDateTime
+            every { processingDate } returns ZonedDateTime.now()
         }
         val dataResult = Result.Success(listOf(transaction))
         val mockHeaderModel = mockk<HeaderModel>()

@@ -3,9 +3,9 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail.cards
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.entity.*
-import com.spiraclesoftware.androidsample.epochDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test
+import java.time.ZonedDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CardsPresenterTest : PresenterTest() {
@@ -15,7 +15,7 @@ class CardsPresenterTest : PresenterTest() {
         val transaction = Transaction(
             TransactionId("1"),
             "Paypal *Steam",
-            epochDateTime,
+            ZonedDateTime.now(),
             Money("49.99", "EUR"),
             TransferDirection.OUTGOING,
             TransactionCategory.ENTERTAINMENT,
