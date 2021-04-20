@@ -1,6 +1,7 @@
 object Version {
     // Plugins
     const val android_gradle = "4.1.3"
+    const val google_services = "4.3.5"
     const val kotlinter = "3.2.0"
     const val exhaustive = "0.1.1"
 
@@ -10,6 +11,9 @@ object Version {
     const val coroutines = "1.4.2"
     const val rainbow_cake = "1.3.0"
     const val koin = "2.2.0-rc-1"
+
+    // Firebase
+    const val firebase = "27.0.0"
 
     // Debugging
     const val leak_canary = "2.3"
@@ -95,6 +99,15 @@ object Dependency {
 
     const val koin_test =
         "org.koin:koin-test:${Version.koin}"
+    //endregion
+
+
+    // region Firebase
+    const val firebase_bom =
+        "com.google.firebase:firebase-bom:${Version.firebase}"
+
+    const val firebase_messaging =
+        "com.google.firebase:firebase-messaging-ktx"
     //endregion
 
 

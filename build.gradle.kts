@@ -4,7 +4,8 @@ import org.jmailen.gradle.kotlinter.KotlinterPlugin
 
 buildscript {
     dependencies {
-        classpath(Plugin.androidGradle)
+        classpath(Plugin.android_gradle)
+        classpath(Plugin.google_services)
         classpath(Plugin.kotlin)
         classpath(Plugin.kotlinter)
         classpath(Plugin.safeArgs)

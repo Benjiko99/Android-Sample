@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
 }
 apply(plugin = "org.jmailen.kotlinter")
@@ -76,6 +77,9 @@ dependencies {
     implementation(Dependency.fastadapter_binding)
     implementation(Dependency.fastadapter_diff)
     implementation(Dependency.decorator)
+
+    implementation(platform(Dependency.firebase_bom))
+    implementation(Dependency.firebase_messaging)
 
     debugImplementation(Dependency.leak_canary)
 

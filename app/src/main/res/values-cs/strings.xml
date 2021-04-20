@@ -3,6 +3,8 @@
 
     <string name="app_name">Mobile Banking</string>
 
+    <string name="default_notification_channel_name" translatable="true">Default</string>
+
     <!-- Common -->
     <string name="refresh">Obnovit</string>
     <string name="retry">Opakovat</string>
