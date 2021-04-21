@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
     id("androidx.navigation.safeargs.kotlin")
 }
 apply(plugin = "org.jmailen.kotlinter")
@@ -79,6 +80,7 @@ dependencies {
     implementation(Dependency.decorator)
 
     implementation(platform(Dependency.firebase_bom))
+    implementation(Dependency.firebase_crashlytics)
     implementation(Dependency.firebase_messaging)
 
     debugImplementation(Dependency.leak_canary)

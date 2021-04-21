@@ -2,6 +2,7 @@ object Version {
     // Plugins
     const val android_gradle = "4.1.3"
     const val google_services = "4.3.5"
+    const val crashlytics = "2.5.2"
     const val kotlinter = "3.2.0"
     const val exhaustive = "0.1.1"
 
@@ -105,6 +106,9 @@ object Dependency {
     // region Firebase
     const val firebase_bom =
         "com.google.firebase:firebase-bom:${Version.firebase}"
+
+    const val firebase_crashlytics =
+        "com.google.firebase:firebase-crashlytics-ktx"
 
     const val firebase_messaging =
         "com.google.firebase:firebase-messaging-ktx"

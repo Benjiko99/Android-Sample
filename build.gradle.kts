@@ -6,6 +6,7 @@ buildscript {
     dependencies {
         classpath(Plugin.android_gradle)
         classpath(Plugin.google_services)
+        classpath(Plugin.crashlytics)
         classpath(Plugin.kotlin)
         classpath(Plugin.kotlinter)
         classpath(Plugin.safeArgs)
