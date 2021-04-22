@@ -49,8 +49,9 @@ class ProfileInteractorTest {
         justRun { localDataSource.saveProfile(any()) }
 
         val mockProfile = mockk<Profile>()
-        every { profileUpdateValidator.sanitizeAndValidate(any()) } returns
-                ValidationResult.Valid(mockProfile)
+        every {
+            profileUpdateValidator.sanitizeAndValidate(any())
+        } returns ValidationResult.Valid(mockProfile)
 
         val actual = testSubject.updateProfile(mockk())
         val expected = UpdateProfileResult.Success(mockProfile)
@@ -75,8 +76,9 @@ class ProfileInteractorTest {
         justRun { localDataSource.saveProfile(any()) }
 
         val mockErrors = mockk<List<ProfileUpdateValidator.Error>>()
-        every { profileUpdateValidator.sanitizeAndValidate(any()) } returns
-                ValidationResult.Invalid(mockErrors)
+        every {
+            profileUpdateValidator.sanitizeAndValidate(any())
+        } returns ValidationResult.Invalid(mockErrors)
 
         val actual = testSubject.updateProfile(mockk())
         val expected = UpdateProfileResult.ValidationsFailed(mockErrors)

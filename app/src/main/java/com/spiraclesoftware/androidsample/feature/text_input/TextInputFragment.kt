@@ -56,7 +56,7 @@ class TextInputFragment :
     override fun render(viewState: TextInputViewState) = with(binding) {
         when (viewState) {
             is Initial -> {
-               inputView.setText(viewState.initialInput)
+                inputView.setText(viewState.initialInput)
             }
             is InputEntry -> {
                 inputField.error = viewState.error?.formattedMessage(requireContext())

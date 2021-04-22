@@ -3,7 +3,7 @@ object Version {
     const val android_gradle = "4.1.3"
     const val google_services = "4.3.5"
     const val crashlytics = "2.5.2"
-    const val kotlinter = "3.2.0"
+    const val kotlinter = "3.4.0"
     const val exhaustive = "0.1.1"
 
     // Core

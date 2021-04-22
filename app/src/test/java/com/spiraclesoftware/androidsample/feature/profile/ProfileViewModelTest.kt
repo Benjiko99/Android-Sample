@@ -88,8 +88,9 @@ class ProfileViewModelTest : ViewModelTest() {
         every { profilePresenter.getProfile() } returns profile
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        every { profilePresenter.updateProfile(any()) } returns
-                UpdateProfileModel.Success(updatedProfileModel)
+        every {
+            profilePresenter.updateProfile(any())
+        } returns UpdateProfileModel.Success(updatedProfileModel)
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, _, queuedEventsObserver ->
@@ -118,8 +119,7 @@ class ProfileViewModelTest : ViewModelTest() {
         every { profilePresenter.getProfile() } returns PROFILE
         every { profilePresenter.getProfileModel() } returns mockk()
 
-        every { profilePresenter.updateProfile(any()) } returns
-                UpdateProfileModel.Error(errorMessage)
+        every { profilePresenter.updateProfile(any()) } returns UpdateProfileModel.Error(errorMessage)
 
         with(newTestSubject()) {
             observeStateAndEvents { _, _, queuedEventsObserver ->
@@ -142,8 +142,7 @@ class ProfileViewModelTest : ViewModelTest() {
         every { profilePresenter.getProfile() } returns profile
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        every { profilePresenter.updateProfile(any()) } returns
-                UpdateProfileModel.Error("")
+        every { profilePresenter.updateProfile(any()) } returns UpdateProfileModel.Error("")
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, _ ->
@@ -204,8 +203,7 @@ class ProfileViewModelTest : ViewModelTest() {
         every { profilePresenter.getProfile() } returns profile
         every { profilePresenter.getProfileModel() } returns profileModel
 
-        every { profilePresenter.updateProfile(any()) } returns
-                UpdateProfileModel.ValidationError(errors)
+        every { profilePresenter.updateProfile(any()) } returns UpdateProfileModel.ValidationError(errors)
 
         with(newTestSubject()) {
             observeStateAndEvents { stateObserver, _ ->

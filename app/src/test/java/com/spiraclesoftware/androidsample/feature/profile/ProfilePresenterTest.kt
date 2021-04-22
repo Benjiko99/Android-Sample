@@ -52,8 +52,7 @@ class ProfilePresenterTest : PresenterTest() {
 
         every { profileFormatter.profileModel(any()) } returns updatedProfileModel
 
-        every { profileInteractor.updateProfile(any()) } returns
-                UpdateProfileResult.Success(mockk())
+        every { profileInteractor.updateProfile(any()) } returns UpdateProfileResult.Success(mockk())
 
         val actual = testSubject.updateProfile(mockk())
         val expected = UpdateProfileModel.Success(updatedProfileModel)
@@ -63,8 +62,9 @@ class ProfilePresenterTest : PresenterTest() {
 
     @Test
     fun updateProfile_validationsFailed() {
-        every { profileInteractor.updateProfile(any()) } returns
-                UpdateProfileResult.ValidationsFailed(listOf())
+        every {
+            profileInteractor.updateProfile(any())
+        } returns UpdateProfileResult.ValidationsFailed(listOf())
 
         val mockErrors = mockk<ProfileViewState.ValidationErrors>()
         every { profileFormatter.validationErrors(any()) } returns mockErrors
@@ -77,8 +77,7 @@ class ProfilePresenterTest : PresenterTest() {
 
     @Test
     fun updateProfile_error() {
-        every { profileInteractor.updateProfile(any()) } returns
-                UpdateProfileResult.Error(Exception())
+        every { profileInteractor.updateProfile(any()) } returns UpdateProfileResult.Error(Exception())
 
         every { exceptionFormatter.format(any()) } returns "abc"
 

@@ -9,8 +9,10 @@ data class Money(
     val currency: Currency
 ) {
 
-    constructor(amount: String, currencyCode: String) :
-            this(BigDecimal(amount), Currency.getInstance(currencyCode))
+    constructor(amount: String, currencyCode: String) : this(
+        BigDecimal(amount),
+        Currency.getInstance(currencyCode)
+    )
 
     companion object {
         /** Keep the MathContext consistent across the application */
