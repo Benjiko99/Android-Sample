@@ -70,6 +70,7 @@
     <string name="transaction_detail__note">Note</string>
     <string name="transaction_detail__edit_note">Edit</string>
     <string name="transaction_detail__add_note">Add note</string>
+    <string name="transaction_detail__split_bill">Split bill</string>
 
     <!-- Category Select -->
     <string name="category_select__title">Select category</string>

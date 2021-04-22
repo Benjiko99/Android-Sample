@@ -26,7 +26,7 @@ class CardsPresenterTest : PresenterTest() {
             "Note to self"
         )
 
-        val presenter = CardsPresenter()
+        val presenter = CardsPresenter(CardsFormatter())
         val cards = presenter.getCards(transaction, emptyList())
 
         assertThat(cards.count()).isEqualTo(4)

@@ -68,6 +68,7 @@
     <string name="transaction_detail__note">Poznámka</string>
     <string name="transaction_detail__edit_note">Upravit</string>
     <string name="transaction_detail__add_note">Přidat poznámku</string>
+    <string name="transaction_detail__split_bill">Rozdělit účet</string>
 
     <!-- Category Select -->
     <string name="category_select__title">Vyberte kategorii</string>

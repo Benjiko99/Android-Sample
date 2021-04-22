@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.zsmb.rainbowcake.base.OneShotEvent
 import coil.load
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
@@ -24,6 +26,7 @@ import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.component.image_picker.ImagePicker
+import com.spiraclesoftware.androidsample.databinding.PrimaryActionChipBinding
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.extension.*
@@ -89,6 +92,12 @@ class TransactionDetailFragment :
         viewModel.openNoteInput()
     }
 
+    private fun onChipAction(actionId: Int) {
+        when (actionId) {
+            R.id.action_split_bill -> viewModel.splitBill()
+        }
+    }
+
     private fun onValuePairAction(actionId: Int) {
         when (actionId) {
             R.id.action_open_card_detail -> viewModel.openCardDetail()
@@ -101,11 +110,13 @@ class TransactionDetailFragment :
     }
 
     override fun render(viewState: TransactionDetailViewState): Unit = with(binding) {
-        renderErrorLayout(viewState)
+        scrollView.isVisible = viewState is Content
+        errorMessageView.isVisible = viewState is Error
 
         when (viewState) {
             is Content -> {
-                FastAdapterDiffUtil[itemAdapter] = viewState.detailModel.cardModels
+                FastAdapterDiffUtil[itemAdapter] = viewState.cardModels
+                renderActionChips(viewState.actionChips)
 
                 with(viewState.detailModel) {
                     toolbar.title = name
@@ -115,7 +126,19 @@ class TransactionDetailFragment :
                     renderCategoryIcon(iconRes, iconTintRes)
                 }
             }
+            is Error -> {
+                errorMessageView.text = viewState.message
+            }
         }
+    }
+
+    private fun renderActionChips(actionChips: List<ActionChip>) = with(binding) {
+        actionChips.forEach { chip ->
+            actionChipsGroup.findViewById<Chip>(chip.id)?.let { view ->
+                view.isVisible = chip.isVisible
+            }
+        }
+        actionChipsGroup.isVisible = actionChipsGroup.children.any { it.isVisible }
     }
 
     private fun renderAmountText(formattedMoney: String, contributesToBalance: Boolean) = with(binding) {
@@ -133,14 +156,6 @@ class TransactionDetailFragment :
         iconView.background = tintedDrawable(R.drawable.shp_circle, fadedTint)
     }
 
-    private fun renderErrorLayout(viewState: TransactionDetailViewState): Unit = with(binding) {
-        errorMessageView.isVisible = viewState is Error
-
-        if (viewState is Error) {
-            errorMessageView.text = viewState.message
-        }
-    }
-
     override fun onEvent(event: OneShotEvent) {
         when (event) {
             is NavigateToCategorySelectEvent -> {
@@ -152,6 +167,9 @@ class TransactionDetailFragment :
                 findNavController().navigate(directions)
             }
             is NavigateToCardDetailEvent -> {
+                showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
+            }
+            is SplitBillEvent -> {
                 showToast(R.string.not_implemented, Toast.LENGTH_SHORT)
             }
             is DownloadStatementEvent -> {
@@ -208,11 +226,23 @@ class TransactionDetailFragment :
         setupToolbar()
         setupFastItemAdapter()
         setupRecyclerView()
+        setupActionChips()
     }
 
     override fun onDestroyView() = with(binding) {
         recyclerView.adapter = null
         super.onDestroyView()
+    }
+
+    private fun setupActionChips() = with(binding) {
+        val chip = PrimaryActionChipBinding.inflate(layoutInflater, actionChipsGroup, false).root.apply {
+            id = R.id.action_split_bill
+            text = string(R.string.transaction_detail__split_bill)
+            chipIcon = drawable(R.drawable.ic_split_bill)
+        }
+        actionChipsGroup.addView(chip)
+
+        chip.setOnClickListener { onChipAction(it.id) }
     }
 
     private fun setupToolbar() = with(binding) {

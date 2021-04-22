@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.chip.Chip xmlns:tools="http://schemas.android.com/tools"
+    style="@style/PrimaryActionChip"
+    tools:chipIcon="@drawable/ic_split_bill"
+    tools:text="@string/transaction_detail__split_bill" />

@@ -3,13 +3,13 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail
 import co.zsmb.rainbowcake.test.assertObserved
 import co.zsmb.rainbowcake.test.base.ViewModelTest
 import co.zsmb.rainbowcake.test.observeStateAndEvents
-import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputType
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
+import com.spiraclesoftware.androidsample.framework.Model
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -38,13 +38,17 @@ class TransactionDetailViewModelTest : ViewModelTest() {
     @Test
     fun onInit_produceViewState() = runBlockingTest {
         val detailModel = mockk<DetailModel>()
+        val cardModels = mockk<List<Model>>()
+        val actionChips = mockk<List<ActionChip>>()
 
-        every { detailPresenter.flowDetailModel(any(), any()) } returns flowOf(Result.Success(detailModel))
+        every { detailPresenter.flowDetailModel() } returns flowOf(detailModel)
+        every { detailPresenter.flowCardModels(any()) } returns flowOf(cardModels)
+        coEvery { detailPresenter.getActionChips() } returns actionChips
 
         val viewModel = newTestSubject()
         viewModel.observeStateAndEvents { stateObserver, _ ->
             stateObserver.assertObserved(
-                Content(detailModel)
+                Content(detailModel, cardModels, actionChips)
             )
         }
     }

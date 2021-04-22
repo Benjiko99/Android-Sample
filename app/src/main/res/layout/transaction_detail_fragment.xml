@@ -91,29 +91,48 @@
                 app:layout_constraintTop_toBottomOf="@id/nameView"
                 tools:text="12:00, Fri, 15 May" />
 
+            <HorizontalScrollView
+                android:id="@+id/actionChipsScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dateView">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/actionChipsGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true">
+
+                    <!-- contents are inflated at runtime -->
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:nestedScrollingEnabled="false"
-                app:layout_constraintTop_toBottomOf="@id/dateView"
+                app:layout_constraintTop_toBottomOf="@id/actionChipsScrollView"
                 tools:itemCount="5"
-                tools:layout_marginTop="24dp"
+                tools:layout_marginTop="16dp"
                 tools:listitem="@layout/value_pair_card_item" />
-
-            <TextView
-                android:id="@+id/errorMessageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/unknown_error"
-                tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/errorMessageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/edge_margin"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:text="@string/unknown_error"
+        tools:visibility="gone" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

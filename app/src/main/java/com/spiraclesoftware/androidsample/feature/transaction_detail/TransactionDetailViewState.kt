@@ -10,7 +10,13 @@ sealed class TransactionDetailViewState {
 
     data class Content(
         val detailModel: DetailModel,
-        val cardModels: List<Model>
+        val cardModels: List<Model>,
+        val actionChips: List<ActionChip>,
     ) : TransactionDetailViewState()
 
 }
+
+data class ActionChip(
+    val id: Int,
+    val isVisible: Boolean,
+)

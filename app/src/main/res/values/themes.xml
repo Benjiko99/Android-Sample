@@ -7,12 +7,12 @@
         <item name="colorSecondary">@color/black</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="colorAccent">@color/pink_600</item>
-        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:colorBackground">@color/background</item>
     </style>
 
     <style name="AppTheme.ThemeOverlay.Toolbar" parent="">
-        <item name="colorControlNormal">@color/toolbarControls</item>
-        <item name="colorOnSurface">@color/toolbarControls</item>
+        <item name="colorControlNormal">@color/toolbar_controls</item>
+        <item name="colorOnSurface">@color/toolbar_controls</item>
     </style>
 
     <style name="AppTheme.CardView.Outlined" parent="Widget.MaterialComponents.CardView">

@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Actions -->
+    <item name="action_split_bill" type="id" />
     <item name="action_open_card_detail" type="id" />
     <item name="action_download_statement" type="id" />
 

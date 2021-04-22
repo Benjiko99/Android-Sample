@@ -36,6 +36,8 @@ class TransactionDetailViewModel(
 
     object NavigateToCardDetailEvent : OneShotEvent
 
+    object SplitBillEvent : OneShotEvent
+
     object DownloadStatementEvent : OneShotEvent
 
     object OpenAttachmentPickerEvent : OneShotEvent
@@ -56,14 +58,19 @@ class TransactionDetailViewModel(
     }
 
     private fun collectViewState() = executeNonBlocking {
-        val detailModelFlow = presenter.flowDetailModel(transactionId)
-        val cardModelsFlow = presenter.flowCardModels(transactionId, attachmentUploads)
+        val detailModelFlow = presenter.flowDetailModel()
+        val cardModelsFlow = presenter.flowCardModels(attachmentUploads)
+        val actionChips = presenter.getActionChips()
 
         detailModelFlow.combine(cardModelsFlow) { detailModel, cardModels ->
-            Content(detailModel, cardModels)
+            Content(detailModel, cardModels, actionChips)
         }
             .catch { viewState = Error(it.message) }
             .collect { viewState = it }
+    }
+
+    fun splitBill() {
+        postEvent(SplitBillEvent)
     }
 
     fun openCardDetail() {
