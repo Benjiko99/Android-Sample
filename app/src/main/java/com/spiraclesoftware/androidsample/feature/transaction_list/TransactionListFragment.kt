@@ -178,6 +178,7 @@ class TransactionListFragment :
             val lifecycle = this@TransactionListFragment as LifecycleOwner
 
             collapseActionViewCallback = addCallback(lifecycle) { collapseActionView() }
+            collapseActionViewCallback.isEnabled = false
         }
     }
 
