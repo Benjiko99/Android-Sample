@@ -3,17 +3,15 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail
 import android.net.Uri
 import androidx.core.net.toUri
 import co.zsmb.rainbowcake.withIOContext
-import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsFormatter
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
 import com.spiraclesoftware.androidsample.format.ExceptionFormatter
+import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.StandardPresenter
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.*
 
 class TransactionDetailPresenter(
     private val id: TransactionId,
@@ -25,17 +23,21 @@ class TransactionDetailPresenter(
 ) : StandardPresenter(exceptionFormatter) {
 
     fun flowDetailModel(
+        id: TransactionId
+    ): Flow<DetailModel> {
+        return flowTransactionById(id).map { transaction ->
+            transactionDetailFormatter.detailModel(transaction!!)
+        }.catch { throw getFormattedException(it) }
+    }
+
+    fun flowCardModels(
         id: TransactionId,
         attachmentUploads: Flow<List<Uri>>
-    ): Flow<Result<DetailModel>> {
+    ): Flow<List<Model>> {
         return flowTransactionById(id).combine(attachmentUploads) { transaction, uploads ->
-            if (transaction != null) tryForResult {
-                val cards = cardsPresenter.getCards(transaction, uploads)
-                val cardModels = cardsFormatter.cardModels(cards)
-                transactionDetailFormatter.detailModel(transaction, cardModels)
-            }
-            else Result.Error(getPresenterException())
-        }
+            val cards = cardsPresenter.getCards(transaction!!, uploads)
+            cardsFormatter.cardModels(cards)
+        }.catch { throw getFormattedException(it) }
     }
 
     suspend fun updateNote(note: String) = withIOContext {

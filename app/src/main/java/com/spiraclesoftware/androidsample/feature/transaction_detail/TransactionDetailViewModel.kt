@@ -4,7 +4,6 @@ import android.net.Uri
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
@@ -14,12 +13,14 @@ import com.spiraclesoftware.androidsample.feature.transaction_detail.Transaction
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import timber.log.Timber
 
 class TransactionDetailViewModel(
     private val transactionId: TransactionId,
-    private val detailPresenter: TransactionDetailPresenter
+    private val presenter: TransactionDetailPresenter
 ) : RainbowCakeViewModel<TransactionDetailViewState>(Initial) {
 
     data class NavigateToCategorySelectEvent(
@@ -51,19 +52,18 @@ class TransactionDetailViewModel(
     private val attachmentUploads = MutableStateFlow<List<Uri>>(emptyList())
 
     init {
-        produceViewStateFromDataFlow()
+        collectViewState()
     }
 
-    private fun produceViewStateFromDataFlow() = executeNonBlocking {
-        detailPresenter.flowDetailModel(transactionId, attachmentUploads)
-            .collect { result ->
-                viewState = when (result) {
-                    is Result.Loading -> Initial
-                    is Result.Success -> Content(result.data)
-                    is Result.Error -> Error(result.exception.message)
-                    else -> throw IllegalStateException()
-                }
-            }
+    private fun collectViewState() = executeNonBlocking {
+        val detailModelFlow = presenter.flowDetailModel(transactionId)
+        val cardModelsFlow = presenter.flowCardModels(transactionId, attachmentUploads)
+
+        detailModelFlow.combine(cardModelsFlow) { detailModel, cardModels ->
+            Content(detailModel, cardModels)
+        }
+            .catch { viewState = Error(it.message) }
+            .collect { viewState = it }
     }
 
     fun openCardDetail() {
@@ -77,19 +77,19 @@ class TransactionDetailViewModel(
     fun selectCategory() = execute {
         val navigateEvent = NavigateToCategorySelectEvent(
             transactionId.value,
-            detailPresenter.getCategory()
+            presenter.getCategory()
         )
         postEvent(navigateEvent)
     }
 
     fun viewAttachment(uri: Uri) = execute {
-        val images = detailPresenter.getAttachments()
+        val images = presenter.getAttachments()
         val startPosition = images.indexOf(uri)
         postEvent(OpenAttachmentViewerEvent(images, startPosition))
     }
 
     fun addAttachment() = execute {
-        val attachments = detailPresenter.getAttachments()
+        val attachments = presenter.getAttachments()
         val totalCount = attachments.size + attachmentUploads.value.size
 
         if (totalCount >= Transaction.MAX_ATTACHMENTS) {
@@ -100,7 +100,7 @@ class TransactionDetailViewModel(
     }
 
     fun removeAttachment(uri: Uri) = execute {
-        detailPresenter.removeAttachment(uri)
+        presenter.removeAttachment(uri)
     }
 
     fun cancelUpload(uri: Uri) {
@@ -111,7 +111,7 @@ class TransactionDetailViewModel(
         val navigateEvent = NavigateToTextInputEvent(
             TextInputType.NOTE,
             NOTE_INPUT_REQUEST_KEY,
-            initialInput = detailPresenter.getNote()
+            initialInput = presenter.getNote()
         )
         postEvent(navigateEvent)
     }
@@ -121,7 +121,7 @@ class TransactionDetailViewModel(
 
         try {
             delay(3000) // Simulate network delay
-            detailPresenter.uploadAttachment(imageUri)
+            presenter.uploadAttachment(imageUri)
             attachmentUploads.value = attachmentUploads.value.minus(imageUri)
         } catch (e: Exception) {
             Timber.e(e)
@@ -131,7 +131,7 @@ class TransactionDetailViewModel(
 
     fun onNoteChanged(note: String) = executeNonBlocking {
         try {
-            detailPresenter.updateNote(note)
+            presenter.updateNote(note)
         } catch (e: Exception) {
             Timber.e(e)
             postEvent(NotifyOfFailureEvent(R.string.unknown_error))

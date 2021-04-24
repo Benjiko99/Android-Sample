@@ -40,7 +40,7 @@ class TransactionListPresenter(
         filterFlow: Flow<TransactionsFilter>
     ): Flow<Result<ContentModel>> = withIOContext {
         transactionsInteractor.flowTransactions(filterFlow)
-            .mapOnError { getPresenterException(it) }
+            .mapOnError { getFormattedException(it) }
             .mapOnSuccess { transactions ->
                 tryForResult {
                     val listModels = transactions

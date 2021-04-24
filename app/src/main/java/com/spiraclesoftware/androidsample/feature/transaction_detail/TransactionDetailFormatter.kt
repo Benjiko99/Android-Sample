@@ -5,7 +5,6 @@ import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.format.DateTimeFormat
 import com.spiraclesoftware.androidsample.format.MoneyFormatter
 import com.spiraclesoftware.androidsample.format.TransactionCategoryFormatter
-import com.spiraclesoftware.androidsample.framework.Model
 import org.koin.java.KoinJavaComponent.inject
 
 class TransactionDetailFormatter {
@@ -13,8 +12,7 @@ class TransactionDetailFormatter {
     private val categoryFormatter by inject(TransactionCategoryFormatter::class.java)
 
     fun detailModel(
-        transaction: Transaction,
-        cardModels: List<Model>
+        transaction: Transaction
     ): DetailModel = with(transaction) {
         val iconRes: Int
         val iconTintRes: Int
@@ -35,8 +33,7 @@ class TransactionDetailFormatter {
             iconRes = iconRes,
             iconTintRes = iconTintRes,
             contributesToBalance = contributesToAccountBalance(),
-            isSuccessful = isSuccessful(),
-            cardModels = cardModels
+            isSuccessful = isSuccessful()
         )
     }
 

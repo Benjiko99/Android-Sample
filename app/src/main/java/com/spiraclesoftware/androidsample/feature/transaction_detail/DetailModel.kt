@@ -13,5 +13,4 @@ data class DetailModel(
     @ColorRes val iconTintRes: Int,
     val contributesToBalance: Boolean,
     val isSuccessful: Boolean,
-    val cardModels: List<Model>
 ) : Model

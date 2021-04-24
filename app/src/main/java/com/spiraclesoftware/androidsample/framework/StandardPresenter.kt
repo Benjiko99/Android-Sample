@@ -12,13 +12,14 @@ abstract class StandardPresenter(
         return try {
             Result.Success(operation())
         } catch (cause: Exception) {
-            Result.Error(getPresenterException(cause))
+            Result.Error(getFormattedException(cause))
         }
     }
 
-    protected fun getPresenterException(it: Exception = Exception()): PresenterException {
-        Timber.e(it)
-        return PresenterException(exceptionFormatter.format(it))
+    /** Logs and formats the [exception] */
+    protected fun getFormattedException(exception: Throwable = Exception()): PresenterException {
+        Timber.e(exception)
+        return PresenterException(exceptionFormatter.format(exception))
     }
 
 }
