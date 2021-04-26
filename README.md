@@ -32,9 +32,9 @@ The backend is available on [GitHub](https://github.com/Benjiko99/Backend-Sample
 
 ## Screenshots
 
-Transactions | Detail #1 | Detail #2
+Transactions | Detail | Profile
 --- | --- | ---
-![](/assets/transactions.png) | ![](/assets/detail%20full.png) | ![](/assets/detail%20plain.png)
+![](/assets/transactions.png) | ![](/assets/detail%20full.png) | ![](/assets/profile.png)
 
 ***View the UI designs on [Figma](https://www.figma.com/file/TzouiZrbhbZw1Q8qnqntQ9/Banking-Sample).***
 
