@@ -1,4 +1,4 @@
-[![Build Status](https://app.bitrise.io/app/90d86914184610cd/status.svg?token=oQPBvmy8X1D2qFxYUjHi5w&branch=master)](https://app.bitrise.io/app/90d86914184610cd)
+[![Android CI](https://github.com/Benjiko99/Android-Sample/actions/workflows/android.yml/badge.svg)](https://github.com/Benjiko99/Android-Sample/actions/workflows/android.yml)
 
 ## Architecture
 
