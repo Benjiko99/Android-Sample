@@ -8,7 +8,6 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionStatus
 import com.spiraclesoftware.androidsample.domain.entity.TransactionStatusCode
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
 import com.spiraclesoftware.androidsample.format.FormatterTest
-import com.spiraclesoftware.androidsample.framework.StringHolder
 import org.junit.Test
 
 class CardsFormatterTest : FormatterTest() {
@@ -42,17 +41,17 @@ class CardsFormatterTest : FormatterTest() {
                 listOf(
                     ValuePairModel(
                         label = R.string.transaction_detail__status,
-                        value = StringHolder(R.string.transaction_status__completed)
+                        value = "Completed"
                     ),
                     ValuePairModel(
                         label = R.string.transaction_detail__card,
-                        value = StringHolder("Mastercard"),
+                        value = "Mastercard",
                         icon = R.drawable.ic_credit_card,
                         actionId = R.id.action_open_card_detail
                     ),
                     ValuePairModel(
                         label = R.string.transaction_detail__statement,
-                        value = StringHolder(R.string.transaction_detail__download),
+                        value = "Download",
                         icon = R.drawable.ic_download_statement,
                         actionId = R.id.action_download_statement
                     )
@@ -73,7 +72,7 @@ class CardsFormatterTest : FormatterTest() {
             NoteCardModel("Note"),
         )
 
-        val formatter = CardsFormatter()
+        val formatter = CardsFormatter(context)
         val actual = formatter.cardModels(cards)
 
         assertThat(actual).isEqualTo(expected)

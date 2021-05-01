@@ -3,12 +3,27 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail.cards
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.entity.*
+import io.mockk.MockKAnnotations
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Before
 import org.junit.Test
 import java.time.ZonedDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CardsPresenterTest : PresenterTest() {
+
+    @MockK
+    lateinit var cardsFormatter: CardsFormatter
+
+    @InjectMockKs
+    lateinit var cardsPresenter: CardsPresenter
+
+    @Before
+    fun setUp() {
+        MockKAnnotations.init(this)
+    }
 
     @Test
     fun presentCardsForTransaction() {
@@ -26,8 +41,7 @@ class CardsPresenterTest : PresenterTest() {
             "Note to self"
         )
 
-        val presenter = CardsPresenter(CardsFormatter())
-        val cards = presenter.getCards(transaction, emptyList())
+        val cards = cardsPresenter.getCards(transaction, emptyList())
 
         assertThat(cards.count()).isEqualTo(4)
 

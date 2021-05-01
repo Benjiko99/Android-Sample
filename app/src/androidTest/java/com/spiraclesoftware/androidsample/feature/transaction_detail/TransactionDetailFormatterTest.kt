@@ -32,12 +32,11 @@ class TransactionDetailFormatterTest : FormatterTest() {
             iconRes = R.drawable.ic_category_entertainment,
             iconTintRes = R.color.transaction_category__entertainment,
             contributesToBalance = true,
-            isSuccessful = true,
-            cardModels = emptyList()
+            isSuccessful = true
         )
 
         val formatter = TransactionDetailFormatter()
-        val actual = formatter.detailModel(transaction, emptyList())
+        val actual = formatter.detailModel(transaction)
 
         assertThat(actual).isEqualTo(expected)
     }

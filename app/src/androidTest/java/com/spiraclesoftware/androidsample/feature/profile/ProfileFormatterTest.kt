@@ -19,7 +19,7 @@ class ProfileFormatterTest : FormatterTest() {
 
         val expected = ProfileModel(
             fullName = "John Doe",
-            dateOfBirth = "01 January 1970",
+            dateOfBirth = "1970-01-01",
             phoneNumber = "+420 123 456 789",
             email = "john.doe@example.com"
         )

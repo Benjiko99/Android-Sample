@@ -3,7 +3,6 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.spiraclesoftware.androidsample.framework.Model
-import com.spiraclesoftware.androidsample.framework.StringHolder
 
 data class ValuePairCardModel(
     val valuePairModels: List<ValuePairModel>
@@ -11,7 +10,7 @@ data class ValuePairCardModel(
 
 data class ValuePairModel(
     @StringRes val label: Int,
-    val value: StringHolder,
+    val value: String,
     @DrawableRes val icon: Int? = null,
     val actionId: Int? = null
 )

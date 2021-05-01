@@ -28,7 +28,7 @@ class ValuePairCardItem(
             val pb = ValuePairCardItemEntryBinding.inflate(LayoutInflater.from(ctx), binding.content, false)
 
             pb.labelText = ctx.string(model.label)
-            pb.valueText = model.value.getString(ctx)
+            pb.valueText = model.value
 
             if (model.actionId != null) {
                 pb.valueView.onClick { onValuePairAction(model.actionId) }

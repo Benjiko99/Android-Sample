@@ -49,7 +49,7 @@ val featureModule = module {
     }
     single { TransactionDetailFormatter() }
     single { CardsPresenter(get()) }
-    single { CardsFormatter() }
+    single { CardsFormatter(get()) }
 
     viewModel { (inputType: TextInputType, requestKey: String, initialInput: String) ->
         TextInputViewModel(inputType, requestKey, initialInput)
