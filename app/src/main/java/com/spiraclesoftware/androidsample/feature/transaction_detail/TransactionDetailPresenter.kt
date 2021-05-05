@@ -1,7 +1,6 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail
 
 import android.net.Uri
-import androidx.core.net.toUri
 import co.zsmb.rainbowcake.withIOContext
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
@@ -57,16 +56,16 @@ class TransactionDetailPresenter(
         transactionsInteractor.updateTransactionNote(transactionId, note)
     }
 
-    suspend fun removeAttachment(uri: Uri) = withIOContext {
-        transactionsInteractor.removeAttachment(transactionId, uri.toString())
+    suspend fun removeAttachment(uri: String) = withIOContext {
+        transactionsInteractor.removeAttachment(transactionId, uri)
     }
 
-    suspend fun uploadAttachment(uri: Uri) = withIOContext {
-        transactionsInteractor.uploadAttachment(transactionId, uri.toString())
+    suspend fun uploadAttachment(uri: String) = withIOContext {
+        transactionsInteractor.uploadAttachment(transactionId, uri)
     }
 
     suspend fun getAttachments() =
-        getTransaction().attachments.map(String::toUri)
+        getTransaction().attachments
 
     suspend fun getNote() =
         getTransaction().noteToSelf.orEmpty()

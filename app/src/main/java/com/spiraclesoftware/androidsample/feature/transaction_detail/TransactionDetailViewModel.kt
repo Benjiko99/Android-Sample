@@ -1,6 +1,7 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail
 
 import android.net.Uri
+import androidx.core.net.toUri
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
 import com.spiraclesoftware.androidsample.R
@@ -90,9 +91,9 @@ class TransactionDetailViewModel(
     }
 
     fun viewAttachment(uri: Uri) = execute {
-        val images = presenter.getAttachments()
-        val startPosition = images.indexOf(uri)
-        postEvent(OpenAttachmentViewerEvent(images, startPosition))
+        val attachments = presenter.getAttachments().map(String::toUri)
+        val startPosition = attachments.indexOf(uri)
+        postEvent(OpenAttachmentViewerEvent(attachments, startPosition))
     }
 
     fun addAttachment() = execute {
@@ -107,7 +108,7 @@ class TransactionDetailViewModel(
     }
 
     fun removeAttachment(uri: Uri) = execute {
-        presenter.removeAttachment(uri)
+        presenter.removeAttachment(uri.toString())
     }
 
     fun cancelUpload(uri: Uri) {
@@ -128,7 +129,7 @@ class TransactionDetailViewModel(
 
         try {
             delay(3000) // Simulate network delay
-            presenter.uploadAttachment(imageUri)
+            presenter.uploadAttachment(imageUri.toString())
             attachmentUploads.value = attachmentUploads.value.minus(imageUri)
         } catch (e: Exception) {
             Timber.e(e)
