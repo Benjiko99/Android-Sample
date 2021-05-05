@@ -23,8 +23,15 @@ class TransactionDetailPresenter(
     exceptionFormatter: ExceptionFormatter
 ) : StandardPresenter(exceptionFormatter) {
 
+    private val transactionFlow: Flow<Transaction?> = transactionsInteractor
+        .flowTransactionById(transactionId)
+        .distinctUntilChanged()
+
+    private suspend fun getTransaction(): Transaction =
+        transactionFlow.first()!!
+
     fun flowDetailModel(): Flow<DetailModel> {
-        return flowTransaction().map { transaction ->
+        return transactionFlow.map { transaction ->
             transactionDetailFormatter.detailModel(transaction!!)
         }.catch { throw getFormattedException(it) }
     }
@@ -32,7 +39,7 @@ class TransactionDetailPresenter(
     fun flowCardModels(
         attachmentUploads: Flow<List<Uri>>
     ): Flow<List<Model>> {
-        return flowTransaction().combine(attachmentUploads) { transaction, uploads ->
+        return transactionFlow.combine(attachmentUploads) { transaction, uploads ->
             cardsPresenter.getCardModels(transaction!!, uploads)
         }.catch { throw getFormattedException(it) }
     }
@@ -66,14 +73,5 @@ class TransactionDetailPresenter(
 
     suspend fun getCategory() =
         getTransaction().category
-
-    private fun flowTransaction(): Flow<Transaction?> {
-        return transactionsInteractor.flowTransactionById(transactionId)
-            .distinctUntilChanged()
-    }
-
-    private suspend fun getTransaction() = withIOContext {
-        transactionsInteractor.getTransactionById(transactionId)!!
-    }
 
 }

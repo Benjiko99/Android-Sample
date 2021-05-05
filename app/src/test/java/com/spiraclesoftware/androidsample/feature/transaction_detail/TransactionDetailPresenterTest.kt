@@ -11,7 +11,6 @@ import com.spiraclesoftware.androidsample.framework.Model
 import com.spiraclesoftware.androidsample.framework.PresenterException
 import io.mockk.MockKAnnotations
 import io.mockk.every
-import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,9 +39,6 @@ class TransactionDetailPresenterTest : PresenterTest() {
         )
     }
 
-    // gets injected as constructor param into the [testSubject]
-    val transactionId = TransactionId("1")
-
     @MockK
     lateinit var transactionsInteractor: TransactionsInteractor
 
@@ -55,13 +51,19 @@ class TransactionDetailPresenterTest : PresenterTest() {
     @MockK
     lateinit var exceptionFormatter: ExceptionFormatter
 
-    @InjectMockKs
-    lateinit var testSubject: TransactionDetailPresenter
-
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
     }
+
+    private fun newTestSubject() =
+        TransactionDetailPresenter(
+            TRANSACTION.id,
+            transactionsInteractor,
+            transactionDetailFormatter,
+            cardsPresenter,
+            exceptionFormatter
+        )
 
     @Test
     fun `Present detail model`() = runBlockingTest {
@@ -70,7 +72,7 @@ class TransactionDetailPresenterTest : PresenterTest() {
         every { transactionDetailFormatter.detailModel(any()) } returns mockDetailModel
         every { transactionsInteractor.flowTransactionById(any()) } returns flowOf(TRANSACTION)
 
-        val actual = testSubject.flowDetailModel().first()
+        val actual = newTestSubject().flowDetailModel().first()
         assertThat(actual).isEqualTo(mockDetailModel)
     }
 
@@ -81,7 +83,7 @@ class TransactionDetailPresenterTest : PresenterTest() {
 
         val exception = assertThrows(PresenterException::class.java) {
             runBlocking {
-                testSubject.flowDetailModel().first()
+                newTestSubject().flowDetailModel().first()
             }
         }
         assertThat(exception.message).isEqualTo("error")
@@ -95,7 +97,7 @@ class TransactionDetailPresenterTest : PresenterTest() {
         every { transactionsInteractor.flowTransactionById(any()) } returns flowOf(TRANSACTION)
         every { cardsPresenter.getCardModels(any(), any()) } returns cardModels
 
-        val actual = testSubject.flowCardModels(attachmentUploads).first()
+        val actual = newTestSubject().flowCardModels(attachmentUploads).first()
         assertThat(actual).isEqualTo(cardModels)
         assertThat(true).isEqualTo(true)
     }
@@ -107,7 +109,7 @@ class TransactionDetailPresenterTest : PresenterTest() {
 
         val exception = assertThrows(PresenterException::class.java) {
             runBlocking {
-                testSubject.flowCardModels(flowOf(emptyList())).first()
+                newTestSubject().flowCardModels(flowOf(emptyList())).first()
             }
         }
         assertThat(exception.message).isEqualTo("error")
