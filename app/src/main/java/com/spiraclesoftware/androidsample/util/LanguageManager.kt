@@ -16,6 +16,8 @@ class LanguageManager(
     enum class AppLanguage(val code: String) {
         ENGLISH("en-US"),
         CZECH("cs-CZ");
+
+        fun toLocale(): Locale = Locale.forLanguageTag(code)
     }
 
     companion object {
@@ -52,7 +54,7 @@ class LanguageManager(
     }
 
     private fun updateResources(context: Context): Context {
-        val newLocale = Locale(getCurrentLanguage().code)
+        val newLocale = getCurrentLanguage().toLocale()
         Locale.setDefault(newLocale)
 
         val oldConfiguration = context.resources.configuration

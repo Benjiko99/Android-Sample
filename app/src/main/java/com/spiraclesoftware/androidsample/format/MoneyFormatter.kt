@@ -32,14 +32,9 @@ class MoneyFormatter {
     }
 
     private fun getNumberFormat(money: Money): NumberFormat {
-        return (NumberFormat.getNumberInstance() as DecimalFormat).apply {
+        return (NumberFormat.getCurrencyInstance() as DecimalFormat).apply {
             currency = money.currency
-
-            // Don't show the decimal numbers if its just zeros.
-            if (money.amount.scale() > 0)
-                applyPattern("¤#,##0.00")
-            else
-                applyPattern("¤#,##0")
+            minimumFractionDigits = 0
         }
     }
 
