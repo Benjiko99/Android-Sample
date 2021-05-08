@@ -11,7 +11,7 @@
     <string name="refresh">Refresh</string>
     <string name="retry">Retry</string>
     <string name="unknown_error">Something went wrong</string>
-    <string name="network_error">Failed to load the data.\nPlease check your connection.</string>
+    <string name="network_error">Network error.\nPlease check your connection.</string>
     <string name="timeout_error">Connection timed-out.\nThe backend takes a while to wake up when not in use, please retry.</string>
     <string name="not_implemented">Not implemented</string>
 
