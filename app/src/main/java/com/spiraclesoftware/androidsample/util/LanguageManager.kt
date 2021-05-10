@@ -14,8 +14,8 @@ class LanguageManager(
 ) {
 
     enum class AppLanguage(val code: String) {
-        ENGLISH("en"),
-        CZECH("cs");
+        ENGLISH("en-US"),
+        CZECH("cs-CZ");
     }
 
     companion object {
