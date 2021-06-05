@@ -4,6 +4,11 @@ plugins {
 }
 apply(plugin = "org.jmailen.kotlinter")
 
+java {
+    sourceCompatibility = AppConfig.jvmTarget
+    targetCompatibility = AppConfig.jvmTarget
+}
+
 dependencies {
     implementation(Dependency.kotlin)
     implementation(Dependency.coroutines_core)

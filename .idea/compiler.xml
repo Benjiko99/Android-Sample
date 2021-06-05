@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="Android-Sample.app" target="11" />
+      <module name="Android-Sample.buildSrc" target="11" />
+      <module name="Android-Sample.data-local" target="11" />
+      <module name="Android-Sample.data-remote" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
