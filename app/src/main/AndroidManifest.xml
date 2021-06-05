@@ -42,7 +42,7 @@
         </provider>
 
         <activity
-            android:name=".framework.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
