@@ -29,8 +29,6 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = AppConfig.jvmTarget
-        targetCompatibility = AppConfig.jvmTarget
     }
 }
 

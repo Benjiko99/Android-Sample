@@ -1,6 +1,6 @@
 object Version {
     // Plugins
-    const val android_gradle = "4.1.3"
+    const val android_gradle = "4.2.1"
     const val google_services = "4.3.5"
     const val crashlytics = "2.5.2"
     const val kotlinter = "3.4.0"
