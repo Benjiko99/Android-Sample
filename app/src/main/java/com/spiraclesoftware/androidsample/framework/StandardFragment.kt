@@ -53,7 +53,7 @@ abstract class StandardFragment<VB, VS, VM> :
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.statusBarColor = themedContext.colorAttr(android.R.attr.colorBackground)
         } else {
-            window.statusBarColor = themedContext.color(R.color.black)
+            window.statusBarColor = themedContext.color(android.R.color.black)
         }
     }
 }
