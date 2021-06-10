@@ -8,7 +8,7 @@ import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.Content
-import com.spiraclesoftware.androidsample.framework.Model
+import com.spiraclesoftware.androidsample.framework.core.Model
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf

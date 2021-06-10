@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemBinding
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemEntryBinding
-import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.ValuePairCardModel
+import com.spiraclesoftware.androidsample.framework.extensions.*
 
 class ValuePairCardItem(
     model: ValuePairCardModel,

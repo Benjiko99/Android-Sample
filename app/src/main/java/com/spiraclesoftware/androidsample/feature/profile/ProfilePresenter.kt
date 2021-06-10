@@ -1,11 +1,11 @@
 package com.spiraclesoftware.androidsample.feature.profile
 
+import com.spiraclesoftware.androidsample.common.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.domain.entity.Profile
 import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.UpdateProfileResult
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.ValidationErrors
-import com.spiraclesoftware.androidsample.format.ExceptionFormatter
-import com.spiraclesoftware.androidsample.framework.StandardPresenter
+import com.spiraclesoftware.androidsample.framework.core.StandardPresenter
 
 class ProfilePresenter(
     private val profileInteractor: ProfileInteractor,

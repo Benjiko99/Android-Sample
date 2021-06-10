@@ -1,5 +1,6 @@
 package com.spiraclesoftware.androidsample.domain.entity
 
+import com.spiraclesoftware.androidsample.domain.core.Identifiable
 import java.time.ZonedDateTime
 import java.util.*
 

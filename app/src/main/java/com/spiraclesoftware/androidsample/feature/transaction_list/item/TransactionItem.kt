@@ -7,10 +7,10 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionItemBinding
-import com.spiraclesoftware.androidsample.domain.util.to64BitHash
-import com.spiraclesoftware.androidsample.extension.*
+import com.spiraclesoftware.androidsample.domain.utils.to64BitHash
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
-import com.spiraclesoftware.androidsample.framework.ModelAbstractBindingItem
+import com.spiraclesoftware.androidsample.framework.core.ModelAbstractBindingItem
+import com.spiraclesoftware.androidsample.framework.extensions.*
 
 class TransactionItem(
     model: TransactionModel

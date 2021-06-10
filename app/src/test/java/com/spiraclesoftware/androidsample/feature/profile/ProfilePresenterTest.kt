@@ -2,10 +2,10 @@ package com.spiraclesoftware.androidsample.feature.profile
 
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
+import com.spiraclesoftware.androidsample.common.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.ProfileInteractor.UpdateProfileResult
 import com.spiraclesoftware.androidsample.feature.profile.ProfilePresenter.UpdateProfileModel
-import com.spiraclesoftware.androidsample.format.ExceptionFormatter
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs

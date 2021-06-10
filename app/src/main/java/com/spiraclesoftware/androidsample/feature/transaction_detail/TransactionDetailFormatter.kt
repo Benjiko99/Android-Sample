@@ -1,10 +1,10 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail
 
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.common.DateTimeFormat
+import com.spiraclesoftware.androidsample.common.formatter.MoneyFormatter
+import com.spiraclesoftware.androidsample.common.formatter.TransactionCategoryFormatter
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import com.spiraclesoftware.androidsample.format.DateTimeFormat
-import com.spiraclesoftware.androidsample.format.MoneyFormatter
-import com.spiraclesoftware.androidsample.format.TransactionCategoryFormatter
 import org.koin.java.KoinJavaComponent.inject
 
 class TransactionDetailFormatter {

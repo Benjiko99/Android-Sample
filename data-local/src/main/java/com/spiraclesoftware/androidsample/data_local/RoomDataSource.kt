@@ -1,9 +1,9 @@
 package com.spiraclesoftware.androidsample.data_local
 
+import com.spiraclesoftware.androidsample.data_local.core.AssociatedItemCache
 import com.spiraclesoftware.androidsample.data_local.dao.TransactionsDao
 import com.spiraclesoftware.androidsample.data_local.mapper.MoneyEntityMapper
 import com.spiraclesoftware.androidsample.data_local.mapper.TransactionEntityMapper
-import com.spiraclesoftware.androidsample.data_local.util.AssociatedItemCache
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.entity.*
 import kotlinx.coroutines.flow.Flow

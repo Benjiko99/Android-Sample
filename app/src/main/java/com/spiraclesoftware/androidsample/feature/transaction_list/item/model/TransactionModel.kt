@@ -3,7 +3,7 @@ package com.spiraclesoftware.androidsample.feature.transaction_list.item.model
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
-import com.spiraclesoftware.androidsample.framework.Model
+import com.spiraclesoftware.androidsample.framework.core.Model
 
 data class TransactionModel(
     val id: TransactionId,

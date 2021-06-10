@@ -2,6 +2,7 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
+import com.spiraclesoftware.androidsample.common.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.domain.Result
 import com.spiraclesoftware.androidsample.domain.data
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
@@ -10,9 +11,8 @@ import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
-import com.spiraclesoftware.androidsample.format.ExceptionFormatter
-import com.spiraclesoftware.androidsample.framework.PresenterException
-import com.spiraclesoftware.androidsample.util.LanguageManager
+import com.spiraclesoftware.androidsample.framework.core.PresenterException
+import com.spiraclesoftware.androidsample.framework.utils.LanguageManager
 import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK

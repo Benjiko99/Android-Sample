@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.domain.entity
 
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter.ALL
-import com.spiraclesoftware.androidsample.domain.util.lenientContains
+import com.spiraclesoftware.androidsample.domain.utils.lenientContains
 import java.time.format.DateTimeFormatter
 
 data class TransactionsFilter(

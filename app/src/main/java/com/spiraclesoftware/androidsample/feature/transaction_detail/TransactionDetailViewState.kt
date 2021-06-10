@@ -1,6 +1,6 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail
 
-import com.spiraclesoftware.androidsample.framework.Model
+import com.spiraclesoftware.androidsample.framework.core.Model
 
 sealed class TransactionDetailViewState {
 

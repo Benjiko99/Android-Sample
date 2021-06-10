@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.StatusCardItemBinding
-import com.spiraclesoftware.androidsample.extension.string
-import com.spiraclesoftware.androidsample.extension.stringOrNull
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.StatusCardModel
+import com.spiraclesoftware.androidsample.framework.extensions.string
+import com.spiraclesoftware.androidsample.framework.extensions.stringOrNull
 
 class StatusCardItem(
     model: StatusCardModel

@@ -3,11 +3,11 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail.cards
 import androidx.core.net.toUri
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.common.formatter.FormatterTest
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionStatus
 import com.spiraclesoftware.androidsample.domain.entity.TransactionStatusCode
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
-import com.spiraclesoftware.androidsample.format.FormatterTest
 import org.junit.Test
 
 class CardsFormatterTest : FormatterTest() {

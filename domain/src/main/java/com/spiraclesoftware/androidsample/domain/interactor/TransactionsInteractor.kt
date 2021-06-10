@@ -2,12 +2,12 @@ package com.spiraclesoftware.androidsample.domain.interactor
 
 import com.spiraclesoftware.androidsample.domain.LocalDataSource
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
-import com.spiraclesoftware.androidsample.domain.Result
+import com.spiraclesoftware.androidsample.domain.core.Result
+import com.spiraclesoftware.androidsample.domain.core.mapOnSuccess
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
-import com.spiraclesoftware.androidsample.domain.mapOnSuccess
 import kotlinx.coroutines.flow.*
 
 class TransactionsInteractor(

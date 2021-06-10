@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail.cards
 
 import android.net.Uri
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import com.spiraclesoftware.androidsample.framework.Model
+import com.spiraclesoftware.androidsample.framework.core.Model
 
 class CardsPresenter(
     private val cardsFormatter: CardsFormatter,

@@ -1,8 +1,8 @@
 package com.spiraclesoftware.androidsample.feature.profile
 
 import com.google.common.truth.Truth.assertThat
+import com.spiraclesoftware.androidsample.common.formatter.FormatterTest
 import com.spiraclesoftware.androidsample.domain.entity.Profile
-import com.spiraclesoftware.androidsample.format.FormatterTest
 import org.junit.Test
 import java.time.LocalDate
 

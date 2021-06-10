@@ -19,12 +19,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ProfileFragmentBinding
-import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.*
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Editing
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState.Viewing
-import com.spiraclesoftware.androidsample.framework.StandardFragment
-import com.spiraclesoftware.androidsample.util.DelightUI
+import com.spiraclesoftware.androidsample.framework.core.StandardFragment
+import com.spiraclesoftware.androidsample.framework.extensions.*
+import com.spiraclesoftware.androidsample.framework.utils.DelightUI
 import java.time.*
 import java.time.format.DateTimeFormatter
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState as ViewState

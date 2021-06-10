@@ -7,7 +7,7 @@ import com.spiraclesoftware.androidsample.domain.service.profile_update_validato
 import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.NameIsBlank
 import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.PhoneNumberIsBlank
 import com.spiraclesoftware.androidsample.domain.service.profile_update_validator.ProfileUpdateValidator.*
-import com.spiraclesoftware.androidsample.extension.string
+import com.spiraclesoftware.androidsample.framework.extensions.string
 import java.time.format.DateTimeFormatter
 
 class ProfileFormatter(private val ctx: Context) {

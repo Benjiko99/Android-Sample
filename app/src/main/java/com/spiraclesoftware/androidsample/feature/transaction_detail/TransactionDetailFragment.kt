@@ -29,7 +29,6 @@ import com.spiraclesoftware.androidsample.component.image_picker.ImagePicker
 import com.spiraclesoftware.androidsample.databinding.PrimaryActionChipBinding
 import com.spiraclesoftware.androidsample.databinding.TransactionDetailFragmentBinding
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
-import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toCategorySelect
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
@@ -38,9 +37,10 @@ import com.spiraclesoftware.androidsample.feature.transaction_detail.Transaction
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Error
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
-import com.spiraclesoftware.androidsample.framework.Model
-import com.spiraclesoftware.androidsample.framework.StandardFragment
-import com.spiraclesoftware.androidsample.util.DelightUI
+import com.spiraclesoftware.androidsample.framework.core.Model
+import com.spiraclesoftware.androidsample.framework.core.StandardFragment
+import com.spiraclesoftware.androidsample.framework.extensions.*
+import com.spiraclesoftware.androidsample.framework.utils.DelightUI
 import com.stfalcon.imageviewer.StfalconImageViewer
 import io.cabriole.decorator.LinearMarginDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel

@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.feature.transaction_list
 
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
-import com.spiraclesoftware.androidsample.framework.Model
+import com.spiraclesoftware.androidsample.framework.core.Model
 
 data class ContentModel(
     val listModels: List<Model>,

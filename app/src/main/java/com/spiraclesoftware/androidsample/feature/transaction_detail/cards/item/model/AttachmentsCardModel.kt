@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model
 
 import android.net.Uri
-import com.spiraclesoftware.androidsample.framework.Model
+import com.spiraclesoftware.androidsample.framework.core.Model
 
 data class AttachmentsCardModel(
     val attachments: List<Uri>,

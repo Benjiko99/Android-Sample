@@ -5,7 +5,7 @@ import com.spiraclesoftware.androidsample.data_remote.mapper.ConversionRatesMapp
 import com.spiraclesoftware.androidsample.data_remote.mapper.MoneyMapper
 import com.spiraclesoftware.androidsample.data_remote.mapper.TransactionMapper
 import com.spiraclesoftware.androidsample.domain.RemoteDataSource
-import com.spiraclesoftware.androidsample.domain.Result
+import com.spiraclesoftware.androidsample.domain.core.Result
 import com.spiraclesoftware.androidsample.domain.entity.ConversionRates
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import kotlinx.coroutines.flow.flow

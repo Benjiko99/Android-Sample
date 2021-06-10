@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.feature.text_input
 
 import android.content.Context
-import com.spiraclesoftware.androidsample.extension.string
+import com.spiraclesoftware.androidsample.framework.extensions.string
 
 open class ValidationError(
     private val stringRes: Int,

@@ -4,12 +4,12 @@ import android.net.Uri
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.common.formatter.ExceptionFormatter
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.CardsPresenter
-import com.spiraclesoftware.androidsample.format.ExceptionFormatter
-import com.spiraclesoftware.androidsample.framework.Model
-import com.spiraclesoftware.androidsample.framework.PresenterException
+import com.spiraclesoftware.androidsample.framework.core.Model
+import com.spiraclesoftware.androidsample.framework.core.PresenterException
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi

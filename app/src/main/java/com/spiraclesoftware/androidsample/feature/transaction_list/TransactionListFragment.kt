@@ -21,11 +21,10 @@ import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericModelAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
-import com.spiraclesoftware.androidsample.FeatureFlags
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBinding
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
-import com.spiraclesoftware.androidsample.extension.*
+import com.spiraclesoftware.androidsample.feature.FeatureFlags
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toProfile
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
@@ -34,9 +33,10 @@ import com.spiraclesoftware.androidsample.feature.transaction_list.item.HeaderIt
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.TransactionItem
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
-import com.spiraclesoftware.androidsample.framework.Model
-import com.spiraclesoftware.androidsample.framework.StandardFragment
-import com.spiraclesoftware.androidsample.util.DelightUI
+import com.spiraclesoftware.androidsample.framework.core.Model
+import com.spiraclesoftware.androidsample.framework.core.StandardFragment
+import com.spiraclesoftware.androidsample.framework.extensions.*
+import com.spiraclesoftware.androidsample.framework.utils.DelightUI
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState as ViewState
 
 class TransactionListFragment :

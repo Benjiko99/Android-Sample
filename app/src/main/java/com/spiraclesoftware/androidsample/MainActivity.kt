@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import com.spiraclesoftware.androidsample.util.LanguageManager
+import com.spiraclesoftware.androidsample.framework.utils.LanguageManager
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {

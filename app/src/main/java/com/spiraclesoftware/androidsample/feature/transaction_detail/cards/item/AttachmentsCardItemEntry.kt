@@ -8,8 +8,8 @@ import coil.load
 import com.mikepenz.fastadapter.binding.AbstractBindingItem
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.AttachmentsCardItemEntryBinding
-import com.spiraclesoftware.androidsample.domain.util.to64BitHash
-import com.spiraclesoftware.androidsample.extension.onClick
+import com.spiraclesoftware.androidsample.domain.utils.to64BitHash
+import com.spiraclesoftware.androidsample.framework.extensions.onClick
 
 class AttachmentsCardItemEntry(
     val imageSource: Uri,

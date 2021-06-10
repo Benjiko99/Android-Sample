@@ -9,7 +9,7 @@ import com.spiraclesoftware.androidsample.feature.text_input.TextInputType
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragment.Companion.NOTE_INPUT_REQUEST_KEY
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
-import com.spiraclesoftware.androidsample.framework.Model
+import com.spiraclesoftware.androidsample.framework.core.Model
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every

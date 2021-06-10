@@ -1,5 +1,6 @@
 package com.spiraclesoftware.androidsample.domain
 
+import com.spiraclesoftware.androidsample.domain.core.Result
 import com.spiraclesoftware.androidsample.domain.entity.ConversionRates
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import kotlinx.coroutines.flow.Flow

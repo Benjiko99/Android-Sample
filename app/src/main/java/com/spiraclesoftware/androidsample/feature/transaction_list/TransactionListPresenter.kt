@@ -1,17 +1,17 @@
 package com.spiraclesoftware.androidsample.feature.transaction_list
 
 import co.zsmb.rainbowcake.withIOContext
-import com.spiraclesoftware.androidsample.domain.Result
+import com.spiraclesoftware.androidsample.common.formatter.ExceptionFormatter
+import com.spiraclesoftware.androidsample.domain.core.Result
+import com.spiraclesoftware.androidsample.domain.core.mapOnError
+import com.spiraclesoftware.androidsample.domain.core.mapOnSuccess
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
-import com.spiraclesoftware.androidsample.domain.mapOnError
-import com.spiraclesoftware.androidsample.domain.mapOnSuccess
-import com.spiraclesoftware.androidsample.format.ExceptionFormatter
-import com.spiraclesoftware.androidsample.framework.Model
-import com.spiraclesoftware.androidsample.framework.StandardPresenter
-import com.spiraclesoftware.androidsample.util.LanguageManager
+import com.spiraclesoftware.androidsample.framework.core.Model
+import com.spiraclesoftware.androidsample.framework.core.StandardPresenter
+import com.spiraclesoftware.androidsample.framework.utils.LanguageManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import java.time.ZonedDateTime

@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.TransactionHeaderItemBinding
-import com.spiraclesoftware.androidsample.domain.util.to64BitHash
+import com.spiraclesoftware.androidsample.domain.utils.to64BitHash
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
-import com.spiraclesoftware.androidsample.framework.ModelAbstractBindingItem
+import com.spiraclesoftware.androidsample.framework.core.ModelAbstractBindingItem
 
 class HeaderItem(
     model: HeaderModel

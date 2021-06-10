@@ -8,8 +8,8 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.AttachmentsCardItemBinding
-import com.spiraclesoftware.androidsample.extension.onClick
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.AttachmentsCardModel
+import com.spiraclesoftware.androidsample.framework.extensions.onClick
 
 class AttachmentsCardItem(
     model: AttachmentsCardModel,

@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.spiraclesoftware.androidsample.framework.Model
+import com.spiraclesoftware.androidsample.framework.core.Model
 
 data class ValuePairCardModel(
     val valuePairModels: List<ValuePairModel>

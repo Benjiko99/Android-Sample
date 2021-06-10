@@ -11,12 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import co.zsmb.rainbowcake.base.OneShotEvent
 import com.spiraclesoftware.androidsample.databinding.TextInputFragmentBinding
-import com.spiraclesoftware.androidsample.extension.*
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment.Companion.RESULT_KEY
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewModel.SendResultToCallerAndExitEvent
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.Initial
 import com.spiraclesoftware.androidsample.feature.text_input.TextInputViewState.InputEntry
-import com.spiraclesoftware.androidsample.framework.StandardFragment
+import com.spiraclesoftware.androidsample.framework.core.StandardFragment
+import com.spiraclesoftware.androidsample.framework.extensions.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 

@@ -17,15 +17,15 @@ import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.CategorySelectFragmentBinding
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
-import com.spiraclesoftware.androidsample.extension.set
-import com.spiraclesoftware.androidsample.extension.showSnackbar
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewModel.NotifyOfFailureEvent
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewModel.NotifyOfSuccessEvent
 import com.spiraclesoftware.androidsample.feature.category_select.CategorySelectViewState.Content
 import com.spiraclesoftware.androidsample.feature.category_select.item.CategoryItem
 import com.spiraclesoftware.androidsample.feature.category_select.item.model.CategoryModel
-import com.spiraclesoftware.androidsample.framework.StandardFragment
-import com.spiraclesoftware.androidsample.util.DelightUI
+import com.spiraclesoftware.androidsample.framework.core.StandardFragment
+import com.spiraclesoftware.androidsample.framework.extensions.set
+import com.spiraclesoftware.androidsample.framework.extensions.showSnackbar
+import com.spiraclesoftware.androidsample.framework.utils.DelightUI
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 

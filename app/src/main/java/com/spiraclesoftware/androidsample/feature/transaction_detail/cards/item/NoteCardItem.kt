@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.NoteCardItemBinding
-import com.spiraclesoftware.androidsample.extension.onClick
-import com.spiraclesoftware.androidsample.extension.string
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.NoteCardModel
+import com.spiraclesoftware.androidsample.framework.extensions.onClick
+import com.spiraclesoftware.androidsample.framework.extensions.string
 
 class NoteCardItem(
     model: NoteCardModel,

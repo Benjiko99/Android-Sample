@@ -2,7 +2,7 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.base.RainbowCakeViewModel
-import com.spiraclesoftware.androidsample.domain.Result
+import com.spiraclesoftware.androidsample.domain.core.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter

@@ -3,12 +3,12 @@ package com.spiraclesoftware.androidsample.feature.transaction_detail.cards
 import android.content.Context
 import androidx.core.net.toUri
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.extension.string
+import com.spiraclesoftware.androidsample.common.formatter.TransactionCategoryFormatter
+import com.spiraclesoftware.androidsample.common.formatter.TransactionStatusCodeFormatter
+import com.spiraclesoftware.androidsample.common.formatter.TransactionStatusFormatter
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
-import com.spiraclesoftware.androidsample.format.TransactionCategoryFormatter
-import com.spiraclesoftware.androidsample.format.TransactionStatusCodeFormatter
-import com.spiraclesoftware.androidsample.format.TransactionStatusFormatter
-import com.spiraclesoftware.androidsample.framework.Model
+import com.spiraclesoftware.androidsample.framework.core.Model
+import com.spiraclesoftware.androidsample.framework.extensions.string
 import org.koin.java.KoinJavaComponent.inject
 
 class CardsFormatter(private val ctx: Context) {

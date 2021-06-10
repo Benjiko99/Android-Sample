@@ -2,10 +2,10 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.R
+import com.spiraclesoftware.androidsample.common.formatter.FormatterTest
 import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
-import com.spiraclesoftware.androidsample.format.FormatterTest
 import org.junit.Test
 import java.math.BigDecimal
 import java.time.ZonedDateTime

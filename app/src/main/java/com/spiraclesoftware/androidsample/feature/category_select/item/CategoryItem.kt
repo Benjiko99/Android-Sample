@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.CategorySelectItemBinding
-import com.spiraclesoftware.androidsample.extension.color
-import com.spiraclesoftware.androidsample.extension.string
-import com.spiraclesoftware.androidsample.extension.tintedDrawable
 import com.spiraclesoftware.androidsample.feature.category_select.item.model.CategoryModel
-import com.spiraclesoftware.androidsample.framework.ModelAbstractBindingItem
+import com.spiraclesoftware.androidsample.framework.core.ModelAbstractBindingItem
+import com.spiraclesoftware.androidsample.framework.extensions.color
+import com.spiraclesoftware.androidsample.framework.extensions.string
+import com.spiraclesoftware.androidsample.framework.extensions.tintedDrawable
 
 class CategoryItem(
     model: CategoryModel
