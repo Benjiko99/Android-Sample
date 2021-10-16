@@ -5,11 +5,10 @@ import com.spiraclesoftware.androidsample.common.DateTimeFormat
 import com.spiraclesoftware.androidsample.common.formatter.MoneyFormatter
 import com.spiraclesoftware.androidsample.common.formatter.TransactionCategoryFormatter
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import org.koin.java.KoinJavaComponent.inject
 
-class TransactionDetailFormatter {
-
-    private val categoryFormatter by inject(TransactionCategoryFormatter::class.java)
+class TransactionDetailFormatter(
+    private val categoryFormatter: TransactionCategoryFormatter,
+) {
 
     fun detailModel(
         transaction: Transaction

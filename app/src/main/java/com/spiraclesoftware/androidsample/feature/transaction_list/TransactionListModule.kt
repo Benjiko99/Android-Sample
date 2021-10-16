@@ -9,6 +9,6 @@ val transactionListModule = module {
 
     factory { TransactionListPresenter(get(), get(), get(), get(), get()) }
 
-    single { TransactionListFormatter() }
+    single { TransactionListFormatter(get(), get(), get()) }
 
 }

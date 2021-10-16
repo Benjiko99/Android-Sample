@@ -13,6 +13,6 @@ val categorySelectModule = module {
 
     factory { CategorySelectPresenter(get(), get()) }
 
-    single { CategoryModelFormatter() }
+    single { CategoryModelFormatter(get()) }
 
 }

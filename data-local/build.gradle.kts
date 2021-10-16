@@ -8,12 +8,10 @@ apply(plugin = "org.jmailen.kotlinter")
 
 android {
     defaultConfig {
-        minSdkVersion(AppConfig.minSdkVersion)
-        targetSdkVersion(AppConfig.targetSdkVersion)
-        compileSdkVersion(AppConfig.compileSdkVersion)
-        buildToolsVersion(AppConfig.buildToolsVersion)
-        versionCode = AppConfig.versionCode
-        versionName = AppConfig.versionName
+        minSdk = AppConfig.minSdkVersion
+        targetSdk = AppConfig.targetSdkVersion
+        compileSdk = AppConfig.compileSdkVersion
+        buildToolsVersion = AppConfig.buildToolsVersion
         testInstrumentationRunner = AppConfig.testInstrumentationRunner
 
         javaCompileOptions {

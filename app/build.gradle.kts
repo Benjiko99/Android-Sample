@@ -58,7 +58,6 @@ dependencies {
     implementation(Dependency.rainbow_cake_koin)
     implementation(Dependency.rainbow_cake_timber)
     implementation(Dependency.koin_android)
-    implementation(Dependency.koin_viewmodel)
     implementation(Dependency.stetho)
     implementation(Dependency.process_phoenix)
     implementation(Dependency.livedata_ktx)

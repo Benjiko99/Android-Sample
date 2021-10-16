@@ -1,7 +1,7 @@
 package com.spiraclesoftware.androidsample.feature.transaction_list
 
 import com.spiraclesoftware.androidsample.R
-import com.spiraclesoftware.androidsample.common.*
+import com.spiraclesoftware.androidsample.common.DateTimeFormat
 import com.spiraclesoftware.androidsample.common.formatter.MoneyFormatter
 import com.spiraclesoftware.androidsample.common.formatter.TransactionCategoryFormatter
 import com.spiraclesoftware.androidsample.common.formatter.TransactionStatusCodeFormatter
@@ -11,14 +11,13 @@ import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
-import org.koin.java.KoinJavaComponent.inject
 import java.time.ZonedDateTime
 
-class TransactionListFormatter {
-
-    private val statusCodeFormatter by inject(TransactionStatusCodeFormatter::class.java)
-    private val categoryFormatter by inject(TransactionCategoryFormatter::class.java)
-    private val directionFilterFormatter by inject(TransferDirectionFilterFormatter::class.java)
+class TransactionListFormatter(
+    private val statusCodeFormatter: TransactionStatusCodeFormatter,
+    private val categoryFormatter: TransactionCategoryFormatter,
+    private val directionFilterFormatter: TransferDirectionFilterFormatter,
+) {
 
     fun headerModel(
         dateTime: ZonedDateTime,

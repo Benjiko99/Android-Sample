@@ -24,6 +24,7 @@ import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericModelAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
+import com.rubensousa.decorator.LinearMarginDecoration
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.component.image_picker.ImagePicker
 import com.spiraclesoftware.androidsample.databinding.PrimaryActionChipBinding
@@ -42,7 +43,6 @@ import com.spiraclesoftware.androidsample.framework.core.StandardFragment
 import com.spiraclesoftware.androidsample.framework.extensions.*
 import com.spiraclesoftware.androidsample.framework.utils.DelightUI
 import com.stfalcon.imageviewer.StfalconImageViewer
-import io.cabriole.decorator.LinearMarginDecoration
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 

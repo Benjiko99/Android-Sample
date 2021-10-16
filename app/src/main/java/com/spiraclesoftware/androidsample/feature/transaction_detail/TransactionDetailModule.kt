@@ -17,10 +17,10 @@ val transactionDetailModule = module {
         TransactionDetailPresenter(id, get(), get(), get(), get())
     }
 
-    single { TransactionDetailFormatter() }
+    single { TransactionDetailFormatter(get()) }
 
     single { CardsPresenter(get()) }
 
-    single { CardsFormatter(get()) }
+    single { CardsFormatter(get(), get(), get(), get()) }
 
 }

@@ -1,6 +1,6 @@
 object Version {
     // Plugins
-    const val android_gradle = "4.2.1"
+    const val android_gradle = "7.0.3"
     const val google_services = "4.3.5"
     const val crashlytics = "2.5.2"
     const val kotlinter = "3.4.0"
@@ -10,8 +10,8 @@ object Version {
     const val kotlin = "1.4.32"
     const val core_library_desugaring = "1.1.1"
     const val coroutines = "1.4.2"
-    const val rainbow_cake = "1.3.0"
-    const val koin = "2.2.0-rc-1"
+    const val rainbow_cake = "1.6.0"
+    const val koin = "3.1.2"
 
     // Firebase
     const val firebase = "27.0.0"
@@ -36,11 +36,11 @@ object Version {
     const val androidx_fragment = "1.3.0-beta01"
     const val arch = "2.1.0"
     const val lifecycle = "2.2.0"
-    const val navigation = "2.2.2"
-    const val coil = "1.0.0-rc3"
+    const val navigation = "2.3.5"
+    const val coil = "1.4.0"
     const val fastadapter = "5.3.5"
-    const val decorator = "1.2.0"
-    const val imageviewer = "1.0.1"
+    const val decorator = "2.0.0"
+    const val imageviewer = "v1.0.1"
     const val swipe_refresh_layout = "1.1.0"
     const val constraint_layout = "2.0.4"
 
@@ -90,16 +90,13 @@ object Dependency {
 
     //region Koin
     const val koin_core =
-        "org.koin:koin-core:${Version.koin}"
-
-    const val koin_android =
-        "org.koin:koin-android:${Version.koin}"
-
-    const val koin_viewmodel =
-        "org.koin:koin-androidx-viewmodel:${Version.koin}"
+        "io.insert-koin:koin-core:${Version.koin}"
 
     const val koin_test =
-        "org.koin:koin-test:${Version.koin}"
+        "io.insert-koin:koin-test:${Version.koin}"
+
+    const val koin_android =
+        "io.insert-koin:koin-android:${Version.koin}"
     //endregion
 
 
@@ -189,7 +186,7 @@ object Dependency {
         "io.coil-kt:coil:${Version.coil}"
 
     const val imageviewer =
-        "com.github.stfalcon:stfalcon-imageviewer:${Version.imageviewer}"
+        "com.github.stfalcon-studio:StfalconImageViewer:${Version.imageviewer}"
 
     const val material =
         "com.google.android.material:material:${Version.androidx}"
@@ -222,7 +219,7 @@ object Dependency {
         "com.mikepenz:fastadapter-extensions-diff:${Version.fastadapter}"
 
     const val decorator =
-        "io.cabriole:decorator:${Version.decorator}"
+        "com.rubensousa:decorator:${Version.decorator}"
     //endregion
 
 

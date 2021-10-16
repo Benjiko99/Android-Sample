@@ -9,13 +9,13 @@ import com.spiraclesoftware.androidsample.common.formatter.TransactionStatusForm
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
 import com.spiraclesoftware.androidsample.framework.core.Model
 import com.spiraclesoftware.androidsample.framework.extensions.string
-import org.koin.java.KoinJavaComponent.inject
 
-class CardsFormatter(private val ctx: Context) {
-
-    private val statusFormatter by inject(TransactionStatusFormatter::class.java)
-    private val statusCodeFormatter by inject(TransactionStatusCodeFormatter::class.java)
-    private val categoryFormatter by inject(TransactionCategoryFormatter::class.java)
+class CardsFormatter(
+    private val ctx: Context,
+    private val statusFormatter: TransactionStatusFormatter,
+    private val statusCodeFormatter: TransactionStatusCodeFormatter,
+    private val categoryFormatter: TransactionCategoryFormatter
+) {
 
     fun cardModels(cards: List<Card>): List<Model> {
         return cards.map { card ->
