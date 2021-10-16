@@ -1,20 +1,29 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="unit tests" type="AndroidJUnit" factoryName="Android JUnit">
-    <useClassPathOnly />
-    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-    <option name="ALTERNATIVE_JRE_PATH" value="Android API 29 Platform" />
-    <option name="PACKAGE_NAME" value="com.spiraclesoftware.androidsample" />
-    <option name="MAIN_CLASS_NAME" value="" />
-    <option name="METHOD_NAME" value="" />
-    <option name="TEST_OBJECT" value="package" />
-    <option name="PARAMETERS" value="" />
-    <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-    <option name="TEST_SEARCH_SCOPE">
-      <value defaultName="wholeProject" />
-    </option>
-    <dir value="$PROJECT_DIR$/app/src/test/java/com/spiraclesoftware/androidsample" />
-    <method v="2">
-      <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-    </method>
+  <configuration default="false" name="unit tests" type="GradleRunConfiguration" factoryName="Gradle">
+    <ExternalSystemSettings>
+      <option name="executionName" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$" />
+      <option name="externalSystemIdString" value="GRADLE" />
+      <option name="scriptParameters" value="--tests &quot;com.spiraclesoftware.androidsample.*&quot;" />
+      <option name="taskDescriptions">
+        <list />
+      </option>
+      <option name="taskNames">
+        <list>
+          <option value=":app:cleanTestDebugUnitTest" />
+          <option value=":app:testDebugUnitTest" />
+          <option value=":data-local:cleanTestDebugUnitTest" />
+          <option value=":data-local:testDebugUnitTest" />
+          <option value=":data-remote:cleanTestDebugUnitTest" />
+          <option value=":data-remote:testDebugUnitTest" />
+          <option value=":domain:test" />
+        </list>
+      </option>
+      <option name="vmOptions" value="" />
+    </ExternalSystemSettings>
+    <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+    <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+    <DebugAllEnabled>false</DebugAllEnabled>
+    <method v="2" />
   </configuration>
 </component>

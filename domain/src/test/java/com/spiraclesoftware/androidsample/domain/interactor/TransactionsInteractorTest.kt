@@ -1,11 +1,15 @@
 package com.spiraclesoftware.androidsample.domain.interactor
 
 import com.google.common.truth.Truth.assertThat
-import com.spiraclesoftware.androidsample.domain.*
+import com.spiraclesoftware.androidsample.domain.LocalDataSource
+import com.spiraclesoftware.androidsample.domain.RemoteDataSource
+import com.spiraclesoftware.androidsample.domain.core.Result
+import com.spiraclesoftware.androidsample.domain.core.data
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirection
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
+import com.spiraclesoftware.androidsample.domain.transaction
 import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK

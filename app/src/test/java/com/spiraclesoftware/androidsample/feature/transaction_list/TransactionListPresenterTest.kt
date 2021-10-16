@@ -3,8 +3,8 @@ package com.spiraclesoftware.androidsample.feature.transaction_list
 import co.zsmb.rainbowcake.test.base.PresenterTest
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.common.formatter.ExceptionFormatter
-import com.spiraclesoftware.androidsample.domain.Result
-import com.spiraclesoftware.androidsample.domain.data
+import com.spiraclesoftware.androidsample.domain.core.Result
+import com.spiraclesoftware.androidsample.domain.core.data
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
 import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
