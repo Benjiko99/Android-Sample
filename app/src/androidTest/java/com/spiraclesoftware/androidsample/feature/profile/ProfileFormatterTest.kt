@@ -4,9 +4,12 @@ import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.common.formatter.FormatterTest
 import com.spiraclesoftware.androidsample.domain.entity.Profile
 import org.junit.Test
+import org.koin.core.component.inject
 import java.time.LocalDate
 
 class ProfileFormatterTest : FormatterTest() {
+
+    private val formatter by inject<ProfileFormatter>()
 
     @Test
     fun formatProfileModel() {
@@ -24,7 +27,6 @@ class ProfileFormatterTest : FormatterTest() {
             email = "john.doe@example.com"
         )
 
-        val formatter = ProfileFormatter(context)
         val actual = formatter.profileModel(profile)
 
         assertThat(actual).isEqualTo(expected)

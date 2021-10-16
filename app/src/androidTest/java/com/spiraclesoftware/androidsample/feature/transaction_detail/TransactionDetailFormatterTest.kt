@@ -5,11 +5,14 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.common.formatter.FormatterTest
 import com.spiraclesoftware.androidsample.domain.entity.*
 import org.junit.Test
+import org.koin.core.component.inject
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.util.*
 
 class TransactionDetailFormatterTest : FormatterTest() {
+
+    private val formatter by inject<TransactionDetailFormatter>()
 
     @Test
     fun formatDetailModel() {
@@ -35,7 +38,6 @@ class TransactionDetailFormatterTest : FormatterTest() {
             isSuccessful = true
         )
 
-        val formatter = TransactionDetailFormatter()
         val actual = formatter.detailModel(transaction)
 
         assertThat(actual).isEqualTo(expected)

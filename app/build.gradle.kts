@@ -95,4 +95,5 @@ dependencies {
     androidTestImplementation(Dependency.arch_test)
     androidTestImplementation(Dependency.junit)
     androidTestImplementation(Dependency.truth)
+    androidTestImplementation(Dependency.koin_test)
 }

@@ -7,13 +7,14 @@ import com.spiraclesoftware.androidsample.domain.entity.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
 import org.junit.Test
+import org.koin.core.component.inject
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.util.*
 
 class TransactionListFormatterTest : FormatterTest() {
 
-    private val formatter = TransactionListFormatter()
+    private val formatter by inject<TransactionListFormatter>()
 
     @Test
     fun formatHeaderModel() {

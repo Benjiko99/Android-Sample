@@ -6,8 +6,11 @@ import com.spiraclesoftware.androidsample.common.formatter.FormatterTest
 import com.spiraclesoftware.androidsample.domain.entity.TransactionCategory
 import com.spiraclesoftware.androidsample.feature.category_select.item.model.CategoryModel
 import org.junit.Test
+import org.koin.core.component.inject
 
 class CategoryModelFormatterTest : FormatterTest() {
+
+    private val formatter by inject<CategoryModelFormatter>()
 
     @Test
     fun format() {
@@ -21,7 +24,7 @@ class CategoryModelFormatterTest : FormatterTest() {
             iconTintRes = R.color.transaction_category__entertainment,
             isSelectedCategory = true
         )
-        val actual = CategoryModelFormatter().format(category, isSelected)
+        val actual = formatter.format(category, isSelected)
 
         assertThat(actual).isEqualTo(expected)
     }

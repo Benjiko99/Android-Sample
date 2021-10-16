@@ -9,8 +9,11 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionStatus
 import com.spiraclesoftware.androidsample.domain.entity.TransactionStatusCode
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
 import org.junit.Test
+import org.koin.core.component.inject
 
 class CardsFormatterTest : FormatterTest() {
+
+    private val formatter by inject<CardsFormatter>()
 
     @Test
     fun formatCardModels() {
@@ -72,7 +75,6 @@ class CardsFormatterTest : FormatterTest() {
             NoteCardModel("Note"),
         )
 
-        val formatter = CardsFormatter(context)
         val actual = formatter.cardModels(cards)
 
         assertThat(actual).isEqualTo(expected)
