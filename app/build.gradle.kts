@@ -38,8 +38,13 @@ android {
     }
 
     buildFeatures {
+        compose = true
         dataBinding = true
         viewBinding = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Version.compose
     }
 }
 
@@ -63,6 +68,20 @@ dependencies {
     implementation(Dependency.livedata_ktx)
     implementation(Dependency.navigation_ui_ktx)
     implementation(Dependency.navigation_fragment_ktx)
+    implementation(Dependency.compose)
+    implementation(Dependency.compose)
+    implementation(Dependency.compose_tooling)
+    implementation(Dependency.compose_runtime)
+    implementation(Dependency.compose_livedata)
+    implementation(Dependency.compose_foundation)
+    implementation(Dependency.compose_layout)
+    implementation(Dependency.compose_animation)
+    implementation(Dependency.compose_activity)
+    implementation(Dependency.compose_viewmodel)
+    implementation(Dependency.compose_material)
+    implementation(Dependency.compose_material_theme_adapter)
+    implementation(Dependency.compose_material_icons)
+    implementation(Dependency.compose_material_icons_extended)
     implementation(Dependency.coil)
     implementation(Dependency.imageviewer)
     implementation(Dependency.material)

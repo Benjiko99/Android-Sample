@@ -37,6 +37,10 @@ object Version {
     const val arch = "2.1.0"
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.5"
+    const val compose = "1.1.0-beta01"
+    const val compose_activity = "1.3.1"
+    const val compose_viewmodel = "1.0.0-alpha07"
+    const val compose_material_theme_adapter = "1.0.4"
     const val coil = "1.4.0"
     const val fastadapter = "5.3.5"
     const val decorator = "2.0.0"
@@ -182,6 +186,45 @@ object Dependency {
 
 
     //region User Interface
+    const val compose =
+        "androidx.compose.ui:ui:${Version.compose}"
+
+    const val compose_tooling =
+        "androidx.compose.ui:ui-tooling:${Version.compose}"
+
+    const val compose_runtime =
+        "androidx.compose.runtime:runtime:${Version.compose}"
+
+    const val compose_livedata =
+        "androidx.compose.runtime:runtime-livedata:${Version.compose}"
+
+    const val compose_foundation =
+        "androidx.compose.foundation:foundation:${Version.compose}"
+
+    const val compose_layout =
+        "androidx.compose.foundation:foundation-layout:${Version.compose}"
+
+    const val compose_animation =
+        "androidx.compose.animation:animation:${Version.compose}"
+
+    const val compose_material =
+        "androidx.compose.material:material:${Version.compose}"
+
+    const val compose_material_theme_adapter =
+        "com.google.android.material:compose-theme-adapter:${Version.compose_material_theme_adapter}"
+
+    const val compose_material_icons =
+        "androidx.compose.material:material-icons-core:${Version.compose}"
+
+    const val compose_material_icons_extended =
+        "androidx.compose.material:material-icons-extended:${Version.compose}"
+
+    const val compose_activity =
+        "androidx.activity:activity-compose:${Version.compose_activity}"
+
+    const val compose_viewmodel =
+        "androidx.lifecycle:lifecycle-viewmodel-compose:${Version.compose_viewmodel}"
+
     const val coil =
         "io.coil-kt:coil:${Version.coil}"
 
