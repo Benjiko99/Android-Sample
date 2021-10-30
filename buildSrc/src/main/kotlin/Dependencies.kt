@@ -7,7 +7,7 @@ object Version {
     const val exhaustive = "0.1.1"
 
     // Core
-    const val kotlin = "1.4.32"
+    const val kotlin = "1.5.31"
     const val core_library_desugaring = "1.1.1"
     const val coroutines = "1.4.2"
     const val rainbow_cake = "1.6.0"
@@ -24,7 +24,7 @@ object Version {
     // Networking
     const val okhttp = "4.7.2"
     const val retrofit = "2.9.0"
-    const val moshi = "1.11.0"
+    const val moshi = "1.12.0"
     const val serialization_json = "1.0.1"
 
     // Database
