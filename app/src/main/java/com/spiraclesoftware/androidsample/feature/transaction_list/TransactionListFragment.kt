@@ -26,6 +26,7 @@ import com.spiraclesoftware.androidsample.databinding.TransactionListFragmentBin
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.feature.FeatureFlags
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toProfile
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toSettings
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListFragmentDirections.Companion.toTransactionDetail
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
@@ -79,6 +80,10 @@ class TransactionListFragment :
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_settings -> {
+                viewModel.openSettings()
+                return true
+            }
             R.id.action_profile -> {
                 viewModel.openProfile()
                 return true
@@ -151,6 +156,8 @@ class TransactionListFragment :
 
     override fun onEvent(event: OneShotEvent) {
         when (event) {
+            is NavigateToSettingsEvent ->
+                findNavController().navigate(toSettings())
             is NavigateToProfileEvent ->
                 findNavController().navigate(toProfile())
             is NavigateToTransactionDetailEvent ->

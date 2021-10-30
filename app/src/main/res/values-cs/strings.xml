@@ -16,10 +16,14 @@
     <!-- Menu Actions -->
     <string name="action_edit">Upravit</string>
     <string name="action_save">Uložit</string>
+    <string name="action_settings">Nastavení</string>
     <string name="action_profile">Profil</string>
     <string name="action_change_language">Změnit jazyk</string>
     <string name="action_search">Vyhledávání</string>
     <string name="action_search_hint">Jméno, částka nebo datum</string>
+
+    <!-- Settings -->
+    <string name="settings__title">Nastavení</string>
 
     <!-- Profile -->
     <string name="profile__title">Profil</string>

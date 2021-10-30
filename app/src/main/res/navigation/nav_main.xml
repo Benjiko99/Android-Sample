@@ -5,6 +5,11 @@
     android:id="@+id/nav_main"
     app:startDestination="@id/transactionListFragment">
 
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.spiraclesoftware.androidsample.feature.settings.SettingsActivity"
+        android:label="@string/settings__title" />
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.spiraclesoftware.androidsample.feature.profile.ProfileFragment"
@@ -31,6 +36,10 @@
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
+
+        <action
+            android:id="@+id/to_settings"
+            app:destination="@id/settingsActivity" />
     </fragment>
 
     <fragment

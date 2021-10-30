@@ -14,6 +14,8 @@ class TransactionListViewModel(
     private val presenter: TransactionListPresenter
 ) : RainbowCakeViewModel<TransactionListViewState>(Loading) {
 
+    object NavigateToSettingsEvent : OneShotEvent
+
     object NavigateToProfileEvent : OneShotEvent
 
     data class NavigateToTransactionDetailEvent(val id: String) : OneShotEvent
@@ -25,6 +27,10 @@ class TransactionListViewModel(
     init {
         produceViewState()
         refreshTransactions()
+    }
+
+    fun openSettings() {
+        postEvent(NavigateToSettingsEvent)
     }
 
     fun openProfile() {
