@@ -17,7 +17,7 @@ object Version {
     const val firebase = "27.0.0"
 
     // Debugging
-    const val leak_canary = "2.3"
+    const val leak_canary = "2.9.1"
     const val process_phoenix = "2.0.0"
     const val stetho = "1.5.1"
 
@@ -119,6 +119,9 @@ object Dependency {
     //region Debugging
     const val leak_canary =
         "com.squareup.leakcanary:leakcanary-android:${Version.leak_canary}"
+
+    const val leak_canary_plumber =
+        "com.squareup.leakcanary:plumber-android:${Version.leak_canary}"
 
     const val stetho =
         "com.facebook.stetho:stetho:${Version.stetho}"

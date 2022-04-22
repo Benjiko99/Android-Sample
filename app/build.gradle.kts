@@ -99,6 +99,7 @@ dependencies {
     implementation(Dependency.firebase_crashlytics)
     implementation(Dependency.firebase_messaging)
 
+    implementation(Dependency.leak_canary_plumber)
     debugImplementation(Dependency.leak_canary)
 
     testImplementation(Dependency.junit)
