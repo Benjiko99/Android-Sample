@@ -16,7 +16,7 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
+import com.spiraclesoftware.androidsample.view.TextInputLayout
 import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ProfileFragmentBinding
 import com.spiraclesoftware.androidsample.feature.profile.ProfileViewModel.*

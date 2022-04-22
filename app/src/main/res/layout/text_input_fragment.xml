@@ -6,21 +6,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.spiraclesoftware.androidsample.view.AppBarLayout
         android:id="@+id/appbar"
         style="@style/AppBarLayout">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <com.spiraclesoftware.androidsample.view.Toolbar
             android:id="@+id/toolbar"
             style="@style/Toolbar" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.spiraclesoftware.androidsample.view.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.spiraclesoftware.androidsample.view.TextInputLayout
             android:id="@+id/inputField"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:hint="@string/note_input__hint">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.spiraclesoftware.androidsample.view.TextInputEditText
                 android:id="@+id/inputView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                 android:inputType="text"
                 android:maxLines="1" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.spiraclesoftware.androidsample.view.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/saveButton"

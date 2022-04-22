@@ -7,16 +7,16 @@
     android:background="?android:colorBackground"
     tools:theme="@style/AppTheme.White">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.spiraclesoftware.androidsample.view.AppBarLayout
         android:id="@+id/appbar"
         style="@style/AppBarLayout"
         app:liftOnScroll="true">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <com.spiraclesoftware.androidsample.view.Toolbar
             android:id="@+id/toolbar"
             style="@style/Toolbar" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.spiraclesoftware.androidsample.view.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
@@ -53,7 +53,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 app:layout_constraintTop_toBottomOf="@id/headerView" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.spiraclesoftware.androidsample.view.TextInputLayout
                 android:id="@+id/fullNameField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -62,15 +62,15 @@
                 android:hint="@string/profile__full_name"
                 app:layout_constraintTop_toBottomOf="@id/subHeaderView">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.spiraclesoftware.androidsample.view.TextInputEditText
                     android:id="@+id/fullNameView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPersonName" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.spiraclesoftware.androidsample.view.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.spiraclesoftware.androidsample.view.TextInputLayout
                 android:id="@+id/dateOfBirthField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -80,14 +80,14 @@
                 app:layout_constraintTop_toBottomOf="@id/fullNameField"
                 app:startIconDrawable="@drawable/ic_calendar_input">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.spiraclesoftware.androidsample.view.TextInputEditText
                     android:id="@+id/dateOfBirthView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.spiraclesoftware.androidsample.view.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.spiraclesoftware.androidsample.view.TextInputLayout
                 android:id="@+id/phoneNumberField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -96,15 +96,15 @@
                 android:hint="@string/profile__phone_number"
                 app:layout_constraintTop_toBottomOf="@id/dateOfBirthField">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.spiraclesoftware.androidsample.view.TextInputEditText
                     android:id="@+id/phoneNumberView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="phone" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.spiraclesoftware.androidsample.view.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.spiraclesoftware.androidsample.view.TextInputLayout
                 android:id="@+id/emailField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -113,13 +113,13 @@
                 android:hint="@string/profile__email"
                 app:layout_constraintTop_toBottomOf="@id/phoneNumberField">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.spiraclesoftware.androidsample.view.TextInputEditText
                     android:id="@+id/emailView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textEmailAddress" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.spiraclesoftware.androidsample.view.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

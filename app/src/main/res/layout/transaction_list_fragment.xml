@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.spiraclesoftware.androidsample.view.AppBarLayout
         android:id="@+id/appbar"
         style="@style/AppBarLayout"
         app:liftOnScroll="true"
         app:liftOnScrollTargetViewId="@id/scrollView">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <com.spiraclesoftware.androidsample.view.Toolbar
             android:id="@+id/toolbar"
             style="@style/Toolbar" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.spiraclesoftware.androidsample.view.AppBarLayout>
 
     <com.spiraclesoftware.androidsample.view.ScrollChildSwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
