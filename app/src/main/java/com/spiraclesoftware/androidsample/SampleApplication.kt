@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Behavior
@@ -42,12 +41,7 @@ class SampleApplication : Application() {
 
         initBeagle()
         initTimber()
-        initStetho()
         initKoin()
-    }
-
-    private fun initStetho() {
-        Stetho.initializeWithDefaults(this)
     }
 
     private fun initKoin() {

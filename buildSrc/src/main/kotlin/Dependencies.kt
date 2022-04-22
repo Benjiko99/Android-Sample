@@ -20,7 +20,6 @@ object Version {
     const val leak_canary = "2.9.1"
     const val beagle = "2.6.7"
     const val process_phoenix = "2.0.0"
-    const val stetho = "1.5.1"
 
     // Networking
     const val okhttp = "4.7.2"
@@ -123,9 +122,6 @@ object Dependency {
 
     const val leak_canary_plumber =
         "com.squareup.leakcanary:plumber-android:${Version.leak_canary}"
-
-    const val stetho =
-        "com.facebook.stetho:stetho:${Version.stetho}"
 
     const val beagle_noop =
         "com.github.pandulapeter.beagle:noop:${Version.beagle}"
