@@ -1,9 +1,11 @@
 package com.spiraclesoftware.androidsample.data_remote
 
+import com.pandulapeter.beagle.logOkHttp.BeagleOkHttpLogger
 import com.spiraclesoftware.androidsample.data_remote.adapter.BigDecimalAdapter
 import com.spiraclesoftware.androidsample.data_remote.adapter.CurrencyAdapter
 import com.spiraclesoftware.androidsample.data_remote.adapter.ZonedDateTimeAdapter
 import com.squareup.moshi.Moshi
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -42,6 +44,7 @@ val remoteModule = module {
             if (BuildConfig.DEBUG) {
                 addInterceptor(get() as HttpLoggingInterceptor)
             }
+            (BeagleOkHttpLogger.logger as? Interceptor?)?.let { addInterceptor(it) }
         }.build()
     }
 

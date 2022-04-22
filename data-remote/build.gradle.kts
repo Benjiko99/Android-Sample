@@ -34,6 +34,9 @@ dependencies {
     implementation(Dependency.retrofit)
     implementation(Dependency.retrofit_moshi)
 
+    debugApi(Dependency.beagle_okhttp)
+    releaseApi(Dependency.beagle_okhttp_noop)
+
     testImplementation(Dependency.junit)
     testImplementation(Dependency.truth)
     testImplementation(Dependency.mockk)

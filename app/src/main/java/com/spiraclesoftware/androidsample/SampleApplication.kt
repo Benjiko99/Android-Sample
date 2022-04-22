@@ -6,6 +6,11 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import com.facebook.stetho.Stetho
 import com.jakewharton.processphoenix.ProcessPhoenix
+import com.pandulapeter.beagle.Beagle
+import com.pandulapeter.beagle.common.configuration.Behavior
+import com.pandulapeter.beagle.log.BeagleLogger
+import com.pandulapeter.beagle.logOkHttp.BeagleOkHttpLogger
+import com.pandulapeter.beagle.modules.*
 import com.spiraclesoftware.androidsample.common.commonModule
 import com.spiraclesoftware.androidsample.data_local.localModule
 import com.spiraclesoftware.androidsample.data_remote.remoteModule
@@ -35,12 +40,17 @@ class SampleApplication : Application() {
 
         if (ProcessPhoenix.isPhoenixProcess(this)) return
 
+        initBeagle()
+        initTimber()
+        initStetho()
+        initKoin()
+    }
+
+    private fun initStetho() {
         Stetho.initializeWithDefaults(this)
+    }
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(DebugTree())
-        }
-
+    private fun initKoin() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@SampleApplication)
@@ -52,6 +62,51 @@ class SampleApplication : Application() {
                     remoteModule
                 ) + featureModules + domainModules
             )
+        }
+    }
+
+    private fun initBeagle() {
+        Beagle.initialize(
+            application = this,
+            behavior = Behavior(
+                logBehavior = Behavior.LogBehavior(
+                    loggers = listOf(BeagleLogger),
+                ),
+                networkLogBehavior = Behavior.NetworkLogBehavior(
+                    networkLoggers = listOf(BeagleOkHttpLogger),
+                ),
+            )
+        )
+
+        Beagle.set(
+            HeaderModule(
+                title = getString(R.string.app_name),
+                subtitle = "${BuildConfig.BUILD_TYPE} v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+            ),
+            PaddingModule(),
+            TextModule("Logs", TextModule.Type.SECTION_HEADER),
+            NetworkLogListModule(),
+            LogListModule(),
+            LifecycleLogListModule(),
+            DividerModule(),
+            TextModule("Other", TextModule.Type.SECTION_HEADER),
+            DeviceInfoModule(),
+            ScreenCaptureToolboxModule(),
+            KeylineOverlaySwitchModule(),
+            AnimationDurationSwitchModule(),
+        )
+    }
+
+    private fun initTimber() {
+        class BeagleTree : DebugTree() {
+            override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+                Beagle.log("\n[$tag] $message", "Timber", t?.stackTraceToString())
+            }
+        }
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+            Timber.plant(BeagleTree())
         }
     }
 

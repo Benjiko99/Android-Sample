@@ -102,6 +102,11 @@ dependencies {
     implementation(Dependency.leak_canary_plumber)
     debugImplementation(Dependency.leak_canary)
 
+    debugImplementation(Dependency.beagle_drawer)
+    debugImplementation(Dependency.beagle_log)
+    releaseImplementation(Dependency.beagle_noop)
+    releaseImplementation(Dependency.beagle_log_noop)
+
     testImplementation(Dependency.junit)
     testImplementation(Dependency.truth)
     testImplementation(Dependency.mockk)
