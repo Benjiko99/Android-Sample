@@ -221,6 +221,14 @@ class TransactionListFragment :
         toolbar.inflateMenu(R.menu.transaction_list_menu)
         toolbar.setOnMenuItemClickListener(::onMenuItemClicked)
 
+        if (FeatureFlags.PROFILE_FEATURE.isDisabled) {
+            toolbar.menu.removeItem(R.id.action_profile)
+        }
+
+        if (FeatureFlags.SETTINGS_FEATURE.isDisabled) {
+            toolbar.menu.removeItem(R.id.action_settings)
+        }
+
         setupSearchView(toolbar.menu)
     }
 
@@ -236,12 +244,6 @@ class TransactionListFragment :
             binding.toolbar.post {
                 // hide other menu items when search is expanded
                 menu.forEach { it.isVisible = !isExpanded }
-
-                // hide profile item according to feature flag
-                menu.findItem(R.id.action_profile).apply {
-                    val isEnabled = FeatureFlags.PROFILE_FEATURE.isEnabled
-                    isVisible = isEnabled && !isExpanded
-                }
             }
         }
 
