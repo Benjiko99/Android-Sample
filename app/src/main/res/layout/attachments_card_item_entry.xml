@@ -47,6 +47,7 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:background="@drawable/shp_circle"
+            android:backgroundTint="?attr/colorSurface"
             android:contentDescription="@null"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"

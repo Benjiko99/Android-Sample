@@ -3,7 +3,7 @@
 
     <style name="Base.AppTheme" parent="Base.v21.AppTheme" />
 
-    <style name="Base.v21.AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Base.v21.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/black</item>
     </style>
 

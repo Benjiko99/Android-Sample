@@ -1,8 +1,6 @@
 package com.spiraclesoftware.androidsample
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.log.BeagleLogger
@@ -13,7 +11,8 @@ import com.spiraclesoftware.androidsample.data_local.localModule
 import com.spiraclesoftware.androidsample.data_remote.remoteModule
 import com.spiraclesoftware.androidsample.domain.domainModules
 import com.spiraclesoftware.androidsample.feature.featureModules
-import com.spiraclesoftware.androidsample.framework.extensions.string
+import com.spiraclesoftware.androidsample.framework.utils.ThemeManager
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -23,19 +22,13 @@ import timber.log.Timber.DebugTree
 
 class SampleApplication : Application() {
 
-    companion object {
-        fun getSharedPreferences(ctx: Context): SharedPreferences {
-            val key = ctx.string(R.string.shared_preferences_key)
-            return ctx.getSharedPreferences(key, Context.MODE_PRIVATE)
-        }
-    }
-
     override fun onCreate() {
         super.onCreate()
 
         initTimber()
         initKoin()
         initBeagle()
+        applyTheming()
     }
 
     private fun initKoin() {
@@ -96,6 +89,10 @@ class SampleApplication : Application() {
             Timber.plant(DebugTree())
             Timber.plant(BeagleTree())
         }
+    }
+
+    private fun applyTheming() {
+        get<ThemeManager>().applyCurrentTheme()
     }
 
 }
