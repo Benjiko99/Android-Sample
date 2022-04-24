@@ -32,6 +32,7 @@ object Version {
     const val room_test = "2.2.6"
 
     // User Interface
+    const val appcompat = "1.4.1"
     const val androidx = "1.1.0"
     const val androidx_fragment = "1.3.0-beta01"
     const val arch = "2.1.0"
@@ -255,7 +256,7 @@ object Dependency {
         "com.google.android.material:material:${Version.androidx}"
 
     const val appcompat =
-        "androidx.appcompat:appcompat:${Version.androidx}"
+        "androidx.appcompat:appcompat:${Version.appcompat}"
 
     const val fragment_ktx =
         "androidx.fragment:fragment-ktx:${Version.androidx_fragment}"
