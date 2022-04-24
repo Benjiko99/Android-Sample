@@ -18,12 +18,6 @@
         tools:ignore="AlwaysShowAction" />
 
     <item
-        android:id="@+id/action_change_language"
-        android:icon="@drawable/ic_translate"
-        android:title="@string/action_change_language"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/action_settings"

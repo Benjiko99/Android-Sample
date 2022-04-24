@@ -7,7 +7,7 @@ val transactionListModule = module {
 
     viewModel { TransactionListViewModel(get()) }
 
-    factory { TransactionListPresenter(get(), get(), get(), get(), get()) }
+    factory { TransactionListPresenter(get(), get(), get(), get()) }
 
     single { TransactionListFormatter(get(), get(), get()) }
 

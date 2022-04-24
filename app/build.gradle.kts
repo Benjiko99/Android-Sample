@@ -63,7 +63,6 @@ dependencies {
     implementation(Dependency.rainbow_cake_koin)
     implementation(Dependency.rainbow_cake_timber)
     implementation(Dependency.koin_android)
-    implementation(Dependency.process_phoenix)
     implementation(Dependency.livedata_ktx)
     implementation(Dependency.navigation_ui_ktx)
     implementation(Dependency.navigation_fragment_ktx)

@@ -15,7 +15,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.zsmb.rainbowcake.base.OneShotEvent
 import co.zsmb.rainbowcake.koin.getViewModelFromFactory
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericModelAdapter
@@ -74,10 +73,6 @@ class TransactionListFragment :
         viewModel.retryOnError()
     }
 
-    private fun onLanguageChangeConfirmed() {
-        viewModel.confirmLanguageChange()
-    }
-
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_settings -> {
@@ -86,10 +81,6 @@ class TransactionListFragment :
             }
             R.id.action_profile -> {
                 viewModel.openProfile()
-                return true
-            }
-            R.id.action_change_language -> {
-                viewModel.changeLanguage()
                 return true
             }
         }
@@ -162,20 +153,7 @@ class TransactionListFragment :
                 findNavController().navigate(toProfile())
             is NavigateToTransactionDetailEvent ->
                 findNavController().navigate(toTransactionDetail(event.id))
-            ShowLanguageChangeConfirmationEvent ->
-                showLanguageChangeConfirmation(onConfirmed = ::onLanguageChangeConfirmed)
         }
-    }
-
-    private fun showLanguageChangeConfirmation(onConfirmed: () -> Unit) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setMessage(R.string.change_language_dialog__message)
-            .setNegativeButton(R.string.change_language_dialog__cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setPositiveButton(R.string.change_language_dialog__confirm) { _, _ ->
-                onConfirmed()
-            }.show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

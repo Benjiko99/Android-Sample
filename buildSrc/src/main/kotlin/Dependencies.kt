@@ -19,7 +19,6 @@ object Version {
     // Debugging
     const val leak_canary = "2.9.1"
     const val beagle = "2.6.7"
-    const val process_phoenix = "2.0.0"
 
     // Networking
     const val okhttp = "4.7.2"
@@ -143,9 +142,6 @@ object Dependency {
 
     const val beagle_okhttp_noop =
         "com.github.pandulapeter.beagle:log-okhttp-noop:${Version.beagle}"
-
-    const val process_phoenix =
-        "com.jakewharton:process-phoenix:${Version.process_phoenix}"
     //endregion
 
 

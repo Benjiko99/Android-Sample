@@ -3,7 +3,6 @@ package com.spiraclesoftware.androidsample.common.formatter
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.entity.Money
 import com.spiraclesoftware.androidsample.domain.entity.Transaction
-import com.spiraclesoftware.androidsample.framework.utils.LanguageManager.AppLanguage
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Before
@@ -34,12 +33,12 @@ class MoneyFormatterTest {
 
     @Before
     fun setUp() {
-        Locale.setDefault(AppLanguage.ENGLISH.toLocale())
+        Locale.setDefault(Locale.ENGLISH)
     }
 
     @Test
     fun localization_english() {
-        Locale.setDefault(AppLanguage.ENGLISH.toLocale())
+        Locale.setDefault(Locale.ENGLISH)
 
         val money = Money("100", "CZK")
 
@@ -49,7 +48,7 @@ class MoneyFormatterTest {
 
     @Test
     fun localization_czech() {
-        Locale.setDefault(AppLanguage.CZECH.toLocale())
+        Locale.setDefault(Locale.forLanguageTag("cs"))
 
         val money = Money("100", "CZK")
 

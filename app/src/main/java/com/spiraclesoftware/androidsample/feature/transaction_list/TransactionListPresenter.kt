@@ -11,14 +11,12 @@ import com.spiraclesoftware.androidsample.domain.interactor.AccountsInteractor
 import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteractor
 import com.spiraclesoftware.androidsample.framework.core.Model
 import com.spiraclesoftware.androidsample.framework.core.StandardPresenter
-import com.spiraclesoftware.androidsample.framework.utils.LanguageManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 
 class TransactionListPresenter(
-    private val languageManager: LanguageManager,
     private val accountsInteractor: AccountsInteractor,
     private val transactionsInteractor: TransactionsInteractor,
     private val formatter: TransactionListFormatter,
@@ -27,10 +25,6 @@ class TransactionListPresenter(
 
     suspend fun refreshTransactions() = withIOContext {
         transactionsInteractor.refreshTransactions()
-    }
-
-    fun toggleLanguageAndRestart() {
-        languageManager.toggleLanguageAndRestart()
     }
 
     fun getFilterStringIds() =

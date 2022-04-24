@@ -3,8 +3,6 @@ package com.spiraclesoftware.androidsample
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Configuration
-import com.jakewharton.processphoenix.ProcessPhoenix
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.log.BeagleLogger
@@ -16,8 +14,6 @@ import com.spiraclesoftware.androidsample.data_remote.remoteModule
 import com.spiraclesoftware.androidsample.domain.domainModules
 import com.spiraclesoftware.androidsample.feature.featureModules
 import com.spiraclesoftware.androidsample.framework.extensions.string
-import com.spiraclesoftware.androidsample.framework.utils.LanguageManager
-import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -37,11 +33,9 @@ class SampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        if (ProcessPhoenix.isPhoenixProcess(this)) return
-
-        initBeagle()
         initTimber()
         initKoin()
+        initBeagle()
     }
 
     private fun initKoin() {
@@ -102,18 +96,6 @@ class SampleApplication : Application() {
             Timber.plant(DebugTree())
             Timber.plant(BeagleTree())
         }
-    }
-
-    /** Executes before onCreate(), thus we cannot inject dependencies with Koin */
-    override fun attachBaseContext(base: Context) {
-        val sharedPreferences = getSharedPreferences(base)
-        val languageManager = LanguageManager(base, sharedPreferences)
-        super.attachBaseContext(languageManager.applyLocale(base))
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        get<LanguageManager>().applyLocale(this)
     }
 
 }

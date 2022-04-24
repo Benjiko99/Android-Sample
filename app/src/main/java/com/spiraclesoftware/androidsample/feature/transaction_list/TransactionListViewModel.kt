@@ -8,7 +8,6 @@ import com.spiraclesoftware.androidsample.domain.entity.TransactionsFilter
 import com.spiraclesoftware.androidsample.domain.entity.TransferDirectionFilter
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.*
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 
 class TransactionListViewModel(
     private val presenter: TransactionListPresenter
@@ -19,8 +18,6 @@ class TransactionListViewModel(
     object NavigateToProfileEvent : OneShotEvent
 
     data class NavigateToTransactionDetailEvent(val id: String) : OneShotEvent
-
-    object ShowLanguageChangeConfirmationEvent : OneShotEvent
 
     private var filterFlow = MutableStateFlow(TransactionsFilter())
 
@@ -47,14 +44,6 @@ class TransactionListViewModel(
 
     fun filterByQuery(query: String) {
         setSearchQuery(query)
-    }
-
-    fun changeLanguage() {
-        postEvent(ShowLanguageChangeConfirmationEvent)
-    }
-
-    fun confirmLanguageChange() {
-        toggleLanguage()
     }
 
     fun refreshData() {
@@ -84,10 +73,6 @@ class TransactionListViewModel(
 
     private fun refreshTransactions() = executeNonBlocking {
         presenter.refreshTransactions()
-    }
-
-    private fun toggleLanguage() {
-        presenter.toggleLanguageAndRestart()
     }
 
     private fun setSearchQuery(query: String) = execute {

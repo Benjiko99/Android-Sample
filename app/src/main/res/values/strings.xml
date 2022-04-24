@@ -20,7 +20,6 @@
     <string name="action_save">Save</string>
     <string name="action_settings">Settings</string>
     <string name="action_profile">Profile</string>
-    <string name="action_change_language">Change language</string>
     <string name="action_search">Search</string>
     <string name="action_search_hint">Name, amount, or date</string>
 
@@ -89,11 +88,6 @@
     <string name="discard_changes_dialog__message">You haven\'t saved your changes.</string>
     <string name="discard_changes_dialog__discard">Discard changes</string>
     <string name="discard_changes_dialog__cancel">Keep editing</string>
-
-    <!-- Change language dialog -->
-    <string name="change_language_dialog__message">Change language to czech?</string>
-    <string name="change_language_dialog__confirm">Change</string>
-    <string name="change_language_dialog__cancel">Cancel</string>
 
     <!-- Text Input -->
     <string name="text_input__save_changes">Save changes</string>

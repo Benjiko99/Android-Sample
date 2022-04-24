@@ -6,10 +6,14 @@ import co.zsmb.rainbowcake.test.observeStateAndEvents
 import com.google.common.truth.Truth.assertThat
 import com.spiraclesoftware.androidsample.domain.core.Result
 import com.spiraclesoftware.androidsample.domain.entity.TransactionId
-import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.*
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.NavigateToProfileEvent
+import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewModel.NavigateToTransactionDetailEvent
 import com.spiraclesoftware.androidsample.feature.transaction_list.TransactionListViewState.Content
 import com.spiraclesoftware.androidsample.framework.core.Model
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coJustRun
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
@@ -42,24 +46,6 @@ class TransactionListViewModelTest : ViewModelTest() {
                 NavigateToTransactionDetailEvent("1")
             )
         }
-    }
-
-    @Test
-    fun changeLanguage() {
-        testSubject.observeStateAndEvents { _, eventsObserver ->
-            testSubject.changeLanguage()
-
-            eventsObserver.assertObserved(ShowLanguageChangeConfirmationEvent)
-        }
-    }
-
-    @Test
-    fun confirmLanguageChange() {
-        justRun { presenter.toggleLanguageAndRestart() }
-
-        testSubject.confirmLanguageChange()
-
-        verify { presenter.toggleLanguageAndRestart() }
     }
 
     @Test

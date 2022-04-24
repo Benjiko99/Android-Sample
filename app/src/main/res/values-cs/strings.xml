@@ -18,7 +18,6 @@
     <string name="action_save">Uložit</string>
     <string name="action_settings">Nastavení</string>
     <string name="action_profile">Profil</string>
-    <string name="action_change_language">Změnit jazyk</string>
     <string name="action_search">Vyhledávání</string>
     <string name="action_search_hint">Jméno, částka nebo datum</string>
 
@@ -87,11 +86,6 @@
     <string name="discard_changes_dialog__message">Neuložili jste změny.</string>
     <string name="discard_changes_dialog__discard">Zahodit změny</string>
     <string name="discard_changes_dialog__cancel">Pokračovat v úpravách</string>
-
-    <!-- Change language dialog -->
-    <string name="change_language_dialog__message">Změnit jazyk na angličtinu?</string>
-    <string name="change_language_dialog__confirm">Změnit</string>
-    <string name="change_language_dialog__cancel">Zrušit</string>
 
     <!-- Text Input -->
     <string name="text_input__save_changes">Uložit změny</string>

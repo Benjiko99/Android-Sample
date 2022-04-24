@@ -12,7 +12,6 @@ import com.spiraclesoftware.androidsample.domain.interactor.TransactionsInteract
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.HeaderModel
 import com.spiraclesoftware.androidsample.feature.transaction_list.item.model.TransactionModel
 import com.spiraclesoftware.androidsample.framework.core.PresenterException
-import com.spiraclesoftware.androidsample.framework.utils.LanguageManager
 import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -26,9 +25,6 @@ import java.time.ZonedDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TransactionListPresenterTest : PresenterTest() {
-
-    @MockK
-    lateinit var languageManager: LanguageManager
 
     @MockK
     lateinit var accountsInteractor: AccountsInteractor
@@ -48,15 +44,6 @@ class TransactionListPresenterTest : PresenterTest() {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-    }
-
-    @Test
-    fun toggleLanguage() = runBlockingTest {
-        justRun { languageManager.toggleLanguageAndRestart() }
-
-        testSubject.toggleLanguageAndRestart()
-
-        verify { languageManager.toggleLanguageAndRestart() }
     }
 
     @Test
