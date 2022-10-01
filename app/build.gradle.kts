@@ -11,10 +11,10 @@ apply(plugin = "app.cash.exhaustive")
 
 android {
     defaultConfig {
-        minSdkVersion(AppConfig.minSdkVersion)
-        targetSdkVersion(AppConfig.targetSdkVersion)
-        compileSdkVersion(AppConfig.compileSdkVersion)
-        buildToolsVersion(AppConfig.buildToolsVersion)
+        minSdk = AppConfig.minSdkVersion
+        targetSdk = AppConfig.targetSdkVersion
+        compileSdk = AppConfig.compileSdkVersion
+        buildToolsVersion = AppConfig.buildToolsVersion
         applicationId = AppConfig.id
         versionCode = AppConfig.versionCode
         versionName = AppConfig.versionName
