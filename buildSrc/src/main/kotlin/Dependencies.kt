@@ -48,6 +48,9 @@ object Version {
     const val swipe_refresh_layout = "1.1.0"
     const val constraint_layout = "2.0.4"
 
+    // Utilities
+    const val requirektx = "1.2.0"
+
     // Testing
     const val androidx_test = "1.3.0"
     const val androidx_test_junit = "1.1.2"
@@ -77,7 +80,6 @@ object Dependency {
 
 
     //region Rainbow Cake
-
     const val rainbow_cake_core =
         "co.zsmb:rainbow-cake-core:${Version.rainbow_cake}"
 
@@ -281,6 +283,18 @@ object Dependency {
 
     const val decorator =
         "com.rubensousa:decorator:${Version.decorator}"
+    //endregion
+
+
+    //region Utilities
+    const val requirektx_bundle =
+        "co.zsmb:requirektx-bundle:${Version.requirektx}"
+
+    const val requirektx_intent =
+        "co.zsmb:requirektx-intent:${Version.requirektx}"
+
+    const val requirektx_work =
+        "co.zsmb:requirektx-work:${Version.requirektx}"
     //endregion
 
 

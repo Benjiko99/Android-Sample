@@ -94,6 +94,10 @@ dependencies {
     implementation(Dependency.fastadapter_diff)
     implementation(Dependency.decorator)
 
+    implementation(Dependency.requirektx_bundle)
+    implementation(Dependency.requirektx_intent)
+    implementation(Dependency.requirektx_work)
+
     implementation(platform(Dependency.firebase_bom))
     implementation(Dependency.firebase_crashlytics)
     implementation(Dependency.firebase_messaging)
