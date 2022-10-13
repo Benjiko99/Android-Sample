@@ -32,7 +32,7 @@ import com.spiraclesoftware.androidsample.feature.profile.ProfileViewState as Vi
 class ProfileFragment :
     StandardFragment<ProfileFragmentBinding, ViewState, ProfileViewModel>() {
 
-    override var themeResId: Int = R.style.AppTheme_White
+    override var themeResId: Int = R.style.AppTheme_Surface
 
     override fun provideViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
         ProfileFragmentBinding.inflate(inflater, container, false)

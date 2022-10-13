@@ -46,6 +46,7 @@ class ThemeManager(
         return AppTheme.valueOf(themePref)
     }
 
+    // TODO: Add a theme switcher widget and call this
     private fun persistTheme(theme: AppTheme) {
         sharedPreferences.edit()
             .putString(APP_THEME_KEY, theme.name)

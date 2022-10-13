@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorBackground"
-    tools:theme="@style/AppTheme.White">
+    tools:theme="@style/AppTheme.Surface">
 
     <com.spiraclesoftware.androidsample.view.AppBarLayout
         android:id="@+id/appbar"

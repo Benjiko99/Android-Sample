@@ -5,6 +5,7 @@
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="appBarLayoutStyle">@style/AppBarLayout</item>
 
+        <!-- TODO: Check colors in night mode -->
         <item name="android:colorBackground">@color/background</item>
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorPrimaryDark">@color/blue_700</item>
@@ -13,13 +14,15 @@
         <item name="colorAccent">@color/pink_600</item>
     </style>
 
-    <style name="AppTheme.White">
+    <!-- TODO: Rename -->
+    <style name="AppTheme.Surface">
         <item name="android:colorBackground">?attr/colorSurface</item>
     </style>
 
     <style name="AppTheme.ThemeOverlay.Toolbar" parent="">
-        <item name="colorControlNormal">@color/toolbar_controls</item>
-        <item name="colorOnSurface">@color/toolbar_controls</item>
+        <!-- TODO: Hmm -->
+<!--        <item name="colorControlNormal">?attr/colorControlNormal</item>-->
+<!--        <item name="colorOnSurface">?attr/colorControlNormal</item>-->
     </style>
 
     <style name="AppTheme.CardView.Outlined" parent="Widget.MaterialComponents.CardView">

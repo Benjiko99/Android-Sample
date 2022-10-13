@@ -7,12 +7,14 @@
 
     <color name="background">#f7f7f7</color>
 
+    <!-- TODO: Adjust for night mode? -->
     <!-- Transaction Categories -->
     <color name="transaction_category__entertainment">#ff0000</color>
     <color name="transaction_category__restaurants">#7cb342</color>
     <color name="transaction_category__groceries">#c0ca33</color>
     <color name="transaction_category__transfers">#009688</color>
 
+    <!-- TODO: Adjust for night mode? -->
     <!-- Transaction Status -->
     <color name="transaction_status__declined">#9e9e9e</color>
 

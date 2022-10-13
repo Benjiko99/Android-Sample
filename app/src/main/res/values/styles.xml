@@ -9,7 +9,8 @@
     <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:theme">@style/AppTheme.ThemeOverlay.Toolbar</item>
+        <!-- TODO: Experiment with ways of tinting the menu icons and action text -->
+<!--        <item name="android:theme">@style/AppTheme.ThemeOverlay.Toolbar</item>-->
         <item name="android:background">?android:colorBackground</item>
     </style>
 

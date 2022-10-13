@@ -7,6 +7,7 @@
       Don't use these colors outside of the colors.xml file!
       If you want to use them, create a new, well named color and reference them there.
     -->
+    <!-- TODO: Check usages, create themed color variants -->
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="gray_50">#fafafa</color>
