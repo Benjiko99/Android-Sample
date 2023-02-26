@@ -10,6 +10,8 @@ apply(plugin = "org.jmailen.kotlinter")
 apply(plugin = "app.cash.exhaustive")
 
 android {
+    namespace = "com.spiraclesoftware.androidsample"
+
     defaultConfig {
         minSdk = AppConfig.minSdkVersion
         targetSdk = AppConfig.targetSdkVersion
@@ -64,22 +66,9 @@ dependencies {
     implementation(Dependency.rainbow_cake_timber)
     implementation(Dependency.koin_android)
     implementation(Dependency.livedata_ktx)
+    implementation(Dependency.navigation_compose)
     implementation(Dependency.navigation_ui_ktx)
     implementation(Dependency.navigation_fragment_ktx)
-    implementation(Dependency.compose)
-    implementation(Dependency.compose)
-    implementation(Dependency.compose_tooling)
-    implementation(Dependency.compose_runtime)
-    implementation(Dependency.compose_livedata)
-    implementation(Dependency.compose_foundation)
-    implementation(Dependency.compose_layout)
-    implementation(Dependency.compose_animation)
-    implementation(Dependency.compose_activity)
-    implementation(Dependency.compose_viewmodel)
-    implementation(Dependency.compose_material)
-    implementation(Dependency.compose_material_theme_adapter)
-    implementation(Dependency.compose_material_icons)
-    implementation(Dependency.compose_material_icons_extended)
     implementation(Dependency.coil)
     implementation(Dependency.imageviewer)
     implementation(Dependency.material)
@@ -93,9 +82,15 @@ dependencies {
     implementation(Dependency.fastadapter_diff)
     implementation(Dependency.decorator)
 
-    implementation(Dependency.requirektx_bundle)
-    implementation(Dependency.requirektx_intent)
-    implementation(Dependency.requirektx_work)
+    implementation(platform(Dependency.compose_bom))
+    implementation(Dependency.compose_tooling_preview)
+    implementation(Dependency.compose_livedata)
+    implementation(Dependency.compose_activity)
+    implementation(Dependency.compose_viewmodel)
+    implementation(Dependency.compose_material)
+    implementation(Dependency.compose_material_theme_adapter)
+    implementation(Dependency.compose_material_icons_extended)
+    debugImplementation(Dependency.compose_tooling)
 
     implementation(platform(Dependency.firebase_bom))
     implementation(Dependency.firebase_crashlytics)
@@ -117,6 +112,7 @@ dependencies {
     testImplementation(Dependency.coroutines_test)
     testImplementation(Dependency.rainbow_cake_test)
 
+    androidTestImplementation(platform(Dependency.compose_bom))
     androidTestImplementation(Dependency.android_test_runner)
     androidTestImplementation(Dependency.android_test_junit)
     androidTestImplementation(Dependency.arch_test)

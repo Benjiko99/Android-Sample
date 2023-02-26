@@ -6,6 +6,8 @@ plugins {
 apply(plugin = "org.jmailen.kotlinter")
 
 android {
+    namespace = "com.spiraclesoftware.androidsample.data_remote"
+
     defaultConfig {
         minSdk = AppConfig.minSdkVersion
         targetSdk = AppConfig.targetSdkVersion

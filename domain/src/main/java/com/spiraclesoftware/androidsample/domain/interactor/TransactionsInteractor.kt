@@ -42,6 +42,7 @@ class TransactionsInteractor(
                 when (result) {
                     is Result.Success -> localDataSource.saveTransactions(result.data)
                     is Result.Error -> localDataSource.clearTransactions()
+                    Result.Loading -> {}
                 }
             }
             .collect { result -> remoteDataSourceResult.value = result }
