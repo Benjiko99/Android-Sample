@@ -3,7 +3,7 @@ package com.spiraclesoftware.androidsample.view
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
-import com.spiraclesoftware.androidsample.R
+import com.google.android.material.R
 import com.google.android.material.textfield.TextInputLayout as MaterialTextInputLayout
 
 class TextInputLayout : MaterialTextInputLayout {

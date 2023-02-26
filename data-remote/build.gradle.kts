@@ -6,9 +6,10 @@ plugins {
 apply(plugin = "org.jmailen.kotlinter")
 
 android {
+    namespace = "com.spiraclesoftware.androidsample.data_remote"
+
     defaultConfig {
         minSdk = AppConfig.minSdkVersion
-        targetSdk = AppConfig.targetSdkVersion
         compileSdk = AppConfig.compileSdkVersion
         buildToolsVersion = AppConfig.buildToolsVersion
         testInstrumentationRunner = AppConfig.testInstrumentationRunner
@@ -16,6 +17,10 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 

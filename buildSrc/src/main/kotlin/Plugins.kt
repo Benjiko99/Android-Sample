@@ -1,7 +1,7 @@
 object Plugin {
 
     const val android_gradle =
-        "com.android.tools.build:gradle:${Version.android_gradle}"
+        "com.android.tools.build:gradle:8.4.0"
 
     const val google_services =
         "com.google.gms:google-services:${Version.google_services}"

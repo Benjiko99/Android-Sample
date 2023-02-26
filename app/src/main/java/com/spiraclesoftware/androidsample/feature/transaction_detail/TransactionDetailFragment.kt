@@ -34,8 +34,7 @@ import com.spiraclesoftware.androidsample.feature.text_input.TextInputFragment
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toCategorySelect
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailFragmentDirections.Companion.toTextInput
 import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewModel.*
-import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Content
-import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.Error
+import com.spiraclesoftware.androidsample.feature.transaction_detail.TransactionDetailViewState.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.*
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.*
 import com.spiraclesoftware.androidsample.framework.core.Model
@@ -114,6 +113,7 @@ class TransactionDetailFragment :
         errorMessageView.isVisible = viewState is Error
 
         when (viewState) {
+            is Initial -> {}
             is Content -> {
                 FastAdapterDiffUtil[itemAdapter] = viewState.cardModels
                 renderActionChips(viewState.actionChips)

@@ -6,7 +6,13 @@ import com.spiraclesoftware.androidsample.R
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemBinding
 import com.spiraclesoftware.androidsample.databinding.ValuePairCardItemEntryBinding
 import com.spiraclesoftware.androidsample.feature.transaction_detail.cards.item.model.ValuePairCardModel
-import com.spiraclesoftware.androidsample.framework.extensions.*
+import com.spiraclesoftware.androidsample.framework.extensions.colorAttr
+import com.spiraclesoftware.androidsample.framework.extensions.dimen
+import com.spiraclesoftware.androidsample.framework.extensions.drawable
+import com.spiraclesoftware.androidsample.framework.extensions.onClick
+import com.spiraclesoftware.androidsample.framework.extensions.string
+import com.spiraclesoftware.androidsample.framework.extensions.tintedDrawable
+import com.spiraclesoftware.androidsample.framework.extensions.topMargin
 
 class ValuePairCardItem(
     model: ValuePairCardModel,
@@ -33,7 +39,7 @@ class ValuePairCardItem(
             if (model.actionId != null) {
                 pb.valueView.onClick { onValuePairAction(model.actionId) }
 
-                val tintColor = ctx.colorAttr(R.attr.colorPrimary)
+                val tintColor = ctx.colorAttr(android.R.attr.colorPrimary)
                 pb.valueView.setTextColor(tintColor)
                 pb.iconDrawable = ctx.drawable(model.icon)?.tintedDrawable(tintColor)
             } else {

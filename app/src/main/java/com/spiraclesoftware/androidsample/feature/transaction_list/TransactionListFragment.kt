@@ -97,6 +97,7 @@ class TransactionListFragment :
 
     private fun renderRecyclerView(viewState: ViewState): Unit = with(binding) {
         when (viewState) {
+            is Loading -> {}
             is Content -> {
                 recyclerView.isVisible = viewState.emptyState == null
                 FastAdapterDiffUtil[itemAdapter] = viewState.listModels
@@ -110,6 +111,7 @@ class TransactionListFragment :
 
     private fun renderEmptyState(viewState: ViewState): Unit = with(binding) {
         when (viewState) {
+            is Loading -> {}
             is Content -> {
                 emptyStateLayout.apply {
                     root.isVisible = viewState.emptyState != null

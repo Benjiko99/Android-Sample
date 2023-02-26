@@ -1,14 +1,13 @@
 object Version {
     // Plugins
-    const val android_gradle = "7.0.3"
     const val google_services = "4.3.5"
     const val crashlytics = "2.5.2"
     const val kotlinter = "3.4.0"
     const val exhaustive = "0.1.1"
 
     // Core
-    const val kotlin = "1.5.31"
-    const val core_library_desugaring = "1.1.1"
+    const val kotlin = "1.8.10"
+    const val core_library_desugaring = "2.0.2"
     const val coroutines = "1.4.2"
     const val rainbow_cake = "1.6.0"
     const val koin = "3.1.2"
@@ -23,7 +22,7 @@ object Version {
     // Networking
     const val okhttp = "4.7.2"
     const val retrofit = "2.9.0"
-    const val moshi = "1.12.0"
+    const val moshi = "1.14.0"
     const val serialization_json = "1.0.1"
 
     // Database
@@ -36,20 +35,18 @@ object Version {
     const val androidx_fragment = "1.3.0-beta01"
     const val arch = "2.1.0"
     const val lifecycle = "2.2.0"
-    const val navigation = "2.3.5"
-    const val compose = "1.1.0-beta01"
-    const val compose_activity = "1.3.1"
-    const val compose_viewmodel = "1.0.0-alpha07"
-    const val compose_material_theme_adapter = "1.0.4"
+    const val navigation = "2.5.3"
+    const val compose_bom = "2023.01.00"
+    const val compose = "1.4.3"
+    const val compose_activity = "1.6.1"
+    const val compose_viewmodel = "2.5.1"
+    const val compose_material_theme_adapter = "0.28.0"
     const val coil = "1.4.0"
     const val fastadapter = "5.3.5"
     const val decorator = "2.0.0"
     const val imageviewer = "v1.0.1"
     const val swipe_refresh_layout = "1.1.0"
     const val constraint_layout = "2.0.4"
-
-    // Utilities
-    const val requirektx = "1.2.0"
 
     // Testing
     const val androidx_test = "1.3.0"
@@ -152,6 +149,9 @@ object Dependency {
 
 
     //region Navigation
+    const val navigation_compose =
+        "androidx.navigation:navigation-compose:${Version.navigation}"
+
     const val navigation_fragment_ktx =
         "androidx.navigation:navigation-fragment-ktx:${Version.navigation}"
 
@@ -203,38 +203,26 @@ object Dependency {
 
 
     //region User Interface
-    const val compose =
-        "androidx.compose.ui:ui:${Version.compose}"
+    const val compose_bom =
+        "androidx.compose:compose-bom:${Version.compose_bom}"
 
     const val compose_tooling =
-        "androidx.compose.ui:ui-tooling:${Version.compose}"
+        "androidx.compose.ui:ui-tooling"
 
-    const val compose_runtime =
-        "androidx.compose.runtime:runtime:${Version.compose}"
+    const val compose_tooling_preview =
+        "androidx.compose.ui:ui-tooling-preview"
 
     const val compose_livedata =
-        "androidx.compose.runtime:runtime-livedata:${Version.compose}"
-
-    const val compose_foundation =
-        "androidx.compose.foundation:foundation:${Version.compose}"
-
-    const val compose_layout =
-        "androidx.compose.foundation:foundation-layout:${Version.compose}"
-
-    const val compose_animation =
-        "androidx.compose.animation:animation:${Version.compose}"
+        "androidx.compose.runtime:runtime-livedata"
 
     const val compose_material =
-        "androidx.compose.material:material:${Version.compose}"
+        "androidx.compose.material:material"
 
     const val compose_material_theme_adapter =
-        "com.google.android.material:compose-theme-adapter:${Version.compose_material_theme_adapter}"
-
-    const val compose_material_icons =
-        "androidx.compose.material:material-icons-core:${Version.compose}"
+        "com.google.accompanist:accompanist-themeadapter-material:${Version.compose_material_theme_adapter}"
 
     const val compose_material_icons_extended =
-        "androidx.compose.material:material-icons-extended:${Version.compose}"
+        "androidx.compose.material:material-icons-extended"
 
     const val compose_activity =
         "androidx.activity:activity-compose:${Version.compose_activity}"
@@ -280,18 +268,6 @@ object Dependency {
 
     const val decorator =
         "com.rubensousa:decorator:${Version.decorator}"
-    //endregion
-
-
-    //region Utilities
-    const val requirektx_bundle =
-        "co.zsmb:requirektx-bundle:${Version.requirektx}"
-
-    const val requirektx_intent =
-        "co.zsmb:requirektx-intent:${Version.requirektx}"
-
-    const val requirektx_work =
-        "co.zsmb:requirektx-work:${Version.requirektx}"
     //endregion
 
 
